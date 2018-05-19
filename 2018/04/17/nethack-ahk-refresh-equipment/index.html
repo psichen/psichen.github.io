@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="pan.world">
 <meta property="og:description" content="在之前的文章里提过Nethack，它是一款及其小众，上手难度较大的游戏，画面由字符组成，没有炫目的CG和动听的音乐。然而就是这样一款古老的游戏，一直以丰富的游戏性著称。 游戏中有数种职业可以选择，其中法师(Wizard)是典型的后期职业，然而法师的初始装备中，除了固定的+1的木棒、具有魔抗功能的披风和force blot的法术书之外，还有额外一本法术书、三个药水、三个卷轴、两个戒指，各20%的概率">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-08T14:56:27.662Z">
+<meta property="og:updated_time" content="2018-05-11T12:29:40.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用ahk刷Nethack中Wizard的初始装备">
 <meta name="twitter:description" content="在之前的文章里提过Nethack，它是一款及其小众，上手难度较大的游戏，画面由字符组成，没有炫目的CG和动听的音乐。然而就是这样一款古老的游戏，一直以丰富的游戏性著称。 游戏中有数种职业可以选择，其中法师(Wizard)是典型的后期职业，然而法师的初始装备中，除了固定的+1的木棒、具有魔抗功能的披风和force blot的法术书之外，还有额外一本法术书、三个药水、三个卷轴、两个戒指，各20%的概率">
@@ -324,7 +324,7 @@
 <p>游戏中有数种职业可以选择，其中法师(Wizard)是典型的后期职业，然而法师的初始装备中，除了固定的+1的木棒、具有魔抗功能的披风和force blot的法术书之外，还有额外一本法术书、三个药水、三个卷轴、两个戒指，各20%的概率随机出现眼罩和魔法笔。</p>
 <p>这些物品的具体内容是随机的，如果能刷到强力的装备，那么法师这个职业在早期的存活概率将大大增加。</p>
 <h1 id="ahk脚本刷"><a href="#ahk脚本刷" class="headerlink" title="ahk脚本刷"></a>ahk脚本刷</h1><p>为了能方便快捷地刷初始装备，这时就要祭出<a href="https://autohotkey.com/" target="_blank" rel="external">ahk</a>了。ahk是windows下的一个脚本程序，通过它可以几乎完全地程序化操作windows系统。其代码如下：</p>
-<figure class="highlight ahk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">^\::</span></div><div class="line">Loop <span class="number">50</span></div><div class="line">&#123;</div><div class="line"><span class="built_in">    Loop,</span> Read, nethack.log</div><div class="line">    &#123;</div><div class="line">        total_lines = %<span class="built_in">A_Index</span>%</div><div class="line">    &#125;</div><div class="line">    sleep <span class="number">100</span>   </div><div class="line"><span class="built_in">    FileReadLine,</span> inventory, nethack.log, total_lines</div><div class="line">    sleep <span class="number">100</span></div><div class="line">    If InStr(inventory, <span class="string">"digestion"</span>) <span class="literal">and</span> InStr(inventory, <span class="string">"wand of polymorph"</span>)</div><div class="line">        <span class="keyword">break</span></div><div class="line">    sleep <span class="number">50</span>    </div><div class="line"><span class="built_in">    Send,</span> &#123;space&#125;+&#123;<span class="number">3</span>&#125;q&#123;enter&#125;ynnnn&#123;space&#125;</div><div class="line">    sleep <span class="number">50</span></div><div class="line"><span class="built_in">    Send,</span> pnwhfny&#123;space&#125;i</div><div class="line">    sleep <span class="number">200</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span></div></pre></td></tr></table></figure>
+<figure class="highlight ahk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">^\::</span></div><div class="line">Loop <span class="number">50</span></div><div class="line">&#123;</div><div class="line"><span class="built_in">    Loop,</span> Read, nethack.log</div><div class="line">    &#123;</div><div class="line">        total_lines = %<span class="built_in">A_Index</span>%</div><div class="line">    &#125;</div><div class="line">    sleep <span class="number">100</span>   </div><div class="line"><span class="built_in">    FileReadLine,</span> inventory, nethack.log, total_lines</div><div class="line">    sleep <span class="number">100</span></div><div class="line">    If InStr(inventory, <span class="string">"digestion"</span>) <span class="literal">and</span> InStr(inventory, <span class="string">"marker"</span>)</div><div class="line">        <span class="keyword">break</span></div><div class="line">    sleep <span class="number">50</span>    </div><div class="line"><span class="built_in">    Send,</span> &#123;space&#125;+&#123;<span class="number">3</span>&#125;q&#123;enter&#125;ynnnn&#123;space&#125;</div><div class="line">    sleep <span class="number">50</span></div><div class="line"><span class="built_in">    Send,</span> pnwhfny&#123;space&#125;i</div><div class="line">    sleep <span class="number">500</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span></div></pre></td></tr></table></figure>
 <p>这段代码选择的是“人类中立女法师”，其用法如下：</p>
 <ol>
 <li>首先在windows下用putty程序ssh到alt.org这个nethack的公共服务器时，在左侧面板“Session”-“Logging”中，选择保存”printable output”到指定文件中，这里是保存到同目录的”nethack.log”这个文件中。这一步的目的是为了方便ahk读取文件，获得装备信息。</li>
@@ -464,7 +464,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -477,7 +477,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
