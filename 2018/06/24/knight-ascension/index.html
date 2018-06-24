@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Nethack,ahk,wizard," />
+  <meta name="keywords" content="Nethack,ascension,knight," />
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="在之前的文章里提过Nethack，它是一款及其小众，上手难度较大的游戏，画面由字符组成，没有炫目的CG和动听的音乐。然而就是这样一款古老的游戏，一直以丰富的游戏性著称。 游戏中有数种职业可以选择，其中法师(Wizard)是典型的后期职业，然而法师的初始装备中，除了固定的+1的木棒、具有魔抗功能的披风和force blot的法术书之外，还有额外一本法术书、三个药水、三个卷轴、两个戒指，各20%的概率">
-<meta name="keywords" content="Nethack,ahk,wizard">
+<meta name="description" content="近日用守序人类女骑士开了一局nethack，意外地发现Knight也是一个很强力的角色：  初始AC较低，防御较好； 宠物pony携带有saddle，这可是比magic lamp还要稀少的道具，骑上坐骑后负重变为最大且速度很快； 骑士初始携带大量水果，可用于训练宠物从商店中偷取道具（一点也不骑士精神）；  5级时用long sword可以泡出Excalibur； 向神献祭可以获得Grayswand">
+<meta name="keywords" content="Nethack,ascension,knight">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用ahk刷Nethack中Wizard的初始装备">
-<meta property="og:url" content="http://www.psichen.com/2018/04/17/nethack-ahk-refresh-equipment/index.html">
+<meta property="og:title" content="Nethack骑士飞升之旅">
+<meta property="og:url" content="http://www.psichen.com/2018/06/24/knight-ascension/index.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="在之前的文章里提过Nethack，它是一款及其小众，上手难度较大的游戏，画面由字符组成，没有炫目的CG和动听的音乐。然而就是这样一款古老的游戏，一直以丰富的游戏性著称。 游戏中有数种职业可以选择，其中法师(Wizard)是典型的后期职业，然而法师的初始装备中，除了固定的+1的木棒、具有魔抗功能的披风和force blot的法术书之外，还有额外一本法术书、三个药水、三个卷轴、两个戒指，各20%的概率">
+<meta property="og:description" content="近日用守序人类女骑士开了一局nethack，意外地发现Knight也是一个很强力的角色：  初始AC较低，防御较好； 宠物pony携带有saddle，这可是比magic lamp还要稀少的道具，骑上坐骑后负重变为最大且速度很快； 骑士初始携带大量水果，可用于训练宠物从商店中偷取道具（一点也不骑士精神）；  5级时用long sword可以泡出Excalibur； 向神献祭可以获得Grayswand">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-11T12:29:40.145Z">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/af56f883ly1fsm26z8j3uj21hf0o8tge.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/af56f883ly1fsm26zyjzpj21hf0o8n10.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/af56f883ly1fsm270chm4j21hf0o8gse.jpg">
+<meta property="og:updated_time" content="2018-06-24T02:37:10.872Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用ahk刷Nethack中Wizard的初始装备">
-<meta name="twitter:description" content="在之前的文章里提过Nethack，它是一款及其小众，上手难度较大的游戏，画面由字符组成，没有炫目的CG和动听的音乐。然而就是这样一款古老的游戏，一直以丰富的游戏性著称。 游戏中有数种职业可以选择，其中法师(Wizard)是典型的后期职业，然而法师的初始装备中，除了固定的+1的木棒、具有魔抗功能的披风和force blot的法术书之外，还有额外一本法术书、三个药水、三个卷轴、两个戒指，各20%的概率">
+<meta name="twitter:title" content="Nethack骑士飞升之旅">
+<meta name="twitter:description" content="近日用守序人类女骑士开了一局nethack，意外地发现Knight也是一个很强力的角色：  初始AC较低，防御较好； 宠物pony携带有saddle，这可是比magic lamp还要稀少的道具，骑上坐骑后负重变为最大且速度很快； 骑士初始携带大量水果，可用于训练宠物从商店中偷取道具（一点也不骑士精神）；  5级时用long sword可以泡出Excalibur； 向神献祭可以获得Grayswand">
+<meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/af56f883ly1fsm26z8j3uj21hf0o8tge.jpg">
 
 
 
@@ -120,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.psichen.com/2018/04/17/nethack-ahk-refresh-equipment/"/>
+  <link rel="canonical" href="http://www.psichen.com/2018/06/24/knight-ascension/"/>
 
 
 
 
 
-  <title>利用ahk刷Nethack中Wizard的初始装备 | pan.world</title>
+  <title>Nethack骑士飞升之旅 | pan.world</title>
   
 
 
@@ -262,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2018/04/17/nethack-ahk-refresh-equipment/">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2018/06/24/knight-ascension/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="psichen">
@@ -279,7 +283,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">利用ahk刷Nethack中Wizard的初始装备</h2>
+          <h2 class="post-title" itemprop="name headline">Nethack骑士飞升之旅</h2>
         
 
         <div class="post-meta">
@@ -291,8 +295,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T12:28:28+08:00">
-                2018-04-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-24T10:35:18+08:00">
+                2018-06-24
               </time>
             
 
@@ -329,29 +333,20 @@
       
 
       
-        <p>在之前的<a href="http://www.psichen.com/2017/11/06/nethack-travel/">文章</a>里提过Nethack，它是一款及其小众，上手难度较大的游戏，画面由字符组成，没有炫目的CG和动听的音乐。然而就是这样一款古老的游戏，一直以丰富的游戏性著称。</p>
-<p>游戏中有数种职业可以选择，其中法师(Wizard)是典型的后期职业，然而法师的初始装备中，除了固定的+1的木棒、具有魔抗功能的披风和force blot的法术书之外，还有额外一本法术书、三个药水、三个卷轴、两个戒指，各20%的概率随机出现眼罩和魔法笔。</p>
-<p>这些物品的具体内容是随机的，如果能刷到强力的装备，那么法师这个职业在早期的存活概率将大大增加。</p>
-<h1 id="ahk脚本刷"><a href="#ahk脚本刷" class="headerlink" title="ahk脚本刷"></a>ahk脚本刷</h1><p>为了能方便快捷地刷初始装备，这时就要祭出<a href="https://autohotkey.com/" target="_blank" rel="external">ahk</a>了。ahk是windows下的一个脚本程序，通过它可以几乎完全地程序化操作windows系统。其代码如下：</p>
-<figure class="highlight ahk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">^\::</span></div><div class="line">Loop <span class="number">50</span></div><div class="line">&#123;</div><div class="line"><span class="built_in">    Loop,</span> Read, nethack.log</div><div class="line">    &#123;</div><div class="line">        total_lines = %<span class="built_in">A_Index</span>%</div><div class="line">    &#125;</div><div class="line">    sleep <span class="number">100</span>   </div><div class="line"><span class="built_in">    FileReadLine,</span> inventory, nethack.log, total_lines</div><div class="line">    sleep <span class="number">100</span></div><div class="line">    If InStr(inventory, <span class="string">"digestion"</span>) <span class="literal">and</span> InStr(inventory, <span class="string">"marker"</span>)</div><div class="line">        <span class="keyword">break</span></div><div class="line">    sleep <span class="number">50</span>    </div><div class="line"><span class="built_in">    Send,</span> &#123;space&#125;+&#123;<span class="number">3</span>&#125;q&#123;enter&#125;ynnnn&#123;space&#125;</div><div class="line">    sleep <span class="number">50</span></div><div class="line"><span class="built_in">    Send,</span> pnwhfny&#123;space&#125;i</div><div class="line">    sleep <span class="number">500</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span></div></pre></td></tr></table></figure>
-<p>这段代码选择的是“人类中立女法师”，其用法如下：</p>
+        <p>近日用守序人类女骑士开了一局nethack，意外地发现Knight也是一个很强力的角色：</p>
 <ol>
-<li>首先在windows下用putty程序ssh到alt.org这个nethack的公共服务器时，在左侧面板“Session”-“Logging”中，选择保存”printable output”到指定文件中，这里是保存到同目录的”nethack.log”这个文件中。这一步的目的是为了方便ahk读取文件，获得装备信息。</li>
-<li>输入自己的账号密码，登陆nethack，先手动进入游戏，选择种族职业性别等，进入游戏后按“i”打开物品列表，如果对其不满意的话，这时执行ahk脚本，执行方法为同时按<code>ctrl+\</code>，，此时开始不断退出重开，直到刷出想要的装备为止（上面的代码刷的是”ring of slow digestion”和”wand of polymorph”），为了防止时间过长，设置了循环上限为50。</li>
-<li>如果刷到了预设的装备则会自动停下，否则再执行一次即可。</li>
-<li>最后记得删掉log文件和关掉ahk文件~</li>
+<li>初始AC较低，防御较好；</li>
+<li>宠物pony携带有saddle，这可是比magic lamp还要稀少的道具，骑上坐骑后负重变为最大且速度很快；</li>
+<li>骑士初始携带大量水果，可用于训练宠物从商店中偷取道具（一点也不骑士精神）； </li>
+<li>5级时用long sword可以泡出Excalibur；</li>
+<li>向神献祭可以获得Grayswandir，伤害翻倍且银制武器对于不死类敌人有伤害加成；</li>
 </ol>
-<h1 id="法师推荐装备"><a href="#法师推荐装备" class="headerlink" title="法师推荐装备"></a>法师推荐装备</h1><p>法师初始装备中，可以随机出现的好东西还是不少的。下面简单推荐一些前期我认为比较重要的装备：</p>
-<ol>
-<li>ring of slow digestion<br>可以一直用到通关的戒指，将玩家从饥荒中拯救出来。</li>
-<li>wand of polymorph<br>法师前期打怪主要靠宠物，利用变形法杖将宠物变成一个强角色，无疑会安全许多，不过宠物如果走丢或变成野生怪了就很麻烦了。</li>
-<li>+n ring of protection<br>增加n点的防御，如果是n&lt;=2就算了。</li>
-<li>magic marker<br>对于法师来讲，在智力高了后可以写出未曾见过的卷轴或法术书，在早期如果见过增强武器或防具的卷轴后，利用magic marker来多生产这两个卷轴也是很有用的。</li>
-<li>spellbook of light<br>虽然这个法术很无害，但是前期进入地精矿后，不少地图是需要照明的，有了这个法术会很方便。</li>
-<li>potion of holy water<br>这个出现概率较小，圣水的作用有很多：祝福物品、解除诅咒和净化兽人感染等等，是冒险家必备的物品，然而圣水的生产需要有同阵营的祭坛，这往往在矿镇里，也可能没有，因此初始装备拥有圣水便不必冒险去找祭坛了（不过同阵营祭坛的好处不止于此）。</li>
-</ol>
-<p>暂时先这么多，这样的初始装备应该足够让玩家撑到矿镇，矿镇的商店里凭运气看有没有神灯，许愿要一套龙鳞甲，那就比较稳妥了。勇士快踏上冒险的旅程吧，for amulet of Yender!</p>
-<h1 id="4月18日更新"><a href="#4月18日更新" class="headerlink" title="4月18日更新"></a>4月18日更新</h1><p>挂了……已经拥有了神级装备，不愁吃喝，养了一众宠物充当打手，在面对一个blue jelly的时候掉以轻心，普通攻击几次后被blue jelly的被动效果给冻死了。T_T</p>
+<p>在这局里，早期很幸运地在商店里发现了一个wand of wish，让宠物马将其偷出来，于是一件silver dragon mail入手，再加之本局中并不缺scroll of enchant armor/weapon，所以生存是没有问题的。</p>
+<p>再加上有很多wish可以使用，所以总体难度并不大，Knight后来的打法和Valkyrie的不同之处在于，因为携带了Mirror of Merlin，Knight的攻击法术伤害会翻倍，因此善用magic missile等法术，再挑上一两把好武器（Excalibur/Grayswandir/Sunsword），配合Silver saber，进行two-weapon，Knight可谓是人挡杀人佛挡杀佛，面对星界中的天启骑士，也是两刀就干掉。</p>
+<p>关于坐骑，pony/horse/warhorse是较为常见的宠物，然而由于马都是吃素的，并没有那么多的水果素食可以喂养它，所以常常会被饿死。可以作为坐骑的还有Dragon（龙骑士很帅吧），但是Dragon的速度较慢。最好的是Ki-rin（麒麟），速度快，会飞，带魔抗，可以治愈自身，可谓是很全面了，不过缺点在于很难驯化Ki-rin，只有通过使用figurine of ki-rin的方式来获得宠物麒麟。于是我前后花费了三个wish来获得figurine of ki-rin，第一个变成了peaceful ki-rin，第二个变成了hostile的ki-rin，还召唤出了一大帮怪物来围攻我，全部干掉。终于第三个成功获得了驯化的ki-rin，开心地放上saddle骑上去，状态变为了”Ride”+”Fly”，上天入地不在话下。</p>
+<p>可是悲剧还是来了，虽说麒麟非常的强力，然后在吸血鬼塔中面对cockatrice的时候，不慎被咬而石化了……</p>
+<p><img src="http://wx4.sinaimg.cn/mw690/af56f883ly1fsm26z8j3uj21hf0o8tge.jpg" alt=""><br><img src="http://wx3.sinaimg.cn/mw690/af56f883ly1fsm26zyjzpj21hf0o8n10.jpg" alt=""><br><img src="http://wx2.sinaimg.cn/mw690/af56f883ly1fsm270chm4j21hf0o8gse.jpg" alt=""></p>
+<p>还记得第一次ascension时的感觉，兴奋得睡不着觉。现在通关后反而是平静，Nethack带给我的游戏快乐更多地类似于赌博：赌这一局能否获得好道具。当然过程中少不了需要策略规划、风险预估等方面的考虑，但获得神装无疑是保证游戏通关的重大因素。也许是时候向Nethack说再见了。</p>
 
       
     </div>
@@ -371,9 +366,9 @@
           
             <a href="/tags/Nethack/" rel="tag"># Nethack</a>
           
-            <a href="/tags/ahk/" rel="tag"># ahk</a>
+            <a href="/tags/ascension/" rel="tag"># ascension</a>
           
-            <a href="/tags/wizard/" rel="tag"># wizard</a>
+            <a href="/tags/knight/" rel="tag"># knight</a>
           
         </div>
       
@@ -386,8 +381,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/09/glycation/" rel="next" title="糖类摄入与皮肤衰老">
-                <i class="fa fa-chevron-left"></i> 糖类摄入与皮肤衰老
+              <a href="/2018/06/12/a-dream/" rel="next" title="记梦">
+                <i class="fa fa-chevron-left"></i> 记梦
               </a>
             
           </div>
@@ -395,10 +390,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/06/carmen/" rel="prev" title="弗朗明戈的火焰">
-                弗朗明戈的火焰 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -448,17 +439,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -511,22 +493,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ahk脚本刷"><span class="nav-number">1.</span> <span class="nav-text">ahk脚本刷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#法师推荐装备"><span class="nav-number">2.</span> <span class="nav-text">法师推荐装备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4月18日更新"><span class="nav-number">3.</span> <span class="nav-text">4月18日更新</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
