@@ -22,7 +22,7 @@ mathjax: true
 
 在较低的激发光强下，染料只经历three-level体系(S<sub>0</sub>, S<sub>1</sub>, T<sub>1</sub>)，而在较高激发光强下(> ~70 kW/cm<sup>2</sup>)，染料经历five-level体系(S<sub>0</sub>, S<sub>1</sub>, T<sub>1</sub>, S<sub>n</sub>, T<sub>n</sub>)<sup>1</sup>。
 
-<%- img https://wx2.sinaimg.cn/mw690/007XD662ly1g7d73m1jh5j30er0aujrj.jpg 'three/five-level system' %>
+<% img https://wx2.sinaimg.cn/mw690/007XD662ly1g7d73m1jh5j30er0aujrj.jpg 'three/five-level system' %>
 
 处于第一激发态的染料(S<sub>1</sub>或T<sub>1</sub>)，还可吸收短波长的激光光子，进一步被激发到更高的能级(S<sub>n</sub>或T<sub>n</sub>)，从而增大染料猝灭的概率<sup>2</sup>。
 
@@ -32,17 +32,17 @@ mathjax: true
 
 当ALEX激光的频率在ns尺度时，正好落在荧光寿命的时间尺度。红光先对acceptor染料分子激发，在ns尺度的延迟之后，蓝光进行激发，此时acceptor荧光分子处于S<sub>1</sub>，吸收蓝光光子，进一步激发到更高能级(S<sub>n</sub>或T<sub>n</sub>)，发生猝灭，荧光信号降低。当延迟时间超过ns尺度后，acceptor的荧光信号得到恢复。
 
-<%- img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73mulg9j30cw0aqmz4.jpg ns-delay %>
+<% img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73mulg9j30cw0aqmz4.jpg ns-delay %>
 
 当ALEX的延迟时间在μs尺度时，此时染料分子应处于triplet state，而荧光信号改变不大。说明在smFRET中，猝灭主要是由acceptor染料的S<sub>1</sub>吸收短波长的光子带来的，可见染料猝灭的很大一部分原因，都是因为singlet state不能稳定地弛豫到ground state。
 
-<%- img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73oe4igj30d10abgn2.jpg us-delay %>
+<% img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73oe4igj30d10abgn2.jpg us-delay %>
 
 ##影响
 
 如果荧光分子的猝灭时间尺度和分子在confocal显微镜的聚焦体积内的扩散时间相当的话（~ 10<sup>2</sup> μs)，那么single-molecule FRET的分布会有拖尾，因为分子在聚焦体积内，acceptor猝灭，此时donor仍发光，造成表观的FRET效率减小<sup>2</sup>，**拖尾有时容易让人误以为是新组分的存在。**
 
-<%- img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73ner5yj30t70db0vg.jpg 'FRET trailing' %>
+<% img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73ner5yj30t70db0vg.jpg 'FRET trailing' %>
 
 ##解决方法
 
@@ -53,7 +53,7 @@ mathjax: true
 
 2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺($\ce{ NH2-CH2-CH2-SH }$)和1 mM Trolox，其中半胱胺作为singlet oxygen和自由基的quencher，Trolox作为染料triplet quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50 μs的时间分辨率<sup>4</sup>。
 
-<%- img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73nt3hpj309y08b752.jpg 'Trolox cocktail' %>
+<% img https://wx1.sinaimg.cn/mw690/007XD662ly1g7d73nt3hpj309y08b752.jpg 'Trolox cocktail' %>
 
 ##references
 
