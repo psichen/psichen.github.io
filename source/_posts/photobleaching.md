@@ -42,7 +42,7 @@ mathjax: true
 
 如果荧光分子的猝灭时间尺度和分子在confocal显微镜的聚焦体积内的扩散时间相当的话（~ 10<sup>2</sup> μs)，那么single-molecule FRET的分布会有拖尾，因为分子在聚焦体积内，acceptor猝灭，此时donor仍发光，造成表观的FRET效率减小<sup>2</sup>，**拖尾有时容易让人误以为是新组分的存在。**
 
-![FRET-trailing](https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg)
+![FRET-trailing](https://i.loli.net/2019/09/27/4GxiQAnvfHIyOoK.jpg)
 
 ##解决方法
 
@@ -53,7 +53,7 @@ mathjax: true
 
 2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺($\ce{ NH2-CH2-CH2-SH }$)和1 mM Trolox，其中半胱胺作为singlet oxygen和自由基的quencher，Trolox作为染料triplet quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50 μs的时间分辨率<sup>4</sup>。
 
-![trolox-cocktail](https://i.loli.net/2019/09/27/4GxiQAnvfHIyOoK.jpg)
+![trolox-cocktail](https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg)
 
 ##references
 
