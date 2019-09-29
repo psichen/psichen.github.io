@@ -16,26 +16,28 @@ $$df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i$$
 
 令$u_i \equiv \frac{\partial f}{\partial x_i}$，$u_i$与$x_i$就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：
 
-$$g \equiv f-\sum_{i=1}^{r} u_ix_i$$
+$$g \equiv f-\sum_{i=1}^{r} u_ix_i, (r \le k)$$
 
 其微分形式为：
 
 $$
 \begin{align}
-dg &= df - \sum_{i=1}^{r} u_idx_i - \sum_{i=1}^{r} x_idu_i \\
-&= \sum_{i=1}^{r} x_idu_i + \sum_{i=r+1}^{k} u_idx_i
+dg &= df - \sum_{i=1}^{r} u_idx_i - \sum_{i=1}^{r} x_idu_i \nonumber \\
+&= \sum_{i=r+1}^{k} u_idx_i - \sum_{i=1}^{r} x_idu_i \nonumber \\
 \end{align}
 $$
 
-从微分形式可见，函数$g=g(u_1,...u_r,x_{r+1},...x_k)$。
+从微分形式可见，函数$g=g(u_1,...u_r,x_{r+1},...x_k)$，前r个自变量已经由$x_i$变换为$u_i$。
 
 ###几何含义
 
-假设存在一个凹函数$f(x)$，其Legendre变换为$g(u)=f(x(u))-ux(u)$
+假设存在一个凹函数$f(x)$，其Legendre变换为$g=f-ux$，我们可以将$ux+g$看做是经过点$(x, f(x))$的函数$f$的切线，其截距为$g$，斜率为$u$。
+
+
 
 ##热力学函数
 
-对于内能$U$，我们选取两个entensive量，熵$S$和体积$V$作为自变量，则内能函数为$U=U(S, V)$，其微分形式：
+对于内能$U$，我们选取两个extensive量，熵$S$和体积$V$作为自变量，则内能函数为$U=U(S, V)$，其微分形式：
 $$ dU(S, V) = TdS-pdV $$
 
 其中$T$和$S$是共轭变量，$-p$和$V$是共轭变量。现在我们想将其中的变量$V$变换为其共轭变量$p$，于是有：
@@ -48,6 +50,17 @@ $$ dH = dU(S, V)+pdV+Vdp = TdS+Vdp $$
 
 可见定义的新函数$H=H(S, p)$。
 
-###能量最低
+类似地，通过Legendre变换，我们可以得到另外两个热力学函数$F$和$G$：
+
+$$
+\begin{align}
+&F \equiv U(S, V) - TS \nonumber \\
+&G \equiv U(S, V) - TS + pV \nonumber \\
+&dF = -SdT-pdV \nonumber \\
+&dG = -SdT+Vdp \nonumber \\
+\end{align}
+$$
 
 根据Legendre变换的几何含义，
+
+##references
