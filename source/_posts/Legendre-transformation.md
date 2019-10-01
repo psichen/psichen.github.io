@@ -5,7 +5,7 @@ tags: [Legendre, transformation, math, thermodynamics]
 mathjax: true
 ---
 
-热力学中有几个能量概念十分容易混淆：内能(U)，焓(H)，亥姆霍兹自由能(F)和吉布斯自由能(G)。都是能量的量纲，然后适用条件又不一样。其实觉得容易混淆是因为对其中的Legendre变换没有理解。
+热力学中有几个函数概念十分容易混淆：内能($U$)，焓($H$)，亥姆霍兹自由能($A$)和吉布斯自由能($G$)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。
 
 ##Legendre变换
 
@@ -16,7 +16,7 @@ $$df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i$$
 
 令$u_i \equiv \frac{\partial f}{\partial x_i}$，$u_i$与$x_i$就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：
 
-$$g \equiv f-\sum_{i=1}^{r} u_ix_i, (r \le k)$$
+$$g \equiv f-\sum_{i=1}^{r} u_ix_i \quad (r \le k)$$
 
 其微分形式为：
 
@@ -31,9 +31,7 @@ $$
 
 ###几何含义
 
-假设存在一个凹函数$f(x)$，其Legendre变换为$g=f-ux$，我们可以将$ux+g$看做是经过点$(x, f(x))$的函数$f$的切线，其截距为$g$，斜率为$u$。
-
-
+假设存在一个凹函数$f(x)$，其Legendre变换为$g=f-ux$，我们可以将$ux+g$看做是经过($x$, $f(x)$)的函数$f$的切线，其截距为$g$，斜率为$u=\frac{\partial f}{\partial x}$。
 
 ##热力学函数
 
@@ -50,17 +48,15 @@ $$ dH = dU(S, V)+pdV+Vdp = TdS+Vdp $$
 
 可见定义的新函数$H=H(S, p)$。
 
-类似地，通过Legendre变换，我们可以得到另外两个热力学函数$F$和$G$：
+类似地，通过Legendre变换，我们可以得到另外两个热力学函数$F(T, V)$和$G(T, p)$：
 
 $$
 \begin{align}
 &F \equiv U(S, V) - TS \nonumber \\
 &G \equiv U(S, V) - TS + pV \nonumber \\
-&dF = -SdT-pdV \nonumber \\
+&dA = -SdT-pdV \nonumber \\
 &dG = -SdT+Vdp \nonumber \\
 \end{align}
 $$
 
-根据Legendre变换的几何含义，
-
-##references
+在实际当中，体系的温度、压强和体积比较好控制，因此$A(T, V)$和$G(T, p)$较为常用。
