@@ -53,7 +53,7 @@ dI_A &= I_0 \sigma_D Q_A \eta_A \cdot dE \nonumber \\
 \end{align}
 $$
 
-我们可以设想一个Acceptor先于Donor猝灭的过程，这样Donor通道的信号强度会增加 $\Delta I_D$，Acceptor通道的信号强度会降低 $\Delta I_A$，FRET效率会从$E$降到0，通过TIRF可以将Acceptor猝灭的过程挑出来，并测到 $\Delta I_D$和 $I_A$，将上两式相除，就可以得到：
+我们可以设想一个Acceptor先于Donor猝灭的过程，这样Donor通道的信号强度会增加 $\Delta I_D$，Acceptor通道的信号强度会降低 $\Delta I_A$，FRET效率会从$E$降到0，通过TIRF可以将Acceptor猝灭的过程挑出来，并测到 $\Delta I_D$和 $\Delta I_A$，将上两式相除，就可以得到：
 
 $$ \gamma_T = \frac{Q_A \eta_A}{Q_D \eta_D} = \frac{\Delta I_A}{\Delta I_D} $$
 
@@ -90,6 +90,44 @@ $$ I_A^{Dex} = d \cdot I_A^{Aex} $$
 
 在ALEX实验中对Acceptor通道信号减掉直接激发项即可。
 
-##Jacobian变换
+##Jacobian行列式
 
-Jacobian变换常用于积分换元，
+Jacobian行列式常用于积分换元：
+
+$$
+J = \left|
+\begin{matrix}
+\frac{\partial x_1}{\partial u_1} &\cdots &\frac{\partial x_1}{\partial u_k} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial x_k}{\partial u_1} &\cdots &\frac{\partial x_k}{\partial u_k} \\
+\end{matrix}
+\right|
+$$
+
+对于一维情况：
+$$
+\begin{align}
+x &= x(u) \nonumber \\
+\int f(x)dx &= \int f(x(u)) \cdot \frac{dx}{du} \cdot du \nonumber \\
+\end{align}
+$$
+
+在FRET分布的校正中，理论FRET效率的概率密度函数应该服从高斯分布$N(\mu, \sigma)$，而校正前的FRET效率的概率密度函数暂时未知，但是有如下关系：
+
+$$ f(E_{app}) = F(E)\cdot \frac{dE}{dE_{app}}$$
+
+其中$F(E) = Ae^{\frac{-(E-\mu)^2}{2\sigma^2}}$ 为理论FRET分布的概率密度函数，根据FRET的校正公式：
+
+$$ E^{-1}-1 = \gamma_c \cdot (E^{-1}_{app}-1) $$
+
+可得到：
+
+$$ \frac{dE}{dE_{app}} = \gamma_c \cdot \frac{E^2}{E_{app}^2} $$
+
+代入上式即可得到表观FRET分布的概率密度函数$f(E_{app})$。
+
+当校正系数$\gamma$取不同值时，理论FRET效率与表观FRET效率呈非线性关系：
+![gamma](https://i.loli.net/2019/10/13/btrFvNJigY8Cfhy.png)
+
+校正前的FRET分布呈现偏态：
+![apparent FRET distribution](https://i.loli.net/2019/10/13/hyGIdLSTBbenN4m.png)
