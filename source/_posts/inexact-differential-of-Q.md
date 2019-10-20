@@ -38,10 +38,10 @@ $$ \frac{\partial (\mu P)}{\partial y} = \frac{\partial (\mu Q)}{\partial x} $$
 
 $$
 \begin{align}
-&\delta Q_1 &= \tau_1(\sigma_1, t)d\sigma_1 \nonumber \\
-&\delta Q_2 &= \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
-&\delta Q &=  \tau(\sigma, t)d\sigma \nonumber \\
-&\tau(\sigma, t)d\sigma &= \tau_1(\sigma_1, t)d\sigma_1 + \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
+\delta Q_1 &= \tau_1(\sigma_1, t)d\sigma_1 \nonumber \\
+\delta Q_2 &= \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
+\delta Q &=  \tau(\sigma, t)d\sigma \nonumber \\
+\tau(\sigma, t)d\sigma &= \tau_1(\sigma_1, t)d\sigma_1 + \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
 \end{align}
 $$
 
