@@ -8,19 +8,19 @@ mathjax: true
 
 $$ \int_{L_1} \delta Q \neq \int_{L_2} \delta Q $$
 
-类似的，体积功$\delta W$的积分也于路径有关，这一点很好理解。假设有如下3个过程A, B, C：
+类似的，体积功$\delta W$的积分也与路径有关，这一点很好理解。假设有2个过程A, B：
 
-![path function](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAcgs7YHZAwTUiBr0jldUmCLanom2fA-5egHLRuMd-qrCXZ6fE)
+![path function](http://muchongimg.xmcimg.com/data/bcs/2014/0701/w108h1175073_1404207867_483.jpg#opennewwindow)
 
-由于$W=\int PdV$，曲线A, B, C下方与x轴形成的面积即对应的体积功，很容易看出：
+由于$W=\int PdV$，曲线A, B下方与x轴形成的面积即对应的体积功，很容易看出：
 
-$$ W_A \neq W_B \neq W_C $$
+$$ W_A \neq W_B $$
 
 在没有非体积功的情况下，系统都是从状态1 $(P_1, V_1)$到状态2 $(P_2, V_2)$。因此状态函数内能的改变量$\Delta U$应相等。根据热力学第一定律：
 
 $$ \Delta U = Q-W $$
 
-所以$ Q_A \neq Q_B \neq Q_C $。
+所以$ Q_A \neq Q_B $。
 
 ##积分因子
 
@@ -74,7 +74,7 @@ $$ \tau_i = e^{\int g(t)dt}h_i(\sigma_i), (i = 1, 2)$$
 $$ \tau = e^{\int g(t)dt}h(\sigma_1, \sigma_2) $$
 
 ###温度定义（之一）
-令绝对温度$ T = C \cdot e^{\int g(t)dt} $，该函数只与经验温度$t$有关，常数$C$可通过人为指定来固定（如水的沸点和凝固点）。将$\tau_i$代入$\delta Q_i$的公式，有
+令绝对温度$ T = C \cdot e^{\int g(t)dt} $，该函数只与经验温度$t$有关，常数$C$可通过人为指定来固定（如水的沸点和凝固点之间平均划分为100份）。将$\tau_i$代入$\delta Q_i$的公式，有
 
 $$ \delta Q_i = T \frac{h_i(\sigma_i)}{C} d\sigma_i, (i=1, 2) $$
 
