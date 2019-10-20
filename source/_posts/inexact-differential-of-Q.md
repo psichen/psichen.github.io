@@ -28,20 +28,20 @@ $$ \Delta U = Q-W $$
 
 $$ du = Pdx + Qdy $$
 
-其中$ \frac{\partial P}{\partial y} \neq \frac{\partial Q}{\partial x} $，若存在一个函数$ \mu(x, y) \neq 0 $，使得$ \mu Pdx + \mu Qdy = 0 $成为全微分方唱，即满足：
+其中$ \frac{\partial P}{\partial y} \neq \frac{\partial Q}{\partial x} $，若存在一个函数$ \mu(x, y) \neq 0 $，使得$ \mu Pdx + \mu Qdy = 0 $成为全微分方程，即满足：
 
 $$ \frac{\partial (\mu P)}{\partial y} = \frac{\partial (\mu Q)}{\partial x} $$
 
 则称$\mu$为方程$du$的积分因子。
 
-所以我们现在来找$ \delta Q $的积分因子。设想由2个物体组成的孤立体系，2个物体之间有热接触，因此温度均为$t$（经验温度），设想一个状态函数$\sigam$，用于表示系统所处的状态。在绝热可逆过程中：
+所以我们现在来找$ \delta Q $的积分因子。设想由2个物体组成的孤立体系，2个物体之间有热接触，因此温度均为$t$（经验温度），设想一个状态函数$\sigma$，用于表示系统所处的状态。在**绝热可逆**过程中：
 
 $$
 \begin{align}
-\delta Q_1 &= \tau_1(\sigma_1, t)d\sigma_1 \nonumber \\
-\delta Q_2 &= \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
-\delta Q &=  \tau(\sigma, t)d\sigma \nonumber \\
-\tau(\sigma, t)d\sigma &= \tau_1(\sigma_1, t)d\sigma_1 + \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
+&\delta Q_1 &= \tau_1(\sigma_1, t)d\sigma_1 \nonumber \\
+&\delta Q_2 &= \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
+&\delta Q &=  \tau(\sigma, t)d\sigma \nonumber \\
+&\tau(\sigma, t)d\sigma &= \tau_1(\sigma_1, t)d\sigma_1 + \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
 \end{align}
 $$
 
@@ -60,7 +60,13 @@ $$
 $$ \frac{\partial}{\partial t}\left(\frac{\partial \sigma}{\partial \sigma_1}\right) = \frac{1}{\tau^2} (\tau \frac{\partial \tau_1}{\partial t}-\tau_1\frac{\partial \tau}{\partial t}) = 0 $$
 $$ \frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_1} \frac{\partial \tau_1}{\partial t} $$
 
-同理，$ \frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t} $，所以$ \frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t} = \frac{1}{\tau} \frac{\partial \tau}{\partial t} $。
+同理，
+
+$$ \frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t} $$
+
+所以
+
+$$ \frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_1} \frac{\partial \tau_1}{\partial t} = \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t} $$
 
 因为$ \tau_1 = \tau_1(\sigma_1, t) $，并不含有$\sigma_2$，同理$ \tau_2 = \tau_2(\sigma_2, t) $，并不含有$\sigma_1$，所以上面等式成立的条件为等式各方只是$t$的函数，而与$\sigma_1, \sigma_2$无关，将该函数设为$g(t)$，于是
 
