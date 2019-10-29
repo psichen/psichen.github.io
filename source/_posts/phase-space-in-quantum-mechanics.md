@@ -17,13 +17,19 @@ $$ S = k_Bln(|\Gamma|) $$
 
 平面单色波函数：
 
-$$ \psi_k(x,t) = Ae^{i(\boldsymbol k \cdot \boldsymbol r-\omega t)} $$
+$$ \psi(x,t) = Ae^{i(\boldsymbol k \cdot \boldsymbol r-\omega t)} $$
+
+其中$k=2\pi/\lambda$为波数，$\omega=2\pi\cdot f$为角频率。其振幅$A$不随时间变化，为定态波函数（并不意味着波函数不随时间变化）。
+
+波函数来自于下面的二阶偏微分方程：
+
+$$ \frac{\omega^2}{k^2} \boldsymbol \nabla^2 \cdot \boldsymbol \psi = \frac{\partial^2 \psi}{\partial t^2} $$
 
 ###波包
 
 ###群速度与相速度
 
-等相位面$ kx-\omega t = const $，对时间求导可得相速度：$ \frac{dx}{dt} = \frac{\omega}{k} $
+对于平面波，等相位面$ kx-\omega t = const $，对时间求导可得相速度：$ \frac{dx}{dt} = \frac{\omega}{k} $
 
 ###算符
 
