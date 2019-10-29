@@ -1,3 +1,9 @@
+---
+title: 量子力学里的相空间体积
+date: 2019-10-29 10:08:07
+tags: [phase space, quantum mechanics, operator, entropyl, wave function]
+---
+
 最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵$S$和相空间$\Gamma$的体积有关：
 
 $$ S = k_Bln(|\Gamma|) $$
