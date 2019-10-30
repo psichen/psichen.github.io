@@ -23,9 +23,11 @@ $$ \psi(x,t) = Ae^{i(\boldsymbol k \cdot \boldsymbol r-\omega t)} $$
 
 波函数来自于下面的二阶偏微分方程：
 
-$$ \frac{\omega^2}{k^2} \boldsymbol \nabla^2 \cdot \boldsymbol \psi = \frac{\partial^2 \psi}{\partial t^2} $$
+$$ \frac{\omega^2}{k^2} \boldsymbol \nabla^2 \boldsymbol \psi = \frac{\partial^2 \psi}{\partial t^2} $$
 
 ###波包
+
+
 
 ###群速度与相速度
 
