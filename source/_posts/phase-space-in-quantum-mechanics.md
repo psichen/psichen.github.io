@@ -41,21 +41,8 @@ $$ \psi(r, t) = \int \phi(k)e^{i(k \cdot r - \omega(k)t)} dk $$
 
 其中$ \phi(k) $为每一个单色波的振幅，角频率$\omega(k)$与波数$k$的函数关系称为波的**色散关系**。
 
-由于基本三角函数在周期区间上是正交的：
 
-$$
-\begin{align}
-&\int_{-\pi}^{\pi} \sin nx dx = 0 \nonumber \\
-&\int_{-\pi}^{\pi} \cos nx dx = 0 \nonumber \\
-&\int_{-\pi}^{\pi} \sin mx \cdot \cos nx dx = 0 \nonumber \\
-&\int_{-\pi}^{\pi} \sin mx \cdot \sin nx dx = 0 \ \ \ \ (m \neq n) \nonumber \\
-&\int_{-\pi}^{\pi} \cos mx \cdot \cos nx dx = 0 \ \ \ \ (m \neq n) \nonumber \\
-&\int_{-\pi}^{\pi} \sin^2 nx dx = \pi \nonumber \\
-&\int_{-\pi}^{\pi} \cos^2 nx dx = \pi \nonumber \\
-\end{align}
-$$
-
-所以我们可以考虑对处于$t=0$时刻的波包$\psi(r, 0)$乘以某一个单色波的共轭部分：$e^{-ik \cdot r}$，根据三角函数的正交性，我们就可以得到该单色波的振幅$\phi(k)$：
+所以我们可以考虑对处于$t=0$时刻的波包$\psi(r, 0)$乘以某一个单色波相因子的共轭：$e^{-ik \cdot r}$，根据三角函数的正交性，我们就可以得到该单色波的振幅$\phi(k)$：
 
 $$ \phi(k) = \int \psi(r, 0)e^{-ik \cdot r} dr $$
 
