@@ -41,18 +41,33 @@ $$ \psi(r, t) = \int \phi(k)e^{i(k \cdot r - \omega(k)t)} dk $$
 
 其中$ \phi(k) $为每一个单色波的振幅，角频率$\omega(k)$与波数$k$的函数关系称为波的**色散关系**。
 
+###Dirac函数
+
+Dirac函数的性质：
+
+$$ \int f(x)\delta(x-a)dx = f(a) $$
+
+称之为Dirac函数的挑选性。根据挑选性，我们对Dirac函数进行Fourier变换：
+
+$$ \mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i\omega x} dx = \frac{1}{2\pi} $$
+
+再进行Fourier逆变换，我们就可以得到$\delta$函数的表达式之一：
+
+$$ \delta(x) = \frac{1}{2\pi} \int e^{i\omega x} d\omega $$
+
+###波函数的Fourier逆变换
 
 所以我们可以考虑对处于$t=0$时刻的波包$\psi(r, 0)$乘以某一个单色波相因子的共轭：$e^{-ik \cdot r}$，根据三角函数的正交性，我们就可以得到该单色波的振幅$\phi(k)$：
 
 $$ \phi(k) = \int \psi(r, 0)e^{-ik \cdot r} dr $$
 
-即波函数的**Fourier变换与逆变换**。
-
 ##量子力学基础
 
-物质波为概率波，
+物质波为概率波，将单色平面波写为如下形式：
 
-$$ \psi(r, t) = Ae^{i/\hbar(p \cdot r - Et)} $$
+$$ \psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} $$
+
+方便之后归一化为$\delta$函数。
 
 ###动量空间波函数
 
@@ -83,5 +98,3 @@ $$
 $$ \Delta r \cdot \Delta p \ge \hbar $$
 
 ##相空间体积
-
-###Dirac函数
