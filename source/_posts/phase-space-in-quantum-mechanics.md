@@ -11,6 +11,108 @@ $$ S = k_Bln(|\Gamma|) $$
 
 根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变$\Gamma$的体积单位时，会在$S$加上一个常数，熵就不再为0了，与热力学第三定律矛盾。
 
+###Dirac函数
+Dirac函数为一种广义函数，定义为：
+
+$$
+\delta(x) =
+\begin{cases}
++\infty & (x = 0) \\
+0 & (x \neq 0) \\
+\end{cases}
+$$
+
+并且满足$ \int_{-\infty}^{+\infty} \detla(x)dx = 1 $。
+
+Dirac函数的性质：
+
+$$ \int f(x)\delta(x-a)dx = f(a) $$
+
+称之为Dirac函数的挑选性。根据挑选性，我们对Dirac函数进行Fourier变换：
+
+$$ \mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i k x} dx = \frac{1}{2\pi} $$
+
+再进行Fourier逆变换，我们就可以得到$\delta$函数的表达式之一：
+
+$$ \delta(x) = \frac{1}{2\pi} \int e^{i k x} dk $$
+
+###Fourier变换与逆变换
+Fourier变换将目标函数$f(t)$变为周期为$T/n$的正余弦函数的线性组合。
+
+三角函数形式的Fourier级数：
+
+$$ f(t) = \frac{a_0}{2} + \sum_{n=1}^{+\infty} a_n \cos n \omega t + b_n \sin n \omega t $$
+
+根据三角函数的正交性：
+
+$$
+\begin{align}
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos nt dt = 0 \nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \sin nt dt = 0 \nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos nt \sin nt dt = 0 \nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos nt \cos mt dt =
+\begin{cases}
+\frac{T}{2} & (n = m) \\
+0 & (n \neq m) \\
+\end{cases}
+\nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \sin nt \sin mt dt =
+\begin{cases}
+\frac{T}{2} & (n = m) \\
+0 & (n \neq m) \\
+\end{cases}
+\nonumber \\
+
+\end{align}
+$$
+
+
+我们在Fourier级数的两边同时对$t$积分：
+
+$$ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt = \frac{T}{2}a_0 $$
+
+所以$ a_0 = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt $。
+
+然后我们在Fourier级数的两边同时乘上$\cos n \omega t$，再同时对$t$积分，可得到：
+
+$$ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos n \omega t dt = \frac{T}{2} a_n $$
+
+同理，乘上$\sin n \omega t$，积分后可得到：
+
+$$ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin n \omega t dt = \frac{T}{2} b_n $$
+
+整理之后，我们就可以得到Fourier级数展开的系数项：
+
+$$
+\begin{align}
+a_n = \frac{T}{2} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos n \omega t dt \nonumber \\
+b_n = \frac{T}{2} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin n \omega t dt \nonumber \\
+\end{align}
+$$
+
+根据Euler公式：$ e^{ikx} = \cos ikx + i\sin ikx $，所以三角函数可以表达为：
+
+$$
+\begin{align}
+\cos n \omega t &= \frac{1}{2} (e^{i n \omega t}+e^{-i n \omega t}) \ nonumber \\
+\sin n \omega t &= \frac{1}{2i} (e^{i n \omega t}-e^{-i n \omega t}) \ nonumber \\
+\end{align}
+$$
+
+代入Fourier级数的表达式，并合并指数项，可得：
+
+$$
+\begin{align}
+f(t) &= \frac{a_0}{2}+\sum_{n=1}^{+\infty} \frac{a_n-i b_n}{2}e^{i n \omega t}+\frac{a_n+i b_n}{2}e^{-i n \omega t} \nonumber \\
+&=\sum_{-\infty}^{+\infty}
+\end{align}
+$$
+
 ##波函数基础
 
 平面单色波函数：
@@ -39,7 +141,7 @@ $$ \frac{dr}{dt} = \frac{\omega}{k} $$
 
 $$ \psi(r, t) = \sum_k \phi(k) e^{i(k \cdot r-\omega(k)t)} $$
 
-或将波数$k$考虑为连续变化，写为积分形式：
+或将波数$k$考虑为连续变化，写为积分形式（Fourier逆变换)：
 
 $$ \psi(r, t) = \int \phi(k)e^{i(k \cdot r - \omega(k)t)} dk $$
 
@@ -51,32 +153,8 @@ $$ \frac{d \phi}{d k} = r_c - \frac{d \omega}{d k}t = 0 $$
 
 再对时间求导可得**群速度**：$ \frac{d r_c}{d t} = \frac{d \omega}{d k} $。
 
-###Dirac函数
-Dirac函数为一种广义函数，定义为：
 
-$$
-\delta(x) =
-\begin{cases}
-+\infty & (x = 0) \\
-0 & (x \neq 0) \\
-\end{cases}
-$$
-
-并且满足$ \int_{-\infty}^{+\infty} \detla(x)dx = 1 $。
-
-Dirac函数的性质：
-
-$$ \int f(x)\delta(x-a)dx = f(a) $$
-
-称之为Dirac函数的挑选性。根据挑选性，我们对Dirac函数进行Fourier变换：
-
-$$ \mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i k x} dx = \frac{1}{2\pi} $$
-
-再进行Fourier逆变换，我们就可以得到$\delta$函数的表达式之一：
-
-$$ \delta(x) = \frac{1}{2\pi} \int e^{i k x} dk $$
-
-###波函数的Fourier逆变换
+###波函数的Fourier变换
 
 所以我们可以考虑对处于$t=0$时刻的波包$\psi(r, 0)$乘以某一个单色波相因子的共轭：$e^{-ik \cdot r}$，根据三角函数的正交性，我们就可以得到该单色波的振幅$\phi(k)$：
 
