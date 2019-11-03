@@ -15,21 +15,27 @@ $$ S = k_Bln(|\Gamma|) $$
 
 平面单色波函数：
 
-$$ \psi(r,t) = Ae^{i(k \cdot r-\omega t)} $$
+$$ \psi(r,t) = \phi e^{i(k \cdot r-\omega t)} $$
 
-其中$k=2\pi/\lambda$为波数，$\omega=2\pi f$为角频率。其振幅$A$不随时间变化，为定态波函数（并不意味着波函数不随时间变化）。
+其中$k=2\pi/\lambda$为波数，$\omega=2\pi f$为角频率。其振幅$\phi$不随时间变化，为定态波函数（并不意味着波函数不随时间变化）。
 
 波函数来自于下面的二阶偏微分方程，平面单色波是其一个特解：
 
 $$ \frac{\omega^2}{k^2} \nabla^2 \psi = \frac{\partial^2 \psi}{\partial t^2} $$
 
-对于平面波，等相位面$ k \cdot r-\omega t = const $，将坐标对时间求导可得**相速度**：
+对于平面波，等相位面$ \phi = k \cdot r-\omega t = const $，将坐标对时间求导可得**相速度**：
 
 $$ \frac{dr}{dt} = \frac{\omega}{k} $$
 
 ###波包
 
-实际情况中波动的振幅只在空间的有限区域内不为零，所以形象地称之为波包。通常波包可由不同波数$k$的波叠加而成，可写为：
+实际情况中波动的振幅只在空间的有限区域内不为零，所以形象地称之为波包。
+
+![wavepacket.png](https://i.loli.net/2019/11/03/Xu8MKqIgdv3o1G5.png)
+
+蓝色实线为波包，红色虚线为包络线。
+
+通常波包可由不同波数$k$的波叠加而成，可写为：
 
 $$ \psi(r, t) = \sum_k \phi(k) e^{i(k \cdot r-\omega(k)t)} $$
 
@@ -39,7 +45,24 @@ $$ \psi(r, t) = \int \phi(k)e^{i(k \cdot r - \omega(k)t)} dk $$
 
 其中$ \phi(k) $为每一个单色波的振幅，角频率$\omega(k)$与波数$k$的函数关系称为波的**色散关系**。
 
+考虑在$ (r_c, t) $处波包的振幅达到最大，那么波包经过传播，在$ (r_c+\Delta x, t+\Delta t) $时再现$ (r_c, t) $处的各个频率的相位，所以相位对于频率的导数应为0：
+
+$$ \frac{d \phi}{d k} = r_c - \frac{d \omega}{d k}t = 0 $$
+
+再对时间求导可得**群速度**：$ \frac{d r_c}{d t} = \frac{d \omega}{d k} $。
+
 ###Dirac函数
+Dirac函数为一种广义函数，定义为：
+
+$$
+\delta(x) =
+\begin{cases}
++\infty & (x = 0) \\
+0 & (x \neq 0) \\
+\end{cases}
+$$
+
+并且满足$ \int_{-\infty}^{+\infty} \detla(x)dx = 1 $。
 
 Dirac函数的性质：
 
@@ -47,11 +70,11 @@ $$ \int f(x)\delta(x-a)dx = f(a) $$
 
 称之为Dirac函数的挑选性。根据挑选性，我们对Dirac函数进行Fourier变换：
 
-$$ \mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i\omega x} dx = \frac{1}{2\pi} $$
+$$ \mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i k x} dx = \frac{1}{2\pi} $$
 
 再进行Fourier逆变换，我们就可以得到$\delta$函数的表达式之一：
 
-$$ \delta(x) = \frac{1}{2\pi} \int e^{i\omega x} d\omega $$
+$$ \delta(x) = \frac{1}{2\pi} \int e^{i k x} dk $$
 
 ###波函数的Fourier逆变换
 
