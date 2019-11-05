@@ -150,11 +150,29 @@ $$ g(\omega') = \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega' t} dt
 $$
 \begin{align}
 g(\omega) &= \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \nonumber \\
-f(t) &= \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega
+f(t) &= \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \nonumber \\
 \end{align}
 $$
 
-物理上更多地使用更加对称的形式：
+或改变一下函数前面的系数：
+
+$$
+\begin{align}
+g(\omega) &= \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \nonumber \\
+f(t) &= \frac{1}{2\pi} \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \nonumber \\
+\end{align}
+$$
+
+因为频率$f$与角频率$\omega$满足关系：$\omega = 2 \pi f$，所以上式可以改写为：
+
+$$
+\begin{align}
+g(f) &= \int_{-\infty}^{+\infty} f(t) e^{-i 2 \pi f t} dt \nonumber \\
+f(t) &= \int_{-\infty}^{+\infty} g(f) e^{i 2 \pi f t} df \nonumber \\
+\end{align}
+$$
+
+物理上更多地使用如下形式：
 
 $$
 \begin{align}
