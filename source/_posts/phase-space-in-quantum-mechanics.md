@@ -1,5 +1,5 @@
 ---
-title: 量子力学里的相空间体积
+title: 量子力学里的相空间体积(一)
 date: 2019-10-29 10:08:07
 tags: [phase space, quantum mechanics, operator, entropy, wave function]
 mathjax: true
@@ -9,7 +9,7 @@ mathjax: true
 
 $$ S = k_Bln(|\Gamma|) $$
 
-根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变$\Gamma$的体积单位时，会在$S$加上一个常数，熵就不再为0了，与热力学第三定律矛盾。
+根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变$\Gamma$的体积单位时，会在$S$加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。
 
 ##Fourier变换与逆变换
 Fourier变换将目标函数$f(t)$变为周期为$T/n$的正余弦函数的线性组合。
@@ -244,27 +244,39 @@ $$
 
 $$ \psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} $$
 
-方便之后归一化为$\delta$函数。
+方便之后归一化为$\delta$函数。其振幅的平方$|\psi(r,t)|^2$对应于粒子坐标的概率密度，因此对于粒子的平均位置$<r>$可以从下式求出：
 
-###动量空间波函数
+$$ <r> = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr $$
 
-$$ \psi(r, t) = \int \phi(p)e^{i/\hbar(p \cdot r - Et)} dp $$
+###动量算符
 
-$$ \phi(p) = \int \psi(r, 0)e^{-i/\hbar(p \cdot r)} dr $$
+根据波函数的叠加性和Fourier变换，我们可以得到波函数的两种变换形式($r$和$p$均为三维矢量)：
+
+$$ \psi(r, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p, t)e^{i/\hbar p \cdot r} dp $$
+
+$$ \phi(p, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \psi(r, t)e^{-i/\hbar p \cdot r} dr $$
+
+其中$|\phi(p, t)|^2$为粒子动量$p$的概率密度分布，所以我们可以得到平均动量$<p>$：
 
 $$
 \begin{align}
 <p> &= \int p |\phi(p)|^2 dp \nonumber \\
-    &= \int \phi^*(p) p \phi(p)dp \nonumber \\
+    &= \int \phi^*(p,t) p \phi(p,t)dp \nonumber \\
+    &= \int \phi(p,t)p dp \left[ \frac{1}{(2 \pi \hbar)^{3/2}}\int \psi^*(r, t) e^{i/\hbar p \cdot r} dr \right] \nonumber \\
+    &= \int \psi^*(r, t) dr \left[ \frac{1}{(2 \pi \hbar)^{3/2}}\int p \phi(p, t) e^{i/\hbar p \cdot r} dp \right] \nonumber \\
+    &= \int \psi^*(r, t) dr \left[ \frac{1}{((2 \pi \hbar)^{3/2}}\int \phi(p, t) (-i \hbar \nabla e^{i/\hbar p \cdot r}) dp \right] \nonumber \\
+    &= \int \psi^*(r, t) dr (-i \hbar \nabla ) \left[ \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p,t) e^{i/\hbar p \cdot r} dp \right] \nonumber \\
+    &= \int \psi^*(r, t) (-i \hbar \nabla ) \psi(r, t) dr
 \end{align}
+-  
 $$
 
-###算符
+由此我们可以得到动量的算符表达式。类似的我们可以得到动能$T$和角动量$L$的算符表达式：
 
 $$
 \begin{align}
 \hat r &= r \nonumber \\
-\hat p &= i\hbar \nabla \nonumber \\
+\hat p &= -i \hbar \nabla \nonumber \\
 \hat T &= -\frac{\hbar^2}{2m} \nabla^2 \nonumber \\
 \hat L &= -i\hbar \hat r \times \nabla \nonumber \\
 \end{align}
