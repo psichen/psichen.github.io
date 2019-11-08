@@ -1,6 +1,6 @@
 ---
 title: 量子力学里的相空间体积(三)
-date: 2019-10-29 10:08:07
+date: 2019-10-31 10:08:07
 tags: [phase space, quantum mechanics, operator, entropy, uncertanity relation]
 mathjax: true
 ---

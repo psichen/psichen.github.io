@@ -1,6 +1,6 @@
 ---
 title: 量子力学里的相空间体积(二)
-date: 2019-10-29 10:08:07
+date: 2019-10-30 10:08:07
 tags: [wave function, wavepacket, Fourier transformation]
 mathjax: true
 ---
