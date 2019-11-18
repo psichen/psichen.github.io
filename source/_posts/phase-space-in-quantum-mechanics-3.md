@@ -49,6 +49,68 @@ $$
 
 ###不确定关系
 
-$$ \Delta r \cdot \Delta p \ge \hbar $$
+不确定关系来源于Fourier变换，是Fourier变换的内禀性质，与测量与否无关，与函数的聚体形式无关。
+
+假设函数$f(x)$存在Fourier变换，考虑积分：
+
+$$ I = \int |\eta x f(x) + f'(x)|^2 dx \ge 0 $$
+
+其中积分符号内的式子等于：
+
+$$
+\begin{align}
+|\eta x f(x) + f'(x)|^2 &= [\eta x f(x) + f'(x)][\eta x f(x) + f'(x)]^* \nonumber \\
+&= \eta^2 x^2 |f(x)|^2 + \eta x [f(x)f'^*(x)+f(x)f'(x)] + |f'(x)|^2 \nonumber \\
+\end{align}
+$$
+
+所以$I$可以分为三个部分$I_1, I_2, I_3$：
+
+$$
+\begin{align}
+I &= I_1+I_2+I_3 \nonumber \\
+I_1 &= \eta^2 \int x^2 |f(x)|^2 dx \nonumber \\
+I_2 &= \eta \int x [f(x)f'^*(x)+f^*(x)f'(x)] dx \nonumber \\
+I_3 &= \int |f'(x)|^2 dx \nonumber \\
+\end{align}
+$$
+
+对于$I_1$，$\int x^2 |f(x)|^2 dx$归一化后即为$\Delta x^2$。
+
+对于$I_2$：
+
+$$
+\begin{align}
+I_2 &= \eta \int x [f(x)f^*(x)]'dx \nonumber \\
+&= \eta \int x d|f(x)|^2 \nonumber \\
+&= \eta \left( x|f(x)|^2|_{-\infty}^{+\infty} - \int |f(x)|^2 dx \right) \nonumber \\
+&= - \eta \int |f(x)|^2 dx \nonumber \\
+\end{align}
+$$
+
+因为积分$\int x |f(x)|^2 dx$，也就是x的期望存在，所以$x|f(x)|^2$在$x \to \infty$时一定为0，否则积分不收敛。
+
+对于$I_3$：
+
+$$
+\begin{align}
+I_3 &= \int \left( \frac{1}{2\pi} \int i \omega' g(\omega') e^{i \omega' x} d\omega' \right) \left( \frac{1}{2\pi} \int (-i) \omega g^*(\omega) e^{-i \omega x} d\omega \right) dx \nonumber \\
+&= \frac{1}{4\pi^2} \iiint \omega \omega' g(\omega)g^*(\omega') e^{i(\omega' - \omega)x} dx d\omega d\omega' \nonumber \\
+&= \frac{1}{2\pi} \iint \omega \omega' g(\omega) g^*(\omega') \delta(\omega' - \omega) d\omega d\omega' \nonumber \\
+&= \frac{1}{2\pi} \int \omega^2 |g(\omega)|^2 d\omega \nonumber \\
+\end{align}
+$$
+
+所以$I_3 \sim \Delta \omega^2$。根据Parseval定理：$ \int |f(x)|^2 dx = \frac{1}{2\pi} \int |g(\omega)|^2 d\omega $，对$I$同时除以$\int |f(x)|^2 dx$，可得：
+
+$$ \eta^2 \Delta x^2 - \eta + \Delta \omega^2 \ge 0 $$
+
+上式是关于$\eta$的二次函数，其二阶导数$2 \Delta x^2 \ge 0$，所以当$\eta = \frac{1}{2 \Delta x^2}$时，函数取最小值，代入上式得：
+
+$$ \Delta \omega^2 - \frac{1}{4 \Delta x^2} \ge 0 $$
+$$ \Delta x \Delta \omega \ge \frac{1}{2} $$
+
+将动量和波数的色散关系$p = \hbar \omega $代入，可得量子力学中的不确定性原理表达式：
+$$ \Delta r \cdot \Delta p \ge \frac{\hbar}{2} $$
 
 ##相空间体积
