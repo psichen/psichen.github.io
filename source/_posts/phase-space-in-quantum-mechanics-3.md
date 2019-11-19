@@ -49,7 +49,7 @@ $$
 
 ###不确定关系
 
-不确定关系来源于Fourier变换，是Fourier变换的内禀性质，与测量与否无关，与函数的聚体形式无关。
+不确定关系来源于Fourier变换，是Fourier变换的内禀性质，与测量与否无关，与函数的具体形式无关。
 
 假设函数$f(x)$存在Fourier变换，考虑积分：
 
@@ -60,7 +60,7 @@ $$ I = \int |\eta x f(x) + f'(x)|^2 dx \ge 0 $$
 $$
 \begin{align}
 |\eta x f(x) + f'(x)|^2 &= [\eta x f(x) + f'(x)][\eta x f(x) + f'(x)]^* \nonumber \\
-&= \eta^2 x^2 |f(x)|^2 + \eta x [f(x)f'^*(x)+f(x)f'(x)] + |f'(x)|^2 \nonumber \\
+&= \eta^2 x^2 |f(x)|^2 + \eta x [f(x)f'^*(x)+f^*(x)f'(x)] + |f'(x)|^2 \nonumber \\
 \end{align}
 $$
 
@@ -111,6 +111,6 @@ $$ \Delta \omega^2 - \frac{1}{4 \Delta x^2} \ge 0 $$
 $$ \Delta x \Delta \omega \ge \frac{1}{2} $$
 
 将动量和波数的色散关系$p = \hbar \omega $代入，可得量子力学中的不确定性原理表达式：
-$$ \Delta r \cdot \Delta p \ge \frac{\hbar}{2} $$
+$$ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} $$
 
 ##相空间体积
