@@ -9,6 +9,8 @@ mathjax: true
 
 $$ I(N) = \int e^{Nf(x)} dx $$
 
+其中涉及到复变函数的一些基本性质。
+
 ## 复数及复变函数性质
 
 复变量$z$在复平面可表示为$ z = x+yi $，其复变函数可表示为$ f(z) = u + vi $，其中$ u = u(x, y)， v = v(x, y) $。
@@ -26,7 +28,7 @@ $$
 \begin{align}
 f'(z) &= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
 &= \lim_{\Delta x \to 0} \frac{\Delta u + \Delta vi}{\Delta x} \nonumber \\
-&= u_x + v_xi
+&= u_x + v_xi \tag{1}
 \end{align}
 $$
 
@@ -35,11 +37,11 @@ $$
 \begin{align}
 f'(z) &= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
 &= \lim_{\Delta y \to 0} \frac{\Delta u + \Delta vi}{\Delta yi} \nonumber \\
-&= v_y - u_yi
+&= v_y - u_yi \tag{2}
 \end{align}
 $$
 
-比较(1)和(2)，我们就可以得到可导函数的Cauchy-Riemann条件：
+比较$\eqref{1}$和$\eqref{2}$，我们就可以得到可导函数的Cauchy-Riemann条件：
 $$
 \begin{cases}
 u_x = v_y \\
@@ -59,7 +61,7 @@ $$
 \nabla^2 u &= \frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} \nonumber \\
 &= \frac{\partial v_y}{\partial x} - \frac{\partial v_x}{\partial y}\nonumber \\
 &= v_{yx} - v_{xy} \nonumber \\
-&= 0
+&= 0 \nonumber
 \end{align}
 $$
 
@@ -68,3 +70,9 @@ $$
 根据调和性，我们可以知道函数的实部$u(x,y)$在两个方向上的二阶导数是异号（如果不为0的话）的，这表明了鞍点的存在。
 
 ## 最速下降近似
+
+对于积分$ I = \int_c e^{Nf(z)} dz $，要求$f(z) = u + vi $为解析复变函数，同时实部$u$有局部极大值，对应的坐标为$z_0$，可以设想，当$N$非常大时，积分$I$主要是由$f(z_0)$贡献，根据解析函数的调和性，$f(z)$有鞍点$z_0$。
+
+
+
+解析函数的积分与路径无关，所以我们可将积分路径$C$变形，使其经过鞍点$z_0$，并
