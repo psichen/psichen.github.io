@@ -1,11 +1,11 @@
 ---
-title: 最速下降近似
+title: 鞍点近似
 date: 2019-11-29 13:52:53
-tags: [saddle point, approximation, steepest descent, stationary phase, asymptotic, complex analysis]
+tags: [saddle point, approximation, stationary phase, asymptotic, complex analysis]
 mathjax: true
 ---
 
-最速下降近似(steepest descent approximation)，又称为鞍点法近似(saddle point approximation)，用于计算下列积分在$ N \to \infty $时的渐进行为。
+鞍点法近似(saddle point approximation)，又称为stationary phase approximation，用于计算下列积分在$ N \to \infty $时的渐进行为。
 
 $$ I(N) = \int e^{Nf(x)} dx $$
 
@@ -28,7 +28,7 @@ $$
 \begin{align}
 f'(z) &= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
 &= \lim_{\Delta x \to 0} \frac{\Delta u + \Delta vi}{\Delta x} \nonumber \\
-&= u_x + v_xi \tag{1}
+&= u_x + v_xi
 \end{align}
 $$
 
@@ -37,11 +37,11 @@ $$
 \begin{align}
 f'(z) &= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
 &= \lim_{\Delta y \to 0} \frac{\Delta u + \Delta vi}{\Delta yi} \nonumber \\
-&= v_y - u_yi \tag{2}
+&= v_y - u_yi
 \end{align}
 $$
 
-比较$\eqref{1}$和$\eqref{2}$，我们就可以得到可导函数的Cauchy-Riemann条件：
+比较$(1)$和$(2)$，我们就可以得到可导函数的Cauchy-Riemann条件：
 $$
 \begin{cases}
 u_x = v_y \\
@@ -71,14 +71,18 @@ $$
 
 ## 鞍点近似法
 
-对于积分$ I = \int e^{Nf(z)} dz $，要求$f(z) = u + vi $为解析复变函数，根据解析函数的调和性，$f(z)$有鞍点$z_0$。我们改变积分路径，使其经过$z_0$，并将$f(z)$在$z_0$处进行Tayler展开，于是积分$I$变为：
+对于积分$ I = \int e^{Nf(z)} dz $，要求$f(z) = u + vi $为解析复变函数，根据解析函数的调和性，$f(z)$有鞍点$z_0$。我们改变积分路径，使其在$z_0$附近为经过$z_0$的直线，并将$f(z)$在$z_0$处进行Tayler展开，于是积分$I$变为：
 
 $$ I = e^{Nf(z_0)} \int e^{\frac{1}{2} N f''(z_0)(z-z_0)^2} dz $$
 
-然后我们将复变量$(z-z_0)$和$f^{''}(z_0)$均用极坐标来表示：
+然后我们将复变量$(z-z_0)$和$f''(z_0)$均用极坐标来表示：
 
 $$ z-z_0 = re^{i\phi} $$
 $$ f''(z_0) =  |f''(z_0)|e^{i\theta} $$
+
+于是上述积分变为：
+
+$$ I = e^{Nf(z_0)} \int e^{\frac{1}{2} N |f''(z_0)| r^2 e^{i(\theta+2\phi)}} e^{i\phi} dr $$
 
 可以设想，当$N$非常大时，积分$I$主要是由$f(z_0)$贡献，
 
