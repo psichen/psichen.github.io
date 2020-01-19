@@ -1,7 +1,7 @@
 ---
 title: Legendre变换的理解和在热力学中的应用
 date: 2019-09-25 20:41:00
-tags: [Legendre, transformation, math, thermodynamics]
+tags: [Legendre, transformation, thermodynamics]
 mathjax: true
 ---
 
