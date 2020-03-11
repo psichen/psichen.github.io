@@ -1,5 +1,5 @@
 ---
-title: 量子力学里的相空间体积(一)
+title: 量子力学里的相空间体积--Fourier变换
 date: 2019-10-29 10:08:07
 tags: [Fourier transformation, Dirac function]
 mathjax: true
@@ -50,7 +50,9 @@ $$
 
 $$ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt = \frac{T}{2}a_0 $$
 
-所以$ a_0 = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt $。
+所以
+
+$$ a_0 = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt $$
 
 然后我们在Fourier级数的两边同时乘上$\cos (n \omega t)$，再同时对$t$积分，可得到：
 
@@ -100,23 +102,28 @@ F(n \omega) &= \frac{1}{2}\left[ \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f
 $$
 
 ###Fourier积分变换
-因为周期$T$与角频率$\omega$满足关系：$T \omega = 2 \pi$，当$T \to +\infty$时，$\omega \to 0$，在对$n$的求和中，成为无穷小量$d (n \omega$)，于是由上文的指数形式的Fourier级数，扩展为积分形式，并令$\omega' = n \omega$，可得：
+因为周期$T$与角频率$\omega$满足关系：$T \omega = 2 \pi$，当$T \to +\infty$时，$\omega \to 0$。
+
+对无穷小量的求和满足如下关系：
+
+$$ \sum_{-\infty}^{+\infty} f(n \delta x) = \frac{1}{\delta x} \int_{-\infty}^{+\infty} f(x) dx $$
+
+于是上文的指数形式的Fourier级数，可以扩展为积分形式：
+
 $$
 \begin{align}
 f(t) &= \sum_{-\infty}^{+\infty} F(n \omega) e^{i n \omega t} \nonumber \\
-&= \sum_{-\infty}^{+\infty} \frac{F(n \omega)}{\omega} e^{i n \omega t} \omega \nonumber \\
-&= \int_{-\infty}^{+\infty} \frac{F(n \omega)}{\omega} e^{i \omega' t} d\omega' \nonumber \\
-&= \int_{-\infty}^{+\infty} g(\omega')e^{i \omega' t} d\omega' \nonumber \\
+&= \int_{-\infty}^{+\infty} \frac{F(\omega)}{\omega} e^{i \omega t} d\omega \nonumber \\
 \end{align}
 $$
 
-其中令$g(\omega') = \frac{F(n \omega)}{\omega}$。
+其中令$g(\omega) = \frac{F(\omega)}{\omega}$。
 
-根据上面$F(n \omega) = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt$以及$T\omega = 2\pi$，可得：
+根据上面$F(n \omega) = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt$，将 $\omega$ 记为 $\omega'$，根据$T\omega' = 2\pi$，可得：
 
-$$ \frac{F(n \omega)}{\omega} = \frac{1}{2\pi} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt $$
+$$ \frac{F(\omega')}{\omega'} = \frac{1}{2\pi} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i \omega' t} dt $$
 
-当$\omega \to 0$时，有：
+当$\omega' \to 0$时，有：
 
 $$ g(\omega') = \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega' t} dt $$
 
