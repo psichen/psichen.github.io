@@ -7,7 +7,7 @@ mathjax: true
 
 鞍点法近似(saddle point approximation)，又称为stationary phase approximation，用于计算下列积分在$ N \to \infty $时的渐进行为。
 
-$$ I(N) = \int e^{Nf(x)} dx $$
+$$ I(N) = \int_C e^{Nf(x)} dx $$
 
 其中涉及到复变函数的一些基本性质。
 
@@ -71,9 +71,13 @@ $$
 
 ## 鞍点近似法
 
-对于积分$ I = \int e^{Nf(z)} dz $，要求$f(z) = u + vi $为解析复变函数，根据解析函数的调和性，$f(z)$有鞍点$z_0$。我们改变积分路径，使其在$z_0$附近为经过$z_0$的直线，并将$f(z)$在$z_0$处进行Tayler展开，于是积分$I$变为：
+对于积分$ I = \int e^{Nf(z)} dz $，要求$f(z) = u + vi $为解析复变函数，根据解析函数的调和性，$f(z)$有鞍点$z_0$。我们将积分路径$C$变为$C'$，使其沿一个固定幅角$\phi$经过$z_0$。
 
-$$ I = e^{Nf(z_0)} \int e^{\frac{1}{2} N f''(z_0)(z-z_0)^2} dz $$
+由于$f(z)$在指数函数上，因此可以想象，当$N$极大时，在鞍点$z_0$附近，$e^{Nf(z)}$的图像非常陡峭，因此该函数的积分主要由$z_0$的邻域所贡献。
+
+将$f(z)$在$z_0$处进行Tayler展开，于是积分$I$变为：
+
+$$ I = e^{Nf(z_0)} \int_{C'} e^{\frac{1}{2} N f''(z_0)(z-z_0)^2} dz $$
 
 然后我们将复变量$(z-z_0)$和$f''(z_0)$均用极坐标来表示：
 
@@ -82,10 +86,32 @@ $$ f''(z_0) =  |f''(z_0)|e^{i\theta} $$
 
 于是上述积分变为：
 
-$$ I = e^{Nf(z_0)} \int e^{\frac{1}{2} N |f''(z_0)| r^2 e^{i(\theta+2\phi)}} e^{i\phi} dr $$
+$$ I = e^{Nf(z_0)} \int_{C'} e^{\frac{1}{2} N |f''(z_0)| r^2 e^{i(\theta+2\phi)}} e^{i\phi} dr $$
 
-可以设想，当$N$非常大时，积分$I$主要是由$f(z_0)$贡献，
+被积函数中$e^{i(\theta+2\phi)} = \cos(\theta+2\phi)+i\sin(\theta+2\phi)$，可知当$\theta+2\phi = \pi$时，上述积分变为一个Gauss积分，于是最终得到积分近似：
+
+$$ I = \int_C e^{Nf(z)}dz \approx e^{Nf(z_0)+i\phi}\cdot\sqrt{\frac{2\pi}{N|f''(z_0)|}} $$
+
+其中$ \phi = \frac{\pi}{2}-\frac{arg(f''(z_0))}{2} $
 
 ### Stirling近似
 
-解析函数的积分与路径无关，所以我们可将积分路径$C$变形，使其经过鞍点$z_0$，并
+$$ \Gamma(x) = \int_0^\infty e^{-t}t^{x-1} dt $$
+
+当$x >> 1$时，可使用鞍点近似。首先将$\Gamma(x)$变为$\int e^{xf(t)} dt$的形式：
+
+$$ \Gamma(x+1) = \int_0^{\infty} e^{xlnt-t} dt $$
+
+令$ t = xs $，有：
+
+$$ \Gamma(x+1) = x \int_0^{\infty} e^{xlnx+x(lns-s)} ds $$
+
+因为有$ \Gamma(x+1) = x\Gamma(x) $，所以：
+
+$$ \Gamma(x) = x^x \int_0^{\infty} e^{x(lns-s)} ds $$
+
+考虑复平面上的积分$ I = \int e^{x(lnz-z)} dz $，其中$f(z) = lnz-z$，$z_0 = 1$，$f(z_0) = -1$，$f''(z_0) = -1$，$arg(f''(z_0)) = \pi $，故积分路径的幅角$\theta = 0$，恰好为沿着正实轴。
+
+代入近似公式，得：
+
+$$ \Gamma(x) \approx x^x e^{-x} \sqrt{\frac{2\pi}{x}} = x^{x-\frac{1}{2}}e^{-x}\sqrt{2\pi} $$
