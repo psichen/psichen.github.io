@@ -34,8 +34,18 @@ It's also called *multinomial coefficients* in polynomial equation $(x_1+x_2+ \c
 
 ### with replacement
 
-As in the case of permutations we might ask how many combinations of $k$ objects can be chosen from $n$ objects with replacement. 
+As in the case of permutations we might ask how many combinations of $k$ objects can be chosen from $n$ objects with replacement. To calculate the value, we may image that the $n$ distinguishable objects set out on a table. Each combination of $k$ objects can then be made by pointing to $k$ objects of the $n$ objects in turn. There $k$ equivalent selections amongst $n$ different but re-choosable objects are strictly analogous to the placing of $k$ indistinguishable balls into $n$ different
+boxes with no restriction on the number of balls in each box.
+
+A particular scenario in the case $k=6, n=4$ may be symbolised as
 
 $$ XX| \quad |XXX|X $$
 
-## four different kinds of particle statistics
+There are 2 balls in the first box, none in the second box, 3 balls in the third box and 1 ball in the fourth box. So we only need to consider the combination of $k+n-1$ objects consist of $k$ crosses and $n-1$ vertical lines. This is given as
+
+$$ \frac{(k+n-1)!}{k!(n-1)!} = C(k+n-1, k) $$
+
+## Four different kinds of particle statistics
+
+Let's consider a partical scenario. A system contains a number $N$ of non-interacting particles, each of which can be in any of quantum states of the system. The structure of the set of quantum states is such that there exist $R$ energy levels with corresponding energies $E_i$ and degeneracies $g_i$ (i.e. the $i$th energy level contains $g_i$ quantum states). Find the numbers of distinct ways in which the particles can be distributed among the quantum states of the system such that
+the $i$th energy level contains $n_i$ particles, for $i=1,2,\cdots,R$,
