@@ -10,6 +10,8 @@ tags: [python, crawler, postdoc]
 
 言归正传，这次用python的bs4、requests包来爬取网页信息，获得最近几年世界各地大学的变化趋势，以及postdoc的发布信息。
 
+<!--more-->
+
 ## 大学排名
 数据来源：[世界大学学术排名](http://www.zuihaodaxue.com/ARWU2019.html)
 

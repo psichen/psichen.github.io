@@ -15,6 +15,8 @@ Generally, if we select $k (<n)$ objects from $n$, the number of permuations is
 
 $$ n(n-1)\cdot\cdot\cdot(n-k+1) = \frac{n!}{(n-k)!} = P(n, k) $$
 
+<!--more-->
+
 ### with replacement
 
 Previously we assumed objects were selected without replacement. If the selected object is put back into the population every time, it's called *sampling with replacement*. Easily, If $k$ objects are selected from $n$ objects with replacement, the number of permutations is

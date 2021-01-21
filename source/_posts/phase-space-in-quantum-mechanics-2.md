@@ -17,6 +17,8 @@ $$ \psi(r,t) = \phi e^{i(k \cdot r-\omega t)} $$
 
 $$ \frac{\omega^2}{k^2} \nabla^2 \psi = \frac{\partial^2 \psi}{\partial t^2} $$
 
+<!--more-->
+
 对于平面波，等相位面$ \phi = k \cdot r-\omega t = const $，将坐标对时间求导可得**相速度**：
 
 $$ \frac{dr}{dt} = \frac{\omega}{k} $$

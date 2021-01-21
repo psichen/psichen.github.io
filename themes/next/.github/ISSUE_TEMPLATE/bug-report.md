@@ -1,25 +1,21 @@
 ---
 name: Bug Report
-about: Create a report to help us improve.
+about: Something isn't working as expected
 title: ''
 labels: Bug
 assignees: ''
 
 ---
 
-<!-- ATTENTION!
-IF YOU DON'T FILL OUT THE FOLLOWING INFORMATION WE MIGHT CLOSE YOUR ISSUE WITHOUT INVESTIGATING.
-如果你不填写下面的内容，我们可能会直接关闭你的 Issue。
--->
+Please follow this Issue template to provide relevant information, such as source code repositories, blog links, and screenshots, which will help us investigate.
+请按照此 Issue 模版提供相关信息，例如源码仓库、博客链接和屏幕截图，这将有助于我们进行调查。
 
 ## Issue Checklist <!-- 我确认我已经查看了 -->
-<!-- Please check if your Issue fulfills the following requirements -->
-<!-- Change [ ] to [x] to select, not [ x] or [x ] (将 [ ] 换成 [x] 来选择，而非 [ x] 或者 [x ]) -->
+<!-- Change [ ] to [x] to select (将 [ ] 换成 [x] 来选择) -->
 
-- [ ] I have executed `hexo clean`, cleared the browser cache and disabled all CDN services (e.g. Cloudflare Rocket Loader), this issue still exists.
-- [ ] I have confirmed that this issue only appears in theme NexT, but cannot be reproduced in other themes (e.g. default theme landscape). In other words, prove that this is a NexT issue, not a issue from Hexo.
-- [ ] I have already viewed [Hexo Docs page](https://hexo.io/docs/), especially [Templates](https://hexo.io/docs/templates.html), [Variables](https://hexo.io/docs/variables.html), [Helpers](https://hexo.io/docs/helpers.html) and [Troubleshooting](https://hexo.io/docs/troubleshooting.html).
-- [ ] I have already viewed [NexT Documentation Site](http://theme-next.org/docs/) and searched for current [issues](https://github.com/theme-next/hexo-theme-next/issues?utf8=%E2%9C%93&q=is%3Aissue) which does not help me.
+- [ ] I am using [the latest](https://github.com/theme-next/hexo-theme-next/releases/latest) version of NexT.
+- [ ] I have read the relevant documents of [Hexo](https://hexo.io/docs/) and [NexT](https://theme-next.org/docs/).
+- [ ] I have reviewed the latest Roadmap on GitHub and searched for current [issues](https://github.com/theme-next/hexo-theme-next/issues), which does not help me.
 
 ***
 
@@ -39,28 +35,28 @@ IF YOU DON'T FILL OUT THE FOLLOWING INFORMATION WE MIGHT CLOSE YOUR ISSUE WITHOU
 3. N/A
 
 
-## Hexo Information
+## Environment Information
+
+### Node.js and NPM Information
+<!-- Paste output from `node -v && npm -v` (粘贴 `node -v && npm -v` 输出的信息) -->
+```
+
+```
 
 ### Package dependencies Information
-<!-- Paste output from `cat package.json` (粘贴 `cat package.json` 输出的信息) -->
-```
-
-```
-
-### Hexo Version
-<!-- Paste output from `hexo -v` (粘贴 `hexo -v` 输出的信息) -->
+<!-- Paste output from `npm ls --depth 0` (粘贴 `npm ls --depth 0` 输出的信息) -->
 ```
 
 ```
 
 ### Hexo Configuration
-<!-- Paste configuration from Hexo `_config.yml` (从 Hexo `_config.yml` 中粘贴信息) -->
+<!-- Paste configuration from Hexo `_config.yml` (粘贴 Hexo `_config.yml` 中的内容) -->
 ```yml
 
 ```
 
 ### NexT Configuration
-<!-- Paste ONLY CHANGED CONFIGURATION from NexT `_config.yml` (只粘贴NexT主题配置文件 `_config.yml` 中修改过的部分) -->
+<!-- Paste ONLY CHANGED CONFIGURATION from NexT `_config.yml` (只粘贴 NexT 主题配置文件 `_config.yml` 中修改过的部分) -->
 ```yml
 
 ```

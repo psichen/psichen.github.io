@@ -18,6 +18,8 @@ $$df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i$$
 
 $$g \equiv f-\sum_{i=1}^{r} u_ix_i \quad (r \le k)$$
 
+<!--more-->
+
 其微分形式为：
 
 $$
