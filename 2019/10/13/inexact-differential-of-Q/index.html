@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="热力学中都会提到，热量$Q$不是一个恰当微分，写为$\delta Q$，这是因为$\delta Q$的积分和积分路径有关，也就是说对于两条起点和终点都是$A$和$B$，但是中间过程不同的路径$L_1$和$L_2$而言，有： \int_{L_1} \delta Q \neq \int_{L_2} \delta Q类似的，体积功$\delta W$的积分也与路径有关，这一点很好理解。假设有2个过程A,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="热力学中热量的非恰当微分">
+<meta property="og:url" content="http://www.psichen.com/2019/10/13/inexact-differential-of-Q/index.html">
+<meta property="og:site_name" content="pan.world">
+<meta property="og:description" content="热力学中都会提到，热量$Q$不是一个恰当微分，写为$\delta Q$，这是因为$\delta Q$的积分和积分路径有关，也就是说对于两条起点和终点都是$A$和$B$，但是中间过程不同的路径$L_1$和$L_2$而言，有： \int_{L_1} \delta Q \neq \int_{L_2} \delta Q类似的，体积功$\delta W$的积分也与路径有关，这一点很好理解。假设有2个过程A,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://muchongimg.xmcimg.com/data/bcs/2014/0701/w108h1175073_1404207867_483.jpg#opennewwindow">
+<meta property="article:published_time" content="2019-10-13T02:27:58.000Z">
+<meta property="article:modified_time" content="2021-01-21T18:26:11.178Z">
+<meta property="article:author" content="psichen">
+<meta property="article:tag" content="thermodynamics">
+<meta property="article:tag" content="inexact differential">
+<meta property="article:tag" content="integrating factor">
+<meta property="article:tag" content="entropy">
+<meta property="article:tag" content="temperature">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://muchongimg.xmcimg.com/data/bcs/2014/0701/w108h1175073_1404207867_483.jpg#opennewwindow">
+
+<link rel="canonical" href="http://www.psichen.com/2019/10/13/inexact-differential-of-Q/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>热力学中热量的非恰当微分 | pan.world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">pan.world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/10/13/inexact-differential-of-Q/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/undefined/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          热力学中热量的非恰当微分
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-13 10:27:58" itemprop="dateCreated datePublished" datetime="2019-10-13T10:27:58+08:00">2019-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-22 02:26:11" itemprop="dateModified" datetime="2021-01-22T02:26:11+08:00">2021-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>热力学中都会提到，热量$Q$不是一个恰当微分，写为$\delta Q$，这是因为$\delta Q$的积分和积分路径有关，也就是说对于两条起点和终点都是$A$和$B$，但是中间过程不同的路径$L_1$和$L_2$而言，有：</p>
+<script type="math/tex; mode=display">\int_{L_1} \delta Q \neq \int_{L_2} \delta Q</script><p>类似的，体积功$\delta W$的积分也与路径有关，这一点很好理解。假设有2个过程A, B：</p>
+<p><img src="http://muchongimg.xmcimg.com/data/bcs/2014/0701/w108h1175073_1404207867_483.jpg#opennewwindow" alt="path function"></p>
+<p>由于$W=\int PdV$，曲线A, B下方与x轴形成的面积即对应的体积功，很容易看出：</p>
+<script type="math/tex; mode=display">W_A \neq W_B</script><a id="more"></a>
+<p>在没有非体积功的情况下，系统都是从状态1 $(P_1, V_1)$到状态2 $(P_2, V_2)$。因此状态函数内能的改变量$\Delta U$应相等。根据热力学第一定律：</p>
+<script type="math/tex; mode=display">\Delta U = Q-W</script><p>所以$ Q_A \neq Q_B $。</p>
+<h2 id="积分因子"><a href="#积分因子" class="headerlink" title="积分因子"></a>积分因子</h2><p>对于非恰当微分方程</p>
+<script type="math/tex; mode=display">du = Pdx + Qdy</script><p>其中$ \frac{\partial P}{\partial y} \neq \frac{\partial Q}{\partial x} $，若存在一个函数$ \mu(x, y) \neq 0 $，使得$ \mu Pdx + \mu Qdy = 0 $成为全微分方程，即满足：</p>
+<script type="math/tex; mode=display">\frac{\partial (\mu P)}{\partial y} = \frac{\partial (\mu Q)}{\partial x}</script><p>则称$\mu$为方程$du$的积分因子。</p>
+<p>所以我们现在来找$ \delta Q $的积分因子。设想由2个物体组成的孤立体系，2个物体之间有热接触，因此温度均为$t$（经验温度），设想一个状态函数$\sigma$，用于表示系统所处的状态。在<strong>绝热可逆</strong>过程中：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\delta Q_1 &= \tau_1(\sigma_1, t)d\sigma_1 \nonumber \\
+\delta Q_2 &= \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
+\delta Q &=  \tau(\sigma, t)d\sigma \nonumber \\
+\tau(\sigma, t)d\sigma &= \tau_1(\sigma_1, t)d\sigma_1 + \tau_2(\sigma_2, t)d\sigma_2 \nonumber \\
+\end{align}</script><p>其中$1/\tau_1, 1/\tau_2, 1/\tau$为我们要找的积分因子。我们将$\sigma_1, \sigma_2, t$视为独立变量，分别对$\sigma$求导，有：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial \sigma}{\partial \sigma_1} &= \frac{\tau_1}{\tau} \nonumber \\
+\frac{\partial \sigma}{\partial \sigma_2} &= \frac{\tau_2}{\tau} \nonumber \\
+\frac{\partial \sigma}{\partial t} &= 0 \nonumber \\
+\end{align}</script><p>可见$\sigma$不是$t$的函数，因为$\sigma$是状态函数，具有全微分的性质，所以二阶导数与微分的顺序无关，所以</p>
+<script type="math/tex; mode=display">\frac{\partial}{\partial t}\left(\frac{\partial \sigma}{\partial \sigma_1}\right) = \frac{1}{\tau^2} (\tau \frac{\partial \tau_1}{\partial t}-\tau_1\frac{\partial \tau}{\partial t}) = 0</script><script type="math/tex; mode=display">\frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_1} \frac{\partial \tau_1}{\partial t}</script><p>同理，</p>
+<script type="math/tex; mode=display">\frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t}</script><p>所以</p>
+<script type="math/tex; mode=display">\frac{1}{\tau} \frac{\partial \tau}{\partial t} = \frac{1}{\tau_1} \frac{\partial \tau_1}{\partial t} = \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t}</script><p>因为$ \tau_1 = \tau_1(\sigma_1, t) $，并不含有$\sigma_2$，同理$ \tau_2 = \tau_2(\sigma_2, t) $，并不含有$\sigma_1$，所以上面等式成立的条件为等式各方只是$t$的函数，而与$\sigma_1, \sigma_2$无关，将该函数设为$g(t)$，于是</p>
+<script type="math/tex; mode=display">\tau_i = e^{\int g(t)dt}h_i(\sigma_i), (i = 1, 2)</script><script type="math/tex; mode=display">\tau = e^{\int g(t)dt}h(\sigma_1, \sigma_2)</script><h3 id="温度定义（之一）"><a href="#温度定义（之一）" class="headerlink" title="温度定义（之一）"></a>温度定义（之一）</h3><p>令绝对温度$ T = C \cdot e^{\int g(t)dt} $，该函数只与经验温度$t$有关，常数$C$可通过人为指定来固定（如水的沸点和凝固点之间平均划分为100份）。将$\tau_i$代入$\delta Q_i$的公式，有</p>
+<script type="math/tex; mode=display">\delta Q_i = T \frac{h_i(\sigma_i)}{C} d\sigma_i, (i=1, 2)</script><h3 id="熵定义（之一）"><a href="#熵定义（之一）" class="headerlink" title="熵定义（之一）"></a>熵定义（之一）</h3><p>令$dS_i = \frac{h_i(\sigma_i)}{C} d\sigma_i$，只依赖于状态函数$\sigma_i$，因此$S_i$也是一个状态函数，所以这就找到了非恰当微分$\delta Q$的积分因子：</p>
+<script type="math/tex; mode=display">\frac{\delta Q_i}{T} = dS_i</script><p>对于有热接触的2个物体：</p>
+<script type="math/tex; mode=display">\delta Q = \delta Q_1 + \delta Q_2 = T(dS_1 + dS_2) = TdS</script><p>即可逆过程的热力学第二定律数学式。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li>黄子卿. “热力学第二定律从物理说法导出数学说法.” 化学通报 5 (1974): 56-59.</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/thermodynamics/" rel="tag"># thermodynamics</a>
+              <a href="/tags/inexact-differential/" rel="tag"># inexact differential</a>
+              <a href="/tags/integrating-factor/" rel="tag"># integrating factor</a>
+              <a href="/tags/entropy/" rel="tag"># entropy</a>
+              <a href="/tags/temperature/" rel="tag"># temperature</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/30/FRET-correcting/" rel="prev" title="自由扩散的单分子FRET中的校正">
+      <i class="fa fa-chevron-left"></i> 自由扩散的单分子FRET中的校正
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/29/phase-space-in-quantum-mechanics-1/" rel="next" title="量子力学里的相空间体积--Fourier变换">
+      量子力学里的相空间体积--Fourier变换 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%AF%E5%88%86%E5%9B%A0%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">积分因子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%A9%E5%BA%A6%E5%AE%9A%E4%B9%89%EF%BC%88%E4%B9%8B%E4%B8%80%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">温度定义（之一）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%86%B5%E5%AE%9A%E4%B9%89%EF%BC%88%E4%B9%8B%E4%B8%80%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">熵定义（之一）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">psichen</p>
+  <div class="site-description" itemprop="description">There are no facts, only interpretations.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">psichen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

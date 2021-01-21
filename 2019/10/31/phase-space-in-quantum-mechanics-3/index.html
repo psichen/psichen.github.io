@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="量子力学基础物质波为概率波，将单色平面波写为如下形式： \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)}方便之后归一化为$\delta$函数。其振幅的平方$|\psi(r,t)|^2$对应于粒子坐标的概率密度，因此对于粒子的平均位置$$可以从下式求出：  &#x3D; \int r |\psi(r, t)|^2 d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="量子力学里的相空间体积--相空间">
+<meta property="og:url" content="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/index.html">
+<meta property="og:site_name" content="pan.world">
+<meta property="og:description" content="量子力学基础物质波为概率波，将单色平面波写为如下形式： \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)}方便之后归一化为$\delta$函数。其振幅的平方$|\psi(r,t)|^2$对应于粒子坐标的概率密度，因此对于粒子的平均位置$$可以从下式求出：  &#x3D; \int r |\psi(r, t)|^2 d">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-31T02:08:07.000Z">
+<meta property="article:modified_time" content="2021-01-21T18:27:21.178Z">
+<meta property="article:author" content="psichen">
+<meta property="article:tag" content="phase space">
+<meta property="article:tag" content="entropy">
+<meta property="article:tag" content="quantum mechanics">
+<meta property="article:tag" content="operator">
+<meta property="article:tag" content="uncertainty principle">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>量子力学里的相空间体积--相空间 | pan.world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">pan.world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/undefined/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          量子力学里的相空间体积--相空间
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-31 10:08:07" itemprop="dateCreated datePublished" datetime="2019-10-31T10:08:07+08:00">2019-10-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-22 02:27:21" itemprop="dateModified" datetime="2021-01-22T02:27:21+08:00">2021-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="量子力学基础"><a href="#量子力学基础" class="headerlink" title="量子力学基础"></a>量子力学基础</h2><p>物质波为概率波，将单色平面波写为如下形式：</p>
+<script type="math/tex; mode=display">\psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)}</script><p>方便之后归一化为$\delta$函数。其振幅的平方$|\psi(r,t)|^2$对应于粒子坐标的概率密度，因此对于粒子的平均位置$<r>$可以从下式求出：</p>
+<script type="math/tex; mode=display"><r> = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr</script><a id="more"></a>
+<h3 id="动量算符"><a href="#动量算符" class="headerlink" title="动量算符"></a>动量算符</h3><p>根据波函数的叠加性和Fourier变换，我们可以得到波函数的两种变换形式($r$和$p$均为三维矢量)：</p>
+<script type="math/tex; mode=display">\psi(r, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p, t)e^{i/\hbar p \cdot r} dp</script><script type="math/tex; mode=display">\phi(p, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \psi(r, t)e^{-i/\hbar p \cdot r} dr</script><p>其中$|\phi(p, t)|^2$为粒子动量$p$的概率密度分布，所以我们可以得到平均动量$<p>$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+<p> &= \int p |\phi(p)|^2 dp \nonumber \\
+    &= \int \phi(p,t)p dp \left[ \frac{1}{(2 \pi \hbar)^{3/2}}\int \psi^*(r, t) e^{i/\hbar p \cdot r} dr \right] \nonumber \\
+    &= \int \psi^*(r, t) dr \left[ \frac{1}{(2 \pi \hbar)^{3/2}}\int p \phi(p, t) e^{i/\hbar p \cdot r} dp \right] \nonumber \\
+    &= \int \psi^*(r, t) dr \left[ \frac{1}{((2 \pi \hbar)^{3/2}}\int \phi(p, t) (-i \hbar \nabla e^{i/\hbar p \cdot r}) dp \right] \nonumber \\
+    &= \int \psi^*(r, t) dr (-i \hbar \nabla ) \left[ \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p,t) e^{i/\hbar p \cdot r} dp \right] \nonumber \\
+    &= \int \psi^*(r, t) (-i \hbar \nabla ) \psi(r, t) dr \nonumber \\
+\end{align}</script><p>由此我们可以得到动量的算符表达式。类似的，动能$T = p^2/2m$，角动量$L = r \times p$，我们可以得到动能$T$和角动量$L$的算符表达式：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\hat r &= r \nonumber \\
+\hat p &= -i \hbar \nabla \nonumber \\
+\hat T &= -\frac{\hbar^2}{2m} \nabla^2 \nonumber \\
+\hat L &= -i\hbar \hat r \times \nabla \nonumber \\
+\end{align}</script><h3 id="不确定关系"><a href="#不确定关系" class="headerlink" title="不确定关系"></a>不确定关系</h3><p>不确定关系来源于Fourier变换，是Fourier变换的内禀性质，与测量与否无关，与函数的具体形式无关。</p>
+<p>假设函数$f(x)$存在Fourier变换，考虑积分：</p>
+<script type="math/tex; mode=display">I = \int |\eta x f(x) + f'(x)|^2 dx \ge 0</script><p>其中积分符号内的式子等于：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+|\eta x f(x) + f'(x)|^2 &= [\eta x f(x) + f'(x)][\eta x f(x) + f'(x)]^* \nonumber \\
+&= \eta^2 x^2 |f(x)|^2 + \eta x [f(x)f'^*(x)+f^*(x)f'(x)] + |f'(x)|^2 \nonumber \\
+\end{align}</script><p>所以$I$可以分为三个部分$I_1, I_2, I_3$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+I &= I_1+I_2+I_3 \nonumber \\
+I_1 &= \eta^2 \int x^2 |f(x)|^2 dx \nonumber \\
+I_2 &= \eta \int x [f(x)f'^*(x)+f^*(x)f'(x)] dx \nonumber \\
+I_3 &= \int |f'(x)|^2 dx \nonumber \\
+\end{align}</script><p>对于$I_1$，$\int x^2 |f(x)|^2 dx$归一化后即为$\Delta x^2$。</p>
+<p>对于$I_2$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+I_2 &= \eta \int x [f(x)f^*(x)]'dx \nonumber \\
+&= \eta \int x d|f(x)|^2 \nonumber \\
+&= \eta \left( x|f(x)|^2|_{-\infty}^{+\infty} - \int |f(x)|^2 dx \right) \nonumber \\
+&= - \eta \int |f(x)|^2 dx \nonumber \\
+\end{align}</script><p>因为积分$\int x |f(x)|^2 dx$，也就是x的期望存在，所以$x|f(x)|^2$在$x \to \infty$时一定为0，否则积分不收敛。</p>
+<p>对于$I_3$：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+I_3 &= \int \left( \frac{1}{2\pi} \int i \omega' g(\omega') e^{i \omega' x} d\omega' \right) \left( \frac{1}{2\pi} \int (-i) \omega g^*(\omega) e^{-i \omega x} d\omega \right) dx \nonumber \\
+&= \frac{1}{4\pi^2} \iiint \omega \omega' g(\omega)g^*(\omega') e^{i(\omega' - \omega)x} dx d\omega d\omega' \nonumber \\
+&= \frac{1}{2\pi} \iint \omega \omega' g(\omega) g^*(\omega') \delta(\omega' - \omega) d\omega d\omega' \nonumber \\
+&= \frac{1}{2\pi} \int \omega^2 |g(\omega)|^2 d\omega \nonumber \\
+\end{align}</script><p>所以$I_3 \sim \Delta \omega^2$。根据Parseval定理：$ \int |f(x)|^2 dx = \frac{1}{2\pi} \int |g(\omega)|^2 d\omega $，对$I$同时除以$\int |f(x)|^2 dx$，可得：</p>
+<script type="math/tex; mode=display">\eta^2 \Delta x^2 - \eta + \Delta \omega^2 \ge 0</script><p>上式是关于$\eta$的二次函数，其二阶导数$2 \Delta x^2 \ge 0$，所以当$\eta = \frac{1}{2 \Delta x^2}$时，函数取最小值，代入上式得：</p>
+<script type="math/tex; mode=display">\Delta \omega^2 - \frac{1}{4 \Delta x^2} \ge 0</script><script type="math/tex; mode=display">\Delta x \Delta \omega \ge \frac{1}{2}</script><p>将动量和波数的色散关系$p = \hbar \omega $代入，可得量子力学中的不确定性原理表达式：</p>
+<script type="math/tex; mode=display">\Delta x \cdot \Delta p \ge \frac{\hbar}{2}</script><h2 id="相空间最小单元"><a href="#相空间最小单元" class="headerlink" title="相空间最小单元"></a>相空间最小单元</h2><p>相空间中的一个点用于表示系统所处的一个状态，对于力学系统通常用三维方位和三维动量来表示，如果系统中有$N$个粒子，则相空间为$6N$维。根据不确定关系，方位和动量不可同时确定，所以相空间有最小单元体积：$\hbar^3$。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/phase-space/" rel="tag"># phase space</a>
+              <a href="/tags/entropy/" rel="tag"># entropy</a>
+              <a href="/tags/quantum-mechanics/" rel="tag"># quantum mechanics</a>
+              <a href="/tags/operator/" rel="tag"># operator</a>
+              <a href="/tags/uncertainty-principle/" rel="tag"># uncertainty principle</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/30/phase-space-in-quantum-mechanics-2/" rel="prev" title="量子力学里的相空间体积--波函数">
+      <i class="fa fa-chevron-left"></i> 量子力学里的相空间体积--波函数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/29/saddle-point-approximation/" rel="next" title="鞍点近似">
+      鞍点近似 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">量子力学基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E9%87%8F%E7%AE%97%E7%AC%A6"><span class="nav-number">1.1.</span> <span class="nav-text">动量算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.</span> <span class="nav-text">不确定关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E7%A9%BA%E9%97%B4%E6%9C%80%E5%B0%8F%E5%8D%95%E5%85%83"><span class="nav-number">2.</span> <span class="nav-text">相空间最小单元</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">psichen</p>
+  <div class="site-description" itemprop="description">There are no facts, only interpretations.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">psichen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

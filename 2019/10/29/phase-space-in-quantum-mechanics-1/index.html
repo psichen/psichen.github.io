@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵$S$和相空间$\Gamma$的体积有关： S &#x3D; k_Bln(|\Gamma|)根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变$\Gamma$的体积单位时，会在$S$加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="量子力学里的相空间体积--Fourier变换">
+<meta property="og:url" content="http://www.psichen.com/2019/10/29/phase-space-in-quantum-mechanics-1/index.html">
+<meta property="og:site_name" content="pan.world">
+<meta property="og:description" content="最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵$S$和相空间$\Gamma$的体积有关： S &#x3D; k_Bln(|\Gamma|)根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变$\Gamma$的体积单位时，会在$S$加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-29T02:08:07.000Z">
+<meta property="article:modified_time" content="2021-01-21T18:26:46.331Z">
+<meta property="article:author" content="psichen">
+<meta property="article:tag" content="Fourier transformation">
+<meta property="article:tag" content="Dirac function">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.psichen.com/2019/10/29/phase-space-in-quantum-mechanics-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>量子力学里的相空间体积--Fourier变换 | pan.world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">pan.world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/10/29/phase-space-in-quantum-mechanics-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/undefined/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          量子力学里的相空间体积--Fourier变换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-29 10:08:07" itemprop="dateCreated datePublished" datetime="2019-10-29T10:08:07+08:00">2019-10-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-22 02:26:46" itemprop="dateModified" datetime="2021-01-22T02:26:46+08:00">2021-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵$S$和相空间$\Gamma$的体积有关：</p>
+<script type="math/tex; mode=display">S = k_Bln(|\Gamma|)</script><p>根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变$\Gamma$的体积单位时，会在$S$加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。</p>
+<a id="more"></a>
+<h2 id="Fourier变换与逆变换"><a href="#Fourier变换与逆变换" class="headerlink" title="Fourier变换与逆变换"></a>Fourier变换与逆变换</h2><p>Fourier变换将目标函数$f(t)$变为周期为$T/n$的正余弦函数的线性组合。</p>
+<h3 id="三角函数形式的Fourier级数："><a href="#三角函数形式的Fourier级数：" class="headerlink" title="三角函数形式的Fourier级数："></a>三角函数形式的Fourier级数：</h3><script type="math/tex; mode=display">f(t) = \frac{a_0}{2} + \sum_{n=1}^{+\infty} a_n \cos (n \omega t) + b_n \sin (n \omega t)</script><p>根据三角函数在周期区间内积分的正交性：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos (nt) dt = 0 \nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \sin (nt) dt = 0 \nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos (nt) \sin (mt) dt = 0 \nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos (nt) \cos (mt) dt =
+\begin{cases}
+\frac{T}{2} & (n = m) \\
+0 & (n \neq m) \\
+\end{cases}
+\nonumber \\
+
+&\int_{-\frac{T}{2}}^{\frac{T}{2}} \sin (nt) \sin (mt) dt =
+\begin{cases}
+\frac{T}{2} & (n = m) \\
+0 & (n \neq m) \\
+\end{cases}
+\nonumber \\
+
+\end{align}</script><p>我们在Fourier级数的两边同时对$t$积分：</p>
+<script type="math/tex; mode=display">\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt = \frac{T}{2}a_0</script><p>所以</p>
+<script type="math/tex; mode=display">a_0 = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt</script><p>然后我们在Fourier级数的两边同时乘上$\cos (n \omega t)$，再同时对$t$积分，可得到：</p>
+<script type="math/tex; mode=display">\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt = \frac{T}{2} a_n</script><p>同理，乘上$\sin (n \omega t)$，积分后可得到：</p>
+<script type="math/tex; mode=display">\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt = \frac{T}{2} b_n</script><p>整理之后，我们就可以得到Fourier级数展开的系数项：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+a_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt \nonumber \\
+b_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt \nonumber \\
+\end{align}</script><p>其中$a_n$为偶函数，$b_n$为奇函数。</p>
+<h3 id="指数函数形式的Fourier级数"><a href="#指数函数形式的Fourier级数" class="headerlink" title="指数函数形式的Fourier级数"></a>指数函数形式的Fourier级数</h3><p>根据Euler公式：$e^{ikx} = \cos kx + i\sin kx$，所以三角函数可以表达为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\cos (n \omega t) &= \frac{1}{2} (e^{i n \omega t}+e^{-i n \omega t}) \nonumber \\
+\sin (n \omega t) &= \frac{1}{2i} (e^{i n \omega t}-e^{-i n \omega t}) \nonumber \\
+\end{align}</script><p>代入Fourier级数的表达式，合并指数项，并根据$a_n$和$b_n$的奇偶性，可得指数形式的Fourier级数：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(t) &= \frac{a_0}{2}+\sum_{n=1}^{+\infty} \frac{a_n-i b_n}{2}e^{i n \omega t}+\frac{a_n+i b_n}{2}e^{-i n \omega t} \nonumber \\
+&=\sum_{n=-\infty}^{+\infty} F(n \omega) e^{i n \omega t} \nonumber \\
+\end{align}</script><p>注意两个求和符号中$n$的取值范围，其中$F(n \omega) = \frac{a_n-ib_n}{2}$为指前因子。将$a_n$和$b_n$的表达式代入，得：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+F(n \omega) &= \frac{1}{2}\left[ \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt - \frac{2i}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt \right] \nonumber \\
+&= \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt \nonumber \\
+\end{align}</script><h3 id="Fourier积分变换"><a href="#Fourier积分变换" class="headerlink" title="Fourier积分变换"></a>Fourier积分变换</h3><p>因为周期$T$与角频率$\omega$满足关系：$T \omega = 2 \pi$，当$T \to +\infty$时，$\omega \to 0$。</p>
+<p>对无穷小量的求和满足如下关系：</p>
+<script type="math/tex; mode=display">\sum_{-\infty}^{+\infty} f(n \delta x) = \frac{1}{\delta x} \int_{-\infty}^{+\infty} f(x) dx</script><p>于是上文的指数形式的Fourier级数，可以扩展为积分形式：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(t) &= \sum_{-\infty}^{+\infty} F(n \omega) e^{i n \omega t} \nonumber \\
+&= \int_{-\infty}^{+\infty} \frac{F(\omega)}{\omega} e^{i \omega t} d\omega \nonumber \\
+\end{align}</script><p>其中令$g(\omega) = \frac{F(\omega)}{\omega}$。</p>
+<p>根据上面$F(n \omega) = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt$，将 $\omega$ 记为 $\omega’$，根据$T\omega’ = 2\pi$，可得：</p>
+<script type="math/tex; mode=display">\frac{F(\omega')}{\omega'} = \frac{1}{2\pi} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i \omega' t} dt</script><p>当$\omega’ \to 0$时，有：</p>
+<script type="math/tex; mode=display">g(\omega') = \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega' t} dt</script><p>整理一下，我们就得到了可析函数f(t)的Fourier变换与逆变换：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+g(\omega) &= \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \nonumber \\
+f(t) &= \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \nonumber \\
+\end{align}</script><p>或改变一下函数前面的系数：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+g(\omega) &= \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \nonumber \\
+f(t) &= \frac{1}{2\pi} \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \nonumber \\
+\end{align}</script><p>因为频率$f$与角频率$\omega$满足关系：$\omega = 2 \pi f$，所以上式可以改写为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+g(f) &= \int_{-\infty}^{+\infty} f(t) e^{-i 2 \pi f t} dt \nonumber \\
+f(t) &= \int_{-\infty}^{+\infty} g(f) e^{i 2 \pi f t} df \nonumber \\
+\end{align}</script><p>物理上更多地使用如下形式：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+g(\omega) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \nonumber \\
+f(t) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \nonumber \\
+\end{align}</script><h2 id="Dirac函数"><a href="#Dirac函数" class="headerlink" title="Dirac函数"></a>Dirac函数</h2><p>Dirac函数为一种广义函数，定义为：</p>
+<script type="math/tex; mode=display">
+\delta(x) =
+\begin{cases}
++\infty & (x = 0) \\
+0 & (x \neq 0) \\
+\end{cases}</script><p>并且满足$ \int_{-\infty}^{+\infty} \delta(x)dx = 1 $。</p>
+<p>Dirac函数的性质：</p>
+<script type="math/tex; mode=display">\int f(x)\delta(x-a)dx = f(a)</script><p>称之为Dirac函数的挑选性。根据挑选性，我们对Dirac函数进行Fourier变换：</p>
+<script type="math/tex; mode=display">\mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i k x} dx = \frac{1}{2\pi}</script><p>再进行Fourier逆变换，我们就可以得到$\delta$函数的表达式之一：</p>
+<script type="math/tex; mode=display">\delta(x) = \frac{1}{2\pi} \int e^{i k x} dk</script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Fourier-transformation/" rel="tag"># Fourier transformation</a>
+              <a href="/tags/Dirac-function/" rel="tag"># Dirac function</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/13/inexact-differential-of-Q/" rel="prev" title="热力学中热量的非恰当微分">
+      <i class="fa fa-chevron-left"></i> 热力学中热量的非恰当微分
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/30/phase-space-in-quantum-mechanics-2/" rel="next" title="量子力学里的相空间体积--波函数">
+      量子力学里的相空间体积--波函数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fourier%E5%8F%98%E6%8D%A2%E4%B8%8E%E9%80%86%E5%8F%98%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">Fourier变换与逆变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E5%BD%A2%E5%BC%8F%E7%9A%84Fourier%E7%BA%A7%E6%95%B0%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">三角函数形式的Fourier级数：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%BD%A2%E5%BC%8F%E7%9A%84Fourier%E7%BA%A7%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">指数函数形式的Fourier级数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fourier%E7%A7%AF%E5%88%86%E5%8F%98%E6%8D%A2"><span class="nav-number">1.3.</span> <span class="nav-text">Fourier积分变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dirac%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">Dirac函数</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">psichen</p>
+  <div class="site-description" itemprop="description">There are no facts, only interpretations.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">psichen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

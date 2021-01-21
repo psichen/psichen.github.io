@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="理想气体状态方程pV &#x3D; nRT &#x3D; Nk_BT想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。 系综一定条件下体系可能存在的状态的集合称之为ensemble（系综），是系统状态的概率分布，可与概率空间进行类比。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理想气体状态方程的统计力学推导">
+<meta property="og:url" content="http://www.psichen.com/2020/01/19/ideal-gas-state-function-md/index.html">
+<meta property="og:site_name" content="pan.world">
+<meta property="og:description" content="理想气体状态方程pV &#x3D; nRT &#x3D; Nk_BT想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。 系综一定条件下体系可能存在的状态的集合称之为ensemble（系综），是系统状态的概率分布，可与概率空间进行类比。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-19T11:52:15.000Z">
+<meta property="article:modified_time" content="2021-01-21T18:25:28.079Z">
+<meta property="article:author" content="psichen">
+<meta property="article:tag" content="ideal gas">
+<meta property="article:tag" content="statistic mechanics">
+<meta property="article:tag" content="phase space">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.psichen.com/2020/01/19/ideal-gas-state-function-md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>理想气体状态方程的统计力学推导 | pan.world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">pan.world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2020/01/19/ideal-gas-state-function-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/undefined/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          理想气体状态方程的统计力学推导
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-19 19:52:15" itemprop="dateCreated datePublished" datetime="2020-01-19T19:52:15+08:00">2020-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-22 02:25:28" itemprop="dateModified" datetime="2021-01-22T02:25:28+08:00">2021-01-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>理想气体状态方程<script type="math/tex">pV = nRT = Nk_BT</script>想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。</p>
+<h2 id="系综"><a href="#系综" class="headerlink" title="系综"></a>系综</h2><p>一定条件下体系可能存在的状态的集合称之为ensemble（系综），是系统状态的概率分布，可与概率空间进行类比。</p>
+<a id="more"></a>
+<p><strong>canonical ensemble（正则系综）</strong><br>可与大热源交换能量的体系集合，各体系具有相同<strong>温度</strong></p>
+<p><strong>grand canonical ensemble（巨正则系综）</strong><br>可与大热源交换能量和与大粒子源交换粒子的体系集合，各体系具有相同的<strong>温度</strong>和<strong>化学势</strong></p>
+<p><strong>microcanonical ensemble（微正则系综）</strong><br>能量和粒子守恒的孤立系统，各体系状态<strong>等概率</strong></p>
+<h2 id="相空间"><a href="#相空间" class="headerlink" title="相空间"></a>相空间</h2><p>一个包含$N$个粒子的系统具有$6N$的自由度，其中由位置$\mathbb Q$组成的$3N$维空间称之为configuration space（构形空间），由动量$\mathbb P$组成的$3N$维空间称之为momentum space（动量空间）,由$(\mathbb P, \mathbb Q)$组成的$6N$维空间称之为phase space（相空间）。</p>
+<h3 id="Heaviside函数"><a href="#Heaviside函数" class="headerlink" title="Heaviside函数"></a>Heaviside函数</h3><p>Heaviside函数，也称为阶跃函数，其定义为：</p>
+<script type="math/tex; mode=display">
+\Theta(x) =
+\begin{cases}
+1, & x \ge 0 \\
+0, & x \lt 0
+\end{cases}</script><p>当$\Theta$函数作用于一个检验函数$\psi(x)$时，等于如下积分：</p>
+<script type="math/tex; mode=display">\int_{-\infty}^{+\infty} \Theta(x) \psi(x) dx = \int_0^{+\infty} \psi(x) dx</script><p>另外</p>
+<h3 id="相空间体积"><a href="#相空间体积" class="headerlink" title="相空间体积"></a>相空间体积</h3><p>对于能量处于$(E, \delta E)$的系统，相空间的体积可由下面的积分给出：</p>
+<script type="math/tex; mode=display">\Omega(E) \delta E = \int_{E<\mathcal H (\mathbb P, \mathbb Q) < E+\delta E} d\mathbb P d\mathbb Q</script><h2 id="理想气体状态方程"><a href="#理想气体状态方程" class="headerlink" title="理想气体状态方程"></a>理想气体状态方程</h2><script type="math/tex; mode=display">\Omega(E) = V^N \cdot \frac{ \frac{3N}{2E} \pi^{\frac{3N}{2}} (2mE)^{3N} }{ (\frac{3N}{2})! }</script><script type="math/tex; mode=display">S = k_B ln\Omega(E)</script><script type="math/tex; mode=display">\frac{1}{T} = \frac{\partial S}{\partial E}|_{V, N}</script><script type="math/tex; mode=display">\frac{p}{T} = \frac{\partial S}{\partial V}|_{E, N}</script><script type="math/tex; mode=display">pV = Nk_BT</script>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ideal-gas/" rel="tag"># ideal gas</a>
+              <a href="/tags/statistic-mechanics/" rel="tag"># statistic mechanics</a>
+              <a href="/tags/phase-space/" rel="tag"># phase space</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/29/saddle-point-approximation/" rel="prev" title="鞍点近似">
+      <i class="fa fa-chevron-left"></i> 鞍点近似
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/10/crawler-university-postdoc-md/" rel="next" title="python爬取大学及博士后信息">
+      python爬取大学及博士后信息 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%BC"><span class="nav-number">1.</span> <span class="nav-text">系综</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">相空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Heaviside%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">Heaviside函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E7%A9%BA%E9%97%B4%E4%BD%93%E7%A7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">相空间体积</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E6%83%B3%E6%B0%94%E4%BD%93%E7%8A%B6%E6%80%81%E6%96%B9%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">理想气体状态方程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">psichen</p>
+  <div class="site-description" itemprop="description">There are no facts, only interpretations.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">psichen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
