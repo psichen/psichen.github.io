@@ -37,8 +37,7 @@ It's also called *multinomial coefficients* in polynomial equation $(x_1+x_2+ \c
 
 ### with replacement
 
-As in the case of permutations we might ask how many combinations of $k$ objects can be chosen from $n$ objects with replacement. To calculate the value, we may image that the $n$ distinguishable objects set out on a table. Each combination of $k$ objects can then be made by pointing to $k$ objects of the $n$ objects in turn. There $k$ equivalent selections amongst $n$ different but re-choosable objects are strictly analogous to the placing of $k$ indistinguishable balls into $n$ different
-boxes with no restriction on the number of balls in each box.
+As in the case of permutations we might ask how many combinations of $k$ objects can be chosen from $n$ objects with replacement. To calculate the value, we may image that the $n$ distinguishable objects set out on a table. Each combination of $k$ objects can then be made by pointing to $k$ objects of the $n$ objects in turn. There $k$ equivalent selections amongst $n$ different but re-choosable objects are strictly analogous to the placing of $k$ indistinguishable balls into $n$ different boxes with no restriction on the number of balls in each box.
 
 A particular scenario in the case $k=6, n=4$ may be symbolised as
 
@@ -65,7 +64,7 @@ $$ \frac{N!}{\underset{i=1}{\overset{R}{\large{\Pi}}} n_i!} $$
 
 where $n_i$ is the number of particles in each energy level. Then let's multiply the number of differnet arrangement of $n_i$ particles in $g_i$ degenerate quantum states in each energy level. Becasue there is no restriction on the particle number in each quantum states, each particle can reside in any of $g_i$ degenerated quantum states. So the arrangements in this scenario is
 
-$$ W\{n_i\} = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i^{n_i}}{n_i!} $$
+$$ \Omega = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i^{n_i}}{n_i!} $$
 
 Such a system of particles (for example classical gas molecules) is said to obey *Maxwell-Boltzmann statistics*.
 
@@ -73,7 +72,7 @@ Such a system of particles (for example classical gas molecules) is said to obey
 
 If the particles are indistinguishable, there is only one arrangement in which $n_i (i=1,2,\cdots,R)$ particles reside in $i$th energy level. The distinct arrangements of $n_i$ particles in $g_i$ degenerate states, however, is analogous to placing indistinguishable balls into different boxes. So the number of combination of particles is
 
-$$ W\{n_i\} = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{(n_i+g_i-1)!}{n_i! (g_i-1)!} $$
+$$ \Omega = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{(n_i+g_i-1)!}{n_i! (g_i-1)!} $$
 
 Such a system of particles (for example a gas of photons) is said to obey *Bose-Einstein statistics*.
 
@@ -81,7 +80,7 @@ Such a system of particles (for example a gas of photons) is said to obey *Bose-
 
 If the number of particles in each quantum state is either 0 or 1, the arrangements of $n_i$ particles in $g_i$ degenerate quantum states is equal to the combination of $n_i$ occupied and $g_i-n_i$ unoccupied states. So the distinct arrangements of particles is given by
 
-$$ W\{n_i\} = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i!(g_i-n_i)!} $$
+$$ \Omega = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i!(g_i-n_i)!} $$
 
 Such a system of particles (for example an electron gas) is said to obey *Fermi-Dirac statistics*.
 
@@ -89,6 +88,6 @@ Such a system of particles (for example an electron gas) is said to obey *Fermi-
 
 If the particles are distinguishable, each arrangement of $n_i$ particles in the previous scenario can be reordered in $n_i!$ different ways. Multiplying the number of arrangements of $N$ distinguishable particles among $R$ energy levels, the arrangement of particles is given by
 
-$$ W\{n_i\} = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i! (g_i-n_i)!} $$
+$$ \Omega = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i! (g_i-n_i)!} $$
 
 Such a system of particles never occurs in nature.
