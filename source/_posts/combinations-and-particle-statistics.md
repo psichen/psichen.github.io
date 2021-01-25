@@ -91,3 +91,6 @@ If the particles are distinguishable, each arrangement of $n_i$ particles in the
 $$ \Omega = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i! (g_i-n_i)!} $$
 
 Such a system of particles never occurs in nature.
+
+## References
+Riley, Kenneth Franklin, et al. *Mathematical methods for physics and engineering: a comprehensive guide*. Cambridge university press, 2002.
