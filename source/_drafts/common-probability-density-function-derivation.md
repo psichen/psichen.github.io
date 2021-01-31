@@ -59,6 +59,10 @@ where the sum of a geometric series was used.
 $$ E(X) = \frac{1}{p} $$
 $$ V(X) = \frac{q}{p^2} $$
 
+### Negativee geometric distribution
+
+### Hypergeometric distribution
+
 ### Binomial distribution
 
 $$ P(X=k) = C(n, k)p^k(1-p)^{n-k} $$
@@ -143,7 +147,7 @@ $$ \Phi_{X+Y}(t) = \Phi_X(t) \Phi_Y(t) $$
 
 Moments generating functions are defined as
 
-$$ M_X(t) = E[e^{tX}] = \begin{cases} \sum_i e^{tx_i} P(X=x_i) & \text{for a discrete distribution} \\ \int e^{tx} f(x) dx & \text{for a continuous distribution} \end{cases} $$
+$$ M_X(t) = E[e^{Xt}] = \begin{cases} \sum_i e^{tx_i} P(X=x_i) & \text{for a discrete distribution} \\ \int e^{tx} f(x) dx & \text{for a continuous distribution} \end{cases} $$
 
 The exponent can be expand as a power series as
 
@@ -152,6 +156,12 @@ $$ M_X(t) = E[e^{tX}] = E[\sum_{k=0}^{\infty} \frac{X^k}{k!} t^k] = \sum_{k=0}^{
 So moments of different orders can generated from corresponding derivates of $M_X(t)$
 
 $$ E[X^k] = M_X^{(k)}(0) $$
+
+Similarly, for a multivariate $X+Y=N$ distribution, the moments generating function is defined as
+
+$$ \begin{align} M_{X+Y}(t) &= E[e^{(X+Y)t}] \\ &= \int_{-\infty}^{\infty} e^{nt} f_{X+Y}(n) dn \\ &= \int_{-\infty}^{\infty} e^{nt} dn \int_{-\infty}^{\infty} f_X(x)f_Y(n-x) dx \\ &= \int_{-\infty}^{\infty} e^{xt}f_X(x) dx \int_{-\infty}^{\infty} e^{(n-x)t}f_Y(n-x) dn \\ &=E[e^{Xt}]E[e^{Yt}] \\ &= M_X(t)M_Y(t) \end{align} $$
+
+which is the product of respective moments generating functions of independent variables $X$ and $Y$. This property is useful in the derivation of Poisson/Binomial distributions from Binomial/Bernoulli distributions.
 
 ### Characteristic functions
 
