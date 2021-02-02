@@ -93,6 +93,10 @@ $$ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{\frac{1}{2}(\frac{x-\mu}{\sigma})^2} $
 
 #### Fourier transform
 
+### Log-normal distribution
+
+If $X \sim N(\mu, \sigma^2)$, then the variable $Y = e^X$ follows the log-normal distribution.
+
 ### Exponential distribution
 
 $$ f(x) = \lambda e^{-\lambda x} $$
@@ -157,15 +161,20 @@ So moments of different orders can generated from corresponding derivates of $M_
 
 $$ E[X^k] = M_X^{(k)}(0) $$
 
-Similarly, for a multivariate $X+Y=N$ distribution, the moments generating function is defined as
+Similarly, for an independent multivariate $X+Y=N$ distribution, the moments generating function is defined as
 
 $$ \begin{align} M_{X+Y}(t) &= E[e^{(X+Y)t}] \\ &= \int_{-\infty}^{\infty} e^{nt} f_{X+Y}(n) dn \\ &= \int_{-\infty}^{\infty} e^{nt} dn \int_{-\infty}^{\infty} f_X(x)f_Y(n-x) dx \\ &= \int_{-\infty}^{\infty} e^{xt}f_X(x) dx \int_{-\infty}^{\infty} e^{(n-x)t}f_Y(n-x) dn \\ &=E[e^{Xt}]E[e^{Yt}] \\ &= M_X(t)M_Y(t) \end{align} $$
+
+$$ \begin{align} M_{X+Y}(t) &= E[e^{(X+Y)t}] \\ &= \int_{0}^{\infty} e^{nt} f_{X+Y}(n) dn \\ &= \int_{0}^{\infty} e^{nt} dn \int_{0}^{n} f_X(x)f_Y(n-x) dx \\ &= \int_{0}^{\infty} dn \int_{0}^{n} e^{(n-x)t} e^{xt} f_X(x)f_Y(n-x) dx \\ &= \int_{0}^{\infty} dx \int_{x}^{\infty} e^{(n-x)t} e^{xt} f_X(x)f_Y(n-x) dn \\ &= \int_{0}^{\infty} e^{xt} f_X(x) dx \int_{x}^{\infty} e^{(n-x)t} f_Y(n-x) dn \end{align} $$
 
 which is the product of respective moments generating functions of independent variables $X$ and $Y$. This property is useful in the derivation of Poisson/Binomial distributions from Binomial/Bernoulli distributions.
 
 ### Characteristic functions
 
+$$ C_X(t) = E[e^{iXt}] = \int_{-\infty}^{\infty} e^{ixt} f(x) dx $$
+$$ f(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} C_X(t) e^{-ixt} dt $$
 
+$C_X(t)$ is exactly the Fourier transform of $f(x)$ and *vice versa*.
 
 ## References
 [Univariate Distribution Relationships](http://www.math.wm.edu/~leemis/chart/UDR/UDR.html)

@@ -92,7 +92,7 @@ $$ I_A^{Dex} = d \cdot I_A^{Aex} $$
 
 在ALEX实验中对Acceptor通道信号减掉直接激发项即可。
 
-##Jacobi行列式
+##Jacobian行列式
 
 Jacobian行列式常用于积分换元：
 
@@ -106,7 +106,7 @@ J = \left|
 \right|
 $$
 
-通常可写为 $\frac{\partial (u, v)}{\partial (x, y)}$。Jacobi行列式具有下列重要性质：
+通常可写为 $\frac{\partial (x, y)}{\partial (u, v)}$。Jacobi行列式具有下列重要性质：
 
 1. $ \left( \frac{\partial u}{\partial x} \right)_y = \frac{\partial (u, y)}{\partial (x, y)} $
 
