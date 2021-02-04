@@ -27,17 +27,17 @@ $$ I(N) = \int_C e^{Nf(x)} dx $$
 
 从实轴求导：$ z+\Delta z = (x+\Delta x) + yi $
 $$
-\begin{align}
-f'(z) &= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
+\begin{aligned}
+f'(z) & = \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
 &= \lim_{\Delta x \to 0} \frac{\Delta u + \Delta vi}{\Delta x} \nonumber \\
 &= u_x + v_xi
-\end{align}
+\end{aligned}
 $$
 
 从虚轴求导：$z+\Delta z = x+(y+\Delta y)i $
 $$
 \begin{align}
-f'(z) &= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
+f'(z) & = \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \\
 &= \lim_{\Delta y \to 0} \frac{\Delta u + \Delta vi}{\Delta yi} \nonumber \\
 &= v_y - u_yi
 \end{align}
