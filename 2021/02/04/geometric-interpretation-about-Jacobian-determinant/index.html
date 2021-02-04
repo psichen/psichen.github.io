@@ -20,24 +20,22 @@
     var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="量子力学基础物质波为概率波，将单色平面波写为如下形式： \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)}方便之后归一化为$\delta$函数。其振幅的平方$|\psi(r,t)|^2$对应于粒子坐标的概率密度，因此对于粒子的平均位置$$可以从下式求出：  &#x3D; \int r |\psi(r, t)|^2 d">
+  <meta name="description" content="In scientific computing, integration by substitution is a very common skill. For example, we measured a series of practical values of a variable ($x’$), of which the distribution ($g(x’)$) was unknown">
 <meta property="og:type" content="article">
-<meta property="og:title" content="量子力学里的相空间体积--相空间">
-<meta property="og:url" content="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/index.html">
+<meta property="og:title" content="Geometric interpretation about Jacobian determinant">
+<meta property="og:url" content="http://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/index.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="量子力学基础物质波为概率波，将单色平面波写为如下形式： \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)}方便之后归一化为$\delta$函数。其振幅的平方$|\psi(r,t)|^2$对应于粒子坐标的概率密度，因此对于粒子的平均位置$$可以从下式求出：  &#x3D; \int r |\psi(r, t)|^2 d">
+<meta property="og:description" content="In scientific computing, integration by substitution is a very common skill. For example, we measured a series of practical values of a variable ($x’$), of which the distribution ($g(x’)$) was unknown">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-10-31T02:08:07.000Z">
-<meta property="article:modified_time" content="2021-01-21T18:27:21.178Z">
+<meta property="article:published_time" content="2021-02-04T10:10:26.000Z">
+<meta property="article:modified_time" content="2021-02-04T10:12:14.755Z">
 <meta property="article:author" content="psichen">
-<meta property="article:tag" content="phase space">
-<meta property="article:tag" content="entropy">
-<meta property="article:tag" content="quantum mechanics">
-<meta property="article:tag" content="operator">
-<meta property="article:tag" content="uncertainty principle">
+<meta property="article:tag" content="Jacobian">
+<meta property="article:tag" content="determinant">
+<meta property="article:tag" content="integration by substitution">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/">
+<link rel="canonical" href="http://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/">
 
 
 <script id="page-configurations">
@@ -50,7 +48,7 @@
   };
 </script>
 
-  <title>量子力学里的相空间体积--相空间 | pan.world</title>
+  <title>Geometric interpretation about Jacobian determinant | pan.world</title>
   
 
 
@@ -160,7 +158,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/undefined/avatar.gif">
@@ -173,7 +171,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          量子力学里的相空间体积--相空间
+          Geometric interpretation about Jacobian determinant
         </h1>
 
         <div class="post-meta">
@@ -182,16 +180,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2019-10-31 10:08:07" itemprop="dateCreated datePublished" datetime="2019-10-31T10:08:07+08:00">2019-10-31</time>
+              <time title="Created: 2021-02-04 18:10:26 / Modified: 18:12:14" itemprop="dateCreated datePublished" datetime="2021-02-04T18:10:26+08:00">2021-02-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-22 02:27:21" itemprop="dateModified" datetime="2021-01-22T02:27:21+08:00">2021-01-22</time>
-              </span>
 
           
 
@@ -204,60 +196,41 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="量子力学基础"><a href="#量子力学基础" class="headerlink" title="量子力学基础"></a>量子力学基础</h2><p>物质波为概率波，将单色平面波写为如下形式：</p>
-<script type="math/tex; mode=display">\psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)}</script><p>方便之后归一化为$\delta$函数。其振幅的平方$|\psi(r,t)|^2$对应于粒子坐标的概率密度，因此对于粒子的平均位置$<r>$可以从下式求出：</p>
-<script type="math/tex; mode=display"><r> = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr</script><a id="more"></a>
-<h3 id="动量算符"><a href="#动量算符" class="headerlink" title="动量算符"></a>动量算符</h3><p>根据波函数的叠加性和Fourier变换，我们可以得到波函数的两种变换形式($r$和$p$均为三维矢量)：</p>
-<script type="math/tex; mode=display">\psi(r, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p, t)e^{i/\hbar p \cdot r} dp</script><script type="math/tex; mode=display">\phi(p, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \psi(r, t)e^{-i/\hbar p \cdot r} dr</script><p>其中$|\phi(p, t)|^2$为粒子动量$p$的概率密度分布，所以我们可以得到平均动量$<p>$：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-<p> &= \int p |\phi(p)|^2 dp \nonumber \\
-    &= \int \phi(p,t)p dp \left[ \frac{1}{(2 \pi \hbar)^{3/2}}\int \psi^*(r, t) e^{i/\hbar p \cdot r} dr \right] \nonumber \\
-    &= \int \psi^*(r, t) dr \left[ \frac{1}{(2 \pi \hbar)^{3/2}}\int p \phi(p, t) e^{i/\hbar p \cdot r} dp \right] \nonumber \\
-    &= \int \psi^*(r, t) dr \left[ \frac{1}{((2 \pi \hbar)^{3/2}}\int \phi(p, t) (-i \hbar \nabla e^{i/\hbar p \cdot r}) dp \right] \nonumber \\
-    &= \int \psi^*(r, t) dr (-i \hbar \nabla ) \left[ \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p,t) e^{i/\hbar p \cdot r} dp \right] \nonumber \\
-    &= \int \psi^*(r, t) (-i \hbar \nabla ) \psi(r, t) dr \nonumber \\
-\end{align}</script><p>由此我们可以得到动量的算符表达式。类似的，动能$T = p^2/2m$，角动量$L = r \times p$，我们可以得到动能$T$和角动量$L$的算符表达式：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\hat r &= r \nonumber \\
-\hat p &= -i \hbar \nabla \nonumber \\
-\hat T &= -\frac{\hbar^2}{2m} \nabla^2 \nonumber \\
-\hat L &= -i\hbar \hat r \times \nabla \nonumber \\
-\end{align}</script><h3 id="不确定关系"><a href="#不确定关系" class="headerlink" title="不确定关系"></a>不确定关系</h3><p>不确定关系来源于Fourier变换，是Fourier变换的内禀性质，与测量与否无关，与函数的具体形式无关。</p>
-<p>假设函数$f(x)$存在Fourier变换，考虑积分：</p>
-<script type="math/tex; mode=display">I = \int |\eta x f(x) + f'(x)|^2 dx \ge 0</script><p>其中积分符号内的式子等于：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-|\eta x f(x) + f'(x)|^2 &= [\eta x f(x) + f'(x)][\eta x f(x) + f'(x)]^* \nonumber \\
-&= \eta^2 x^2 |f(x)|^2 + \eta x [f(x)f'^*(x)+f^*(x)f'(x)] + |f'(x)|^2 \nonumber \\
-\end{align}</script><p>所以$I$可以分为三个部分$I_1, I_2, I_3$：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-I &= I_1+I_2+I_3 \nonumber \\
-I_1 &= \eta^2 \int x^2 |f(x)|^2 dx \nonumber \\
-I_2 &= \eta \int x [f(x)f'^*(x)+f^*(x)f'(x)] dx \nonumber \\
-I_3 &= \int |f'(x)|^2 dx \nonumber \\
-\end{align}</script><p>对于$I_1$，$\int x^2 |f(x)|^2 dx$归一化后即为$\Delta x^2$。</p>
-<p>对于$I_2$：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-I_2 &= \eta \int x [f(x)f^*(x)]'dx \nonumber \\
-&= \eta \int x d|f(x)|^2 \nonumber \\
-&= \eta \left( x|f(x)|^2|_{-\infty}^{+\infty} - \int |f(x)|^2 dx \right) \nonumber \\
-&= - \eta \int |f(x)|^2 dx \nonumber \\
-\end{align}</script><p>因为积分$\int x |f(x)|^2 dx$，也就是x的期望存在，所以$x|f(x)|^2$在$x \to \infty$时一定为0，否则积分不收敛。</p>
-<p>对于$I_3$：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-I_3 &= \int \left( \frac{1}{2\pi} \int i \omega' g(\omega') e^{i \omega' x} d\omega' \right) \left( \frac{1}{2\pi} \int (-i) \omega g^*(\omega) e^{-i \omega x} d\omega \right) dx \nonumber \\
-&= \frac{1}{4\pi^2} \iiint \omega \omega' g(\omega)g^*(\omega') e^{i(\omega' - \omega)x} dx d\omega d\omega' \nonumber \\
-&= \frac{1}{2\pi} \iint \omega \omega' g(\omega) g^*(\omega') \delta(\omega' - \omega) d\omega d\omega' \nonumber \\
-&= \frac{1}{2\pi} \int \omega^2 |g(\omega)|^2 d\omega \nonumber \\
-\end{align}</script><p>所以$I_3 \sim \Delta \omega^2$。根据Parseval定理：$ \int |f(x)|^2 dx = \frac{1}{2\pi} \int |g(\omega)|^2 d\omega $，对$I$同时除以$\int |f(x)|^2 dx$，可得：</p>
-<script type="math/tex; mode=display">\eta^2 \Delta x^2 - \eta + \Delta \omega^2 \ge 0</script><p>上式是关于$\eta$的二次函数，其二阶导数$2 \Delta x^2 \ge 0$，所以当$\eta = \frac{1}{2 \Delta x^2}$时，函数取最小值，代入上式得：</p>
-<script type="math/tex; mode=display">\Delta \omega^2 - \frac{1}{4 \Delta x^2} \ge 0</script><script type="math/tex; mode=display">\Delta x \Delta \omega \ge \frac{1}{2}</script><p>将动量和波数的色散关系$p = \hbar \omega $代入，可得量子力学中的不确定性原理表达式：</p>
-<script type="math/tex; mode=display">\Delta x \cdot \Delta p \ge \frac{\hbar}{2}</script><h2 id="相空间最小单元"><a href="#相空间最小单元" class="headerlink" title="相空间最小单元"></a>相空间最小单元</h2><p>相空间中的一个点用于表示系统所处的一个状态，对于力学系统通常用三维方位和三维动量来表示，如果系统中有$N$个粒子，则相空间为$6N$维。根据不确定关系，方位和动量不可同时确定，所以相空间有最小单元体积：$\hbar^3$。</p>
+        <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable ($x’$), of which the distribution ($g(x’)$) was unknown. But we know the theoretic distribution of the variable ($f(x)$) and the correction relationship or mapping relationship between theoretic and practical values ($x’=c(x)$). So we can get the analytic formula of the distribution $g(x’)$ as following</p>
+<p>$$ \int_{x’ \in R’} g(x’) dx’ = \int_{x \in R} f(x) \frac{dx’}{dx} dx $$</p>
+<p>This is the one dimension situation of Jacobian determinant in integration by substitution.</p>
+<h2 id="Cross-product-for-parallelogram-area"><a href="#Cross-product-for-parallelogram-area" class="headerlink" title="Cross product for parallelogram area"></a>Cross product for parallelogram area</h2><p>Let’s consider two vectors $\mathbf{a}^T = [a_1,a_2], \mathbf{b}^T = [b_1, b_2]$. We are very familar with the dot product or the inner product of the two vectors,</p>
+<p>$$ \mathbf{a} \cdot \mathbf{b} = \mathbf{a}^T\mathbf{b} = a_1b_1+a_2b_2 $$</p>
+<p>the name <em>inner</em> comes from the transpose symbol $T$ inside the two vectors. The inner product can also be calculated as</p>
+<p>$$ \mathbf{a} \cdot \mathbf{b} = |\mathbf{a}||\mathbf{b}|\cos\theta $$</p>
+<p>The cross product of two vectors generally produces a new vector which is perpendicular to the plane consist of the two original vectors. If $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are orthogonal unitary vectors, they satisify the following relationship via cross product,</p>
+<p>$$ \mathbf{i} \times \mathbf{j} = \mathbf{k} $$<br>$$ \mathbf{j} \times \mathbf{k} = \mathbf{i} $$<br>$$ \mathbf{k} \times \mathbf{i} = \mathbf{j} $$</p>
+<p>So vectors $\mathbf{a}$ and $\mathbf{b}$ can be rewritten as $\mathbf{a} = a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}$ and $\mathbf{b} = b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}$. Thus</p>
+<p>$$ \mathbf{a} \times \mathbf{b} = (a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}) \times (b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}) = (a_1b_2-a_2b_1)\mathbf{k} = \begin{vmatrix} a_1 &amp; a_2 \ b_1 &amp; b_2 \end{vmatrix} \mathbf{k} $$</p>
+<p>The magnitude of the cross product of two vectors can also be calculated by<br>$$ |\mathbf{a} \times \mathbf{b}| = |\mathbf{a}||\mathbf{b}|\sin\theta $$</p>
+<p>which is the area of the parallelogram having $\mathbf{a}$ and $\mathbf{b}$ as sides ($0 &lt; \theta &lt; \pi$).</p>
+<h2 id="Infinitesimal-area-in-integration"><a href="#Infinitesimal-area-in-integration" class="headerlink" title="Infinitesimal area in integration"></a>Infinitesimal area in integration</h2><p>For double integrals, we take a infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because x-axis and y-axis are orthogonal ($\sin\theta=1$).</p>
+<p>Now let us consider a function $g(u,v)$ of variables $u$ and $v$ while $u=u(x,y)$ and $v=v(x,y)$.If we want to calculate the integral $\int g(u,v) dudv$, we must firstly know the infinitesimal area $dudv$. Because $u, v$ are functions of $x,y$, they have following relationship,</p>
+<p>$$ du = \frac{du}{dx}dx+\frac{du}{dy}dy $$<br>$$ dv = \frac{dv}{dx}dx+\frac{dv}{dy}dy $$</p>
+<p>It’s analogous that vector $\mathbf{u}$ has vector components $\frac{du}{dx}dx$ or $\frac{du}{dy}dy$ on x-axis or y-axis direction respectively, and same for $\mathbf{v}$.</p>
+<p>It’s a wrong way to get the infinitesimal area by multiplying $du$ and $dv$ directly. Because $u$ and $v$ are not guaranteed to be orthogonal. But we can get the infinitesimal area by calculating the cross product of $du$ and $dv$,</p>
+<p>$$ du \times dv = (u_xv_y-u_yv_x)dxdy = \begin{vmatrix} u_x &amp; u_y \ v_x &amp; v_y \end{vmatrix} dxdy = \frac{\partial(u,v)}{\partial(x,y)} dxdy $$</p>
+<p>$\frac{\partial(u,v)}{\partial(x,y)}$ is called the Jacobian determinant. It can be seen as the chage ratio of area (or volume <em>etc.</em>) after variables mapping.</p>
+<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="proof-of-two-dot-product-expression"><a href="#proof-of-two-dot-product-expression" class="headerlink" title="proof of two dot product expression"></a>proof of two dot product expression</h3><p>Let’s consider two vectors $\mathbf{a}$ and $\mathbf{b}$.</p>
+<p>$$ \mathbf{a} = a_1\mathbf{i} + a_2\mathbf{j} $$<br>$$ \mathbf{b} = b_1\mathbf{i} + b_2\mathbf{j} $$</p>
+<p>$\theta_{\mathbf{a}}$ and $\theta_{\mathbf{b}}$ are the respective angel between the vector and x-axis.</p>
+<p>$$ \theta_{\mathbf{a}} = \arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_1}{|\mathbf{a}|}} $$<br>$$ \theta_{\mathbf{b}} = \arcsin{\frac{b_2}{|\mathbf{b}|}} = \arccos{\frac{b_1}{|\mathbf{b}|}} $$</p>
+<p>So the angel between vectors $\mathbf{a}$ and $\mathbf{b}$ is $\theta = \theta_{\mathbf{b}} - \theta_{\mathbf{a}}$. According to the trigonometric function,</p>
+<p>$$ \cos\theta = \cos(\theta_{\mathbf{a}} - \theta_{\mathbf{b}}) = \cos\theta_{\mathbf{a}}\cos\theta_{\mathbf{b}} + \sin\theta_{\mathbf{a}}\sin\theta_{\mathbf{b}} = \frac{a_1}{|\mathbf{a}|} \frac{b_1}{|\mathbf{b}|}+ \frac{a_2}{|\mathbf{a}|} \frac{b_2}{|\mathbf{b}|} $$</p>
+<p>Thus we get the two expressions of dot product of vectors,</p>
+<p>$$ |\mathbf{a}||\mathbf{b}|\cos\theta = a_1b_1+a_2b_2 $$</p>
+<h3 id="proof-of-two-cross-product-expression"><a href="#proof-of-two-cross-product-expression" class="headerlink" title="proof of two cross product expression"></a>proof of two cross product expression</h3><p>Similarly, let’s consider the trigonometric functions of $\sin\theta$,</p>
+<p>$$ \sin(\theta) = \sin(\theta_{\mathbf{b}} - \theta_{\mathbf{a}}) = \sin\theta_{\mathbf{b}}\cos\theta_{\mathbf{a}}-\cos\theta_{\mathbf{b}}\sin\theta_{\mathbf{a}} = \frac{a_1}{|\mathbf{a}|}\frac{b_2}{|\mathbf{b}|}-\frac{a_2}{|\mathbf{a}|}\frac{b_1}{|\mathbf{b}|} $$</p>
+<p>Thus we get the two expressions of the magnitude of the cross product of vectors,</p>
+<p>$$ |\mathbf{a}||\mathbf{b}|\sin\theta = a_1b_2-a_2b_1 $$</p>
+<h3 id="proof-of-trigonometric-functions"><a href="#proof-of-trigonometric-functions" class="headerlink" title="proof of trigonometric functions"></a>proof of trigonometric functions</h3><p>$$ \begin{align} e^{i(\theta_1-\theta_2)} &amp;= \cos(\theta_1-\theta_2) + i \sin(\theta_1-\theta_2) \ e^{i(\theta_1-\theta_2)} &amp;= e^{i\theta_1}/e^{i\theta_2} \ &amp;= \frac{\cos\theta_1 + i \sin\theta_1}{\cos\theta_2 + i \sin\theta_2} \ &amp;= (\cos\theta_1+i\sin\theta_1)(\cos\theta_2-i\sin\theta_2) \ &amp;= (\cos\theta_1 \cos\theta_2 + \sin\theta_1 \sin\theta_2) + i(\sin\theta_1 \cos\theta_2 - \cos\theta_1 \sin\theta_2) \end{align} $$</p>
+<p>The real part and imaginary part should be identical, thus</p>
+<p>$$ \cos(\theta_1-\theta_2) = \cos\theta_1 \cos\theta_2 + \sin\theta_1 \sin\theta_2 $$<br>$$ \sin(\theta_1-\theta_2) = \sin\theta_1 \cos\theta_2 - \cos\theta_1 \sin\theta_2 $$</p>
 
     </div>
 
@@ -267,11 +240,9 @@ I_3 &= \int \left( \frac{1}{2\pi} \int i \omega' g(\omega') e^{i \omega' x} d\om
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/phase-space/" rel="tag"># phase space</a>
-              <a href="/tags/entropy/" rel="tag"># entropy</a>
-              <a href="/tags/quantum-mechanics/" rel="tag"># quantum mechanics</a>
-              <a href="/tags/operator/" rel="tag"># operator</a>
-              <a href="/tags/uncertainty-principle/" rel="tag"># uncertainty principle</a>
+              <a href="/tags/Jacobian/" rel="tag"># Jacobian</a>
+              <a href="/tags/determinant/" rel="tag"># determinant</a>
+              <a href="/tags/integration-by-substitution/" rel="tag"># integration by substitution</a>
           </div>
 
         
@@ -280,13 +251,10 @@ I_3 &= \int \left( \frac{1}{2\pi} \int i \omega' g(\omega') e^{i \omega' x} d\om
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/10/30/phase-space-in-quantum-mechanics-2/" rel="prev" title="量子力学里的相空间体积--波函数">
-      <i class="fa fa-chevron-left"></i> 量子力学里的相空间体积--波函数
+    <a href="/2021/01/21/combinations-and-particle-statistics/" rel="prev" title="Combinations and particle statistics">
+      <i class="fa fa-chevron-left"></i> Combinations and particle statistics
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/11/29/saddle-point-approximation/" rel="next" title="鞍点近似">
-      鞍点近似 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -345,7 +313,7 @@ I_3 &= \int \left( \frac{1}{2\pi} \int i \omega' g(\omega') e^{i \omega' x} d\om
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%AD%90%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">量子力学基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E9%87%8F%E7%AE%97%E7%AC%A6"><span class="nav-number">1.1.</span> <span class="nav-text">动量算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.</span> <span class="nav-text">不确定关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E7%A9%BA%E9%97%B4%E6%9C%80%E5%B0%8F%E5%8D%95%E5%85%83"><span class="nav-number">2.</span> <span class="nav-text">相空间最小单元</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cross-product-for-parallelogram-area"><span class="nav-number">1.</span> <span class="nav-text">Cross product for parallelogram area</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Infinitesimal-area-in-integration"><span class="nav-number">2.</span> <span class="nav-text">Infinitesimal area in integration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix"><span class="nav-number">3.</span> <span class="nav-text">Appendix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-two-dot-product-expression"><span class="nav-number">3.1.</span> <span class="nav-text">proof of two dot product expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-two-cross-product-expression"><span class="nav-number">3.2.</span> <span class="nav-text">proof of two cross product expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-trigonometric-functions"><span class="nav-number">3.3.</span> <span class="nav-text">proof of trigonometric functions</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
