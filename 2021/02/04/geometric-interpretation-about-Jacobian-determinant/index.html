@@ -28,7 +28,7 @@
 <meta property="og:description" content="In scientific computing, integration by substitution is a very common skill. For example, we measured a series of practical values of a variable ($x’$), of which the distribution ($g(x’)$) was unknown">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-04T10:10:26.000Z">
-<meta property="article:modified_time" content="2021-02-04T10:20:31.977Z">
+<meta property="article:modified_time" content="2021-02-04T10:33:25.723Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="Jacobian">
 <meta property="article:tag" content="determinant">
@@ -184,7 +184,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-02-04 18:10:26 / Modified: 18:20:31" itemprop="dateCreated datePublished" datetime="2021-02-04T18:10:26+08:00">2021-02-04</time>
+              <time title="Created: 2021-02-04 18:10:26 / Modified: 18:33:25" itemprop="dateCreated datePublished" datetime="2021-02-04T18:10:26+08:00">2021-02-04</time>
             </span>
 
           
@@ -208,7 +208,7 @@
 <p>The cross product of two vectors generally produces a new vector which is perpendicular to the plane consist of the two original vectors. If $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are orthogonal unitary vectors, they satisify the following relationship via cross product,</p>
 <p>$$ \mathbf{i} \times \mathbf{j} = \mathbf{k} $$<br>$$ \mathbf{j} \times \mathbf{k} = \mathbf{i} $$<br>$$ \mathbf{k} \times \mathbf{i} = \mathbf{j} $$</p>
 <p>So vectors $\mathbf{a}$ and $\mathbf{b}$ can be rewritten as $\mathbf{a} = a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}$ and $\mathbf{b} = b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}$. Thus</p>
-<p>$$ \mathbf{a} \times \mathbf{b} = (a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}) \times (b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}) = (a_1b_2-a_2b_1)\mathbf{k} = \begin{vmatrix} a_1 &amp; a_2 \ b_1 &amp; b_2 \end{vmatrix} \mathbf{k} $$</p>
+<p>$$ \mathbf{a} \times \mathbf{b} = (a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}) \times (b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}) = (a_1b_2-a_2b_1)\mathbf{k} = \begin{vmatrix} a_1 &amp; a_2\b_1 &amp; b_2 \end{vmatrix} \mathbf{k} $$</p>
 <p>The magnitude of the cross product of two vectors can also be calculated by<br>$$ |\mathbf{a} \times \mathbf{b}| = |\mathbf{a}||\mathbf{b}|\sin\theta $$</p>
 <p>which is the area of the parallelogram having $\mathbf{a}$ and $\mathbf{b}$ as sides ($0 &lt; \theta &lt; \pi$).</p>
 <h2 id="Infinitesimal-area-in-integration"><a href="#Infinitesimal-area-in-integration" class="headerlink" title="Infinitesimal area in integration"></a>Infinitesimal area in integration</h2><p>For double integrals, we take a infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because x-axis and y-axis are orthogonal ($\sin\theta=1$).</p>
@@ -230,7 +230,7 @@
 <p>$$ \sin(\theta) = \sin(\theta_{\mathbf{b}} - \theta_{\mathbf{a}}) = \sin\theta_{\mathbf{b}}\cos\theta_{\mathbf{a}}-\cos\theta_{\mathbf{b}}\sin\theta_{\mathbf{a}} = \frac{a_1}{|\mathbf{a}|}\frac{b_2}{|\mathbf{b}|}-\frac{a_2}{|\mathbf{a}|}\frac{b_1}{|\mathbf{b}|} $$</p>
 <p>Thus we get the two expressions of the magnitude of the cross product of vectors,</p>
 <p>$$ |\mathbf{a}||\mathbf{b}|\sin\theta = a_1b_2-a_2b_1 $$</p>
-<h3 id="proof-of-trigonometric-functions"><a href="#proof-of-trigonometric-functions" class="headerlink" title="proof of trigonometric functions"></a>proof of trigonometric functions</h3><p>$$<br>\begin{align}<br>e^{i(\theta_1-\theta_2)} &amp; = \cos(\theta_1-\theta_2) + i \sin(\theta_1-\theta_2) \<br>e^{i(\theta_1-\theta_2)} &amp; = e^{i\theta_1}/e^{i\theta_2} \<br>                         &amp; = \frac{\cos\theta_1 + i \sin\theta_1}{\cos\theta_2 + i \sin\theta_2} \<br>                         &amp; = (\cos\theta_1+i\sin\theta_1)(\cos\theta_2-i\sin\theta_2) \<br>                         &amp; = (\cos\theta_1 \cos\theta_2 + \sin\theta_1 \sin\theta_2) + i(\sin\theta_1 \cos\theta_2 - \cos\theta_1 \sin\theta_2)<br>\end{align}<br>$$</p>
+<h3 id="proof-of-trigonometric-functions"><a href="#proof-of-trigonometric-functions" class="headerlink" title="proof of trigonometric functions"></a>proof of trigonometric functions</h3><p>$$<br>\begin{align}<br>e^{i(\theta_1-\theta_2)} &amp; = \cos(\theta_1-\theta_2) + i \sin(\theta_1-\theta_2)\<br>e^{i(\theta_1-\theta_2)} &amp; = e^{i\theta_1}/e^{i\theta_2}\<br>                         &amp; = \frac{\cos\theta_1 + i \sin\theta_1}{\cos\theta_2 + i \sin\theta_2}\<br>                         &amp; = (\cos\theta_1+i\sin\theta_1)(\cos\theta_2-i\sin\theta_2)\<br>                         &amp; = (\cos\theta_1 \cos\theta_2 + \sin\theta_1 \sin\theta_2) + i(\sin\theta_1 \cos\theta_2 - \cos\theta_1 \sin\theta_2)<br>\end{align}<br>$$</p>
 <p>The real part and imaginary part should be identical, thus</p>
 <p>$$ \cos(\theta_1-\theta_2) = \cos\theta_1 \cos\theta_2 + \sin\theta_1 \sin\theta_2 $$<br>$$ \sin(\theta_1-\theta_2) = \sin\theta_1 \cos\theta_2 - \cos\theta_1 \sin\theta_2 $$</p>
 
