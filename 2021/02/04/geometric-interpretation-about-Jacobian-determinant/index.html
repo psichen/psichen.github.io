@@ -28,7 +28,7 @@
 <meta property="og:description" content="In scientific computing, integration by substitution is a very common skill. For example, we measured a series of practical values of a variable ($x’$), of which the distribution ($g(x’)$) was unknown">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-04T10:10:26.000Z">
-<meta property="article:modified_time" content="2021-02-04T10:46:44.246Z">
+<meta property="article:modified_time" content="2021-02-04T12:46:41.829Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="Jacobian">
 <meta property="article:tag" content="determinant">
@@ -184,7 +184,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-02-04 18:10:26 / Modified: 18:46:44" itemprop="dateCreated datePublished" datetime="2021-02-04T18:10:26+08:00">2021-02-04</time>
+              <time title="Created: 2021-02-04 18:10:26 / Modified: 20:46:41" itemprop="dateCreated datePublished" datetime="2021-02-04T18:10:26+08:00">2021-02-04</time>
             </span>
 
           
@@ -200,23 +200,23 @@
       
         <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable ($x’$), of which the distribution ($g(x’)$) was unknown. But we know the theoretic distribution of the variable ($f(x)$) and the correction relationship or mapping relationship between theoretic and practical values ($x’=c(x)$). <a id="more"></a>So we can get the analytic formula of the distribution $g(x’)$ as following</p>
 <p>$$ \int_{x’ \in R’} g(x’) dx’ = \int_{x \in R} f(x) \frac{dx’}{dx} dx $$</p>
-<p>This is the one dimension situation of Jacobian determinant in integration by substitution.</p>
-<h2 id="Cross-product-for-parallelogram-area"><a href="#Cross-product-for-parallelogram-area" class="headerlink" title="Cross product for parallelogram area"></a>Cross product for parallelogram area</h2><p>Let’s consider two vectors $\mathbf{a}^T = [a_1,a_2], \mathbf{b}^T = [b_1, b_2]$. We are very familar with the dot product or the inner product of the two vectors,</p>
+<p>This is the one dimension situation of Jacobian determinant in integrals by substitution.</p>
+<h2 id="Cross-products-for-parallelogram-area"><a href="#Cross-products-for-parallelogram-area" class="headerlink" title="Cross products for parallelogram area"></a>Cross products for parallelogram area</h2><p>Let’s consider two vectors $\mathbf{a}^T = [a_1,a_2], \mathbf{b}^T = [b_1, b_2]$. We are very familar with the dot product or the inner product of the two vectors,</p>
 <p>$$ \mathbf{a} \cdot \mathbf{b} = \mathbf{a}^T\mathbf{b} = a_1b_1+a_2b_2 $$</p>
 <p>the name <em>inner</em> comes from the transpose symbol $T$ inside the two vectors. The inner product can also be calculated as</p>
 <p>$$ \mathbf{a} \cdot \mathbf{b} = |\mathbf{a}||\mathbf{b}|\cos\theta $$</p>
 <p>The cross product of two vectors generally produces a new vector which is perpendicular to the plane consist of the two original vectors. If $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are orthogonal unitary vectors, they satisify the following relationship via cross product,</p>
 <p>$$ \mathbf{i} \times \mathbf{j} = \mathbf{k} $$<br>$$ \mathbf{j} \times \mathbf{k} = \mathbf{i} $$<br>$$ \mathbf{k} \times \mathbf{i} = \mathbf{j} $$</p>
 <p>So vectors $\mathbf{a}$ and $\mathbf{b}$ can be rewritten as $\mathbf{a} = a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}$ and $\mathbf{b} = b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}$. Thus</p>
-<p>$$ \mathbf{a} \times \mathbf{b} = (a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}) \times (b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}) = (a_1b_2-a_2b_1)\mathbf{k} = \begin{vmatrix} a_1&amp;a_2\b_1&amp;b_2 \end{vmatrix} \mathbf{k} $$</p>
+<p>$$ \mathbf{a} \times \mathbf{b} = (a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}) \times (b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}) = (a_1b_2-a_2b_1)\mathbf{k} = \begin{vmatrix} a_1&amp;a_2 \\ b_1&amp;b_2 \end{vmatrix} \mathbf{k} $$</p>
 <p>The magnitude of the cross product of two vectors can also be calculated by<br>$$ |\mathbf{a} \times \mathbf{b}| = |\mathbf{a}||\mathbf{b}|\sin\theta $$</p>
 <p>which is the area of the parallelogram having $\mathbf{a}$ and $\mathbf{b}$ as sides ($0 &lt; \theta &lt; \pi$).</p>
-<h2 id="Infinitesimal-area-in-integration"><a href="#Infinitesimal-area-in-integration" class="headerlink" title="Infinitesimal area in integration"></a>Infinitesimal area in integration</h2><p>For double integrals, we take a infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because x-axis and y-axis are orthogonal ($\sin\theta=1$).</p>
-<p>Now let us consider a function $g(u,v)$ of variables $u$ and $v$ while $u=u(x,y)$ and $v=v(x,y)$.If we want to calculate the integral $\int g(u,v) dudv$, we must firstly know the infinitesimal area $dudv$. Because $u, v$ are functions of $x,y$, they have following relationship,</p>
+<h2 id="Infinitesimal-area-in-integration"><a href="#Infinitesimal-area-in-integration" class="headerlink" title="Infinitesimal area in integration"></a>Infinitesimal area in integration</h2><p>For double integrals, we take an infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because x-axis and y-axis are orthogonal ($\sin\theta=1$).</p>
+<p>Now let us consider a function $g(u,v)$ of variables $u$ and $v$ while $u=u(x,y)$ and $v=v(x,y)$. If we want to calculate the integral $\int g(u,v) dudv$, we must firstly know the infinitesimal area $dudv$. Because $u, v$ are functions of $x,y$, they have following relationship,</p>
 <p>$$ du = \frac{du}{dx}dx+\frac{du}{dy}dy $$<br>$$ dv = \frac{dv}{dx}dx+\frac{dv}{dy}dy $$</p>
 <p>It’s analogous that vector $\mathbf{u}$ has vector components $\frac{du}{dx}dx$ or $\frac{du}{dy}dy$ on x-axis or y-axis direction respectively, and same for $\mathbf{v}$.</p>
 <p>It’s a wrong way to get the infinitesimal area by multiplying $du$ and $dv$ directly. Because $u$ and $v$ are not guaranteed to be orthogonal. But we can get the infinitesimal area by calculating the cross product of $du$ and $dv$,</p>
-<p>$$ du \times dv = (u_xv_y-u_yv_x)dxdy = \begin{vmatrix} u_x &amp; u_y \ v_x &amp; v_y \end{vmatrix} dxdy = \frac{\partial(u,v)}{\partial(x,y)} dxdy $$</p>
+<p>$$ du \times dv = (u_xv_y-u_yv_x)dxdy = \begin{vmatrix} u_x &amp; u_y \\ v_x &amp; v_y \end{vmatrix} dxdy = \frac{\partial(u,v)}{\partial(x,y)} dxdy $$</p>
 <p>$\frac{\partial(u,v)}{\partial(x,y)}$ is called the Jacobian determinant. It can be seen as the chage ratio of area (or volume <em>etc.</em>) after variables mapping.</p>
 <h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><h3 id="proof-of-two-dot-product-expression"><a href="#proof-of-two-dot-product-expression" class="headerlink" title="proof of two dot product expression"></a>proof of two dot product expression</h3><p>Let’s consider two vectors $\mathbf{a}$ and $\mathbf{b}$.</p>
 <p>$$ \mathbf{a} = a_1\mathbf{i} + a_2\mathbf{j} $$<br>$$ \mathbf{b} = b_1\mathbf{i} + b_2\mathbf{j} $$</p>
@@ -317,7 +317,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cross-product-for-parallelogram-area"><span class="nav-number">1.</span> <span class="nav-text">Cross product for parallelogram area</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Infinitesimal-area-in-integration"><span class="nav-number">2.</span> <span class="nav-text">Infinitesimal area in integration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix"><span class="nav-number">3.</span> <span class="nav-text">Appendix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-two-dot-product-expression"><span class="nav-number">3.1.</span> <span class="nav-text">proof of two dot product expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-two-cross-product-expression"><span class="nav-number">3.2.</span> <span class="nav-text">proof of two cross product expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-trigonometric-functions"><span class="nav-number">3.3.</span> <span class="nav-text">proof of trigonometric functions</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cross-products-for-parallelogram-area"><span class="nav-number">1.</span> <span class="nav-text">Cross products for parallelogram area</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Infinitesimal-area-in-integration"><span class="nav-number">2.</span> <span class="nav-text">Infinitesimal area in integration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix"><span class="nav-number">3.</span> <span class="nav-text">Appendix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-two-dot-product-expression"><span class="nav-number">3.1.</span> <span class="nav-text">proof of two dot product expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-two-cross-product-expression"><span class="nav-number">3.2.</span> <span class="nav-text">proof of two cross product expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-of-trigonometric-functions"><span class="nav-number">3.3.</span> <span class="nav-text">proof of trigonometric functions</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
