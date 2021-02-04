@@ -28,7 +28,7 @@
 <meta property="og:description" content="鞍点法近似(saddle point approximation)，又称为stationary phase approximation，用于计算下列积分在$ N \to \infty $时的渐进行为。 $$ I(N) &#x3D; \int_C e^{Nf(x)} dx $$ 其中涉及到复变函数的一些基本性质。 复数及复变函数性质复变量$z$在复平面可表示为$ z &#x3D; x+yi $，其复变函数可表示为$ f">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-29T05:52:53.000Z">
-<meta property="article:modified_time" content="2021-02-04T10:34:57.495Z">
+<meta property="article:modified_time" content="2021-02-04T10:39:26.103Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="saddle point">
 <meta property="article:tag" content="approximation">
@@ -190,7 +190,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-04 18:34:57" itemprop="dateModified" datetime="2021-02-04T18:34:57+08:00">2021-02-04</time>
+                <time title="Modified: 2021-02-04 18:39:26" itemprop="dateModified" datetime="2021-02-04T18:39:26+08:00">2021-02-04</time>
               </span>
 
           
@@ -213,7 +213,7 @@
 <a id="more"></a>
 
 <h3 id="C-R条件"><a href="#C-R条件" class="headerlink" title="C-R条件"></a>C-R条件</h3><p>复变函数$f(z)$的极限存在的必要条件之一为与$z$逼近极限的路径无关，所以我们可以考虑分别从实轴和虚轴去逼近函数极限来求$f(z)$的导数。</p>
-<p>从实轴求导：$ z+\Delta z = (x+\Delta x) + yi $<br>$$<br>\begin{align}<br>f’(z) &amp; = \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \<br>&amp; = \lim_{\Delta x \to 0} \frac{\Delta u + \Delta vi}{\Delta x} \nonumber \<br>&amp; = u_x + v_xi<br>\end{align}<br>$$</p>
+<p>从实轴求导：$ z+\Delta z = (x+\Delta x) + yi $<br>$$<br>\begin{aligned}<br>f’(z) &amp; = \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \<br>&amp; = \lim_{\Delta x \to 0} \frac{\Delta u + \Delta vi}{\Delta x} \nonumber \<br>&amp; = u_x + v_xi<br>\end{aligned}<br>$$</p>
 <p>从虚轴求导：$z+\Delta z = x+(y+\Delta y)i $<br>$$<br>\begin{align}<br>f’(z) &amp; = \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta z} \nonumber \<br>&amp; = \lim_{\Delta y \to 0} \frac{\Delta u + \Delta vi}{\Delta yi} \nonumber \<br>&amp; = v_y - u_yi<br>\end{align}<br>$$</p>
 <p>比较$(1)$和$(2)$，我们就可以得到可导函数的Cauchy-Riemann条件：<br>$$<br>\begin{cases}<br>u_x = v_y \<br>u_y = -v_x<br>\end{cases}<br>$$</p>
 <p>###调和性<br>满足解析条件的复变函数$f(z)$，其实部函数$u(x, y)$和虚部函数$v(x, y)$具有调和性（Harmonicity）:</p>
