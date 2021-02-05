@@ -222,29 +222,29 @@
 </ol>
 <p>染料分子达到triplet state或发生猝灭，都会降低光子产生速率，对成像、荧光单分子检测，特别是对快过程的研究都会造成影响。</p>
 <a id="more"></a>
-<h2 id="猝灭原理"><a class="markdownIt-Anchor" href="#猝灭原理"></a> 猝灭原理</h2>
-<h3 id="化学因素"><a class="markdownIt-Anchor" href="#化学因素"></a> 化学因素</h3>
+<h2 id="猝灭原理">猝灭原理</h2>
+<h3 id="化学因素">化学因素</h3>
 <p>当染料处于S<sub>1</sub>时，其化学活性较高，容易与溶液中的singlet oxygen或自由基发生反应，造成染料化学结构改变，从而发生荧光猝灭，永久失去发光能力。</p>
-<h3 id="光物理因素"><a class="markdownIt-Anchor" href="#光物理因素"></a> 光物理因素</h3>
+<h3 id="光物理因素">光物理因素</h3>
 <p>在较低的激发光强下，染料只经历three-level体系(S<sub>0</sub>, S<sub>1</sub>, T<sub>1</sub>)，而在较高激发光强下(&gt; ~70 kW/cm<sup>2</sup>)，染料经历five-level体系(S<sub>0</sub>, S<sub>1</sub>, T<sub>1</sub>, S<sub>n</sub>, T<sub>n</sub>)<sup>1</sup>。</p>
-<p><img src="https://i.loli.net/2019/09/27/l7h9quryPtb3KM6.jpg" alt="three/five level system" /></p>
+<p><img src="https://i.loli.net/2019/09/27/l7h9quryPtb3KM6.jpg" alt="three/five level system"></p>
 <p>处于第一激发态的染料(S<sub>1</sub>或T<sub>1</sub>)，还可吸收短波长的激光光子，进一步被激发到更高的能级(S<sub>n</sub>或T<sub>n</sub>)，从而增大染料猝灭的概率<sup>2</sup>。</p>
-<h3 id="猝灭概率singlet-triplet"><a class="markdownIt-Anchor" href="#猝灭概率singlet-triplet"></a> 猝灭概率singlet &gt; triplet</h3>
+<h3 id="猝灭概率singlet-triplet">猝灭概率singlet &gt; triplet</h3>
 <p>通过不同调控频率的ALEX激光，来研究染料singlet和triplet的猝灭概率<sup>2</sup>。</p>
 <p>当ALEX激光的频率在ns尺度时，正好落在荧光寿命的时间尺度。红光先对acceptor染料分子激发，在ns尺度的延迟之后，蓝光进行激发，此时acceptor荧光分子处于S<sub>1</sub>，吸收蓝光光子，进一步激发到更高能级(S<sub>n</sub>或T<sub>n</sub>)，发生猝灭，荧光信号降低。当延迟时间超过ns尺度后，acceptor的荧光信号得到恢复。</p>
-<p><img src="https://i.loli.net/2019/09/27/7KLUgpYbwJV5rv1.jpg" alt="ns-delay" /></p>
+<p><img src="https://i.loli.net/2019/09/27/7KLUgpYbwJV5rv1.jpg" alt="ns-delay"></p>
 <p>当ALEX的延迟时间在μs尺度时，此时染料分子应处于triplet state，而荧光信号改变不大。说明在smFRET中，猝灭主要是由acceptor染料的S<sub>1</sub>吸收短波长的光子带来的，可见染料猝灭的很大一部分原因，都是因为singlet state不能稳定地弛豫到ground state。</p>
-<p><img src="https://i.loli.net/2019/09/27/7nYuxv94D6dVpcI.jpg" alt="us-delay" /></p>
-<h2 id="影响"><a class="markdownIt-Anchor" href="#影响"></a> 影响</h2>
+<p><img src="https://i.loli.net/2019/09/27/7nYuxv94D6dVpcI.jpg" alt="us-delay"></p>
+<h2 id="影响">影响</h2>
 <p>如果荧光分子的猝灭时间尺度和分子在confocal显微镜的聚焦体积内的扩散时间相当的话（~ 10<sup>2</sup> μs)，那么single-molecule FRET的分布会有拖尾，因为分子在聚焦体积内，acceptor猝灭，此时donor仍发光，造成表观的FRET效率减小<sup>2</sup>，<strong>拖尾有时容易让人误以为是新组分的存在。</strong></p>
-<p><img src="https://i.loli.net/2019/09/27/4GxiQAnvfHIyOoK.jpg" alt="FRET-trailing" /></p>
-<h2 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h2>
-<h3 id="除氧trolox"><a class="markdownIt-Anchor" href="#除氧trolox"></a> 除氧+Trolox</h3>
+<p><img src="https://i.loli.net/2019/09/27/4GxiQAnvfHIyOoK.jpg" alt="FRET-trailing"></p>
+<h2 id="解决方法">解决方法</h2>
+<h3 id="除氧-Trolox">除氧+Trolox</h3>
 <p>常用的除氧体系是葡萄糖+葡萄糖氧化酶+过氧化氢酶。然而氧气是非常高效的triplet quencher，因此将氧气除去后，需要再加入Trolox作为染料的triplet quencher。该配方一般用于表面固定的实验，减少荧光染料blinking和bleaching的概率。</p>
-<h3 id="trolox-cocktail"><a class="markdownIt-Anchor" href="#trolox-cocktail"></a> Trolox cocktail</h3>
-<p>2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺(<span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \ce at position 1: \̲c̲e̲{ NH2-CH2-CH2-S…'>\ce{ NH2-CH2-CH2-SH }</span>)和1 mM Trolox，其中半胱胺作为singlet oxygen和自由基的quencher，Trolox作为染料triplet quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50 μs的时间分辨率<sup>4</sup>。</p>
-<p><img src="https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg" alt="trolox-cocktail" /></p>
-<h2 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h2>
+<h3 id="Trolox-cocktail">Trolox cocktail</h3>
+<p>2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺(\ce{ NH2-CH2-CH2-SH })和1 mM Trolox，其中半胱胺作为singlet oxygen和自由基的quencher，Trolox作为染料triplet quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50 μs的时间分辨率<sup>4</sup>。</p>
+<p><img src="https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg" alt="trolox-cocktail"></p>
+<h2 id="References">References</h2>
 <ol>
 <li>Eggeling, Christian, et al. “Photobleaching of fluorescent dyes under conditions used for single-molecule detection: Evidence of two-step photolysis.” Analytical chemistry 70.13 (1998): 2651-2659.</li>
 <li>Kong, Xiangxu, et al. “Photobleaching pathways in single-molecule FRET experiments.” Journal of the American Chemical Society 129.15 (2007): 4643-4654</li>
@@ -332,7 +332,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8C%9D%E7%81%AD%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text"> 猝灭原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%96%E5%AD%A6%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.1.</span> <span class="nav-text"> 化学因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%89%A9%E7%90%86%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text"> 光物理因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8C%9D%E7%81%AD%E6%A6%82%E7%8E%87singlet-triplet"><span class="nav-number">1.3.</span> <span class="nav-text"> 猝灭概率singlet &gt; triplet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%B1%E5%93%8D"><span class="nav-number">2.</span> <span class="nav-text"> 影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text"> 解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%A4%E6%B0%A7trolox"><span class="nav-number">3.1.</span> <span class="nav-text"> 除氧+Trolox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trolox-cocktail"><span class="nav-number">3.2.</span> <span class="nav-text"> Trolox cocktail</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">4.</span> <span class="nav-text"> References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8C%9D%E7%81%AD%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">猝灭原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%96%E5%AD%A6%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.1.</span> <span class="nav-text">化学因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%89%A9%E7%90%86%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">光物理因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8C%9D%E7%81%AD%E6%A6%82%E7%8E%87singlet-triplet"><span class="nav-number">1.3.</span> <span class="nav-text">猝灭概率singlet &gt; triplet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%B1%E5%93%8D"><span class="nav-number">2.</span> <span class="nav-text">影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%A4%E6%B0%A7-Trolox"><span class="nav-number">3.1.</span> <span class="nav-text">除氧+Trolox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trolox-cocktail"><span class="nav-number">3.2.</span> <span class="nav-text">Trolox cocktail</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -461,6 +461,8 @@
   
       
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
 
   
