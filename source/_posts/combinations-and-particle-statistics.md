@@ -2,7 +2,6 @@
 title: Combinations and particle statistics
 date: 2021-01-21 23:55:00
 tags: [permutation, combination, particle statistics]
-mathjax: true
 ---
 
 ## Permutation

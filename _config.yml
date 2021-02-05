@@ -106,3 +106,11 @@ deploy:
   type: git
   repo: git@github.com:psichen/psichen.github.io.git
   branch: master
+
+# renderer pandoc for katex
+pandoc:
+  filters:
+  extra:
+  template:
+  meta:
+  mathEngine:

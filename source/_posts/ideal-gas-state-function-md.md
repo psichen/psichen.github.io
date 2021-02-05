@@ -2,10 +2,9 @@
 title: 理想气体状态方程的统计力学推导
 date: 2020-01-19 19:52:15
 tags: [ideal gas, statistic mechanics, phase space]
-mathjax: true
 ---
 
-理想气体状态方程$$pV = nRT = Nk_BT $$想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。
+理想气体状态方程$pV = nRT = Nk_BT$想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。
 
 ## 系综
 一定条件下体系可能存在的状态的集合称之为ensemble（系综），是系统状态的概率分布，可与概率空间进行类比。
@@ -45,7 +44,7 @@ $$ \int_{-\infty}^{+\infty} \Theta(x) \psi(x) dx = \int_0^{+\infty} \psi(x) dx $
 
 $$ \Omega(E) \delta E = \int_{E<\mathcal H (\mathbb P, \mathbb Q) < E+\delta E} d\mathbb P d\mathbb Q $$
 
-##理想气体状态方程
+## 理想气体状态方程
 
 $$ \Omega(E) = V^N \cdot \frac{ \frac{3N}{2E} \pi^{\frac{3N}{2}} (2mE)^{3N} }{ (\frac{3N}{2})! } $$
 $$ S = k_B ln\Omega(E) $$
