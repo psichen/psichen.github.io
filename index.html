@@ -197,7 +197,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable (<span class="math inline">x&#39;</span>), of which the distribution (<span class="math inline">g(x&#39;)</span>) was unknown. But we know the theoretic distribution of the variable (<span class="math inline">f(x)</span>) and the correction relationship or mapping relationship between theoretic and practical values (<span class="math inline">x&#39;=c(x)</span>).
+          <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable (<span class="math inline">\(x&#39;\)</span>), of which the distribution (<span class="math inline">\(g(x&#39;)\)</span>) was unknown. But we know the theoretic distribution of the variable (<span class="math inline">\(f(x)\)</span>) and the correction relationship or mapping relationship between theoretic and practical values (<span class="math inline">\(x&#39;=c(x)\)</span>).
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/02/04/geometric-interpretation-about-Jacobian-determinant/#more" rel="contents">
@@ -270,10 +270,10 @@
 
       
           <h2 id="permutation">Permutation</h2>
-<p>Let's first consider a set of <span class="math inline">n</span> objects, which are all different. The number of all possible arrangements (permutations) is</p>
-<p><span class="math display"> n(n-1) \cdots 1 = n! </span></p>
-<p>Generally, if we select <span class="math inline">k (&lt;n)</span> objects from <span class="math inline">n</span>, the number of permuations is</p>
-<p><span class="math display"> n(n-1)\cdot\cdot\cdot(n-k+1) = \frac{n!}{(n-k)!} = P(n, k) </span></p>
+<p>Let's first consider a set of <span class="math inline">\(n\)</span> objects, which are all different. The number of all possible arrangements (permutations) is</p>
+<p><span class="math display">\[ n(n-1) \cdots 1 = n! \]</span></p>
+<p>Generally, if we select <span class="math inline">\(k (&lt;n)\)</span> objects from <span class="math inline">\(n\)</span>, the number of permuations is</p>
+<p><span class="math display">\[ n(n-1)\cdot\cdot\cdot(n-k+1) = \frac{n!}{(n-k)!} = P(n, k) \]</span></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/01/21/combinations-and-particle-statistics/#more" rel="contents">
@@ -419,7 +419,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>理想气体状态方程<span class="math inline">pV = nRT = Nk_BT</span>想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。</p>
+          <p>理想气体状态方程<span class="math inline">\(pV = nRT = Nk_BT\)</span>想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。</p>
 <h2 id="系综">系综</h2>
 <p>一定条件下体系可能存在的状态的集合称之为ensemble（系综），是系统状态的概率分布，可与概率空间进行类比。</p>
           <!--noindex-->
@@ -493,13 +493,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>鞍点法近似(saddle point approximation)，又称为stationary phase approximation，用于计算下列积分在<span class="math inline">N \to \infty</span>时的渐进行为。</p>
-<p><span class="math display"> I(N) = \int_C e^{Nf(x)} dx </span></p>
+          <p>鞍点法近似(saddle point approximation)，又称为stationary phase approximation，用于计算下列积分在<span class="math inline">\(N \to \infty\)</span>时的渐进行为。</p>
+<p><span class="math display">\[ I(N) = \int_C e^{Nf(x)} dx \]</span></p>
 <p>其中涉及到复变函数的一些基本性质。</p>
 <h2 id="复数及复变函数性质">复数及复变函数性质</h2>
-<p>复变量<span class="math inline">z</span>在复平面可表示为<span class="math inline">z = x+yi</span>，其复变函数可表示为<span class="math inline">f(z) = u + vi</span>，其中<span class="math inline">u = u(x, y)， v = v(x, y)</span>。</p>
-<p>另外也可以用极坐标来表示：<span class="math inline">z = |z|e^{i \phi}</span>，其中<span class="math inline">\phi</span>决定了复变量的方向。</p>
-<p>当<span class="math inline">f(z)</span>在区域内处处可导，则称<span class="math inline">f(z)</span>为该区域内解析。而解析函数的充要条件为函数<span class="math inline">f(z)</span>在该区域内连续，同时满足C-R条件(Cauchy-Riemann condition)。</p>
+<p>复变量<span class="math inline">\(z\)</span>在复平面可表示为<span class="math inline">\(z = x+yi\)</span>，其复变函数可表示为<span class="math inline">\(f(z) = u + vi\)</span>，其中<span class="math inline">\(u = u(x, y)， v = v(x, y)\)</span>。</p>
+<p>另外也可以用极坐标来表示：<span class="math inline">\(z = |z|e^{i \phi}\)</span>，其中<span class="math inline">\(\phi\)</span>决定了复变量的方向。</p>
+<p>当<span class="math inline">\(f(z)\)</span>在区域内处处可导，则称<span class="math inline">\(f(z)\)</span>为该区域内解析。而解析函数的充要条件为函数<span class="math inline">\(f(z)\)</span>在该区域内连续，同时满足C-R条件(Cauchy-Riemann condition)。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/11/29/saddle-point-approximation/#more" rel="contents">
@@ -573,9 +573,9 @@
       
           <h2 id="量子力学基础">量子力学基础</h2>
 <p>物质波为概率波，将单色平面波写为如下形式：</p>
-<p><span class="math display"> \psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} </span></p>
-<p>方便之后归一化为<span class="math inline">\delta</span>函数。其振幅的平方<span class="math inline">|\psi(r,t)|^2</span>对应于粒子坐标的概率密度，因此对于粒子的平均位置<span class="math inline">&lt;r&gt;</span>可以从下式求出：</p>
-<p><span class="math display"> &lt;r&gt; = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr </span></p>
+<p><span class="math display">\[ \psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} \]</span></p>
+<p>方便之后归一化为<span class="math inline">\(\delta\)</span>函数。其振幅的平方<span class="math inline">\(|\psi(r,t)|^2\)</span>对应于粒子坐标的概率密度，因此对于粒子的平均位置<span class="math inline">\(&lt;r&gt;\)</span>可以从下式求出：</p>
+<p><span class="math display">\[ &lt;r&gt; = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr \]</span></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/31/phase-space-in-quantum-mechanics-3/#more" rel="contents">
@@ -649,10 +649,10 @@
       
           <h2 id="波函数基础">波函数基础</h2>
 <p>平面单色波函数：</p>
-<p><span class="math display"> \psi(r,t) = \phi e^{i(k \cdot r-\omega t)} </span></p>
-<p>其中<span class="math inline">k=2\pi/\lambda</span>为波数，<span class="math inline">\omega=2\pi f</span>为角频率。其振幅<span class="math inline">\phi</span>不随时间变化，为定态波函数（并不意味着波函数不随时间变化）。</p>
+<p><span class="math display">\[ \psi(r,t) = \phi e^{i(k \cdot r-\omega t)} \]</span></p>
+<p>其中<span class="math inline">\(k=2\pi/\lambda\)</span>为波数，<span class="math inline">\(\omega=2\pi f\)</span>为角频率。其振幅<span class="math inline">\(\phi\)</span>不随时间变化，为定态波函数（并不意味着波函数不随时间变化）。</p>
 <p>波函数来自于下面的二阶偏微分方程，平面单色波是其一个特解：</p>
-<p><span class="math display"> \frac{\omega^2}{k^2} \nabla^2 \psi = \frac{\partial^2 \psi}{\partial t^2} </span></p>
+<p><span class="math display">\[ \frac{\omega^2}{k^2} \nabla^2 \psi = \frac{\partial^2 \psi}{\partial t^2} \]</span></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/30/phase-space-in-quantum-mechanics-2/#more" rel="contents">
@@ -724,9 +724,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵<span class="math inline">S</span>和相空间<span class="math inline">\Gamma</span>的体积有关：</p>
-<p><span class="math display"> S = k_Bln(|\Gamma|) </span></p>
-<p>根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变<span class="math inline">\Gamma</span>的体积单位时，会在<span class="math inline">S</span>加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。</p>
+          <p>最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵<span class="math inline">\(S\)</span>和相空间<span class="math inline">\(\Gamma\)</span>的体积有关：</p>
+<p><span class="math display">\[ S = k_Bln(|\Gamma|) \]</span></p>
+<p>根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变<span class="math inline">\(\Gamma\)</span>的体积单位时，会在<span class="math inline">\(S\)</span>加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/29/phase-space-in-quantum-mechanics-1/#more" rel="contents">
@@ -798,14 +798,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>热力学中都会提到，热量<span class="math inline">Q</span>不是一个恰当微分，写为<span class="math inline">\delta Q</span>，这是因为<span class="math inline">\delta Q</span>的积分和积分路径有关，也就是说对于两条起点和终点都是<span class="math inline">A</span>和<span class="math inline">B</span>，但是中间过程不同的路径<span class="math inline">L_1</span>和<span class="math inline">L_2</span>而言，有：</p>
-<p><span class="math display"> \int_{L_1} \delta Q \neq \int_{L_2} \delta Q </span></p>
-<p>类似的，体积功<span class="math inline">\delta W</span>的积分也与路径有关，这一点很好理解。假设有2个过程A, B：</p>
+          <p>热力学中都会提到，热量<span class="math inline">\(Q\)</span>不是一个恰当微分，写为<span class="math inline">\(\delta Q\)</span>，这是因为<span class="math inline">\(\delta Q\)</span>的积分和积分路径有关，也就是说对于两条起点和终点都是<span class="math inline">\(A\)</span>和<span class="math inline">\(B\)</span>，但是中间过程不同的路径<span class="math inline">\(L_1\)</span>和<span class="math inline">\(L_2\)</span>而言，有：</p>
+<p><span class="math display">\[ \int_{L_1} \delta Q \neq \int_{L_2} \delta Q \]</span></p>
+<p>类似的，体积功<span class="math inline">\(\delta W\)</span>的积分也与路径有关，这一点很好理解。假设有2个过程A, B：</p>
 <figure>
 <img src="http://muchongimg.xmcimg.com/data/bcs/2014/0701/w108h1175073_1404207867_483.jpg#opennewwindow" alt="path function" /><figcaption>path function</figcaption>
 </figure>
-<p>由于<span class="math inline">W=\int PdV</span>，曲线A, B下方与x轴形成的面积即对应的体积功，很容易看出：</p>
-<p><span class="math display"> W_A \neq W_B </span></p>
+<p>由于<span class="math inline">\(W=\int PdV\)</span>，曲线A, B下方与x轴形成的面积即对应的体积功，很容易看出：</p>
+<p><span class="math display">\[ W_A \neq W_B \]</span></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/13/inexact-differential-of-Q/#more" rel="contents">
@@ -1084,10 +1084,58 @@
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

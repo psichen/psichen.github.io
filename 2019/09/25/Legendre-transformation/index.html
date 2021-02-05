@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="热力学中有几个函数概念十分容易混淆：内能(U)，焓(H)，亥姆霍兹自由能(A)和吉布斯自由能(G)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。 Legendre变换 基本形式 对于一个函数f(x_1,...,x_k)，其微分形式为：  df &#x3D; \sum_{i&#x3D;1}^{k} \frac{\partial f}{\partial x_i} dx_i  令u_i \equiv \f">
+  <meta name="description" content="热力学中有几个函数概念十分容易混淆：内能(\(U\))，焓(\(H\))，亥姆霍兹自由能(\(A\))和吉布斯自由能(\(G\))，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。 Legendre变换 基本形式 对于一个函数\(f(x_1,...,x_k)\)，其微分形式为： \[ df &#x3D; \sum_{i&#x3D;1}^{k} \frac{\partial f}{\partial x_i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Legendre变换的理解和在热力学中的应用">
 <meta property="og:url" content="http://www.psichen.com/2019/09/25/Legendre-transformation/index.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="热力学中有几个函数概念十分容易混淆：内能(U)，焓(H)，亥姆霍兹自由能(A)和吉布斯自由能(G)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。 Legendre变换 基本形式 对于一个函数f(x_1,...,x_k)，其微分形式为：  df &#x3D; \sum_{i&#x3D;1}^{k} \frac{\partial f}{\partial x_i} dx_i  令u_i \equiv \f">
+<meta property="og:description" content="热力学中有几个函数概念十分容易混淆：内能(\(U\))，焓(\(H\))，亥姆霍兹自由能(\(A\))和吉布斯自由能(\(G\))，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。 Legendre变换 基本形式 对于一个函数\(f(x_1,...,x_k)\)，其微分形式为： \[ df &#x3D; \sum_{i&#x3D;1}^{k} \frac{\partial f}{\partial x_i">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-09-25T12:41:00.000Z">
 <meta property="article:modified_time" content="2021-02-05T08:58:19.732Z">
@@ -209,41 +209,41 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>热力学中有几个函数概念十分容易混淆：内能(<span class="math inline">U</span>)，焓(<span class="math inline">H</span>)，亥姆霍兹自由能(<span class="math inline">A</span>)和吉布斯自由能(<span class="math inline">G</span>)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。</p>
+        <p>热力学中有几个函数概念十分容易混淆：内能(<span class="math inline">\(U\)</span>)，焓(<span class="math inline">\(H\)</span>)，亥姆霍兹自由能(<span class="math inline">\(A\)</span>)和吉布斯自由能(<span class="math inline">\(G\)</span>)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。</p>
 <h2 id="legendre变换">Legendre变换</h2>
 <h3 id="基本形式">基本形式</h3>
-<p>对于一个函数<span class="math inline">f(x_1,...,x_k)</span>，其微分形式为：</p>
-<p><span class="math display"> df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i </span></p>
-<p>令<span class="math inline">u_i \equiv \frac{\partial f}{\partial x_i}</span>，<span class="math inline">u_i</span>与<span class="math inline">x_i</span>就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：</p>
-<p><span class="math display"> g \equiv f-\sum_{i=1}^{r} u_ix_i \quad (r \le k) </span></p>
+<p>对于一个函数<span class="math inline">\(f(x_1,...,x_k)\)</span>，其微分形式为：</p>
+<p><span class="math display">\[ df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i \]</span></p>
+<p>令<span class="math inline">\(u_i \equiv \frac{\partial f}{\partial x_i}\)</span>，<span class="math inline">\(u_i\)</span>与<span class="math inline">\(x_i\)</span>就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：</p>
+<p><span class="math display">\[ g \equiv f-\sum_{i=1}^{r} u_ix_i \quad (r \le k) \]</span></p>
 <a id="more"></a>
 <p>其微分形式为：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 dg &amp;= df - \sum_{i=1}^{r} u_idx_i - \sum_{i=1}^{r} x_idu_i \\
    &amp;= \sum_{i=r+1}^{k} u_idx_i - \sum_{i=1}^{r} x_idu_i \\
 \end{aligned}
-</span></p>
-<p>从微分形式可见，函数<span class="math inline">g=g(u_1,...u_r,x_{r+1},...x_k)</span>，前<span class="math inline">r</span>个自变量已经由<span class="math inline">x_i</span>变换为<span class="math inline">u_i</span>。</p>
+\]</span></p>
+<p>从微分形式可见，函数<span class="math inline">\(g=g(u_1,...u_r,x_{r+1},...x_k)\)</span>，前<span class="math inline">\(r\)</span>个自变量已经由<span class="math inline">\(x_i\)</span>变换为<span class="math inline">\(u_i\)</span>。</p>
 <h3 id="几何含义">几何含义</h3>
-<p>假设存在一个凹函数<span class="math inline">f(x)</span>，其Legendre变换为<span class="math inline">g=f-ux</span>，我们可以将<span class="math inline">ux+g</span>看做是经过(<span class="math inline">x</span>, <span class="math inline">f(x)</span>)的函数<span class="math inline">f</span>的切线，其截距为<span class="math inline">g</span>，斜率为<span class="math inline">u=\frac{\partial f}{\partial x}</span>。</p>
+<p>假设存在一个凹函数<span class="math inline">\(f(x)\)</span>，其Legendre变换为<span class="math inline">\(g=f-ux\)</span>，我们可以将<span class="math inline">\(ux+g\)</span>看做是经过(<span class="math inline">\(x\)</span>, <span class="math inline">\(f(x)\)</span>)的函数<span class="math inline">\(f\)</span>的切线，其截距为<span class="math inline">\(g\)</span>，斜率为<span class="math inline">\(u=\frac{\partial f}{\partial x}\)</span>。</p>
 <h2 id="热力学函数">热力学函数</h2>
-<p>对于内能<span class="math inline">U</span>，我们选取两个extensive量，熵<span class="math inline">S</span>和体积<span class="math inline">V</span>作为自变量，则内能函数为<span class="math inline">U=U(S, V)</span>，其微分形式： <span class="math display"> dU(S, V) = TdS-pdV </span></p>
-<p>其中<span class="math inline">T</span>和<span class="math inline">S</span>是共轭变量，<span class="math inline">-p</span>和<span class="math inline">V</span>是共轭变量。现在我们想将其中的变量<span class="math inline">V</span>变换为其共轭变量<span class="math inline">p</span>，于是有：</p>
-<p><span class="math display"> H \equiv U(S, V)-(-pV) </span></p>
+<p>对于内能<span class="math inline">\(U\)</span>，我们选取两个extensive量，熵<span class="math inline">\(S\)</span>和体积<span class="math inline">\(V\)</span>作为自变量，则内能函数为<span class="math inline">\(U=U(S, V)\)</span>，其微分形式： <span class="math display">\[ dU(S, V) = TdS-pdV \]</span></p>
+<p>其中<span class="math inline">\(T\)</span>和<span class="math inline">\(S\)</span>是共轭变量，<span class="math inline">\(-p\)</span>和<span class="math inline">\(V\)</span>是共轭变量。现在我们想将其中的变量<span class="math inline">\(V\)</span>变换为其共轭变量<span class="math inline">\(p\)</span>，于是有：</p>
+<p><span class="math display">\[ H \equiv U(S, V)-(-pV) \]</span></p>
 <p>其微分形式为：</p>
-<p><span class="math display"> dH = dU(S, V)+pdV+Vdp = TdS+Vdp </span></p>
-<p>可见定义的新函数<span class="math inline">H=H(S, p)</span>。</p>
-<p>类似地，通过Legendre变换，我们可以得到另外两个热力学函数<span class="math inline">F(T, V)</span>和<span class="math inline">G(T, p)</span>：</p>
-<p><span class="math display">
+<p><span class="math display">\[ dH = dU(S, V)+pdV+Vdp = TdS+Vdp \]</span></p>
+<p>可见定义的新函数<span class="math inline">\(H=H(S, p)\)</span>。</p>
+<p>类似地，通过Legendre变换，我们可以得到另外两个热力学函数<span class="math inline">\(F(T, V)\)</span>和<span class="math inline">\(G(T, p)\)</span>：</p>
+<p><span class="math display">\[
 \begin{aligned}
 F  &amp;\equiv U(S, V) - TS \\
 G  &amp;\equiv U(S, V) - TS + pV \\
 dA &amp;= -SdT-pdV \\
 dG &amp;= -SdT+Vdp \\
 \end{aligned}
-</span></p>
-<p>在实际当中，体系的温度、压强和体积比较好控制，因此<span class="math inline">A(T, V)</span>和<span class="math inline">G(T, p)</span>较为常用。</p>
+\]</span></p>
+<p>在实际当中，体系的温度、压强和体积比较好控制，因此<span class="math inline">\(A(T, V)\)</span>和<span class="math inline">\(G(T, p)\)</span>较为常用。</p>
 
     </div>
 
@@ -457,10 +457,58 @@ dG &amp;= -SdT+Vdp \\
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

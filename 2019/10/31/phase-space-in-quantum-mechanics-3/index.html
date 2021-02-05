@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="量子力学基础 物质波为概率波，将单色平面波写为如下形式：  \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)}  方便之后归一化为\delta函数。其振幅的平方|\psi(r,t)|^2对应于粒子坐标的概率密度，因此对于粒子的平均位置&lt;r&gt;可以从下式求出：  &lt;r&gt; &#x3D; \int r">
+  <meta name="description" content="量子力学基础 物质波为概率波，将单色平面波写为如下形式： \[ \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)} \] 方便之后归一化为\(\delta\)函数。其振幅的平方\(|\psi(r,t)|^2\)对应于粒子坐标的概率密度，因此对于粒子的平均位置\(&lt;r&gt;\)可以从下式求出： \[">
 <meta property="og:type" content="article">
 <meta property="og:title" content="量子力学里的相空间体积--相空间">
 <meta property="og:url" content="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/index.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="量子力学基础 物质波为概率波，将单色平面波写为如下形式：  \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)}  方便之后归一化为\delta函数。其振幅的平方|\psi(r,t)|^2对应于粒子坐标的概率密度，因此对于粒子的平均位置&lt;r&gt;可以从下式求出：  &lt;r&gt; &#x3D; \int r">
+<meta property="og:description" content="量子力学基础 物质波为概率波，将单色平面波写为如下形式： \[ \psi(r, t) &#x3D; \frac{1}{ (2\pi \hbar)^{3&#x2F;2} } e^{i&#x2F;\hbar(p \cdot r - Et)} \] 方便之后归一化为\(\delta\)函数。其振幅的平方\(|\psi(r,t)|^2\)对应于粒子坐标的概率密度，因此对于粒子的平均位置\(&lt;r&gt;\)可以从下式求出： \[">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-10-31T02:08:07.000Z">
 <meta property="article:modified_time" content="2021-02-05T08:33:32.016Z">
@@ -213,16 +213,16 @@
       
         <h2 id="量子力学基础">量子力学基础</h2>
 <p>物质波为概率波，将单色平面波写为如下形式：</p>
-<p><span class="math display"> \psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} </span></p>
-<p>方便之后归一化为<span class="math inline">\delta</span>函数。其振幅的平方<span class="math inline">|\psi(r,t)|^2</span>对应于粒子坐标的概率密度，因此对于粒子的平均位置<span class="math inline">&lt;r&gt;</span>可以从下式求出：</p>
-<p><span class="math display"> &lt;r&gt; = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr </span></p>
+<p><span class="math display">\[ \psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} \]</span></p>
+<p>方便之后归一化为<span class="math inline">\(\delta\)</span>函数。其振幅的平方<span class="math inline">\(|\psi(r,t)|^2\)</span>对应于粒子坐标的概率密度，因此对于粒子的平均位置<span class="math inline">\(&lt;r&gt;\)</span>可以从下式求出：</p>
+<p><span class="math display">\[ &lt;r&gt; = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr \]</span></p>
 <a id="more"></a>
 <h3 id="动量算符">动量算符</h3>
-<p>根据波函数的叠加性和Fourier变换，我们可以得到波函数的两种变换形式(<span class="math inline">r</span>和<span class="math inline">p</span>均为三维矢量)：</p>
-<p><span class="math display"> \psi(r, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p, t)e^{i/\hbar p \cdot r} dp </span></p>
-<p><span class="math display"> \phi(p, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \psi(r, t)e^{-i/\hbar p \cdot r} dr </span></p>
-<p>其中<span class="math inline">|\phi(p, t)|^2</span>为粒子动量<span class="math inline">p</span>的概率密度分布，所以我们可以得到平均动量<span class="math inline">&lt;p&gt;</span>：</p>
-<p><span class="math display">
+<p>根据波函数的叠加性和Fourier变换，我们可以得到波函数的两种变换形式(<span class="math inline">\(r\)</span>和<span class="math inline">\(p\)</span>均为三维矢量)：</p>
+<p><span class="math display">\[ \psi(r, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p, t)e^{i/\hbar p \cdot r} dp \]</span></p>
+<p><span class="math display">\[ \phi(p, t) = \frac{1}{(2 \pi \hbar)^{3/2}} \int \psi(r, t)e^{-i/\hbar p \cdot r} dr \]</span></p>
+<p>其中<span class="math inline">\(|\phi(p, t)|^2\)</span>为粒子动量<span class="math inline">\(p\)</span>的概率密度分布，所以我们可以得到平均动量<span class="math inline">\(&lt;p&gt;\)</span>：</p>
+<p><span class="math display">\[
 \begin{aligned}
 &lt;p&gt; &amp;= \int p |\phi(p)|^2 dp \\
     &amp;= \int \phi(p,t)p dp \left[ \frac{1}{(2 \pi \hbar)^{3/2}}\int \psi^*(r, t) e^{i/\hbar p \cdot r} dr \right] \\
@@ -231,63 +231,63 @@
     &amp;= \int \psi^*(r, t) dr (-i \hbar \nabla ) \left[ \frac{1}{(2 \pi \hbar)^{3/2}} \int \phi(p,t) e^{i/\hbar p \cdot r} dp \right] \\
     &amp;= \int \psi^*(r, t) (-i \hbar \nabla ) \psi(r, t) dr \\
 \end{aligned}
-</span></p>
-<p>由此我们可以得到动量的算符表达式。类似的，动能<span class="math inline">T = p^2/2m</span>，角动量<span class="math inline">L = r \times p</span>，我们可以得到动能<span class="math inline">T</span>和角动量<span class="math inline">L</span>的算符表达式：</p>
-<p><span class="math display">
+\]</span></p>
+<p>由此我们可以得到动量的算符表达式。类似的，动能<span class="math inline">\(T = p^2/2m\)</span>，角动量<span class="math inline">\(L = r \times p\)</span>，我们可以得到动能<span class="math inline">\(T\)</span>和角动量<span class="math inline">\(L\)</span>的算符表达式：</p>
+<p><span class="math display">\[
 \begin{aligned}
 \hat r &amp;= r \\
 \hat p &amp;= -i \hbar \nabla \\
 \hat T &amp;= -\frac{\hbar^2}{2m} \nabla^2 \\
 \hat L &amp;= -i\hbar \hat r \times \nabla \\
 \end{aligned}
-</span></p>
+\]</span></p>
 <h3 id="不确定关系">不确定关系</h3>
 <p>不确定关系来源于Fourier变换，是Fourier变换的内禀性质，与测量与否无关，与函数的具体形式无关。</p>
-<p>假设函数<span class="math inline">f(x)</span>存在Fourier变换，考虑积分：</p>
-<p><span class="math display"> I = \int |\eta x f(x) + f&#39;(x)|^2 dx \ge 0 </span></p>
+<p>假设函数<span class="math inline">\(f(x)\)</span>存在Fourier变换，考虑积分：</p>
+<p><span class="math display">\[ I = \int |\eta x f(x) + f&#39;(x)|^2 dx \ge 0 \]</span></p>
 <p>其中积分符号内的式子等于：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 |\eta x f(x) + f&#39;(x)|^2 &amp;= [\eta x f(x) + f&#39;(x)][\eta x f(x) + f&#39;(x)]^* \\
                         &amp;= \eta^2 x^2 |f(x)|^2 + \eta x [f(x)f&#39;^*(x)+f^*(x)f&#39;(x)] + |f&#39;(x)|^2 \\
 \end{aligned}
-</span></p>
-<p>所以<span class="math inline">I</span>可以分为三个部分<span class="math inline">I_1, I_2, I_3</span>：</p>
-<p><span class="math display">
+\]</span></p>
+<p>所以<span class="math inline">\(I\)</span>可以分为三个部分<span class="math inline">\(I_1, I_2, I_3\)</span>：</p>
+<p><span class="math display">\[
 \begin{aligned}
 I   &amp;= I_1+I_2+I_3 \\
 I_1 &amp;= \eta^2 \int x^2 |f(x)|^2 dx \\
 I_2 &amp;= \eta \int x [f(x)f&#39;^*(x)+f^*(x)f&#39;(x)] dx \\
 I_3 &amp;= \int |f&#39;(x)|^2 dx \\
 \end{aligned}
-</span></p>
-<p>对于<span class="math inline">I_1</span>，<span class="math inline">\int x^2 |f(x)|^2 dx</span>归一化后即为<span class="math inline">\Delta x^2</span>。</p>
-<p>对于<span class="math inline">I_2</span>：</p>
-<p><span class="math display">
+\]</span></p>
+<p>对于<span class="math inline">\(I_1\)</span>，<span class="math inline">\(\int x^2 |f(x)|^2 dx\)</span>归一化后即为<span class="math inline">\(\Delta x^2\)</span>。</p>
+<p>对于<span class="math inline">\(I_2\)</span>：</p>
+<p><span class="math display">\[
 \begin{aligned}
 I_2 &amp;= \eta \int x [f(x)f^*(x)]&#39;dx \\
     &amp;= \eta \int x d|f(x)|^2 \\
     &amp;= \eta \left( x|f(x)|^2|_{-\infty}^{+\infty} - \int |f(x)|^2 dx \right) \\
     &amp;= - \eta \int |f(x)|^2 dx \\
 \end{aligned}
-</span></p>
-<p>因为积分<span class="math inline">\int x |f(x)|^2 dx</span>，也就是x的期望存在，所以<span class="math inline">x|f(x)|^2</span>在<span class="math inline">x \to \infty</span>时一定为0，否则积分不收敛。</p>
-<p>对于<span class="math inline">I_3</span>：</p>
-<p><span class="math display">
+\]</span></p>
+<p>因为积分<span class="math inline">\(\int x |f(x)|^2 dx\)</span>，也就是x的期望存在，所以<span class="math inline">\(x|f(x)|^2\)</span>在<span class="math inline">\(x \to \infty\)</span>时一定为0，否则积分不收敛。</p>
+<p>对于<span class="math inline">\(I_3\)</span>：</p>
+<p><span class="math display">\[
 \begin{aligned}
 I_3 &amp;= \int \left( \frac{1}{2\pi} \int i \omega&#39; g(\omega&#39;) e^{i \omega&#39; x} d\omega&#39; \right) \left( \frac{1}{2\pi} \int (-i) \omega g^*(\omega) e^{-i \omega x} d\omega \right) dx \\
     &amp;= \frac{1}{4\pi^2} \iiint \omega \omega&#39; g(\omega)g^*(\omega&#39;) e^{i(\omega&#39; - \omega)x} dx d\omega d\omega&#39; \\
     &amp;= \frac{1}{2\pi} \iint \omega \omega&#39; g(\omega) g^*(\omega&#39;) \delta(\omega&#39; - \omega) d\omega d\omega&#39; \\
     &amp;= \frac{1}{2\pi} \int \omega^2 |g(\omega)|^2 d\omega \\
 \end{aligned}
-</span></p>
-<p>所以<span class="math inline">I_3 \sim \Delta \omega^2</span>。根据Parseval定理：<span class="math inline">\int |f(x)|^2 dx = \frac{1}{2\pi} \int |g(\omega)|^2 d\omega</span>，对<span class="math inline">I</span>同时除以<span class="math inline">\int |f(x)|^2 dx</span>，可得：</p>
-<p><span class="math display"> \eta^2 \Delta x^2 - \eta + \Delta \omega^2 \ge 0 </span></p>
-<p>上式是关于<span class="math inline">\eta</span>的二次函数，其二阶导数<span class="math inline">2 \Delta x^2 \ge 0</span>，所以当<span class="math inline">\eta = \frac{1}{2 \Delta x^2}</span>时，函数取最小值，代入上式得：</p>
-<p><span class="math display"> \Delta \omega^2 - \frac{1}{4 \Delta x^2} \ge 0 </span> <span class="math display"> \Delta x \Delta \omega \ge \frac{1}{2} </span></p>
-<p>将动量和波数的色散关系<span class="math inline">p = \hbar \omega</span>代入，可得量子力学中的不确定性原理表达式： <span class="math display"> \Delta x \cdot \Delta p \ge \frac{\hbar}{2} </span></p>
+\]</span></p>
+<p>所以<span class="math inline">\(I_3 \sim \Delta \omega^2\)</span>。根据Parseval定理：<span class="math inline">\(\int |f(x)|^2 dx = \frac{1}{2\pi} \int |g(\omega)|^2 d\omega\)</span>，对<span class="math inline">\(I\)</span>同时除以<span class="math inline">\(\int |f(x)|^2 dx\)</span>，可得：</p>
+<p><span class="math display">\[ \eta^2 \Delta x^2 - \eta + \Delta \omega^2 \ge 0 \]</span></p>
+<p>上式是关于<span class="math inline">\(\eta\)</span>的二次函数，其二阶导数<span class="math inline">\(2 \Delta x^2 \ge 0\)</span>，所以当<span class="math inline">\(\eta = \frac{1}{2 \Delta x^2}\)</span>时，函数取最小值，代入上式得：</p>
+<p><span class="math display">\[ \Delta \omega^2 - \frac{1}{4 \Delta x^2} \ge 0 \]</span> <span class="math display">\[ \Delta x \Delta \omega \ge \frac{1}{2} \]</span></p>
+<p>将动量和波数的色散关系<span class="math inline">\(p = \hbar \omega\)</span>代入，可得量子力学中的不确定性原理表达式： <span class="math display">\[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</span></p>
 <h2 id="相空间最小单元">相空间最小单元</h2>
-<p>相空间中的一个点用于表示系统所处的一个状态，对于力学系统通常用三维方位和三维动量来表示，如果系统中有<span class="math inline">N</span>个粒子，则相空间为<span class="math inline">6N</span>维。根据不确定关系，方位和动量不可同时确定，所以相空间有最小单元体积：<span class="math inline">\hbar^3</span>。</p>
+<p>相空间中的一个点用于表示系统所处的一个状态，对于力学系统通常用三维方位和三维动量来表示，如果系统中有<span class="math inline">\(N\)</span>个粒子，则相空间为<span class="math inline">\(6N\)</span>维。根据不确定关系，方位和动量不可同时确定，所以相空间有最小单元体积：<span class="math inline">\(\hbar^3\)</span>。</p>
 
     </div>
 
@@ -503,10 +503,58 @@ I_3 &amp;= \int \left( \frac{1}{2\pi} \int i \omega&#39; g(\omega&#39;) e^{i \om
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

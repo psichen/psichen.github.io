@@ -197,13 +197,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>热力学中有几个函数概念十分容易混淆：内能(<span class="math inline">U</span>)，焓(<span class="math inline">H</span>)，亥姆霍兹自由能(<span class="math inline">A</span>)和吉布斯自由能(<span class="math inline">G</span>)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。</p>
+          <p>热力学中有几个函数概念十分容易混淆：内能(<span class="math inline">\(U\)</span>)，焓(<span class="math inline">\(H\)</span>)，亥姆霍兹自由能(<span class="math inline">\(A\)</span>)和吉布斯自由能(<span class="math inline">\(G\)</span>)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。</p>
 <h2 id="legendre变换">Legendre变换</h2>
 <h3 id="基本形式">基本形式</h3>
-<p>对于一个函数<span class="math inline">f(x_1,...,x_k)</span>，其微分形式为：</p>
-<p><span class="math display"> df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i </span></p>
-<p>令<span class="math inline">u_i \equiv \frac{\partial f}{\partial x_i}</span>，<span class="math inline">u_i</span>与<span class="math inline">x_i</span>就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：</p>
-<p><span class="math display"> g \equiv f-\sum_{i=1}^{r} u_ix_i \quad (r \le k) </span></p>
+<p>对于一个函数<span class="math inline">\(f(x_1,...,x_k)\)</span>，其微分形式为：</p>
+<p><span class="math display">\[ df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i \]</span></p>
+<p>令<span class="math inline">\(u_i \equiv \frac{\partial f}{\partial x_i}\)</span>，<span class="math inline">\(u_i\)</span>与<span class="math inline">\(x_i\)</span>就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：</p>
+<p><span class="math display">\[ g \equiv f-\sum_{i=1}^{r} u_ix_i \quad (r \le k) \]</span></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/09/25/Legendre-transformation/#more" rel="contents">
@@ -487,10 +487,58 @@
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

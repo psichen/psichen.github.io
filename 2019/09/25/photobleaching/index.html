@@ -250,7 +250,7 @@
 <h3 id="除氧trolox">除氧+Trolox</h3>
 <p>常用的除氧体系是葡萄糖+葡萄糖氧化酶+过氧化氢酶。然而氧气是非常高效的triplet quencher，因此将氧气除去后，需要再加入Trolox作为染料的triplet quencher。该配方一般用于表面固定的实验，减少荧光染料blinking和bleaching的概率。</p>
 <h3 id="trolox-cocktail">Trolox cocktail</h3>
-<p>2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺(<span class="math inline">\ce{ NH2-CH2-CH2-SH }</span>)和1 mM Trolox，其中半胱胺作为singlet oxygen和自由基的quencher，Trolox作为染料triplet quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50 μs的时间分辨率<sup>4</sup>。</p>
+<p>2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺(<span class="math inline">\(\ce{ NH2-CH2-CH2-SH }\)</span>)和1 mM Trolox，其中半胱胺作为singlet oxygen和自由基的quencher，Trolox作为染料triplet quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50 μs的时间分辨率<sup>4</sup>。</p>
 <figure>
 <img src="https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg" alt="trolox-cocktail" /><figcaption>trolox-cocktail</figcaption>
 </figure>
@@ -470,10 +470,58 @@
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

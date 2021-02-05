@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵S和相空间\Gamma的体积有关：  S &#x3D; k_Bln(|\Gamma|)  根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变\Gamma的体积单位时，会在S加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别">
+  <meta name="description" content="最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵\(S\)和相空间\(\Gamma\)的体积有关： \[ S &#x3D; k_Bln(|\Gamma|) \] 根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变\(\Gamma\)的体积单位时，会在\(S\)加上一个常数，熵就不再为0了，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="量子力学里的相空间体积--Fourier变换">
 <meta property="og:url" content="http://www.psichen.com/2019/10/29/phase-space-in-quantum-mechanics-1/index.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵S和相空间\Gamma的体积有关：  S &#x3D; k_Bln(|\Gamma|)  根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变\Gamma的体积单位时，会在S加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别">
+<meta property="og:description" content="最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵\(S\)和相空间\(\Gamma\)的体积有关： \[ S &#x3D; k_Bln(|\Gamma|) \] 根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变\(\Gamma\)的体积单位时，会在\(S\)加上一个常数，熵就不再为0了，">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-10-29T02:08:07.000Z">
 <meta property="article:modified_time" content="2021-02-05T08:24:37.832Z">
@@ -208,16 +208,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵<span class="math inline">S</span>和相空间<span class="math inline">\Gamma</span>的体积有关：</p>
-<p><span class="math display"> S = k_Bln(|\Gamma|) </span></p>
-<p>根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变<span class="math inline">\Gamma</span>的体积单位时，会在<span class="math inline">S</span>加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。</p>
+        <p>最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵<span class="math inline">\(S\)</span>和相空间<span class="math inline">\(\Gamma\)</span>的体积有关：</p>
+<p><span class="math display">\[ S = k_Bln(|\Gamma|) \]</span></p>
+<p>根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变<span class="math inline">\(\Gamma\)</span>的体积单位时，会在<span class="math inline">\(S\)</span>加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。</p>
 <a id="more"></a>
 <h2 id="fourier变换与逆变换">Fourier变换与逆变换</h2>
-<p>Fourier变换将目标函数<span class="math inline">f(t)</span>变为周期为<span class="math inline">T/n</span>的正余弦函数的线性组合。</p>
+<p>Fourier变换将目标函数<span class="math inline">\(f(t)\)</span>变为周期为<span class="math inline">\(T/n\)</span>的正余弦函数的线性组合。</p>
 <h3 id="三角函数形式的fourier级数">三角函数形式的Fourier级数：</h3>
-<p><span class="math display"> f(t) = \frac{a_0}{2} + \sum_{n=1}^{+\infty} a_n \cos (n \omega t) + b_n \sin (n \omega t) </span></p>
+<p><span class="math display">\[ f(t) = \frac{a_0}{2} + \sum_{n=1}^{+\infty} a_n \cos (n \omega t) + b_n \sin (n \omega t) \]</span></p>
 <p>根据三角函数在周期区间内积分的正交性：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 &amp;\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos (nt) dt = 0 \\
 &amp;\int_{-\frac{T}{2}}^{\frac{T}{2}} \sin (nt) dt = 0 \\
@@ -235,105 +235,105 @@
 \end{cases}
 \\
 \end{aligned}
-</span></p>
-<p>我们在Fourier级数的两边同时对<span class="math inline">t</span>积分：</p>
-<p><span class="math display"> \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt = \frac{T}{2}a_0 </span></p>
+\]</span></p>
+<p>我们在Fourier级数的两边同时对<span class="math inline">\(t\)</span>积分：</p>
+<p><span class="math display">\[ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt = \frac{T}{2}a_0 \]</span></p>
 <p>所以</p>
-<p><span class="math display"> a_0 = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt </span></p>
-<p>然后我们在Fourier级数的两边同时乘上<span class="math inline">\cos (n \omega t)</span>，再同时对<span class="math inline">t</span>积分，可得到：</p>
-<p><span class="math display"> \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt = \frac{T}{2} a_n </span></p>
-<p>同理，乘上<span class="math inline">\sin (n \omega t)</span>，积分后可得到：</p>
-<p><span class="math display"> \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt = \frac{T}{2} b_n </span></p>
+<p><span class="math display">\[ a_0 = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt \]</span></p>
+<p>然后我们在Fourier级数的两边同时乘上<span class="math inline">\(\cos (n \omega t)\)</span>，再同时对<span class="math inline">\(t\)</span>积分，可得到：</p>
+<p><span class="math display">\[ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt = \frac{T}{2} a_n \]</span></p>
+<p>同理，乘上<span class="math inline">\(\sin (n \omega t)\)</span>，积分后可得到：</p>
+<p><span class="math display">\[ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt = \frac{T}{2} b_n \]</span></p>
 <p>整理之后，我们就可以得到Fourier级数展开的系数项：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 a_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt \\
 b_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt \\
 \end{aligned}
-</span></p>
-<p>其中<span class="math inline">a_n</span>为偶函数，<span class="math inline">b_n</span>为奇函数。</p>
+\]</span></p>
+<p>其中<span class="math inline">\(a_n\)</span>为偶函数，<span class="math inline">\(b_n\)</span>为奇函数。</p>
 <h3 id="指数函数形式的fourier级数">指数函数形式的Fourier级数</h3>
-<p>根据Euler公式：<span class="math inline">e^{ikx} = \cos kx + i\sin kx</span>，所以三角函数可以表达为：</p>
-<p><span class="math display">
+<p>根据Euler公式：<span class="math inline">\(e^{ikx} = \cos kx + i\sin kx\)</span>，所以三角函数可以表达为：</p>
+<p><span class="math display">\[
 \begin{aligned}
 \cos (n \omega t) &amp;= \frac{1}{2} (e^{i n \omega t}+e^{-i n \omega t}) \\
 \sin (n \omega t) &amp;= \frac{1}{2i} (e^{i n \omega t}-e^{-i n \omega t}) \\
 \end{aligned}
-</span></p>
-<p>代入Fourier级数的表达式，合并指数项，并根据<span class="math inline">a_n</span>和<span class="math inline">b_n</span>的奇偶性，可得指数形式的Fourier级数：</p>
-<p><span class="math display">
+\]</span></p>
+<p>代入Fourier级数的表达式，合并指数项，并根据<span class="math inline">\(a_n\)</span>和<span class="math inline">\(b_n\)</span>的奇偶性，可得指数形式的Fourier级数：</p>
+<p><span class="math display">\[
 \begin{aligned}
 f(t) &amp;= \frac{a_0}{2}+\sum_{n=1}^{+\infty} \frac{a_n-i b_n}{2}e^{i n \omega t}+\frac{a_n+i b_n}{2}e^{-i n \omega t} \\
 &amp;=\sum_{n=-\infty}^{+\infty} F(n \omega) e^{i n \omega t} \\
 \end{aligned}
-</span></p>
-<p>注意两个求和符号中<span class="math inline">n</span>的取值范围，其中<span class="math inline">F(n \omega) = \frac{a_n-ib_n}{2}</span>为指前因子。将<span class="math inline">a_n</span>和<span class="math inline">b_n</span>的表达式代入，得：</p>
-<p><span class="math display">
+\]</span></p>
+<p>注意两个求和符号中<span class="math inline">\(n\)</span>的取值范围，其中<span class="math inline">\(F(n \omega) = \frac{a_n-ib_n}{2}\)</span>为指前因子。将<span class="math inline">\(a_n\)</span>和<span class="math inline">\(b_n\)</span>的表达式代入，得：</p>
+<p><span class="math display">\[
 \begin{aligned}
 F(n \omega) &amp;= \frac{1}{2}\left[ \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt - \frac{2i}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt \right] \\
 &amp;= \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt \\
 \end{aligned}
-</span></p>
+\]</span></p>
 <h3 id="fourier积分变换">Fourier积分变换</h3>
-<p>因为周期<span class="math inline">T</span>与角频率<span class="math inline">\omega</span>满足关系：<span class="math inline">T \omega = 2 \pi</span>，当<span class="math inline">T \to +\infty</span>时，<span class="math inline">\omega \to 0</span>。</p>
+<p>因为周期<span class="math inline">\(T\)</span>与角频率<span class="math inline">\(\omega\)</span>满足关系：<span class="math inline">\(T \omega = 2 \pi\)</span>，当<span class="math inline">\(T \to +\infty\)</span>时，<span class="math inline">\(\omega \to 0\)</span>。</p>
 <p>对无穷小量的求和满足如下关系：</p>
-<p><span class="math display"> \sum_{-\infty}^{+\infty} f(n \delta x) = \frac{1}{\delta x} \int_{-\infty}^{+\infty} f(x) dx </span></p>
+<p><span class="math display">\[ \sum_{-\infty}^{+\infty} f(n \delta x) = \frac{1}{\delta x} \int_{-\infty}^{+\infty} f(x) dx \]</span></p>
 <p>于是上文的指数形式的Fourier级数，可以扩展为积分形式：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 f(t) &amp;= \sum_{-\infty}^{+\infty} F(n \omega) e^{i n \omega t} \\
      &amp;= \int_{-\infty}^{+\infty} \frac{F(\omega)}{\omega} e^{i \omega t} d\omega \\
 \end{aligned}
-</span></p>
-<p>其中令<span class="math inline">g(\omega) = \frac{F(\omega)}{\omega}</span>。</p>
-<p>根据上面<span class="math inline">F(n \omega) = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt</span>，将 <span class="math inline">\omega</span> 记为 <span class="math inline">\omega&#39;</span>，根据<span class="math inline">T\omega&#39; = 2\pi</span>，可得：</p>
-<p><span class="math display"> \frac{F(\omega&#39;)}{\omega&#39;} = \frac{1}{2\pi} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i \omega&#39; t} dt </span></p>
-<p>当<span class="math inline">\omega&#39; \to 0</span>时，有：</p>
-<p><span class="math display"> g(\omega&#39;) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega&#39; t} dt </span></p>
+\]</span></p>
+<p>其中令<span class="math inline">\(g(\omega) = \frac{F(\omega)}{\omega}\)</span>。</p>
+<p>根据上面<span class="math inline">\(F(n \omega) = \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt\)</span>，将 <span class="math inline">\(\omega\)</span> 记为 <span class="math inline">\(\omega&#39;\)</span>，根据<span class="math inline">\(T\omega&#39; = 2\pi\)</span>，可得：</p>
+<p><span class="math display">\[ \frac{F(\omega&#39;)}{\omega&#39;} = \frac{1}{2\pi} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i \omega&#39; t} dt \]</span></p>
+<p>当<span class="math inline">\(\omega&#39; \to 0\)</span>时，有：</p>
+<p><span class="math display">\[ g(\omega&#39;) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega&#39; t} dt \]</span></p>
 <p>整理一下，我们就得到了可析函数f(t)的Fourier变换与逆变换：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 g(\omega) &amp;= \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \\
 f(t)      &amp;= \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \\
 \end{aligned}
-</span></p>
+\]</span></p>
 <p>或改变一下函数前面的系数：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 g(\omega) &amp;= \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \\
 f(t)      &amp;= \frac{1}{2\pi} \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \\
 \end{aligned}
-</span></p>
-<p>因为频率<span class="math inline">f</span>与角频率<span class="math inline">\omega</span>满足关系：<span class="math inline">\omega = 2 \pi f</span>，所以上式可以改写为：</p>
-<p><span class="math display">
+\]</span></p>
+<p>因为频率<span class="math inline">\(f\)</span>与角频率<span class="math inline">\(\omega\)</span>满足关系：<span class="math inline">\(\omega = 2 \pi f\)</span>，所以上式可以改写为：</p>
+<p><span class="math display">\[
 \begin{aligned}
 g(f) &amp;= \int_{-\infty}^{+\infty} f(t) e^{-i 2 \pi f t} dt \\
 f(t) &amp;= \int_{-\infty}^{+\infty} g(f) e^{i 2 \pi f t} df \\
 \end{aligned}
-</span></p>
+\]</span></p>
 <p>物理上更多地使用如下形式：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 g(\omega) &amp;= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \\
 f(t)      &amp;= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t} d\omega \\
 \end{aligned}
-</span></p>
+\]</span></p>
 <h2 id="dirac函数">Dirac函数</h2>
 <p>Dirac函数为一种广义函数，定义为：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \delta(x) =
 \begin{cases}
 +\infty &amp; (x = 0) \\
 0 &amp; (x \neq 0) \\
 \end{cases}
-</span></p>
-<p>并且满足<span class="math inline">\int_{-\infty}^{+\infty} \delta(x)dx = 1</span>。</p>
+\]</span></p>
+<p>并且满足<span class="math inline">\(\int_{-\infty}^{+\infty} \delta(x)dx = 1\)</span>。</p>
 <p>Dirac函数的性质：</p>
-<p><span class="math display"> \int f(x)\delta(x-a)dx = f(a) </span></p>
+<p><span class="math display">\[ \int f(x)\delta(x-a)dx = f(a) \]</span></p>
 <p>称之为Dirac函数的挑选性。根据挑选性，我们对Dirac函数进行Fourier变换：</p>
-<p><span class="math display"> \mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i k x} dx = \frac{1}{2\pi} </span></p>
-<p>再进行Fourier逆变换，我们就可以得到<span class="math inline">\delta</span>函数的表达式之一：</p>
-<p><span class="math display"> \delta(x) = \frac{1}{2\pi} \int e^{i k x} dk </span></p>
+<p><span class="math display">\[ \mathscr F[\delta(x)] = \frac{1}{2\pi} \int\delta(x) e^{-i k x} dx = \frac{1}{2\pi} \]</span></p>
+<p>再进行Fourier逆变换，我们就可以得到<span class="math inline">\(\delta\)</span>函数的表达式之一：</p>
+<p><span class="math display">\[ \delta(x) = \frac{1}{2\pi} \int e^{i k x} dk \]</span></p>
 
     </div>
 
@@ -546,10 +546,58 @@ f(t)      &amp;= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} g(\omega) e^{i \
 
   
       
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
-  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
