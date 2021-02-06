@@ -48,12 +48,12 @@ It's analogous that vector $\mathbf{u}$ has vector components $\frac{du}{dx}dx$ 
 
 It's a wrong way to get the infinitesimal area by multiplying $du$ and $dv$ directly. Because $u$ and $v$ are not guaranteed to be orthogonal. But we can get the infinitesimal area by calculating the cross product of $du$ and $dv$,
 
-$$ du \times dv = (u_xv_y-u_yv_x)dxdy = \begin{vmatrix} u_x & u_y \\\ v_x & v_y \end{vmatrix} dxdy = \frac{\partial(u,v)}{\partial(x,y)} dxdy $$
+$$ |du \times dv| = |\begin{bmatrix} u_x dx \\ u_y dy \end{bmatrix} \times \begin{bmatrix} v_x dx \\ v_y dy \end{bmatrix}| = (u_xv_y-u_yv_x)dxdy = \frac{\partial(u,v)}{\partial(x,y)} dxdy $$
 
-$\frac{\partial(u,v)}{\partial(x,y)}$ is called the Jacobian determinant. It can be seen as the chage ratio of area (or volume *etc.*) after variables mapping.
+$\frac{\partial(u,v)}{\partial(x,y)}$ is called the Jacobian determinant. It can be seen as the scaling factor of area (or volume *etc.*) after variables mapping.
 
 ## Appendix
-### proof of two dot product expression
+### proof of two dot product expressions
 
 Let's consider two vectors $\mathbf{a}$ and $\mathbf{b}$.
 
@@ -62,7 +62,7 @@ $$ \mathbf{b} = b_1\mathbf{i} + b_2\mathbf{j} $$
 
 $\theta_{\mathbf{a}}$ and $\theta_{\mathbf{b}}$ are the respective angel between the vector and x-axis.
 
-$$ \theta_{\mathbf{a}} = \arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_1}{|\mathbf{a}|}} $$
+$$ \theta_{\mathbf{a}} = \arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_x}{|\mathbf{a}|}} $$
 $$ \theta_{\mathbf{b}} = \arcsin{\frac{b_2}{|\mathbf{b}|}} = \arccos{\frac{b_1}{|\mathbf{b}|}} $$
 
 So the angel between vectors $\mathbf{a}$ and $\mathbf{b}$ is $\theta = \theta_{\mathbf{b}} - \theta_{\mathbf{a}}$. According to the trigonometric function,
@@ -73,7 +73,7 @@ Thus we get the two expressions of dot product of vectors,
 
 $$ |\mathbf{a}||\mathbf{b}|\cos\theta = a_1b_1+a_2b_2 $$
 
-### proof of two cross product expression
+### proof of two cross product expressions
 
 Similarly, let's consider the trigonometric functions of $\sin\theta$,
 
