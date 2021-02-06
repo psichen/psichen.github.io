@@ -28,7 +28,7 @@
 <meta property="og:description" content="In scientific computing, integration by substitution is a very common skill. For example, we measured a series of practical values of a variable (\(x&#39;\)), of which the distribution (\(g(x&#39;)\))">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-02-04T10:10:26.000Z">
-<meta property="article:modified_time" content="2021-02-06T06:44:02.940Z">
+<meta property="article:modified_time" content="2021-02-06T16:46:02.254Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="Jacobian">
 <meta property="article:tag" content="determinant">
@@ -190,7 +190,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-06 14:44:02" itemprop="dateModified" datetime="2021-02-06T14:44:02+08:00">2021-02-06</time>
+                <time title="Modified: 2021-02-07 00:46:02" itemprop="dateModified" datetime="2021-02-07T00:46:02+08:00">2021-02-07</time>
               </span>
 
           
@@ -211,34 +211,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable (<span class="math inline">\(x&#39;\)</span>), of which the distribution (<span class="math inline">\(g(x&#39;)\)</span>) was unknown. But we know the theoretic distribution of the variable (<span class="math inline">\(f(x)\)</span>) and the correction relationship or mapping relationship between theoretic and practical values (<span class="math inline">\(x&#39;=c(x)\)</span>). <a id="more"></a>So we can get the analytic formula of the distribution <span class="math inline">\(g(x&#39;)\)</span> as following</p>
-<p><span class="math display">\[ \int_{x&#39; \in R&#39;} g(x&#39;) dx&#39; = \int_{x \in R} f(x) \frac{dx&#39;}{dx} dx \]</span></p>
+        <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable (<span class="math inline">\(x&#39;\)</span>), of which the distribution (<span class="math inline">\(g(x&#39;)\)</span>) was unknown. But we know the theoretic distribution of the variable (<span class="math inline">\(f(x)\)</span>) and the correction relationship or mapping relationship between theoretic and practical values (<span class="math inline">\(x=h(x&#39;)\)</span>). <a id="more"></a>So we can get the analytic formula of the distribution <span class="math inline">\(g(x&#39;)\)</span> as following</p>
+<p><span class="math display">\[ g(x&#39;) = f(h(x&#39;)) \frac{dx}{dx&#39;} \]</span></p>
 <p>This is the one dimension situation of Jacobian determinant in integrals by substitution.</p>
 <h2 id="cross-products-for-parallelogram-area">Cross products for parallelogram area</h2>
-<p>Let's consider two vectors <span class="math inline">\(\mathbf{a}^T = [a_1,a_2], \mathbf{b}^T = [b_1, b_2]\)</span>. We are very familar with the dot product or the inner product of the two vectors,</p>
-<p><span class="math display">\[ \mathbf{a} \cdot \mathbf{b} = \mathbf{a}^T\mathbf{b} = a_1b_1+a_2b_2 \]</span></p>
-<p>the name <em>inner</em> comes from the transpose symbol <span class="math inline">\(T\)</span> inside the two vectors. The inner product can also be calculated as</p>
+<p>Let's consider two vectors <span class="math inline">\(\mathbf{a}^T = [a_i,a_j, a_k], \mathbf{b}^T = [b_i, b_j, b_k]\)</span>. We are very familar with the dot product or the inner product of the two vectors,</p>
+<p><span class="math display">\[ \mathbf{a} \cdot \mathbf{b} = \mathbf{a}^T\mathbf{b} = a_ib_i+a_jb_j+a_kb_k \]</span></p>
+<p>which is a scaler value. The name <em>inner</em> comes from the transpose symbol <span class="math inline">\(T\)</span> inside the two vectors. The inner product can also be calculated as</p>
 <p><span class="math display">\[ \mathbf{a} \cdot \mathbf{b} = |\mathbf{a}||\mathbf{b}|\cos\theta \]</span></p>
-<p>The cross product of two vectors generally produces a new vector which is perpendicular to the plane consist of the two original vectors. If <span class="math inline">\(\mathbf{i}, \mathbf{j}, \mathbf{k}\)</span> are orthogonal unitary vectors, they satisify the following relationship via cross product,</p>
-<p><span class="math display">\[ \mathbf{i} \times \mathbf{j} = \mathbf{k} \]</span> <span class="math display">\[ \mathbf{j} \times \mathbf{k} = \mathbf{i} \]</span> <span class="math display">\[ \mathbf{k} \times \mathbf{i} = \mathbf{j} \]</span></p>
-<p>So vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> can be rewritten as <span class="math inline">\(\mathbf{a} = a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}\)</span>. Thus</p>
-<p><span class="math display">\[ \mathbf{a} \times \mathbf{b} = (a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}) \times (b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}) = (a_1b_2-a_2b_1)\mathbf{k} = \begin{vmatrix} a_1&amp;a_2 \\\ b_1&amp;b_2 \end{vmatrix} \mathbf{k} \]</span></p>
+<p>The cross product of two vectors, however, generally produces a new vector which is perpendicular to the plane consist of the two original vectors. If <span class="math inline">\(\mathbf{i}, \mathbf{j}, \mathbf{k}\)</span> are orthogonal unitary vectors, they satisify the following relationship via cross product,</p>
+<p><span class="math display">\[ \mathbf{i} \times \mathbf{j} = \mathbf{k},~~ \mathbf{j} \times \mathbf{i} = -\mathbf{k} \]</span> <span class="math display">\[ \mathbf{j} \times \mathbf{k} = \mathbf{i},~~ \mathbf{k} \times \mathbf{j} = -\mathbf{i} \]</span> <span class="math display">\[ \mathbf{k} \times \mathbf{i} = \mathbf{j},~~ \mathbf{i} \times \mathbf{k} = -\mathbf{j} \]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[ \begin{aligned}
+\mathbf{a} \times \mathbf{b} &amp;= (a_i\mathbf{i}+a_j\mathbf{j}+a_k\mathbf{k}) \times (b_i\mathbf{i}+b_j\mathbf{j}+b_k\mathbf{k}) \\
+                             &amp;= \begin{vmatrix} a_j &amp; b_j \\ a_k &amp; b_k \end{vmatrix} \mathbf{i} + \begin{vmatrix} a_k &amp; b_k \\ a_i &amp; b_i \end{vmatrix} \mathbf{j} + \begin{vmatrix} a_i &amp; b_i \\ a_j &amp; b_j \end{vmatrix} \mathbf{k} \\
+                             &amp;= \begin{vmatrix} \mathbf{i} &amp; a_i &amp; b_i \\ \mathbf{j} &amp; a_j &amp; b_j \\ \mathbf{k} &amp; a_k &amp; b_k \end{vmatrix}
+\end{aligned} \]</span></p>
 <p>The magnitude of the cross product of two vectors can also be calculated by <span class="math display">\[ |\mathbf{a} \times \mathbf{b}| = |\mathbf{a}||\mathbf{b}|\sin\theta \]</span></p>
 <p>which is the area of the parallelogram having <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> as sides (<span class="math inline">\(0 &lt; \theta &lt; \pi\)</span>).</p>
 <h2 id="infinitesimal-area-in-integration">Infinitesimal area in integration</h2>
-<p>For double integrals, we take an infinitesimal area as the integral element. Usually it was written as the direct product as <span class="math inline">\(dxdy\)</span> because x-axis and y-axis are orthogonal (<span class="math inline">\(\sin\theta=1\)</span>).</p>
-<p>Now let us consider a function <span class="math inline">\(g(u,v)\)</span> of variables <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> while <span class="math inline">\(u=u(x,y)\)</span> and <span class="math inline">\(v=v(x,y)\)</span>. If we want to calculate the integral <span class="math inline">\(\int g(u,v) dudv\)</span>, we must firstly know the infinitesimal area <span class="math inline">\(dudv\)</span>. Because <span class="math inline">\(u, v\)</span> are functions of <span class="math inline">\(x,y\)</span>, they have following relationship,</p>
-<p><span class="math display">\[ du = \frac{du}{dx}dx+\frac{du}{dy}dy \]</span> <span class="math display">\[ dv = \frac{dv}{dx}dx+\frac{dv}{dy}dy \]</span></p>
-<p>It's analogous that vector <span class="math inline">\(\mathbf{u}\)</span> has vector components <span class="math inline">\(\frac{du}{dx}dx\)</span> or <span class="math inline">\(\frac{du}{dy}dy\)</span> on x-axis or y-axis direction respectively, and same for <span class="math inline">\(\mathbf{v}\)</span>.</p>
-<p>It's a wrong way to get the infinitesimal area by multiplying <span class="math inline">\(du\)</span> and <span class="math inline">\(dv\)</span> directly. Because <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are not guaranteed to be orthogonal. But we can get the infinitesimal area by calculating the cross product of <span class="math inline">\(du\)</span> and <span class="math inline">\(dv\)</span>,</p>
-<p><span class="math display">\[ |du \times dv| = |\begin{bmatrix} u_x dx \\ u_y dy \end{bmatrix} \times \begin{bmatrix} v_x dx \\ v_y dy \end{bmatrix}| = (u_xv_y-u_yv_x)dxdy = \frac{\partial(u,v)}{\partial(x,y)} dxdy \]</span></p>
-<p><span class="math inline">\(\frac{\partial(u,v)}{\partial(x,y)}\)</span> is called the Jacobian determinant. It can be seen as the scaling factor of area (or volume <em>etc.</em>) after variables mapping.</p>
+<p>For double integrals <span class="math inline">\(\iint f(x,y) dxdy\)</span>, we take an infinitesimal area as the integral element. Usually it was written as the direct product as <span class="math inline">\(dxdy\)</span> because <span class="math inline">\(x\)</span>-axis and <span class="math inline">\(y\)</span>-axis are orthogonal (<span class="math inline">\(|dx \times dy| = |dxdy\sin\frac{\pi}{2}|\)</span>).</p>
+<p>Now let's consider the variables substitution <span class="math inline">\(dxdy \to dudv\)</span> where <span class="math inline">\(x=x(u,v)\)</span> and <span class="math inline">\(y=y(u,v)\)</span>. Similarily, if we want to calculate the integral <span class="math inline">\(\iint f(x,y) dxdy\)</span> on <span class="math inline">\(uv\)</span>-plane, we should know the infinitesimal area <span class="math inline">\(dudv\)</span>. It's a wrong way to get the infinitesimal area by multiplying <span class="math inline">\(du\)</span> and <span class="math inline">\(dv\)</span> directly. Because <span class="math inline">\(u\)</span>-axis and <span class="math inline">\(v\)</span>-axis are not guaranteed to be orthogonal. But we can get the infinitesimal area by calculating the cross product of <span class="math inline">\(dx\)</span> and <span class="math inline">\(dy\)</span> after decompse <span class="math inline">\(dx, dy\)</span> on the <span class="math inline">\(u\)</span>-axis and <span class="math inline">\(v\)</span>-axis,</p>
+<p><span class="math display">\[ dx = \frac{dx}{du}du+\frac{dx}{dv}dv \]</span> <span class="math display">\[ dy = \frac{dy}{du}du+\frac{dy}{dv}dv \]</span></p>
+<p>It's analogous that vector <span class="math inline">\(\mathbf{x}\)</span> has vector components <span class="math inline">\(\frac{dx}{du}du\)</span> or <span class="math inline">\(\frac{dx}{dv}dv\)</span> on <span class="math inline">\(u\)</span>-axis or <span class="math inline">\(v\)</span>-axis direction respectively, and same for <span class="math inline">\(\mathbf{y}\)</span>.</p>
+<p>Thus the infinitesimal area <span class="math inline">\(dxdy\)</span> can be described in terms of variables <span class="math inline">\(du\)</span> and <span class="math inline">\(dv\)</span>,</p>
+<p><span class="math display">\[ |dx \times dy| = |\begin{bmatrix} x_u du \\ x_v dv \end{bmatrix} \times \begin{bmatrix} y_u du \\ y_v dv \end{bmatrix}| = (x_uy_v-x_vy_u)dudv = \frac{\partial(x,y)}{\partial(u,v)} dudv \]</span></p>
+<p><span class="math inline">\(\frac{\partial(x,y)}{\partial(u,v)}\)</span> is called the Jacobian determinant. It can be seen as the scaling factor of area (or volume <em>etc.</em>) after variables substitution.</p>
 <h2 id="appendix">Appendix</h2>
 <h3 id="proof-of-two-dot-product-expressions">proof of two dot product expressions</h3>
-<p>Let's consider two vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>.</p>
-<p><span class="math display">\[ \mathbf{a} = a_1\mathbf{i} + a_2\mathbf{j} \]</span> <span class="math display">\[ \mathbf{b} = b_1\mathbf{i} + b_2\mathbf{j} \]</span></p>
-<p><span class="math inline">\(\theta_{\mathbf{a}}\)</span> and <span class="math inline">\(\theta_{\mathbf{b}}\)</span> are the respective angel between the vector and x-axis.</p>
-<p><span class="math display">\[ \theta_{\mathbf{a}} = \arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_x}{|\mathbf{a}|}} \]</span> <span class="math display">\[ \theta_{\mathbf{b}} = \arcsin{\frac{b_2}{|\mathbf{b}|}} = \arccos{\frac{b_1}{|\mathbf{b}|}} \]</span></p>
+<p>Because two vectors compose a plane. We can always choose two orthogonal basis vectors to describe all vectors in the plane. Let's consider two vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>.</p>
+<p><span class="math display">\[ \mathbf{a}^T = [a_1, a_2] \]</span> <span class="math display">\[ \mathbf{b}^T = [b_1, b_2] \]</span></p>
+<p><span class="math inline">\(\theta_{\mathbf{a}}\)</span> and <span class="math inline">\(\theta_{\mathbf{b}}\)</span> are the respective angel between the vector and <span class="math inline">\(x\)</span>-axis.</p>
+<p><span class="math display">\[ \theta_{\mathbf{a}} = \arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_1}{|\mathbf{a}|}} \]</span> <span class="math display">\[ \theta_{\mathbf{b}} = \arcsin{\frac{b_2}{|\mathbf{b}|}} = \arccos{\frac{b_1}{|\mathbf{b}|}} \]</span></p>
 <p>So the angel between vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> is <span class="math inline">\(\theta = \theta_{\mathbf{b}} - \theta_{\mathbf{a}}\)</span>. According to the trigonometric function,</p>
 <p><span class="math display">\[ \cos\theta = \cos(\theta_{\mathbf{a}} - \theta_{\mathbf{b}}) = \cos\theta_{\mathbf{a}}\cos\theta_{\mathbf{b}} + \sin\theta_{\mathbf{a}}\sin\theta_{\mathbf{b}} = \frac{a_1}{|\mathbf{a}|} \frac{b_1}{|\mathbf{b}|}+ \frac{a_2}{|\mathbf{a}|} \frac{b_2}{|\mathbf{b}|} \]</span></p>
 <p>Thus we get the two expressions of dot product of vectors,</p>
