@@ -4,31 +4,35 @@ date: 2021-02-04 18:10:26
 tags: [Jacobian, determinant, integration by substitution, cross product, infinitesimal area]
 ---
 
-In scientific computing, integration by substitution is a very common skill. [For example](https://www.psichen.com/2019/09/30/FRET-correcting/), we measured a series of practical values of a variable ($x'$), of which the distribution ($g(x')$) was unknown. But we know the theoretic distribution of the variable ($f(x)$) and the correction relationship or mapping relationship between theoretic and practical values ($x'=c(x)$). <!--more-->So we can get the analytic formula of the distribution $g(x')$ as following
+In scientific computing, integration by substitution is a very common skill. [For example](https://www.psichen.com/2019/09/30/FRET-correcting/), we measured a series of practical values of a variable ($x'$), of which the distribution ($g(x')$) was unknown. But we know the theoretic distribution of the variable ($f(x)$) and the correction relationship or mapping relationship between theoretic and practical values ($x=h(x')$). <!--more-->So we can get the analytic formula of the distribution $g(x')$ as following
 
-$$ \int_{x' \in R'} g(x') dx' = \int_{x \in R} f(x) \frac{dx'}{dx} dx $$
+$$ g(x') = f(h(x')) \frac{dx}{dx'} $$
 
 This is the one dimension situation of Jacobian determinant in integrals by substitution.
 
 ## Cross products for parallelogram area
 
-Let's consider two vectors $\mathbf{a}^T = [a_1,a_2], \mathbf{b}^T = [b_1, b_2]$. We are very familar with the dot product or the inner product of the two vectors,
+Let's consider two vectors $\mathbf{a}^T = [a_i,a_j, a_k], \mathbf{b}^T = [b_i, b_j, b_k]$. We are very familar with the dot product or the inner product of the two vectors,
 
-$$ \mathbf{a} \cdot \mathbf{b} = \mathbf{a}^T\mathbf{b} = a_1b_1+a_2b_2 $$
+$$ \mathbf{a} \cdot \mathbf{b} = \mathbf{a}^T\mathbf{b} = a_ib_i+a_jb_j+a_kb_k $$
 
-the name *inner* comes from the transpose symbol $T$ inside the two vectors. The inner product can also be calculated as
+which is a scaler value. The name *inner* comes from the transpose symbol $T$ inside the two vectors. The inner product can also be calculated as
 
 $$ \mathbf{a} \cdot \mathbf{b} = |\mathbf{a}||\mathbf{b}|\cos\theta $$
 
-The cross product of two vectors generally produces a new vector which is perpendicular to the plane consist of the two original vectors. If $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are orthogonal unitary vectors, they satisify the following relationship via cross product,
+The cross product of two vectors, however, generally produces a new vector which is perpendicular to the plane consist of the two original vectors. If $\mathbf{i}, \mathbf{j}, \mathbf{k}$ are orthogonal unitary vectors, they satisify the following relationship via cross product,
 
-$$ \mathbf{i} \times \mathbf{j} = \mathbf{k} $$
-$$ \mathbf{j} \times \mathbf{k} = \mathbf{i} $$
-$$ \mathbf{k} \times \mathbf{i} = \mathbf{j} $$
+$$ \mathbf{i} \times \mathbf{j} = \mathbf{k},~~ \mathbf{j} \times \mathbf{i} = -\mathbf{k} $$
+$$ \mathbf{j} \times \mathbf{k} = \mathbf{i},~~ \mathbf{k} \times \mathbf{j} = -\mathbf{i} $$
+$$ \mathbf{k} \times \mathbf{i} = \mathbf{j},~~ \mathbf{i} \times \mathbf{k} = -\mathbf{j} $$
 
-So vectors $\mathbf{a}$ and $\mathbf{b}$ can be rewritten as $\mathbf{a} = a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}$ and $\mathbf{b} = b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}$. Thus
+Thus
 
-$$ \mathbf{a} \times \mathbf{b} = (a_1\mathbf{i}+a_2\mathbf{j}+0\mathbf{k}) \times (b_1\mathbf{i}+b_2\mathbf{j}+0\mathbf{k}) = (a_1b_2-a_2b_1)\mathbf{k} = \begin{vmatrix} a_1&a_2 \\\ b_1&b_2 \end{vmatrix} \mathbf{k} $$
+$$ \begin{aligned}
+\mathbf{a} \times \mathbf{b} &= (a_i\mathbf{i}+a_j\mathbf{j}+a_k\mathbf{k}) \times (b_i\mathbf{i}+b_j\mathbf{j}+b_k\mathbf{k}) \\
+                             &= \begin{vmatrix} a_j & b_j \\ a_k & b_k \end{vmatrix} \mathbf{i} + \begin{vmatrix} a_k & b_k \\ a_i & b_i \end{vmatrix} \mathbf{j} + \begin{vmatrix} a_i & b_i \\ a_j & b_j \end{vmatrix} \mathbf{k} \\
+                             &= \begin{vmatrix} \mathbf{i} & a_i & b_i \\ \mathbf{j} & a_j & b_j \\ \mathbf{k} & a_k & b_k \end{vmatrix}
+\end{aligned} $$
 
 The magnitude of the cross product of two vectors can also be calculated by
 $$ |\mathbf{a} \times \mathbf{b}| = |\mathbf{a}||\mathbf{b}|\sin\theta $$
@@ -37,32 +41,36 @@ which is the area of the parallelogram having $\mathbf{a}$ and $\mathbf{b}$ as s
 
 ## Infinitesimal area in integration
 
-For double integrals, we take an infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because x-axis and y-axis are orthogonal ($\sin\theta=1$).
+For double integrals $\iint f(x,y) dxdy$, we take an infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because $x$-axis and $y$-axis are orthogonal ($|dx \times dy| = |dxdy\sin\frac{\pi}{2}|$).
 
-Now let us consider a function $g(u,v)$ of variables $u$ and $v$ while $u=u(x,y)$ and $v=v(x,y)$. If we want to calculate the integral $\int g(u,v) dudv$, we must firstly know the infinitesimal area $dudv$. Because $u, v$ are functions of $x,y$, they have following relationship,
+Now let's consider the variables substitution $dxdy \to dudv$ where $x=x(u,v)$ and $y=y(u,v)$. So the function $f(x,y) = f(x(u,v),y(u,v))$. Similarily, if we want to calculate the integral $\iint f(x,y) dxdy$ after substitution, we should change the infinitesimal area $dxdy$ to the infinitesimal area $dudv$.
 
-$$ du = \frac{du}{dx}dx+\frac{du}{dy}dy $$
-$$ dv = \frac{dv}{dx}dx+\frac{dv}{dy}dy $$
+Let's first decompse $dx$ and $dy$ on the $u$-axis and $v$-axis,
 
-It's analogous that vector $\mathbf{u}$ has vector components $\frac{du}{dx}dx$ or $\frac{du}{dy}dy$ on x-axis or y-axis direction respectively, and same for $\mathbf{v}$.
+$$ dx = \frac{dx}{du}du+\frac{dx}{dv}dv $$
+$$ dy = \frac{dy}{du}du+\frac{dy}{dv}dv $$
 
-It's a wrong way to get the infinitesimal area by multiplying $du$ and $dv$ directly. Because $u$ and $v$ are not guaranteed to be orthogonal. But we can get the infinitesimal area by calculating the cross product of $du$ and $dv$,
+It's analogous that vector $\mathbf{x}$ has vector components $\frac{dx}{du}du$ or $\frac{dx}{dv}dv$ on $u$-axis or $v$-axis direction respectively, and same for $\mathbf{y}$.
 
-$$ |du \times dv| = |\begin{bmatrix} u_x dx \\ u_y dy \end{bmatrix} \times \begin{bmatrix} v_x dx \\ v_y dy \end{bmatrix}| = (u_xv_y-u_yv_x)dxdy = \frac{\partial(u,v)}{\partial(x,y)} dxdy $$
+It's a wrong way to get the infinitesimal area by multiplying the vector components of $dx$ and $dy$ directly. Because $u$-axis and $v$-axis are not guaranteed to be orthogonal ($|du \times dv| \neq |du||dv|$). But we can get the infinitesimal area by calculating the cross product of $dx$ and $dy$. Thus the infinitesimal area $dxdy$ can be described in terms of variables $du$ and $dv$,
 
-$\frac{\partial(u,v)}{\partial(x,y)}$ is called the Jacobian determinant. It can be seen as the scaling factor of area (or volume *etc.*) after variables mapping.
+$$ |dx \times dy| = |\begin{bmatrix} x_u du \\ x_v dv \end{bmatrix} \times \begin{bmatrix} y_u du \\ y_v dv \end{bmatrix}| = (x_uy_v-x_vy_u)dudv = \frac{\partial(x,y)}{\partial(u,v)} dudv $$
+
+$\frac{\partial(x,y)}{\partial(u,v)}$ is called the Jacobian determinant. It can be seen as the scaling factor of area (or volume *etc.*) after variables substitution. The analytic form of the interand function after variable substitution is equal to
+
+$$ g(u,v) = f(x(u,v),y(u,v)) \frac{\partial (x,y)}{\partial (u,v)} $$
 
 ## Appendix
 ### proof of two dot product expressions
 
-Let's consider two vectors $\mathbf{a}$ and $\mathbf{b}$.
+Because two vectors compose a plane. We can always choose two orthogonal basis vectors to describe all vectors in the plane. Let's consider two vectors $\mathbf{a}$ and $\mathbf{b}$.
 
-$$ \mathbf{a} = a_1\mathbf{i} + a_2\mathbf{j} $$
-$$ \mathbf{b} = b_1\mathbf{i} + b_2\mathbf{j} $$
+$$ \mathbf{a}^T = [a_1, a_2] $$
+$$ \mathbf{b}^T = [b_1, b_2] $$
 
-$\theta_{\mathbf{a}}$ and $\theta_{\mathbf{b}}$ are the respective angel between the vector and x-axis.
+$\theta_{\mathbf{a}}$ and $\theta_{\mathbf{b}}$ are the respective angel between the vector and $x$-axis.
 
-$$ \theta_{\mathbf{a}} = \arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_x}{|\mathbf{a}|}} $$
+$$ \theta_{\mathbf{a}} = \arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_1}{|\mathbf{a}|}} $$
 $$ \theta_{\mathbf{b}} = \arcsin{\frac{b_2}{|\mathbf{b}|}} = \arccos{\frac{b_1}{|\mathbf{b}|}} $$
 
 So the angel between vectors $\mathbf{a}$ and $\mathbf{b}$ is $\theta = \theta_{\mathbf{b}} - \theta_{\mathbf{a}}$. According to the trigonometric function,
