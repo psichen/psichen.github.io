@@ -1,10 +1,12 @@
 ---
 title: Generating functions of probability distributions
-tags: [probability density function, poisson, exponential, gaussian, gamma, binomial, geometric, generating function]
+tags: [probability density function, probability mass function, generating function]
 date: 2021-02-11 13:27:35
 ---
 
 Probability mass/density distribution have defined generating functions which faciliate the derivation and the understanding of different probability distributions.
+
+<!--more-->
 
 # Probability generating functions for discrete variables
 
