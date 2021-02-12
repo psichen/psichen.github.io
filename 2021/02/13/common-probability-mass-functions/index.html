@@ -20,27 +20,25 @@
     var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="荧光染料分子被激发后，会从ground state(S0)变到first excited singlet state (S1)，之后会包含以下几个过程：  重新回到S0，并在ns的时间尺度内发出fluorescence 经过inter-system crossing弛豫到first excited triplet state (T1)，并在μs的时间尺度内发出phosphorescence 如果存">
+  <meta name="description" content="Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. T">
 <meta property="og:type" content="article">
-<meta property="og:title" content="荧光猝灭的原理与避免方法">
-<meta property="og:url" content="http://www.psichen.com/2019/09/25/photobleaching/index.html">
+<meta property="og:title" content="Common probability mass function">
+<meta property="og:url" content="http://www.psichen.com/2021/02/13/common-probability-mass-functions/index.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="荧光染料分子被激发后，会从ground state(S0)变到first excited singlet state (S1)，之后会包含以下几个过程：  重新回到S0，并在ns的时间尺度内发出fluorescence 经过inter-system crossing弛豫到first excited triplet state (T1)，并在μs的时间尺度内发出phosphorescence 如果存">
+<meta property="og:description" content="Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. T">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.loli.net/2019/09/27/l7h9quryPtb3KM6.jpg">
-<meta property="og:image" content="https://i.loli.net/2019/09/27/7KLUgpYbwJV5rv1.jpg">
-<meta property="og:image" content="https://i.loli.net/2019/09/27/7nYuxv94D6dVpcI.jpg">
-<meta property="og:image" content="https://i.loli.net/2019/09/27/4GxiQAnvfHIyOoK.jpg">
-<meta property="og:image" content="https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg">
-<meta property="article:published_time" content="2019-09-25T01:28:15.000Z">
-<meta property="article:modified_time" content="2021-02-05T08:30:18.840Z">
+<meta property="article:published_time" content="2021-02-12T16:18:26.000Z">
+<meta property="article:modified_time" content="2021-02-12T16:19:44.284Z">
 <meta property="article:author" content="psichen">
-<meta property="article:tag" content="fluorescence">
-<meta property="article:tag" content="bleaching">
+<meta property="article:tag" content="probability mass function">
+<meta property="article:tag" content="poisson">
+<meta property="article:tag" content="binomial">
+<meta property="article:tag" content="geometric">
+<meta property="article:tag" content="hypergeometric">
+<meta property="article:tag" content="bernoulli">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2019/09/27/l7h9quryPtb3KM6.jpg">
 
-<link rel="canonical" href="http://www.psichen.com/2019/09/25/photobleaching/">
+<link rel="canonical" href="http://www.psichen.com/2021/02/13/common-probability-mass-functions/">
 
 
 <script id="page-configurations">
@@ -53,7 +51,7 @@
   };
 </script>
 
-  <title>荧光猝灭的原理与避免方法 | pan.world</title>
+  <title>Common probability mass function | pan.world</title>
   
 
 
@@ -163,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/09/25/photobleaching/">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/02/13/common-probability-mass-functions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -176,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          荧光猝灭的原理与避免方法
+          Common probability mass function
         </h1>
 
         <div class="post-meta">
@@ -185,16 +183,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2019-09-25 09:28:15" itemprop="dateCreated datePublished" datetime="2019-09-25T09:28:15+08:00">2019-09-25</time>
+              <time title="Created: 2021-02-13 00:18:26 / Modified: 00:19:44" itemprop="dateCreated datePublished" datetime="2021-02-13T00:18:26+08:00">2021-02-13</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-05 16:30:18" itemprop="dateModified" datetime="2021-02-05T16:30:18+08:00">2021-02-05</time>
-              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -214,53 +206,58 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>荧光染料分子被激发后，会从ground state(S<sub>0</sub>)变到first excited singlet state (S<sub>1</sub>)，之后会包含以下几个过程：</p>
-<ol type="1">
-<li>重新回到S<sub>0</sub>，并在ns的时间尺度内发出fluorescence</li>
-<li>经过inter-system crossing弛豫到first excited triplet state (T<sub>1</sub>)，并在μs的时间尺度内发出phosphorescence</li>
-<li>如果存在FRET，则会将能量传递给acceptor,令acceptor从S<sub>0</sub>到S<sub>1</sub>,然后acceptor染料同样也会经历相同的弛豫过程</li>
-</ol>
-<p>染料分子达到triplet state或发生猝灭，都会降低光子产生速率，对成像、荧光单分子检测，特别是对快过程的研究都会造成影响。</p>
-<a id="more"></a>
-<h2 id="猝灭原理">猝灭原理</h2>
-<h3 id="化学因素">化学因素</h3>
-<p>当染料处于S<sub>1</sub>时，其化学活性较高，容易与溶液中的singlet oxygen或自由基发生反应，造成染料化学结构改变，从而发生荧光猝灭，永久失去发光能力。</p>
-<h3 id="光物理因素">光物理因素</h3>
-<p>在较低的激发光强下，染料只经历three-level体系(S<sub>0</sub>, S<sub>1</sub>, T<sub>1</sub>)，而在较高激发光强下(&gt; ~70 kW/cm<sup>2</sup>)，染料经历five-level体系(S<sub>0</sub>, S<sub>1</sub>, T<sub>1</sub>, S<sub>n</sub>, T<sub>n</sub>)<sup>1</sup>。</p>
-<figure>
-<img src="https://i.loli.net/2019/09/27/l7h9quryPtb3KM6.jpg" alt="three/five level system" /><figcaption>three/five level system</figcaption>
-</figure>
-<p>处于第一激发态的染料(S<sub>1</sub>或T<sub>1</sub>)，还可吸收短波长的激光光子，进一步被激发到更高的能级(S<sub>n</sub>或T<sub>n</sub>)，从而增大染料猝灭的概率<sup>2</sup>。</p>
-<h3 id="猝灭概率singlet-triplet">猝灭概率singlet &gt; triplet</h3>
-<p>通过不同调控频率的ALEX激光，来研究染料singlet和triplet的猝灭概率<sup>2</sup>。</p>
-<p>当ALEX激光的频率在ns尺度时，正好落在荧光寿命的时间尺度。红光先对acceptor染料分子激发，在ns尺度的延迟之后，蓝光进行激发，此时acceptor荧光分子处于S<sub>1</sub>，吸收蓝光光子，进一步激发到更高能级(S<sub>n</sub>或T<sub>n</sub>)，发生猝灭，荧光信号降低。当延迟时间超过ns尺度后，acceptor的荧光信号得到恢复。</p>
-<figure>
-<img src="https://i.loli.net/2019/09/27/7KLUgpYbwJV5rv1.jpg" alt="ns-delay" /><figcaption>ns-delay</figcaption>
-</figure>
-<p>当ALEX的延迟时间在μs尺度时，此时染料分子应处于triplet state，而荧光信号改变不大。说明在smFRET中，猝灭主要是由acceptor染料的S<sub>1</sub>吸收短波长的光子带来的，可见染料猝灭的很大一部分原因，都是因为singlet state不能稳定地弛豫到ground state。</p>
-<figure>
-<img src="https://i.loli.net/2019/09/27/7nYuxv94D6dVpcI.jpg" alt="us-delay" /><figcaption>us-delay</figcaption>
-</figure>
-<h2 id="影响">影响</h2>
-<p>如果荧光分子的猝灭时间尺度和分子在confocal显微镜的聚焦体积内的扩散时间相当的话（~ 10<sup>2</sup> μs)，那么single-molecule FRET的分布会有拖尾，因为分子在聚焦体积内，acceptor猝灭，此时donor仍发光，造成表观的FRET效率减小<sup>2</sup>，<strong>拖尾有时容易让人误以为是新组分的存在。</strong></p>
-<figure>
-<img src="https://i.loli.net/2019/09/27/4GxiQAnvfHIyOoK.jpg" alt="FRET-trailing" /><figcaption>FRET-trailing</figcaption>
-</figure>
-<h2 id="解决方法">解决方法</h2>
-<h3 id="除氧trolox">除氧+Trolox</h3>
-<p>常用的除氧体系是葡萄糖+葡萄糖氧化酶+过氧化氢酶。然而氧气是非常高效的triplet quencher，因此将氧气除去后，需要再加入Trolox作为染料的triplet quencher。该配方一般用于表面固定的实验，减少荧光染料blinking和bleaching的概率。</p>
-<h3 id="trolox-cocktail">Trolox cocktail</h3>
-<p>2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺(<span class="math inline">\(\ce{ NH2-CH2-CH2-SH }\)</span>)和1 mM Trolox，其中半胱胺作为singlet oxygen和自由基的quencher，Trolox作为染料triplet quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50 μs的时间分辨率<sup>4</sup>。</p>
-<figure>
-<img src="https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg" alt="trolox-cocktail" /><figcaption>trolox-cocktail</figcaption>
-</figure>
-<h2 id="references">References</h2>
-<ol type="1">
-<li>Eggeling, Christian, et al. "Photobleaching of fluorescent dyes under conditions used for single-molecule detection: Evidence of two-step photolysis." Analytical chemistry 70.13 (1998): 2651-2659.</li>
-<li>Kong, Xiangxu, et al. "Photobleaching pathways in single-molecule FRET experiments." Journal of the American Chemical Society 129.15 (2007): 4643-4654</li>
-<li>Campos, Luis A., et al. "A photoprotection strategy for microsecond-resolution single-molecule fluorescence spectroscopy." Nature methods 8.2 (2011): 143.</li>
-<li>Liu, Jianwei, et al. "Exploring one-state downhill protein folding in single molecules." Proceedings of the National Academy of Sciences 109.1 (2012): 179-184.</li>
-</ol>
+        <p>Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. These different probability distributions are heavily coupled. In order to apply these distribution properly, we should understand their origin and derivation, which are the main purpose of this post (for discrete distributions).</p>
+<h1 id="bernoulli-distribution">Bernoulli distribution</h1>
+<p>Bernoulli distribution is associated with <em>one trial with two outcomes</em>, generally refered to as success (<span class="math inline">\(k=1\)</span>) and failure (<span class="math inline">\(k=0\)</span>).</p>
+<p><span class="math display">\[ P(X=k) = p^k q^{1-k} \]</span></p>
+<p>where <span class="math inline">\(k=0, 1\)</span>.</p>
+<h2 id="the-moment-generating-function">the moment generating function</h2>
+<p><span class="math display">\[  M_X(t) = E[e^{Xt}] = q+pe^t \]</span></p>
+<h1 id="binomial-distribution">Binomial distribution</h1>
+<p>In the binomial distribution, the probability that <span class="math inline">\(k\)</span> successes in <span class="math inline">\(n\)</span> trials is given by,</p>
+<p><span class="math display">\[ P(X=k) = C(n, k)p^kq^{n-k} \]</span></p>
+<p>where <span class="math inline">\(k=0,1,\dots,n\)</span>.</p>
+<h2 id="the-moment-generating-function-1">the moment generating function</h2>
+<p>The random variable <span class="math inline">\(X\)</span> in binomial distribution is the sum of random variables <span class="math inline">\(X_i\)</span> in the same Bernoulli distribution. So the moment generating function of binomial distribution is given by</p>
+<p><span class="math display">\[ M_X(t) = \prod_{i=1}^{n} q+pe^t = (q+pe^t)^n \]</span></p>
+<h1 id="geometric-distribution">Geometric distribution</h1>
+<p>A random variable <span class="math inline">\(X\)</span> is given by the number of trials needed to obtain the first success when the chance of success at each trial is constant and equals to <span class="math inline">\(p\)</span>.</p>
+<p><span class="math display">\[ P(X=k) = q^{k-1}p \]</span></p>
+<p>where <span class="math inline">\(k&gt;0\)</span> and is an integer number. The name <em>geometric distribution</em> comes from the <em>geometric series</em>.</p>
+<h2 id="the-moment-generating-function-2">the moment generating function</h2>
+<p><span class="math display">\[ M_X(t) = E(e^{Xt}) = \sum_{k=1}^{\infty} q^{k-1}pe^{kt} = pe^t \sum_{k=0}^{\infty} (qe^t)^k = \frac{pe^t}{1-qe^t} \]</span></p>
+<p>where the sum of a geometric series was used and <span class="math inline">\(t&lt;-\ln q\)</span>.</p>
+<h2 id="hypergeometric-distribution">hypergeometric distribution</h2>
+<p>An equivalent scenario for binomial distribution is the number of drawn red balls <span class="math inline">\(X=k\)</span> <em>with replacement</em> in <span class="math inline">\(n\)</span> trials from a set of <span class="math inline">\(N\)</span> balls of which <span class="math inline">\(M\)</span> are red and the rest are white. If the balls, however, are drawn <em>without replacement</em>, the distribution is called hypergeometric distribution and its probability mass function is given by</p>
+<p><span class="math display">\[ P(X=k) = \frac{C(M, k)C(N-M,n-k)}{C(N, n)} \]</span></p>
+<p>The ratio between <span class="math inline">\(P(X=k)\)</span> and <span class="math inline">\(P(X=k+1)\)</span> is a rational function of <span class="math inline">\(k\)</span>, so it's called <em>hypergeometric</em> series,</p>
+<p><span class="math display">\[ \frac{P(X=k+1)}{P(X=k)} = \frac{(M-k)(n-k)}{(k+1)(N-M-n+k+1)} \]</span></p>
+<h1 id="negative-binomial-distribution">Negative binomial distribution</h1>
+<p>Another closely related distribution geometric distribution is negative binomial distribution where the variable <span class="math inline">\(X\)</span> is the number of <em>fail</em> trials when <span class="math inline">\(r\)</span> successes are obtained. Geometric distribution is a special case of negative binomial distribution in which <span class="math inline">\(r=1\)</span>.</p>
+<p><span class="math display">\[ P(X=k) = C(k+r-1, k)q^{k}p^r \]</span></p>
+<h2 id="the-moment-generating-function-3">the moment generating function</h2>
+<p>In negative binomial distribution, the random variable <span class="math inline">\(X=\sum_{i=1}^{r} X_i\)</span>, where <span class="math inline">\(X_i\)</span> follows the same geometric distribution. So the moment generating function of negative binomial distribution can be obtained from the product,</p>
+<p><span class="math display">\[ M_X(t) = \prod_{i=1}^{r} M_{X_i}(t) = (\frac{pe^t}{1-qe^t})^r \]</span></p>
+<p>where <span class="math inline">\(t&lt;-\ln q\)</span>.</p>
+<h1 id="poisson-distribution">Poisson distribution</h1>
+<p>Binomial distribution describe the number of occured events in <span class="math inline">\(n\)</span> trials with probability <span class="math inline">\(p\)</span>. When <span class="math inline">\(n \to \infty\)</span> and <span class="math inline">\(p \to 0\)</span>, we define <span class="math inline">\(np=\lambda\)</span> and substitute it into the probability mass function of binomial distribution,</p>
+<p><span class="math display">\[ \begin{aligned}
+P(X=k) &amp;= \lim_{n \to \infty} \frac{n!}{k!(n-k)!} (\frac{\lambda}{n})^k (1-\frac{\lambda}{n})^{n-k} \\
+       &amp;= \frac{\lambda^k}{k!} \lim_{n \to \infty} \frac{n!}{(n-k)!} \frac{1}{n^k} (1-\frac{\lambda}{n})^{n-k} \\
+       &amp;= \frac{\lambda^k}{k!} \lim_{n \to \infty} \frac{n(n-1)\cdots(n-k+1)}{n^k} (1-\frac{\lambda}{n})^{n-k}
+\end{aligned} \]</span></p>
+<p>Recall the define that <span class="math inline">\(e=\lim_{x \to \infty} (1+\frac{1}{x})^x\)</span>, so we get</p>
+<p><span class="math display">\[ P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!} \]</span></p>
+<p>where <span class="math inline">\(k = 0, 1, 2,\dots\)</span></p>
+<h2 id="moment-generating-function">moment generating function</h2>
+<p>The moment generating function of Poisson distribution can also be derived from that of binomial distribution,</p>
+<p><span class="math display">\[ \begin{aligned}
+M_X(t) &amp;= \lim_{n \to \infty} (1-\frac{\lambda}{n}+\frac{\lambda}{n} e^t)^n \\
+       &amp;=  \lim_{n \to \infty} (1+\frac{\lambda (e^t-1)}{n})^n \\
+       &amp;= e^{\lambda (e^t-1)}
+\end{aligned} \]</span></p>
+<h1 id="references">References</h1>
+<p><a target="_blank" rel="noopener" href="http://www.math.wm.edu/~leemis/chart/UDR/UDR.html">Univariate Distribution Relationships</a></p>
 
     </div>
 
@@ -270,8 +267,12 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/fluorescence/" rel="tag"># fluorescence</a>
-              <a href="/tags/bleaching/" rel="tag"># bleaching</a>
+              <a href="/tags/probability-mass-function/" rel="tag"># probability mass function</a>
+              <a href="/tags/poisson/" rel="tag"># poisson</a>
+              <a href="/tags/binomial/" rel="tag"># binomial</a>
+              <a href="/tags/geometric/" rel="tag"># geometric</a>
+              <a href="/tags/hypergeometric/" rel="tag"># hypergeometric</a>
+              <a href="/tags/bernoulli/" rel="tag"># bernoulli</a>
           </div>
 
         
@@ -279,11 +280,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/09/25/Legendre-transformation/" rel="next" title="Legendre变换的理解和在热力学中的应用">
-      Legendre变换的理解和在热力学中的应用 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/02/11/generating-functions-of-probability-distribution/" rel="prev" title="Generating functions of probability distributions">
+      <i class="fa fa-chevron-left"></i> Generating functions of probability distributions
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -342,7 +343,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8C%9D%E7%81%AD%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">猝灭原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%96%E5%AD%A6%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.1.</span> <span class="nav-text">化学因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%89%A9%E7%90%86%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">光物理因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8C%9D%E7%81%AD%E6%A6%82%E7%8E%87singlet-triplet"><span class="nav-number">1.3.</span> <span class="nav-text">猝灭概率singlet &gt; triplet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%B1%E5%93%8D"><span class="nav-number">2.</span> <span class="nav-text">影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%A4%E6%B0%A7trolox"><span class="nav-number">3.1.</span> <span class="nav-text">除氧+Trolox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trolox-cocktail"><span class="nav-number">3.2.</span> <span class="nav-text">Trolox cocktail</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bernoulli-distribution"><span class="nav-number">1.</span> <span class="nav-text">Bernoulli distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-moment-generating-function"><span class="nav-number">1.1.</span> <span class="nav-text">the moment generating function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#binomial-distribution"><span class="nav-number">2.</span> <span class="nav-text">Binomial distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-moment-generating-function-1"><span class="nav-number">2.1.</span> <span class="nav-text">the moment generating function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#geometric-distribution"><span class="nav-number">3.</span> <span class="nav-text">Geometric distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-moment-generating-function-2"><span class="nav-number">3.1.</span> <span class="nav-text">the moment generating function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hypergeometric-distribution"><span class="nav-number">3.2.</span> <span class="nav-text">hypergeometric distribution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#negative-binomial-distribution"><span class="nav-number">4.</span> <span class="nav-text">Negative binomial distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-moment-generating-function-3"><span class="nav-number">4.1.</span> <span class="nav-text">the moment generating function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#poisson-distribution"><span class="nav-number">5.</span> <span class="nav-text">Poisson distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#moment-generating-function"><span class="nav-number">5.1.</span> <span class="nav-text">moment generating function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -28,7 +28,7 @@
 <meta property="og:description" content="Permutation Let&#39;s first consider a set of \(n\) objects, which are all different. The number of all possible arrangements (permutations) is \[ n(n-1) \cdots 1 &#x3D; n! \] Generally, if we select \(k (&lt;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-01-21T15:55:00.000Z">
-<meta property="article:modified_time" content="2021-02-05T08:03:47.388Z">
+<meta property="article:modified_time" content="2021-02-12T08:51:55.665Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="permutation">
 <meta property="article:tag" content="combination">
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-05 16:03:47" itemprop="dateModified" datetime="2021-02-05T16:03:47+08:00">2021-02-05</time>
+                <time title="Modified: 2021-02-12 16:51:55" itemprop="dateModified" datetime="2021-02-12T16:51:55+08:00">2021-02-12</time>
               </span>
 
           
@@ -240,21 +240,21 @@
 </ol>
 <h3 id="distinguishable-wo-amount-restriction">Distinguishable w/o amount restriction</h3>
 <p>Let us first consider distributing the <span class="math inline">\(N\)</span> patricles among the <span class="math inline">\(R\)</span> energy levels, which is analogous to placing <span class="math inline">\(N\)</span> different balls into <span class="math inline">\(R\)</span> boxes,</p>
-<p><span class="math display">\[ \frac{N!}{\underset{i=1}{\overset{R}{\large{\Pi}}} n_i!} \]</span></p>
+<p><span class="math display">\[ \frac{N!}{\prod_{i=1}^{R} n_i!} \]</span></p>
 <p>where <span class="math inline">\(n_i\)</span> is the number of particles in each energy level. Then let's multiply the number of differnet arrangement of <span class="math inline">\(n_i\)</span> particles in <span class="math inline">\(g_i\)</span> degenerate quantum states in each energy level. Becasue there is no restriction on the particle number in each quantum states, each particle can reside in any of <span class="math inline">\(g_i\)</span> degenerated quantum states. So the arrangements in this scenario is</p>
-<p><span class="math display">\[ \Omega = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i^{n_i}}{n_i!} \]</span></p>
+<p><span class="math display">\[ \Omega = N! \prod_{i=1}^{R} \frac{g_i^{n_i}}{n_i!} \]</span></p>
 <p>Such a system of particles (for example classical gas molecules) is said to obey <em>Maxwell-Boltzmann statistics</em>.</p>
 <h3 id="indistinguishable-wo-amount-restriction">Indistinguishable w/o amount restriction</h3>
 <p>If the particles are indistinguishable, there is only one arrangement in which <span class="math inline">\(n_i (i=1,2,\cdots,R)\)</span> particles reside in <span class="math inline">\(i\)</span>th energy level. The distinct arrangements of <span class="math inline">\(n_i\)</span> particles in <span class="math inline">\(g_i\)</span> degenerate states, however, is analogous to placing indistinguishable balls into different boxes. So the number of combination of particles is</p>
-<p><span class="math display">\[ \Omega = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{(n_i+g_i-1)!}{n_i! (g_i-1)!} \]</span></p>
+<p><span class="math display">\[ \Omega = \prod_{i=1}^{R} \frac{(n_i+g_i-1)!}{n_i! (g_i-1)!} \]</span></p>
 <p>Such a system of particles (for example a gas of photons) is said to obey <em>Bose-Einstein statistics</em>.</p>
 <h3 id="indistinguishable-w-amount-restriction">Indistinguishable w/ amount restriction</h3>
 <p>If the number of particles in each quantum state is either 0 or 1, the arrangements of <span class="math inline">\(n_i\)</span> particles in <span class="math inline">\(g_i\)</span> degenerate quantum states is equal to the combination of <span class="math inline">\(n_i\)</span> occupied and <span class="math inline">\(g_i-n_i\)</span> unoccupied states. So the distinct arrangements of particles is given by</p>
-<p><span class="math display">\[ \Omega = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i!(g_i-n_i)!} \]</span></p>
+<p><span class="math display">\[ \Omega = \prod_{i=1}^{R} \frac{g_i!}{n_i!(g_i-n_i)!} \]</span></p>
 <p>Such a system of particles (for example an electron gas) is said to obey <em>Fermi-Dirac statistics</em>.</p>
 <h3 id="distinguishable-w-amount-restriction">Distinguishable w/ amount restriction</h3>
 <p>If the particles are distinguishable, each arrangement of <span class="math inline">\(n_i\)</span> particles in the previous scenario can be reordered in <span class="math inline">\(n_i!\)</span> different ways. Multiplying the number of arrangements of <span class="math inline">\(N\)</span> distinguishable particles among <span class="math inline">\(R\)</span> energy levels, the arrangement of particles is given by</p>
-<p><span class="math display">\[ \Omega = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i! (g_i-n_i)!} \]</span></p>
+<p><span class="math display">\[ \Omega = N! \prod_{i=1}^{R} \frac{g_i!}{n_i! (g_i-n_i)!} \]</span></p>
 <p>Such a system of particles never occurs in nature.</p>
 <h2 id="references">References</h2>
 <p>Riley, Kenneth Franklin, et al. <em>Mathematical methods for physics and engineering: a comprehensive guide</em>. Cambridge university press, 2002.</p>
@@ -357,14 +357,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
