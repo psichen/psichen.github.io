@@ -59,11 +59,11 @@ Let's consider a partical scenario. A system contains a number $N$ of non-intera
 
 Let us first consider distributing the $N$ patricles among the $R$ energy levels, which is analogous to placing $N$ different balls into $R$ boxes,
 
-$$ \frac{N!}{\underset{i=1}{\overset{R}{\large{\Pi}}} n_i!} $$
+$$ \frac{N!}{\prod_{i=1}^{R} n_i!} $$
 
 where $n_i$ is the number of particles in each energy level. Then let's multiply the number of differnet arrangement of $n_i$ particles in $g_i$ degenerate quantum states in each energy level. Becasue there is no restriction on the particle number in each quantum states, each particle can reside in any of $g_i$ degenerated quantum states. So the arrangements in this scenario is
 
-$$ \Omega = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i^{n_i}}{n_i!} $$
+$$ \Omega = N! \prod_{i=1}^{R} \frac{g_i^{n_i}}{n_i!} $$
 
 Such a system of particles (for example classical gas molecules) is said to obey *Maxwell-Boltzmann statistics*.
 
@@ -71,7 +71,7 @@ Such a system of particles (for example classical gas molecules) is said to obey
 
 If the particles are indistinguishable, there is only one arrangement in which $n_i (i=1,2,\cdots,R)$ particles reside in $i$th energy level. The distinct arrangements of $n_i$ particles in $g_i$ degenerate states, however, is analogous to placing indistinguishable balls into different boxes. So the number of combination of particles is
 
-$$ \Omega = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{(n_i+g_i-1)!}{n_i! (g_i-1)!} $$
+$$ \Omega = \prod_{i=1}^{R} \frac{(n_i+g_i-1)!}{n_i! (g_i-1)!} $$
 
 Such a system of particles (for example a gas of photons) is said to obey *Bose-Einstein statistics*.
 
@@ -79,7 +79,7 @@ Such a system of particles (for example a gas of photons) is said to obey *Bose-
 
 If the number of particles in each quantum state is either 0 or 1, the arrangements of $n_i$ particles in $g_i$ degenerate quantum states is equal to the combination of $n_i$ occupied and $g_i-n_i$ unoccupied states. So the distinct arrangements of particles is given by
 
-$$ \Omega = \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i!(g_i-n_i)!} $$
+$$ \Omega = \prod_{i=1}^{R} \frac{g_i!}{n_i!(g_i-n_i)!} $$
 
 Such a system of particles (for example an electron gas) is said to obey *Fermi-Dirac statistics*.
 
@@ -87,7 +87,7 @@ Such a system of particles (for example an electron gas) is said to obey *Fermi-
 
 If the particles are distinguishable, each arrangement of $n_i$ particles in the previous scenario can be reordered in $n_i!$ different ways. Multiplying the number of arrangements of $N$ distinguishable particles among $R$ energy levels, the arrangement of particles is given by
 
-$$ \Omega = N! \underset{i=1}{\overset{R}{\LARGE{\Pi}}} \frac{g_i!}{n_i! (g_i-n_i)!} $$
+$$ \Omega = N! \prod_{i=1}^{R} \frac{g_i!}{n_i! (g_i-n_i)!} $$
 
 Such a system of particles never occurs in nature.
 
