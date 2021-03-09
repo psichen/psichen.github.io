@@ -28,7 +28,7 @@
 <meta property="og:description" content="Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. T">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-09T16:58:51.000Z">
-<meta property="article:modified_time" content="2021-03-09T17:19:01.014Z">
+<meta property="article:modified_time" content="2021-03-09T17:22:34.139Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="probability density function">
 <meta property="article:tag" content="exponential">
@@ -187,7 +187,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-03-10 00:58:51 / Modified: 01:19:01" itemprop="dateCreated datePublished" datetime="2021-03-10T00:58:51+08:00">2021-03-10</time>
+              <time title="Created: 2021-03-10 00:58:51 / Modified: 01:22:34" itemprop="dateCreated datePublished" datetime="2021-03-10T00:58:51+08:00">2021-03-10</time>
             </span>
 
           
@@ -209,6 +209,7 @@
 
       
         <p>Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. These different probability distributions are heavily coupled. In order to apply these distribution properly, we should understand their origin and derivation, which are the main purpose of this post (for continuous distributions).</p>
+<a id="more"></a>
 <h1 id="gaussian-distribution">Gaussian distribution</h1>
 <p>Gaussian distribution is probably the most famous probability distribution. It's defined as</p>
 <p><span class="math display">\[ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{- \frac{1}{2}(\frac{x-\mu}{\sigma})^2} \]</span></p>
@@ -250,6 +251,23 @@ V[Y] &amp;= E[Y^2] - E^2[Y] = E[e^{2X}] - E^2[e^X] = M_X(2) - M_X^2(1) \\
 <p>The probaility that an event occurs in the next infinitesimal interval <span class="math inline">\(dx\)</span> is,</p>
 <p><span class="math display">\[ P_1 = \frac{(\lambda dx)^k}{k!} e^{-\lambda dx} |_{k=1} = \lambda dx e^{-\lambda dx} \approx \lambda dx \]</span></p>
 <hr />
+<h1 id="appendix">Appendix</h1>
+<p>The gamma function and other related special functions appear in probability density functions many times. Some properties of these special functions need to be metioned.</p>
+<h2 id="gamma-function">Gamma function</h2>
+<p>The gamma function is defined as</p>
+<p><span class="math display">\[ \Gamma(r) = \int_0^{\infty} t^{r-1} e^{-t} dt \]</span></p>
+<p>Let's make a substitution <span class="math inline">\(t=\lambda x\)</span> and transform the equation, we can get the probability density funtion of the gamma distribution,</p>
+<p><span class="math display">\[ f(x) = \frac{\lambda^r x^{r-1} e^{-\lambda x}}{\Gamma(r)} \]</span></p>
+<h2 id="beta-function">Beta function</h2>
+<p>The beta function is defined as</p>
+<p><span class="math display">\[ B(m, n) = \int_0^1 x^{m-1} (1-x)^{n-1} dx \]</span></p>
+<p>Also,</p>
+<p><span class="math display">\[ B(m, n) = \frac{\Gamma(m) \Gamma(n)}{\Gamma(m+n)} \]</span></p>
+<p>Gamma function is the continuation of factorial function. Similarly, Beta function is the continuation of inverse of combination.</p>
+<p>We transfrom the equation and get the probability density function of the beta distribution,</p>
+<p><span class="math display">\[ f(x) = \frac{x^{m-1}(1-x)^{n-1}}{B(m,n)} \]</span></p>
+<h1 id="references">References</h1>
+<p><a target="_blank" rel="noopener" href="http://www.math.wm.edu/~leemis/chart/UDR/UDR.html">Univariate Distribution Relationships</a></p>
 
     </div>
 
@@ -337,7 +355,7 @@ V[Y] &amp;= E[Y^2] - E^2[Y] = E[e^{2X}] - E^2[e^X] = M_X(2) - M_X^2(1) \\
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gaussian-distribution"><span class="nav-number">1.</span> <span class="nav-text">Gaussian distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#moment-generating-function"><span class="nav-number">1.1.</span> <span class="nav-text">moment generating function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#central-limit-theorem"><span class="nav-number">1.2.</span> <span class="nav-text">central limit theorem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#log-normal-distribution"><span class="nav-number">2.</span> <span class="nav-text">Log-normal distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#log-normal-central-limit-theorem"><span class="nav-number">2.1.</span> <span class="nav-text">Log-normal central limit theorem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#exponential-distribution"><span class="nav-number">3.</span> <span class="nav-text">Exponential distribution</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gaussian-distribution"><span class="nav-number">1.</span> <span class="nav-text">Gaussian distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#moment-generating-function"><span class="nav-number">1.1.</span> <span class="nav-text">moment generating function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#central-limit-theorem"><span class="nav-number">1.2.</span> <span class="nav-text">central limit theorem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#log-normal-distribution"><span class="nav-number">2.</span> <span class="nav-text">Log-normal distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#log-normal-central-limit-theorem"><span class="nav-number">2.1.</span> <span class="nav-text">Log-normal central limit theorem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#exponential-distribution"><span class="nav-number">3.</span> <span class="nav-text">Exponential distribution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#appendix"><span class="nav-number">4.</span> <span class="nav-text">Appendix</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gamma-function"><span class="nav-number">4.1.</span> <span class="nav-text">Gamma function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#beta-function"><span class="nav-number">4.2.</span> <span class="nav-text">Beta function</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
