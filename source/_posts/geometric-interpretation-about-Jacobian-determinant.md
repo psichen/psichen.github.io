@@ -43,7 +43,7 @@ which is the area of the parallelogram having $\mathbf{a}$ and $\mathbf{b}$ as s
 
 For double integrals $\iint f(x,y) dxdy$, we take an infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because $x$-axis and $y$-axis are orthogonal ($|dx \times dy| = |dxdy\sin\frac{\pi}{2}|$).
 
-Now let's consider the variables substitution $dxdy \to dudv$ where $x=x(u,v)$ and $y=y(u,v)$. So the function $f(x,y) = f(x(u,v),y(u,v))$. Similarily, if we want to calculate the integral $\iint f(x,y) dxdy$ after substitution, we should change the infinitesimal area $dxdy$ to the infinitesimal area $dudv$.
+Now let's consider the variables substitution $dxdy \to dudv$ where $x=x(u,v)$ and $y=y(u,v)$. So the function $f(x,y) = f(x(u,v),y(u,v))$. Similarily, if we want to calculate the integral $\iint f(x,y) dxdy$ after substitution, we should find the equivalent infinitesimal area of $dxdy$ represented by $dudv$.
 
 Let's first decompse $dx$ and $dy$ on the $u$-axis and $v$-axis,
 

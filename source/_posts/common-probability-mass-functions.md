@@ -1,5 +1,5 @@
 ---
-title: Common porobability mass functions
+title: Common probability mass functions
 date: 2021-02-13 00:23:00
 tags: [probability mass function, poisson, binomial, geometric, hypergeometric, bernoulli]
 ---
