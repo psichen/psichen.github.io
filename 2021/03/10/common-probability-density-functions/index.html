@@ -28,7 +28,7 @@
 <meta property="og:description" content="Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. T">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-09T16:58:51.000Z">
-<meta property="article:modified_time" content="2021-03-09T17:30:25.164Z">
+<meta property="article:modified_time" content="2021-03-09T17:30:37.989Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="probability density function">
 <meta property="article:tag" content="exponential">
@@ -187,7 +187,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-03-10 00:58:51 / Modified: 01:30:25" itemprop="dateCreated datePublished" datetime="2021-03-10T00:58:51+08:00">2021-03-10</time>
+              <time title="Created: 2021-03-10 00:58:51 / Modified: 01:30:37" itemprop="dateCreated datePublished" datetime="2021-03-10T00:58:51+08:00">2021-03-10</time>
             </span>
 
           
@@ -289,7 +289,8 @@ P(X&gt;t+x|X&gt;t) &amp;= \frac{P((X&gt;t+x) \cap (X&gt;t))}{P(X&gt;t)} = \frac{
 <p>Beta distribution describes the probability distribution of a probability. We can derive the beta distribution via Bayesian inference.</p>
 <p>Let's first consider the probability of an event occuring <span class="math inline">\(p\)</span>. We do not know the exact value of the <span class="math inline">\(p\)</span>, so we just have a probability distribution of <span class="math inline">\(p\)</span> in which some values are more likely. When we don't have any sampling information about the <span class="math inline">\(p\)</span>, we have no expectation but rather randomly guess what the <span class="math inline">\(p\)</span> is. So the prior probability <span class="math inline">\(P(p&lt;x&lt;p+\Delta p)\)</span> is uniform distribution <span class="math inline">\(f(p)=1\)</span> times <span class="math inline">\(\Delta p\)</span> (shorthand for <span class="math inline">\(P(p)\)</span>).</p>
 <p>Then we can add new information to the <span class="math inline">\(p\)</span> by counting success trials and failure trials according to the Bayesian equation,</p>
-<p><span class="math display">\[ P(p|X) = \frac{P(X|p)P(p)}{\sum_{p} P(X|p) P(p)} \]</span> **************************************************</p>
+<p><span class="math display">\[ P(p|X) = \frac{P(X|p)P(p)}{\sum_{p} P(X|p) P(p)} \]</span></p>
+<p>where <span class="math inline">\(P(p)\)</span> is the prior, <span class="math inline">\(P(p|X)\)</span> is the posterior, <span class="math inline">\(P(X|p)\)</span> is the likelyhood and <span class="math inline">\(\sum_{p} P(X|p) P(p)\)</span> is the normalization factor. We can derive the posterior probability mass function as, **************************************************</p>
 <h1 id="appendix">Appendix</h1>
 <p>The gamma function and other related special functions appear in probability density functions many times. Some properties of these special functions need to be metioned.</p>
 <h2 id="gamma-function">Gamma function</h2>
