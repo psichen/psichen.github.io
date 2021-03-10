@@ -53,7 +53,7 @@ which is exactly the form of Gaussian distribution, regardless of the type of pr
 
 # Log-normal distribution
 
-If $X \sim N(\mu, \sigma^2)$, then the variable $Y = e^X$ follows the log-normal distribution, and $\ln Y$ follows the normal distribution, hence the name. According to the [Jacobian determinant](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/), the probability density function of $Y$ is the following equation,
+If $X \sim Gaussian(\mu, \sigma^2)$, then the variable $Y = e^X$ follows the log-normal distribution, and $\ln Y$ follows the normal distribution, hence the name. According to the [Jacobian determinant](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/), the probability density function of $Y$ is the following equation,
 
 $$ f(y) = f(x(y)) \frac{\partial x}{\partial y} = \frac{1}{\sigma \sqrt{2\pi}} \frac{1}{y} e^{-\frac{1}{2} (\frac{\ln y-\mu}{\sigma})^2} $$
 
@@ -109,7 +109,7 @@ P(X>t+x|X>t) &= \frac{P((X>t+x) \cap (X>t))}{P(X>t)} = \frac{P(X>t+x)}{P(X>t)} \
              &= e^{-\lambda x} = \int_x^{\infty} \lambda e^{-\lambda x} dx = P(X>x)
 \end{aligned} $$
 
-An application of memorylessness is to join two signal series of Poisson processes. Signal series consist of a series of discrete values. For simplicity, every value belongs to some states. In order to avoid artifacts, we should select such signal series of which the state of the tail of the first signal series should be the same as the state of the head of the second signal series. Then the tail of the first signal series is superposed with the head of the second signal series. Because of the memorylessness, the state transition probability of the head of the first signal series should be the same as that of the head of the second signal series. This join way keeps the stochastic property around the joint point.
+An application of memorylessness is to join two signal series of Poisson processes. Signal series consist of a series of discrete values. For simplicity, every value belongs to some states. In order to avoid artifacts, we should select such signal series of which the state of the tail of the first signal series should be the same as the state of the head of the second signal series. Then the tail of the first signal series is superposed with the head of the second signal series. Because of the memorylessness, the state transition probability of the tail of the first signal series should be the same as that of the head of the second signal series. This join way keeps the stochastic property around the joint point.
 
 # Gamma distribution
 
@@ -129,7 +129,7 @@ The gamma distribution can be defined for all positive real number $r$ by replac
 
 $$ f(x) = \frac{\lambda^r x^{r-1}}{\Gamma(r)} e^{-\lambda x} $$
 
-and we write $X \sim \Gamma(r, \lambda)$ if the random variable $X$ follows Gamma distributon with the shape parameter $r$ and the rate parameter $\lambda$.
+and we write $X \sim Gamma(r, \lambda)$ if the random variable $X$ follows Gamma distributon with the shape parameter $r$ and the rate parameter $\lambda$.
 
 ## moment generating function
 
@@ -137,13 +137,13 @@ The moment generating function for gamma function is obtained from that for expo
 
 $$ M_X(t) = (\frac{\lambda}{\lambda-t})^r $$
 
-In other words, exponential distribution is a special case of gamma distribution $\Gamma(\lambda, 1)$.
+In other words, exponential distribution is a special case of gamma distribution $Gamma(\lambda, 1)$.
 
 ## continuation from Poisson distribution
 
 [Poisson distribution](https://www.psichen.com/2021/02/13/common-porobability-mass-functions/) describes the probability of the number of independent random events occurring. It's a discrete distribution in which the random variable must be integers. We can extend the Poisson distribution from integer space to real space by replacing factorial $k!$ with gamma function $\Gamma(k+1)$,
 
-$$ P(x=k) = \frac{\lambda^k e^{-\lambda}}{\Gamma(k+1)} = \Gamma(k+1, 1) $$
+$$ P(x=k) = \frac{\lambda^k e^{-\lambda}}{\Gamma(k+1)} = Gamma(1, k+1) $$
 
 # Beta distribution
 
@@ -186,7 +186,7 @@ The posterior distribution is,
 
 $$\begin{aligned}
 P(p|X) &= \frac{ {n \choose k} p^k(1-p)^{n-k} \int_p^{p+\Delta p} \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)} dx }{ \int_0^1  {n \choose k} p^k(1-p)^{n-k} \int_p^{p+\Delta p} \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)} dx } \\
-       &= \frac{ \int_0^{\Delta p} p^{\alpha-1+k}(1-p)^{\beta-1+n-k} dp }{ \int_0^1 p^{\alpha-1+k}(1-p)^{\beta-1+n-k} dp } \\
+       &= \frac{ p^{\alpha-1+k}(1-p)^{\beta-1+n-k} \Delta p }{ \int_0^1 p^{\alpha-1+k}(1-p)^{\beta-1+n-k} dp } \\
 \end{aligned}$$
 
 So the probability density function of the posterior distribution is,
@@ -197,7 +197,7 @@ it's just the sum of parameters of Beta and binomial distributions.
 
 # Chi-squared distribution
 
-If $X \sim N(\mu, \sigma^2)$, then the variable $Y=\frac{(X-\mu)^2}{\sigma^2}$ is distributed as $\Gamma(\frac{1}{2}, \frac{1}{2})$.
+If $X \sim Gaussian(\mu, \sigma^2)$, then the variable $Y=\frac{(X-\mu)^2}{\sigma^2}$ is distributed as $Gamma(\frac{1}{2}, \frac{1}{2})$.
 
 Because $X=\mu \pm \sigma \sqrt{Y}$, according to [Jacobian determinant](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/), the probability density function of $Y$ needs sum of two parts,
 
@@ -206,7 +206,7 @@ f(y) &= \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{y}{2}} |\frac{d (\mu+\sigma \sqrt
      &= \frac{1}{{2\sqrt\pi}} e^{-\frac{y}{2}}  (\frac{y}{2})^{-\frac{1}{2}} = \Gamma(\frac{1}{2}, \frac{1}{2}) \\
 \end{aligned} $$
 
-Now let's consider $n$ independent Gaussian random variables $X_i \sim N(\mu_i, \sigma_i^2)$ and define $\chi_n^2 = \sum_{i=1}^{n} \frac{(x_i-\mu_i)^2}{\sigma_i^2}$. 
+Now let's consider $n$ independent Gaussian random variables $X_i \sim Gaussian(\mu_i, \sigma_i^2)$ and define $\chi_n^2 = \sum_{i=1}^{n} \frac{(x_i-\mu_i)^2}{\sigma_i^2}$. 
 The probability density function of $\chi_n^2$ is
 
 $$ f(\chi_n^2) = (\frac{1}{2})^{\frac{1}{2}n} \frac{(\chi_n^2)^{\frac{1}{2}n-1}}{\Gamma(\frac{1}{2}n)} e^{-\frac{1}{2}\chi_n^2} $$
@@ -219,7 +219,7 @@ The probability density function of Chi-squared distribution can be easily obtai
 
 $$ M_{\chi_n^2}(t) = (\frac{\lambda}{\lambda-t})^{\frac{1}{2} n} $$
 
-Thus $\chi_n^2 \sim \Gamma(\frac{1}{2}, \frac{1}{2}n)$.
+Thus $\chi_n^2 \sim Gamma(\frac{1}{2}, \frac{1}{2}n)$.
 
 # Appendix
 
@@ -241,15 +241,35 @@ The beta function is defined as
 
 $$ B(m, n) = \int_0^1 x^{m-1} (1-x)^{n-1} dx $$
 
+We transfrom the equation and get the probability density function of the beta distribution,
+
+$$ f(x) = \frac{x^{m-1}(1-x)^{n-1}}{B(m,n)} $$
+
 Also,
 
 $$ B(m, n) = \frac{\Gamma(m) \Gamma(n)}{\Gamma(m+n)} $$
 
-Gamma function is the continuation of factorial function. Similarly, Beta function is the continuation of inverse of combination.
+Gamma function is the continuation of factorial function (permutation). Similarly, Beta function is the continuation of inverse of combination.
 
-We transfrom the equation and get the probability density function of the beta distribution,
+If $X$ and $Y$ are independent random variables of Gamma distribution, then the variable $Z=\frac{X}{X+Y}$ obeys Beta distribution. Let's define another variable $W = X+Y$, thus we have the probability density function $f(w, z)$,
 
-$$ f(x) = \frac{x^{m-1}(1-x)^{n-1}}{B(m,n)} $$
+$$ f(w, z) = f(x, y) \frac{(\partial x, \partial y)}{(\partial w, \partial z)} $$
+
+where $\frac{(\partial x, \partial y)}{(\partial w, \partial z)}$ is the Jacobian determinant.
+
+Because $w=x+y, z=\frac{x}{x+y}$, so $x=wz, y=w(1-z)$. The Jacobian determinant is,
+
+$$ \begin{vmatrix} \frac{\partial x}{\partial w} & \frac{\partial y}{\partial w} \\ \frac{\partial x}{\partial z} & \frac{\partial y}{\partial z} \\ \end{vmatrix} = \begin{vmatrix} z & 1-z \\ w & -w \\ \end{vmatrix} = -w $$
+
+we just take the absolute value of the Jacobian determinant because it's [the scale factor of the infinitesimal area](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/). Thus we have,
+
+$$\begin{aligned}
+f(w, z) &= \frac{\lambda^{\alpha}(wz)^{\alpha-1}e^{-\lambda wz}}{\Gamma(\alpha)} \frac{\lambda^{\beta}(w(1-z))^{\beta-1}e^{-\lambda w(1-z)}}{\Gamma(\beta)}w \\
+        &= \frac{\lambda^{\alpha+\beta} w^{\alpha+\beta-1} e^{-\lambda w}}{\Gamma(\alpha+\beta)} \frac{z^{\alpha-1} (1-z)^{\beta-1}}{B(\alpha, \beta)} \\
+        &= Gamma(\alpha+\beta, \lambda) \cdot Beta(\alpha, \beta) \\
+\end{aligned}$$
+
+it tells us the sum $X+Y$ and the fraction $\frac{X}{X+Y}$ are independent.
 
 # References
 [Univariate Distribution Relationships](http://www.math.wm.edu/~leemis/chart/UDR/UDR.html)
