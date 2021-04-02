@@ -20,30 +20,37 @@
     var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="There are no facts, only interpretations.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="pan.world">
-<meta property="og:url" content="http://www.psichen.com/index.html">
+  <meta name="description" content="Let&#39;s say the concentration of the component \(j\) in the solution is \(C_j(\vec{r}, t)\), which is a scalar function of coordinates \(\vec{r}\) and time \(t\). For a well-mixed solution, the average">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notes about fluorescence correlation function formalism">
+<meta property="og:url" content="http://www.psichen.com/2021/03/27/notes-about-fluorescence-correlation-spectroscopy-formalism/index.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="There are no facts, only interpretations.">
+<meta property="og:description" content="Let&#39;s say the concentration of the component \(j\) in the solution is \(C_j(\vec{r}, t)\), which is a scalar function of coordinates \(\vec{r}\) and time \(t\). For a well-mixed solution, the average">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-27T15:20:23.000Z">
+<meta property="article:modified_time" content="2021-04-02T05:48:41.173Z">
 <meta property="article:author" content="psichen">
+<meta property="article:tag" content="Fourier transformation">
+<meta property="article:tag" content="differential equation">
+<meta property="article:tag" content="diffusion equation">
+<meta property="article:tag" content="correlation function">
+<meta property="article:tag" content="fluctuation">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://www.psichen.com/">
+<link rel="canonical" href="http://www.psichen.com/2021/03/27/notes-about-fluorescence-correlation-spectroscopy-formalism/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>pan.world</title>
+  <title>Notes about fluorescence correlation function formalism | pan.world</title>
   
 
 
@@ -146,9 +153,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -164,10 +172,9 @@
       <meta itemprop="name" content="pan.world">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/27/notes-about-fluorescence-correlation-spectroscopy-formalism/" class="post-title-link" itemprop="url">Notes about fluorescence correlation function formalism</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Notes about fluorescence correlation function formalism
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -187,6 +194,13 @@
               </span>
 
           
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -197,7 +211,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Let's say the concentration of the component <span class="math inline">\(j\)</span> in the solution is <span class="math inline">\(C_j(\vec{r}, t)\)</span>, which is a scalar function of coordinates <span class="math inline">\(\vec{r}\)</span> and time <span class="math inline">\(t\)</span>. For a well-mixed solution, the average of concentration over coordinates and time should be a constant <span class="math inline">\(&lt;C_j(\vec{r}, t)&gt; = \bar{C}_j\)</span>. The local concentration <span class="math inline">\(C_j(\vec{r}, t)\)</span>, however, fluctuates with coordinates and time. The amount of local fluctuation is <span class="math inline">\(\delta C_j(\vec{r}, t) = C_j(\vec{r}, t)-\bar{C}_j\)</span>.</p>
+        <p>Let's say the concentration of the component <span class="math inline">\(j\)</span> in the solution is <span class="math inline">\(C_j(\vec{r}, t)\)</span>, which is a scalar function of coordinates <span class="math inline">\(\vec{r}\)</span> and time <span class="math inline">\(t\)</span>. For a well-mixed solution, the average of concentration over coordinates and time should be a constant <span class="math inline">\(&lt;C_j(\vec{r}, t)&gt; = \bar{C}_j\)</span>. The local concentration <span class="math inline">\(C_j(\vec{r}, t)\)</span>, however, fluctuates with coordinates and time. The amount of local fluctuation is <span class="math inline">\(\delta C_j(\vec{r}, t) = C_j(\vec{r}, t)-\bar{C}_j\)</span>.</p>
 <h2 id="fluctuation-of-molecules">Fluctuation of molecules</h2>
 <p>Some physical and chemical processes (e.g. diffusion and reaction) will contribute to the partial derivate of the local concentration fluctuation <span class="math inline">\(\frac{\partial \delta C_j(\vec{r}, t)}{\partial t}\)</span>. If we find a relationship between these processes and some measurable quantities related to <span class="math inline">\(\frac{\partial \delta C_j(\vec{r}, t)}{\partial t}\)</span>, we can get parameters describing these processes through the measured quantity.</p>
 <h3 id="ficks-law-of-diffusion">Fick's law of diffusion</h3>
@@ -353,679 +367,38 @@ G(\tau)
 <h1 id="references">References</h1>
 <p>[1] Krichevsky, Oleg, and Grégoire Bonnet. "Fluorescence correlation spectroscopy: the technique and its applications." <em>Reports on Progress in Physics</em> 65.2 (2002): 251.</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/Fourier-transformation/" rel="tag"># Fourier transformation</a>
+              <a href="/tags/differential-equation/" rel="tag"># differential equation</a>
+              <a href="/tags/diffusion-equation/" rel="tag"># diffusion equation</a>
+              <a href="/tags/correlation-function/" rel="tag"># correlation function</a>
+              <a href="/tags/fluctuation/" rel="tag"># fluctuation</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/03/10/common-probability-density-functions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/10/common-probability-density-functions/" class="post-title-link" itemprop="url">Common probability density functions</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-03-10 00:58:51 / Modified: 17:37:14" itemprop="dateCreated datePublished" datetime="2021-03-10T00:58:51+08:00">2021-03-10</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. These different probability distributions are heavily coupled. In order to apply these distribution properly, we should understand their origin and derivation, which are the main purpose of this post (for continuous distributions).</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/10/common-probability-density-functions/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/02/13/common-probability-mass-functions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/13/common-probability-mass-functions/" class="post-title-link" itemprop="url">Common probability mass functions</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-02-13 00:23:00" itemprop="dateCreated datePublished" datetime="2021-02-13T00:23:00+08:00">2021-02-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-16 14:01:42" itemprop="dateModified" datetime="2021-02-16T14:01:42+08:00">2021-02-16</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Probability and statistics are one of the most common terminologies in scientific data interpretations. They provide us ways to find truths and make conclusions from this stochastic and noisy world. These different probability distributions are heavily coupled. In order to apply these distribution properly, we should understand their origin and derivation, which are the main purpose of this post (for discrete distributions).</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/02/13/common-probability-mass-functions/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/10/common-probability-density-functions/" rel="prev" title="Common probability density functions">
+      <i class="fa fa-chevron-left"></i> Common probability density functions
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/02/11/generating-functions-of-probability-distribution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/generating-functions-of-probability-distribution/" class="post-title-link" itemprop="url">Generating functions of probability distributions</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-02-11 13:27:35 / Modified: 13:35:54" itemprop="dateCreated datePublished" datetime="2021-02-11T13:27:35+08:00">2021-02-11</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Probability mass/density distribution have defined generating functions which faciliate the derivation and the understanding of different probability distributions.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/02/11/generating-functions-of-probability-distribution/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/04/geometric-interpretation-about-Jacobian-determinant/" class="post-title-link" itemprop="url">Geometric interpretation about Jacobian determinant</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-02-04 18:10:26" itemprop="dateCreated datePublished" datetime="2021-02-04T18:10:26+08:00">2021-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-25 10:23:51" itemprop="dateModified" datetime="2021-02-25T10:23:51+08:00">2021-02-25</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable (<span class="math inline">\(x&#39;\)</span>), of which the distribution (<span class="math inline">\(g(x&#39;)\)</span>) was unknown. But we know the theoretic distribution of the variable (<span class="math inline">\(f(x)\)</span>) and the correction relationship or mapping relationship between theoretic and practical values (<span class="math inline">\(x=h(x&#39;)\)</span>).
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/02/04/geometric-interpretation-about-Jacobian-determinant/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/01/21/combinations-and-particle-statistics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/21/combinations-and-particle-statistics/" class="post-title-link" itemprop="url">Combinations and particle statistics</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-21 23:55:00" itemprop="dateCreated datePublished" datetime="2021-01-21T23:55:00+08:00">2021-01-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-12 16:51:55" itemprop="dateModified" datetime="2021-02-12T16:51:55+08:00">2021-02-12</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="permutation">Permutation</h2>
-<p>Let's first consider a set of <span class="math inline">\(n\)</span> objects, which are all different. The number of all possible arrangements (permutations) is</p>
-<p><span class="math display">\[ n(n-1) \cdots 1 = n! \]</span></p>
-<p>Generally, if we select <span class="math inline">\(k (&lt;n)\)</span> objects from <span class="math inline">\(n\)</span>, the number of permuations is</p>
-<p><span class="math display">\[ n(n-1)\cdot\cdot\cdot(n-k+1) = \frac{n!}{(n-k)!} = P(n, k) \]</span></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/21/combinations-and-particle-statistics/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2020/02/10/crawler-university-postdoc-md/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/10/crawler-university-postdoc-md/" class="post-title-link" itemprop="url">python爬取大学及博士后信息</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-10 19:22:38" itemprop="dateCreated datePublished" datetime="2020-02-10T19:22:38+08:00">2020-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-22 02:24:52" itemprop="dateModified" datetime="2021-01-22T02:24:52+08:00">2021-01-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>2020年开年不利，天启四骑士war, pestilence, famine, death已经降临了前3个，大家都宅在家里无法出门，于是我便利用这段时间学习一下爬虫的用法。</p>
-<p>其实以前也用过爬虫，不过后来放了很久，很多包也更新了，所以值得重新学一遍。记得在实习的时候，经理曾经给了我一个报价网，该网将市场上几乎所以药品的中标价格都放在了网上，而且网页似乎并没有做任何反爬处理，可惜我已经忘记了网址T T</p>
-<p>言归正传，这次用python的bs4、requests包来爬取网页信息，获得最近几年世界各地大学的变化趋势，以及postdoc的发布信息。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/10/crawler-university-postdoc-md/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2020/01/19/ideal-gas-state-function-md/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/19/ideal-gas-state-function-md/" class="post-title-link" itemprop="url">理想气体状态方程的统计力学推导</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-19 19:52:15" itemprop="dateCreated datePublished" datetime="2020-01-19T19:52:15+08:00">2020-01-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-05 16:46:26" itemprop="dateModified" datetime="2021-02-05T16:46:26+08:00">2021-02-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>理想气体状态方程<span class="math inline">\(pV = nRT = Nk_BT\)</span>想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。</p>
-<h2 id="系综">系综</h2>
-<p>一定条件下体系可能存在的状态的集合称之为ensemble（系综），是系统状态的概率分布，可与概率空间进行类比。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/01/19/ideal-gas-state-function-md/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/11/29/saddle-point-approximation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/29/saddle-point-approximation/" class="post-title-link" itemprop="url">鞍点近似</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-11-29 13:52:53" itemprop="dateCreated datePublished" datetime="2019-11-29T13:52:53+08:00">2019-11-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-05 17:01:49" itemprop="dateModified" datetime="2021-02-05T17:01:49+08:00">2021-02-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>鞍点法近似(saddle point approximation)，又称为stationary phase approximation，用于计算下列积分在<span class="math inline">\(N \to \infty\)</span>时的渐进行为。</p>
-<p><span class="math display">\[ I(N) = \int_C e^{Nf(x)} dx \]</span></p>
-<p>其中涉及到复变函数的一些基本性质。</p>
-<h2 id="复数及复变函数性质">复数及复变函数性质</h2>
-<p>复变量<span class="math inline">\(z\)</span>在复平面可表示为<span class="math inline">\(z = x+yi\)</span>，其复变函数可表示为<span class="math inline">\(f(z) = u + vi\)</span>，其中<span class="math inline">\(u = u(x, y)， v = v(x, y)\)</span>。</p>
-<p>另外也可以用极坐标来表示：<span class="math inline">\(z = |z|e^{i \phi}\)</span>，其中<span class="math inline">\(\phi\)</span>决定了复变量的方向。</p>
-<p>当<span class="math inline">\(f(z)\)</span>在区域内处处可导，则称<span class="math inline">\(f(z)\)</span>为该区域内解析。而解析函数的充要条件为函数<span class="math inline">\(f(z)\)</span>在该区域内连续，同时满足C-R条件(Cauchy-Riemann condition)。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/29/saddle-point-approximation/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/10/31/phase-space-in-quantum-mechanics-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/31/phase-space-in-quantum-mechanics-3/" class="post-title-link" itemprop="url">量子力学里的相空间体积--相空间</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-31 10:08:07" itemprop="dateCreated datePublished" datetime="2019-10-31T10:08:07+08:00">2019-10-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-05 16:33:32" itemprop="dateModified" datetime="2021-02-05T16:33:32+08:00">2021-02-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="量子力学基础">量子力学基础</h2>
-<p>物质波为概率波，将单色平面波写为如下形式：</p>
-<p><span class="math display">\[ \psi(r, t) = \frac{1}{ (2\pi \hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} \]</span></p>
-<p>方便之后归一化为<span class="math inline">\(\delta\)</span>函数。其振幅的平方<span class="math inline">\(|\psi(r,t)|^2\)</span>对应于粒子坐标的概率密度，因此对于粒子的平均位置<span class="math inline">\(&lt;r&gt;\)</span>可以从下式求出：</p>
-<p><span class="math display">\[ &lt;r&gt; = \int r |\psi(r, t)|^2 dr = \int \psi^*(r, t) r \psi(r, t) dr \]</span></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/31/phase-space-in-quantum-mechanics-3/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
 
 
 
@@ -1077,6 +450,7 @@ G(\tau)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fluctuation-of-molecules"><span class="nav-number">1.</span> <span class="nav-text">Fluctuation of molecules</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ficks-law-of-diffusion"><span class="nav-number">1.1.</span> <span class="nav-text">Fick&#39;s law of diffusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reaction-kinetics"><span class="nav-number">1.2.</span> <span class="nav-text">Reaction kinetics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concentration-fluctuation-from-diffusion-and-reaction"><span class="nav-number">1.3.</span> <span class="nav-text">Concentration fluctuation from diffusion and reaction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#correlation-between-fluctuation-of-concentration"><span class="nav-number">2.</span> <span class="nav-text">Correlation between fluctuation of concentration</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#eigendecomposition-and-exponential-function-of-matrices"><span class="nav-number">2.1.</span> <span class="nav-text">eigendecomposition and exponential function of matrices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solving-differential-equations-by-eigenfunctions"><span class="nav-number">2.2.</span> <span class="nav-text">solving differential equations by eigenfunctions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fluorescent-intensity-from-confocal-microscope"><span class="nav-number">3.</span> <span class="nav-text">Fluorescent intensity from confocal microscope</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#correlation-function-in-general"><span class="nav-number">3.1.</span> <span class="nav-text">correlation function in general</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#single-component-diffusion-scenario"><span class="nav-number">3.2.</span> <span class="nav-text">single component diffusion scenario</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
       </div>
       <!--/noindex-->
 
