@@ -28,7 +28,7 @@
 <meta property="og:description" content="Let&#39;s say the concentration of the component \(j\) in the solution is \(C_j(\vec{r}, t)\), which is a scalar function of coordinates \(\vec{r}\) and time \(t\). For a well-mixed solution, the average">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-27T15:20:23.000Z">
-<meta property="article:modified_time" content="2021-04-02T05:57:53.164Z">
+<meta property="article:modified_time" content="2021-04-03T16:35:53.276Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="Fourier transformation">
 <meta property="article:tag" content="differential equation">
@@ -190,7 +190,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-02 13:57:53" itemprop="dateModified" datetime="2021-04-02T13:57:53+08:00">2021-04-02</time>
+                <time title="Modified: 2021-04-04 00:35:53" itemprop="dateModified" datetime="2021-04-04T00:35:53+08:00">2021-04-04</time>
               </span>
 
           
@@ -285,6 +285,8 @@
 <p>Thus we can easily get the solution for the matrix ordinary differential equation,</p>
 <p><span class="math display">\[ \frac{\partial \pmb{F}}{\partial t} = \pmb{M} \pmb{F} \]</span></p>
 <p>which is <span class="math inline">\(\pmb{F}(t) = e^{\pmb{M} t} \pmb{F}(0) = \pmb{X} e^{\pmb{\Lambda} t} \pmb{X}^{-1} \pmb{F}(0)\)</span>.</p>
+<p>In addition, for the diagonal matrix <span class="math inline">\(\pmb{\Lambda}\)</span>, the exponential matrix has following property,</p>
+<p><span class="math display">\[ e^{\pmb{\Lambda}} = \sum_{k} \frac{\pmb{\Lambda}^k}{k!} = \begin{bmatrix} \sum_{k} \frac{\lambda_1^k}{k!} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; \sum_{k} \frac{\lambda_m^k}{k!} \\ \end{bmatrix} = \begin{bmatrix} e^{\lambda_1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp; e^{\lambda_m} \\ \end{bmatrix} \]</span></p>
 <h3 id="solving-differential-equations-by-eigenfunctions">solving differential equations by eigenfunctions</h3>
 <p>According above equations, the equation <span class="math inline">\(\eqref{mainFourier}\)</span> as an ordinary differential matrix function has the solution,</p>
 <p><span class="math display">\[\begin{equation}
@@ -309,7 +311,7 @@ G(\tau) = \frac{&lt;\delta n(t) \delta n(t+\tau)&gt;}{\bar{n}^2} = \frac{&lt;\de
 \begin{aligned}
 G(\tau)
 &amp;= \frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2 I(\vec{r}_1) I(\vec{r}_2) &lt;[\pmb{Q} \delta \pmb{C}(\vec{r}_1, 0)] [\pmb{Q} \delta \pmb{C}(\vec{r}_2, \tau)]&gt; \\
-&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2 I(\vec{r}_1) I(\vec{r}_2) \sum_{i, j} Q_i Q_j &lt;\delta C_i(\vec{r}_1, 0) \delta C_j(\vec{r}_2, \tau)&gt; \\
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2 I(\vec{r}_1) I(\vec{r}_2) \sum_{i} \sum_{j} Q_i Q_j &lt;\delta C_i(\vec{r}_1, 0) \delta C_j(\vec{r}_2, \tau)&gt; \\
 \end{aligned}
 \label{correlationExpand}
 \end{equation}
@@ -332,12 +334,12 @@ G(\tau)
 <p>Then substitute the above equation <span class="math inline">\(\eqref{correlationSolution}\)</span> and the light field function into the equation <span class="math inline">\(\eqref{correlationExpand}\)</span>,</p>
 <p><span class="math display">\[\begin{aligned}
 G(\tau)
-&amp;=\frac{(\Delta t)^2 \bar{C}_i}{\bar{n}^2} \int d^3 \vec{q} \iint (2 \pi)^{-3} e^{i \vec{q} (\vec{r}_2 - \vec{r}_1)} I(\vec{r}_1) I(\vec{r}_2) d^3 \vec{r}_1 d^3 \vec{r}_2 \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
-&amp;=\frac{(\Delta t)^2 \bar{C}_i}{\bar{n}^2} \int d^3 \vec{q} [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_1} I(\vec{r}_1) d^3 \vec{r}_1] [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_2} I(\vec{r}_2) d^3 \vec{r}_2]^* \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
-&amp;=\frac{(\Delta t)^2 \bar{C}_i}{\bar{n}^2} \int |\tilde{I}(\vec{q})|^2 \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} d^3 \vec{q} \\
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \int d^3 \vec{q} \iint (2 \pi)^{-3} e^{i \vec{q} (\vec{r}_2 - \vec{r}_1)} I(\vec{r}_1) I(\vec{r}_2) d^3 \vec{r}_1 d^3 \vec{r}_2 \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \int d^3 \vec{q} [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_1} I(\vec{r}_1) d^3 \vec{r}_1] [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_2} I(\vec{r}_2) d^3 \vec{r}_2]^* \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \int |\tilde{I}(\vec{q})|^2 \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} d^3 \vec{q} \\
 \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(^*\)</span> means complex conjugation.</p>
-<p>The light field in the confocal microscpe can be described by the Gaussian function,</p>
+<p>The light field in the confocal microscope can be described by the Gaussian function,</p>
 <p><span class="math display">\[ I(\vec{r}) = I_0 e^{-\frac{2 (x^2+y^2)}{\omega_{xy}^2}-\frac{2 z^2}{\omega_z^2}} \]</span></p>
 <p>Thus the Fourier transformation of the light field function is,</p>
 <p><span class="math display">\[\begin{aligned}
@@ -347,11 +349,11 @@ G(\tau)
 \end{aligned}\]</span></p>
 <p>The integral of light field function over the space is the special case of the Fourier transformation where <span class="math inline">\(\vec{q}=0\)</span>, so the average fluorescent intensity <span class="math inline">\(\bar{n}\)</span> is,</p>
 <p><span class="math display">\[\begin{equation}
-\bar{n} = \Delta t \int I(\vec{r}) \pmb{Q} \pmb{\bar{C}} d^3 \vec{r} = \Delta t (2 \pi)^{\frac{3}{2}} \sum_j Q_j \bar{C}_j \tilde{I}(0) = \Delta t I_0 \omega_{xy}^2 \omega_{z} (\frac{\pi}{2})^{\frac{3}{2}} \sum_j Q_j \bar{C}_j \label{intensity}
+\bar{n} = \Delta t \int I(\vec{r}) \pmb{Q} \pmb{\bar{C}} d^3 \vec{r} = \Delta t (2 \pi)^{\frac{3}{2}} \sum_l Q_l \bar{C}_l \tilde{I}(0) = \Delta t I_0 \omega_{xy}^2 \omega_{z} (\frac{\pi}{2})^{\frac{3}{2}} \sum_l Q_l \bar{C}_l \label{intensity}
 \end{equation}\]</span></p>
 <p>Thus, the general correlation function of concentration fluctuation is,</p>
 <p><span class="math display">\[\begin{equation}
-G(\tau) = \frac{\bar{C}_i}{(2 \pi)^3 (\sum_j Q_j \bar{C}_j)^2} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} \label{correlationGeneral}
+G(\tau) = \frac{1}{(2 \pi)^3 (\sum_l Q_l \bar{C}_l)^2} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} \label{correlationGeneral}
 \end{equation}\]</span></p>
 <h3 id="single-component-diffusion-scenario">single component diffusion scenario</h3>
 <p>The diffusion function is,</p>
@@ -365,7 +367,48 @@ G(\tau)
 &amp;= \frac{1}{V \bar{C}} (1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} \\
 \end{aligned}\]</span></p>
 <p>where <span class="math inline">\(V = \pi^{\frac{3}{2}} \omega_{xy}^2 \omega_z\)</span> is defined as the effective sampling volume, <span class="math inline">\(\tau_D=\frac{\omega_{xy}^2}{4D}\)</span> is the diffusion time over the <span class="math inline">\(xy\)</span> plane and <span class="math inline">\(\epsilon = \frac{\omega_z}{\omega_{xy}}\)</span> is the waist ratio of the light field.</p>
-<h2 id="references">References</h2>
+<h3 id="diffusion-coupled-with-reaction-scenario">diffusion coupled with reaction scenario</h3>
+<p>Considering a simple isomerization reaction (e.g. the transformation from singlet state to triplet state of fluorescent dyes),</p>
+<p><span class="math display">\[ A \leftrightarrow B \]</span></p>
+<p>where the reaction rate constants are <span class="math inline">\(k_{AB}\)</span> and <span class="math inline">\(k_{BA}\)</span>. Also we assume that both their diffusion coefficients are <span class="math inline">\(D\)</span>, which is often met in experiments. So the matrix <span class="math inline">\(\pmb{M}\)</span> is,</p>
+<p><span class="math display">\[\begin{bmatrix}
+-k_{AB}-\vec{q}^2 D &amp; k_{BA} \\
+k_{AB} &amp; -k_{BA}-\vec{q}^2 D \\
+\end{bmatrix}\]</span></p>
+<p>and its <span class="math inline">\(\pmb{\Lambda}\)</span> and <span class="math inline">\(\pmb{X}\)</span> are,</p>
+<p><span class="math display">\[\begin{aligned}
+\pmb{\Lambda} &amp;= \begin{bmatrix} -\vec{q}^2 D &amp; \\ &amp; -k_{AB}-k_{BA}-\vec{q}^2D \\ \end{bmatrix} \\
+\pmb{X} &amp;= \begin{bmatrix} 1 &amp; 1 \\ \frac{k_{AB}}{k_{BA}} &amp; -1 \\ \end{bmatrix} \\
+\end{aligned}\]</span></p>
+<p>Thus we have the solution matrix,</p>
+<p><span class="math display">\[\begin{aligned}
+\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}
+&amp;= \begin{bmatrix} 1 &amp; 1 \\ \frac{k_{AB}}{k_{BA}} &amp; -1 \\ \end{bmatrix} \begin{bmatrix} e^{-\vec{q}^2 D \tau} &amp; \\ &amp; e^{-(k_{AB}+k_{BA}+\vec{q}^2 D) \tau} \\ \end{bmatrix} \begin{bmatrix} \frac{k_{BA}}{k_{AB}+k_{BA}} &amp; \frac{k_{BA}}{k_{AB}+k_{BA}} \\ \frac{k_{AB}}{k_{AB}+k_{BA}} &amp; -\frac{k_{BA}}{k_{AB}+k_{BA}} \\ \end{bmatrix} \\
+&amp;= \begin{bmatrix} e^{\lambda_1 \tau} &amp; e^{\lambda_2 \tau} \\ K e^{\lambda_1 \tau} &amp; -e^{\lambda_2 \tau} \\ \end{bmatrix} \begin{bmatrix} \frac{1}{1+K} &amp; \frac{1}{1+K} \\ \frac{K}{1+K} &amp; -\frac{1}{1+K} \\ \end{bmatrix} \\
+&amp;= (1+K)^{-1} \begin{bmatrix} e^{\lambda_1 \tau} + K e^{\lambda_2 \tau} &amp; e^{\lambda_1 \tau}-e^{\lambda_2 \tau} \\ K (e^{\lambda_1 \tau}-e^{\lambda_2 \tau}) &amp; K e^{\lambda_1 \tau} + e^{\lambda_2 \tau} \\ \end{bmatrix} \\
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(K=\frac{k_{AB}}{k_{BA}}\)</span> is the reaction dissociation constant.</p>
+<p>The general formula of <span class="math inline">\(G(\tau)\)</span> is,</p>
+<p><span class="math display">\[ G(\tau) = \frac{1}{(2 \pi)^3 (\sum_l Q_l \bar{C}_l)^2} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} \]</span></p>
+<p>If <span class="math inline">\(Q_A=Q\)</span> and <span class="math inline">\(Q_B=0\)</span>, only the first-row first-column element in the matrix <span class="math inline">\(\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}\)</span> contributes to <span class="math inline">\(G(\tau)\)</span>,</p>
+<p><span class="math display">\[\begin{aligned}
+G(\tau)
+&amp;= \frac{1}{(2 \pi)^3 \bar{C}_A} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} (1+K)^{-1} (e^{\lambda_1 \tau} + K e^{\lambda_2 \tau}) d^3 \vec{q} \\
+&amp;= \frac{1}{(2 \pi)^3 (\bar{C}_A + \bar{C}_B)} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} (e^{\lambda_1 \tau} + K e^{\lambda_2 \tau}) d^3 \vec{q} \\
+\end{aligned}\]</span></p>
+<p>Noticed that <span class="math inline">\(\bar{C}_A (1+K) = \bar{C}_A+\bar{C}_B\)</span> because <span class="math inline">\(K\)</span> is the dissociation constant. The integral has two additive parts,</p>
+<p><span class="math display">\[\begin{aligned}
+FIRST \ PART &amp;= \frac{1}{V (\bar{C}_A + \bar{C}_B)} (1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} \\
+SECOND \ PART &amp;= \frac{K}{V (\bar{C}_A + \bar{C}_B)} (1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} \exp[-\frac{\tau}{\tau_R}]
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\tau_R = (k_{AB}+k_{BA})^{-1}\)</span> is the reaction time. Finally, we add the two parts and get the expression of the two-state reaction,</p>
+<p><span class="math display">\[\begin{aligned}
+G(\tau)
+&amp;= FIRST \ PART + SECOND \ PART \\
+&amp;= \frac{1}{V (\bar{C}_A + \bar{C}_B) } (1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} (1 + K \exp(-\frac{\tau}{\tau_R})) \\
+&amp;= G_0 G_D(\tau) G_R(\tau) \\
+\end{aligned}\]</span></p>
+<p>Different processes of different time scales represented in <span class="math inline">\(G(\tau)\)</span> clearly. If <span class="math inline">\(\tau &lt;&lt; \tau_D, \tau_R\)</span>, <span class="math inline">\(G(\tau) = \frac{1+K}{V(\bar{C}_A+\bar{C}_B)} = \frac{1}{V \bar{C}_A}\)</span>. It means the time resolution is enough to detect the fluorescent molecules conversation. If <span class="math inline">\(\tau_R &lt;&lt; \tau &lt;&lt; \tau_D\)</span>, <span class="math inline">\(G(\tau) = \frac{1}{V (\bar{C}_A + \bar{C}_B)}\)</span>. It means in this time scale all of molecules appear to be fluorescent due to the fast tunrover between the A and B states. ## References</p>
 <p>[1] Krichevsky, Oleg, and Grégoire Bonnet. "Fluorescence correlation spectroscopy: the technique and its applications." <em>Reports on Progress in Physics</em> 65.2 (2002): 251.</p>
 
     </div>
@@ -451,7 +494,7 @@ G(\tau)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fluctuation-of-molecules"><span class="nav-number">1.</span> <span class="nav-text">Fluctuation of molecules</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ficks-law-of-diffusion"><span class="nav-number">1.1.</span> <span class="nav-text">Fick&#39;s law of diffusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reaction-kinetics"><span class="nav-number">1.2.</span> <span class="nav-text">Reaction kinetics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concentration-fluctuation-from-diffusion-and-reaction"><span class="nav-number">1.3.</span> <span class="nav-text">Concentration fluctuation from diffusion and reaction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#correlation-between-fluctuation-of-concentration"><span class="nav-number">2.</span> <span class="nav-text">Correlation between fluctuation of concentration</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#eigendecomposition-and-exponential-function-of-matrices"><span class="nav-number">2.1.</span> <span class="nav-text">eigendecomposition and exponential function of matrices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solving-differential-equations-by-eigenfunctions"><span class="nav-number">2.2.</span> <span class="nav-text">solving differential equations by eigenfunctions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fluorescent-intensity-from-confocal-microscope"><span class="nav-number">3.</span> <span class="nav-text">Fluorescent intensity from confocal microscope</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#correlation-function-in-general"><span class="nav-number">3.1.</span> <span class="nav-text">correlation function in general</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#single-component-diffusion-scenario"><span class="nav-number">3.2.</span> <span class="nav-text">single component diffusion scenario</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fluctuation-of-molecules"><span class="nav-number">1.</span> <span class="nav-text">Fluctuation of molecules</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ficks-law-of-diffusion"><span class="nav-number">1.1.</span> <span class="nav-text">Fick&#39;s law of diffusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reaction-kinetics"><span class="nav-number">1.2.</span> <span class="nav-text">Reaction kinetics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concentration-fluctuation-from-diffusion-and-reaction"><span class="nav-number">1.3.</span> <span class="nav-text">Concentration fluctuation from diffusion and reaction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#correlation-between-fluctuation-of-concentration"><span class="nav-number">2.</span> <span class="nav-text">Correlation between fluctuation of concentration</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#eigendecomposition-and-exponential-function-of-matrices"><span class="nav-number">2.1.</span> <span class="nav-text">eigendecomposition and exponential function of matrices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solving-differential-equations-by-eigenfunctions"><span class="nav-number">2.2.</span> <span class="nav-text">solving differential equations by eigenfunctions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fluorescent-intensity-from-confocal-microscope"><span class="nav-number">3.</span> <span class="nav-text">Fluorescent intensity from confocal microscope</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#correlation-function-in-general"><span class="nav-number">3.1.</span> <span class="nav-text">correlation function in general</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#single-component-diffusion-scenario"><span class="nav-number">3.2.</span> <span class="nav-text">single component diffusion scenario</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diffusion-coupled-with-reaction-scenario"><span class="nav-number">3.3.</span> <span class="nav-text">diffusion coupled with reaction scenario</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
