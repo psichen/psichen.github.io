@@ -126,6 +126,9 @@ $$ \frac{\partial \pmb{F}}{\partial t} = \pmb{M} \pmb{F} $$
 
 which is $\pmb{F}(t) = e^{\pmb{M} t} \pmb{F}(0) = \pmb{X} e^{\pmb{\Lambda} t} \pmb{X}^{-1} \pmb{F}(0)$. 
 
+In addition, for the diagonal matrix $\pmb{\Lambda}$, the exponential matrix has following property,
+
+$$ e^{\pmb{\Lambda}} = \sum_{k} \frac{\pmb{\Lambda}^k}{k!} = \begin{bmatrix} \sum_{k} \frac{\lambda_1^k}{k!} & & \\ & \ddots & \\ & & \sum_{k} \frac{\lambda_m^k}{k!} \\ \end{bmatrix} = \begin{bmatrix} e^{\lambda_1} & & \\ & \ddots & \\ & & e^{\lambda_m} \\ \end{bmatrix} $$
 
 ### solving differential equations by eigenfunctions 
 
@@ -164,7 +167,7 @@ $$
 \begin{aligned}
 G(\tau)
 &= \frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2 I(\vec{r}_1) I(\vec{r}_2) <[\pmb{Q} \delta \pmb{C}(\vec{r}_1, 0)] [\pmb{Q} \delta \pmb{C}(\vec{r}_2, \tau)]> \\
-&=\frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2 I(\vec{r}_1) I(\vec{r}_2) \sum_{i, j} Q_i Q_j <\delta C_i(\vec{r}_1, 0) \delta C_j(\vec{r}_2, \tau)> \\
+&=\frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2 I(\vec{r}_1) I(\vec{r}_2) \sum_{i} \sum_{j} Q_i Q_j <\delta C_i(\vec{r}_1, 0) \delta C_j(\vec{r}_2, \tau)> \\
 \end{aligned}
 \label{correlationExpand}
 \end{equation}
@@ -191,14 +194,14 @@ Then substitute the above equation $\eqref{correlationSolution}$ and the light f
 
 $$\begin{aligned}
 G(\tau)
-&=\frac{(\Delta t)^2 \bar{C}_i}{\bar{n}^2} \int d^3 \vec{q} \iint (2 \pi)^{-3} e^{i \vec{q} (\vec{r}_2 - \vec{r}_1)} I(\vec{r}_1) I(\vec{r}_2) d^3 \vec{r}_1 d^3 \vec{r}_2 \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
-&=\frac{(\Delta t)^2 \bar{C}_i}{\bar{n}^2} \int d^3 \vec{q} [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_1} I(\vec{r}_1) d^3 \vec{r}_1] [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_2} I(\vec{r}_2) d^3 \vec{r}_2]^* \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
-&=\frac{(\Delta t)^2 \bar{C}_i}{\bar{n}^2} \int |\tilde{I}(\vec{q})|^2 \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} d^3 \vec{q} \\
+&=\frac{(\Delta t)^2}{\bar{n}^2} \int d^3 \vec{q} \iint (2 \pi)^{-3} e^{i \vec{q} (\vec{r}_2 - \vec{r}_1)} I(\vec{r}_1) I(\vec{r}_2) d^3 \vec{r}_1 d^3 \vec{r}_2 \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
+&=\frac{(\Delta t)^2}{\bar{n}^2} \int d^3 \vec{q} [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_1} I(\vec{r}_1) d^3 \vec{r}_1] [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_2} I(\vec{r}_2) d^3 \vec{r}_2]^* \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
+&=\frac{(\Delta t)^2}{\bar{n}^2} \int |\tilde{I}(\vec{q})|^2 \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} d^3 \vec{q} \\
 \end{aligned}$$
 
 where $^*$ means complex conjugation.
 
-The light field in the confocal microscpe can be described by the Gaussian function,
+The light field in the confocal microscope can be described by the Gaussian function,
 
 $$ I(\vec{r}) = I_0 e^{-\frac{2 (x^2+y^2)}{\omega_{xy}^2}-\frac{2 z^2}{\omega_z^2}} $$
 
@@ -213,13 +216,13 @@ $$\begin{aligned}
 The integral of light field function over the space is the special case of the Fourier transformation where $\vec{q}=0$, so the average fluorescent intensity $\bar{n}$ is,
 
 $$\begin{equation}
-\bar{n} = \Delta t \int I(\vec{r}) \pmb{Q} \pmb{\bar{C}} d^3 \vec{r} = \Delta t (2 \pi)^{\frac{3}{2}} \sum_j Q_j \bar{C}_j \tilde{I}(0) = \Delta t I_0 \omega_{xy}^2 \omega_{z} (\frac{\pi}{2})^{\frac{3}{2}} \sum_j Q_j \bar{C}_j \label{intensity}
+\bar{n} = \Delta t \int I(\vec{r}) \pmb{Q} \pmb{\bar{C}} d^3 \vec{r} = \Delta t (2 \pi)^{\frac{3}{2}} \sum_l Q_l \bar{C}_l \tilde{I}(0) = \Delta t I_0 \omega_{xy}^2 \omega_{z} (\frac{\pi}{2})^{\frac{3}{2}} \sum_l Q_l \bar{C}_l \label{intensity}
 \end{equation}$$
 
 Thus, the general correlation function of concentration fluctuation is,
 
 $$\begin{equation}
-G(\tau) = \frac{\bar{C}_i}{(2 \pi)^3 (\sum_j Q_j \bar{C}_j)^2} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} \sum_{i, j} Q_i Q_j (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} \label{correlationGeneral}
+G(\tau) = \frac{1}{(2 \pi)^3 (\sum_l Q_l \bar{C}_l)^2} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} \label{correlationGeneral}
 \end{equation}$$
 
 ### single component diffusion scenario
@@ -240,6 +243,66 @@ G(\tau)
 
 where $V = \pi^{\frac{3}{2}} \omega_{xy}^2 \omega_z$ is defined as the effective sampling volume, $\tau_D=\frac{\omega_{xy}^2}{4D}$ is the diffusion time over the $xy$ plane and $\epsilon = \frac{\omega_z}{\omega_{xy}}$ is the waist ratio of the light field.
 
+### diffusion coupled with reaction scenario
+
+Considering a simple isomerization reaction (e.g. the transformation from singlet state to triplet state of fluorescent dyes),
+
+$$ A \leftrightarrow B $$
+
+where the reaction rate constants are $k_{AB}$ and $k_{BA}$. Also we assume that both their diffusion coefficients are $D$, which is often met in experiments. So the matrix $\pmb{M}$ is,
+
+$$\begin{bmatrix}
+-k_{AB}-\vec{q}^2 D & k_{BA} \\
+k_{AB} & -k_{BA}-\vec{q}^2 D \\
+\end{bmatrix}$$
+
+and its $\pmb{\Lambda}$ and $\pmb{X}$ are,
+
+$$\begin{aligned}
+\pmb{\Lambda} &= \begin{bmatrix} -\vec{q}^2 D & \\ & -k_{AB}-k_{BA}-\vec{q}^2D \\ \end{bmatrix} \\
+\pmb{X} &= \begin{bmatrix} 1 & 1 \\ \frac{k_{AB}}{k_{BA}} & -1 \\ \end{bmatrix} \\
+\end{aligned}$$
+
+Thus we have the solution matrix,
+
+$$\begin{aligned}
+\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}
+&= \begin{bmatrix} 1 & 1 \\ \frac{k_{AB}}{k_{BA}} & -1 \\ \end{bmatrix} \begin{bmatrix} e^{-\vec{q}^2 D \tau} & \\ & e^{-(k_{AB}+k_{BA}+\vec{q}^2 D) \tau} \\ \end{bmatrix} \begin{bmatrix} \frac{k_{BA}}{k_{AB}+k_{BA}} & \frac{k_{BA}}{k_{AB}+k_{BA}} \\ \frac{k_{AB}}{k_{AB}+k_{BA}} & -\frac{k_{BA}}{k_{AB}+k_{BA}} \\ \end{bmatrix} \\
+&= \begin{bmatrix} e^{\lambda_1 \tau} & e^{\lambda_2 \tau} \\ K e^{\lambda_1 \tau} & -e^{\lambda_2 \tau} \\ \end{bmatrix} \begin{bmatrix} \frac{1}{1+K} & \frac{1}{1+K} \\ \frac{K}{1+K} & -\frac{1}{1+K} \\ \end{bmatrix} \\
+&= (1+K)^{-1} \begin{bmatrix} e^{\lambda_1 \tau} + K e^{\lambda_2 \tau} & e^{\lambda_1 \tau}-e^{\lambda_2 \tau} \\ K (e^{\lambda_1 \tau}-e^{\lambda_2 \tau}) & K e^{\lambda_1 \tau} + e^{\lambda_2 \tau} \\ \end{bmatrix} \\
+\end{aligned}$$
+
+where $K=\frac{k_{AB}}{k_{BA}}$ is the reaction dissociation constant.
+
+The general formula of $G(\tau)$ is,
+
+$$ G(\tau) = \frac{1}{(2 \pi)^3 (\sum_l Q_l \bar{C}_l)^2} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} $$
+
+If $Q_A=Q$ and $Q_B=0$, only the first-row first-column element in the matrix $\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}$ contributes to $G(\tau)$,
+
+$$\begin{aligned}
+G(\tau)
+&= \frac{1}{(2 \pi)^3 \bar{C}_A} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} (1+K)^{-1} (e^{\lambda_1 \tau} + K e^{\lambda_2 \tau}) d^3 \vec{q} \\
+&= \frac{1}{(2 \pi)^3 (\bar{C}_A + \bar{C}_B)} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} (e^{\lambda_1 \tau} + K e^{\lambda_2 \tau}) d^3 \vec{q} \\
+\end{aligned}$$
+
+Noticed that $\bar{C}_A (1+K) = \bar{C}_A+\bar{C}_B$ because $K$ is the dissociation constant. The integral has two additive parts,
+
+$$\begin{aligned}
+FIRST \ PART &= \frac{1}{V (\bar{C}_A + \bar{C}_B)} (1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} \\
+SECOND \ PART &= \frac{K}{V (\bar{C}_A + \bar{C}_B)} (1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} \exp[-\frac{\tau}{\tau_R}]
+\end{aligned}$$
+
+where $\tau_R = (k_{AB}+k_{BA})^{-1}$ is the reaction time. Finally, we add the two parts and get the expression of the two-state reaction,
+
+$$\begin{aligned}
+G(\tau)
+&= FIRST \ PART + SECOND \ PART \\
+&= \frac{1}{V (\bar{C}_A + \bar{C}_B) } (1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} (1 + K \exp(-\frac{\tau}{\tau_R})) \\
+&= G_0 G_D(\tau) G_R(\tau) \\
+\end{aligned}$$
+
+Different processes of different time scales represented in $G(\tau)$ clearly. If $\tau << \tau_D, \tau_R$, $G(\tau) = \frac{1+K}{V(\bar{C}_A+\bar{C}_B)} = \frac{1}{V \bar{C}_A}$. It means the time resolution is enough to detect the fluorescent molecules conversation. If $\tau_R << \tau << \tau_D$, $G(\tau) = \frac{1}{V (\bar{C}_A + \bar{C}_B)}$. It means in this time scale all of molecules appear to be fluorescent due to the fast tunrover between the A and B states.
 ## References
 
 [1] Krichevsky, Oleg, and Grégoire Bonnet. "Fluorescence correlation spectroscopy: the technique and its applications." *Reports on Progress in Physics* 65.2 (2002): 251.
