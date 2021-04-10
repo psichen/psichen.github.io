@@ -107,7 +107,7 @@ In the next section we will use the fact that $\delta C_j(\vec{r}', t)$ are the 
 
 ### eigendecomposition and exponential function of matrices
 
-If the matrix $\pmb{M}$ has the eigenvector matrix $\pmb{\mathsf{X}}$ and eigenvalue matrix $\pmb{\Lambda} \,au it can be decomposed as the product as following,
+If the matrix $\pmb{M}$ has the eigenvector matrix $\pmb{\mathsf{X}}$ and eigenvalue matrix $\pmb{\Lambda_2} \,au it can be decomposed as the product as following,
 
 $$\begin{aligned}
 \pmb{M} \pmb{V} &= \lambda \pmb{V} \\
@@ -243,7 +243,7 @@ G(\tau)
 
 where $V = \pi^{\frac{3}{2}} \omega_{xy}^2 \omega_z$ is defined as the effective sampling volume, $\tau_D=\frac{\omega_{xy}^2}{4D}$ is the diffusion time over the $xy$ plane and $\epsilon = \frac{\omega_z}{\omega_{xy}}$ is the waist ratio of the light field.
 
-### diffusion coupled with reaction scenario
+### diffusion coupled with reaction scenario (perect dark state)
 
 Considering a simple isomerization reaction (e.g. the transformation from singlet state to triplet state of fluorescent dyes),
 
@@ -274,11 +274,7 @@ $$\begin{aligned}
 
 where $K=\frac{k_{AB}}{k_{BA}}$ is the reaction dissociation constant.
 
-The general formula of $G(\tau)$ is,
-
-$$ G(\tau) = \frac{1}{(2 \pi)^3 (\sum_l Q_l \bar{C}_l)^2} \int e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} $$
-
-If $Q_A=Q$ and $Q_B=0$, only the first-row first-column element in the matrix $\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}$ contributes to $G(\tau)$,
+If $Q_A=Q$ and $Q_B=0$, only the first-row first-column element in the matrix $\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}$ contributes to the general equation $\eqref{correlationGeneral}$,
 
 $$\begin{aligned}
 G(\tau)
@@ -302,7 +298,46 @@ G(\tau)
 &= G_0 G_D(\tau) G_R(\tau) \\
 \end{aligned}$$
 
-Different processes of different time scales represented in $G(\tau)$ clearly. If $\tau << \tau_D, \tau_R$, $G(\tau) = \frac{1+K}{V(\bar{C}_A+\bar{C}_B)} = \frac{1}{V \bar{C}_A}$. It means the time resolution is enough to detect the fluorescent molecules conversation. If $\tau_R << \tau << \tau_D$, $G(\tau) = \frac{1}{V (\bar{C}_A + \bar{C}_B)}$. It means in this time scale all of molecules appear to be fluorescent due to the fast tunrover between the A and B states.
+Different processes of different time scales represented in $G(\tau)$ clearly. If $\tau \lt\lt \tau_D, \tau_R$, $G(\tau) = \frac{1+K}{V(\bar{C}_A+\bar{C}_B)} = \frac{1}{V \bar{C}_A}$. It means the time resolution is enough to detect the fluorescent molecules conversation. If $\tau_R \lt\lt \tau \lt\lt \tau_D$, $G(\tau) = \frac{1}{V (\bar{C}_A + \bar{C}_B)}$. It means in this time scale all of molecules appear to be fluorescent due to the fast tunrover between the A and B states.
+
+### reaction scenario with relative brightness
+
+In the previous section, we assume $Q_A=Q$ and $Q_B=0$, which is rarely met in practical experiments. So let's just substitute $Q_A$ and $Q_B$ into the equaiton $\eqref{correlationGeneral}$. For simplicity, we just deduce the reaction part because the change of relative brightness has no impact on diffusion part of correlation function.
+
+$$ \pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1} = \frac{1}{K+1} \begin{bmatrix} 1 + K e^{\lambda_2 \tau} & 1 - e^{\lambda_2 \tau} \\ K(1 - e^{\lambda_2 \tau}) & K + e^{\lambda_2 \tau} \\ \end{bmatrix} $$
+
+where $\lambda_1 = 0$ and $\lambda_2 = -(k_{AB}+k_{BA})$.
+
+Recall that the equation $\eqref{correlationGeneral}$, we have,
+
+$$\begin{aligned}
+\sum_i \sum_j Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j,i]} &= (AA + AB + BA + BB)(\frac{1}{1+K}) \\
+AA &= Q_A Q_A \bar{C}_A (1+K e^{\lambda_2 \tau}) \\
+AB &= Q_A Q_B \bar{C}_A K (1-e^{\lambda_2 \tau}) \\
+BA &= Q_A Q_B \bar{C}_B (1-e^{\lambda_2 \tau}) \\
+BB &= Q_B Q_B \bar{C}_B (K+e^{\lambda_2 \tau}) \\
+\end{aligned}$$
+
+Because there is no variable $\vec{q}$ in reaction part, we can calculate the integral first,
+
+$$ \frac{\int \exp[{-\frac{\omega_{xy}^2}{4}(q_x^2+q_y^2)-\frac{\omega_z^2}{4}q_z^2}] d^3 \vec{q} }{(2 \pi)^3 (Q_A \bar{C}_A + Q_B \bar{C}_B)^2} = \frac{1}{\pi^{\frac{3}{2}} \omega_{xy}^2 \omega_z (Q_A \bar{C}_A + Q_B \bar{C}_B)^2} = \frac{1}{V (Q_A \bar{C}_A + Q_B \bar{C}_B)^2}$$
+
+Then substitute all factors,
+
+$$\begin{aligned}
+G_R(\tau) &= \frac{(AA+AB+BA+BB)(1+K)^{-1}}{V (Q_A \bar{C}_A + Q_B \bar{C}_B)^2} \\
+&= \frac{\bar{C}_A (1+K \exp[\lambda_2 \tau]) + Q^2 \bar{C}_B (K+ \exp[\lambda_2 \tau]) + 2 Q \bar{C}_B (1-\exp[\lambda_2 \tau])}{V (1+K) (\bar{C}_A + Q \bar{C}_B)^2} \\
+\end{aligned}$$
+
+where $Q=\frac{Q_B}{Q_A}$ is the relative brightness. Factor the above equation we get,
+
+$$ \frac{1 + K (\frac{Q-1}{1+QK})^2 \exp[\lambda_2 t]}{V (\bar{C}_A + \bar{C}_B)} $$
+
+Thus when both two species emit fluorescent photons the amplitude before the reaction part is equal to $K (\frac{Q-1}{1+QK})^2$.
+
 ## References
 
+
 [1] Krichevsky, Oleg, and Grégoire Bonnet. "Fluorescence correlation spectroscopy: the technique and its applications." *Reports on Progress in Physics* 65.2 (2002): 251.
+
+[2] Zhu, Ruixue, et al. "Photophysical properties of Atto655 dye in the presence of guanosine and tryptophan in aqueous solution." *The Journal of Physical Chemistry B* 115.17 (2011): 5001-5007.

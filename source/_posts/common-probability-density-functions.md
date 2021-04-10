@@ -43,7 +43,7 @@ M_{X_i}(\frac{t}{n}) &= 1 + \frac{t}{n} E[X_i] + \frac{1}{2!} \frac{t^2}{n^2} E[
 
 When $n \to \infty$,
 
-$$ M_{X_i}(\frac{t}{n}) \approx e^{\frac{\mu_i t}{n} + \frac{1}{2} \frac{\sigma_i^2 t^2}{n^2} } $$
+$$ M_{X_i}(\frac{t}{n}) \approx e^{\frac{\mu_i t}{n} + \frac{1}{2} \frac{\sigma_i^2 t^2}{n^2}} = (1 + \frac{\mu_i t}{n} + \frac{1}{2} \frac{\mu^2 t^2}{n^2} + O((\frac{t}{n})^3))(1 + \frac{1}{2} \frac{\sigma_i^2 t^2}{n^2} + O((\frac{t}{n})^4)) $$
 
 as approximated to the second term $(\frac{t^2}{n^2})$. So the moment generating function of $Z$ can be easily gotten by the product,
 
