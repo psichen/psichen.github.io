@@ -29,13 +29,13 @@ $$ \iiint \frac{\partial C_j(\vec{r}, t)}{\partial t} dV + \iint \vec{J} \cdot d
 where $d\vec{S}$ is the closed surface of the infinitesimal volume. According to the Green Gauss theorem, we have the Fick's second law of diffusion,
 
 $$\begin{equation}
-\frac{\partial C_j(\vec{r}, t)}{\partial t} = - \nabla J = D_j \nabla^2 C_j(\vec{r}, t) \label{fick2nd}
+\frac{\partial C_j(\vec{r}, t)}{\partial t} = - \nabla \cdot \vec{J} = D_j \nabla^2 C_j(\vec{r}, t) \label{fick2nd}
 \end{equation}$$
 
 which is a second-order partial differential quation. Besides, it's a linear equaiton so the following equation holds,
 
 $$\begin{equation}
-\frac{\partial \delta \pmb{C}(\vec{r}, t)}{\partial t} = - \nabla J = \pmb{D} \nabla^2 \delta \pmb{C}(\vec{r}, t) \label{fick2ndFluc}
+\frac{\partial \delta \pmb{C}(\vec{r}, t)}{\partial t} = - \nabla \cdot \vec{J} = \pmb{D} \nabla^2 \delta \pmb{C}(\vec{r}, t) \label{fick2ndFluc}
 \end{equation}$$
 
 where $\pmb{D}$ is a diagonal matrix in which the element is the diffusion coefficient of respective species.
