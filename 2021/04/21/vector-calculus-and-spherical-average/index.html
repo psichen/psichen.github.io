@@ -28,7 +28,7 @@
 <meta property="og:description" content="A vector is typically regarded as a geometric entity characterized by a magnitude and a direction. Here are some notes about vector calculus and its basic application in small-angle x-ray scattering (">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-21T15:30:47.000Z">
-<meta property="article:modified_time" content="2021-04-21T15:34:08.684Z">
+<meta property="article:modified_time" content="2021-04-21T15:39:04.554Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="vector">
 <meta property="article:tag" content="calculus">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-04-21 23:30:47 / Modified: 23:34:08" itemprop="dateCreated datePublished" datetime="2021-04-21T23:30:47+08:00">2021-04-21</time>
+              <time title="Created: 2021-04-21 23:30:47 / Modified: 23:39:04" itemprop="dateCreated datePublished" datetime="2021-04-21T23:30:47+08:00">2021-04-21</time>
             </span>
 
           
@@ -238,9 +238,9 @@
 <p>The gardient operator is defined as <span class="math inline">\(\nabla = \frac{\partial }{\partial x} \pmb{i} + \frac{\partial }{\partial y} \pmb{j} + \frac{\partial }{\partial z} \pmb{k}\)</span>. Thus, the directional derivative in the direction of an arbitrary unit vector <span class="math inline">\(\hat{\pmb{v}}\)</span> is,</p>
 <p><span class="math display">\[ \frac{d \phi(\pmb{r})}{ds} = \nabla{\phi(\pmb{r})} \cdot \frac{\delta {\pmb{v}}}{|\delta \pmb{v}|} = \nabla{\phi(\pmb{r})} \cdot \hat{\pmb{v}} \]</span></p>
 <p>It has two interesting geometric properties.</p>
-<h3 id="steepest-descent">Steepest descent</h3>
+<h3 id="steepest-descent">steepest descent</h3>
 <p>Since the directional derivative is <span class="math inline">\(\nabla{\phi(\pmb{r})} \cdot \hat{\pmb{v}} = |\nabla{\phi(\pmb{r})}| \cos\theta\)</span>, clearly <span class="math inline">\(\nabla{\phi(\pmb{r})}\)</span> lies in the direction of largest possible rate of increase in <span class="math inline">\(\phi(\pmb{r})\)</span>, and <span class="math inline">\(- \nabla{\phi(\pmb{r})}\)</span> the largest possible rate of the decrease in <span class="math inline">\(\phi(\pmb{r})\)</span>.</p>
-<h3 id="normal-vector-to-surface">Normal vector to surface</h3>
+<h3 id="normal-vector-to-surface">normal vector to surface</h3>
 <p>For a surface function <span class="math inline">\(\phi(\pmb{r}) = c\)</span> (<span class="math inline">\(c\)</span> is a constant), the directional derivative is,</p>
 <p><span class="math display">\[ \frac{d \phi(\pmb{r})}{ds} = \nabla \phi \cdot \hat{\pmb{v}} = 0 \]</span></p>
 <p>where <span class="math inline">\(\hat{\pmb{v}}\)</span> is the arbitrary tangent vector. In other words, <span class="math inline">\(\nabla{\phi(\pmb{r})}\)</span> is the vector normal to the surface <span class="math inline">\(\phi(\pmb{r}) = c\)</span> at every point.</p>
@@ -292,7 +292,7 @@ z &amp;= r \cos\theta \\
 <p><span class="math display">\[ dA = \frac{dV}{dr} = r^{2} \sin\theta d\phi d\theta \]</span></p>
 <p>The solid angle is defined as,</p>
 <p><span class="math display">\[ d\Omega = \frac{dA}{r^{2}} = \sin\theta d\phi d\theta \]</span></p>
-<h3 id="spherical-average-of-scattering-wave-function-in-saxs">Spherical average of scattering wave function in SAXS</h3>
+<h3 id="spherical-average-of-scattering-wave-function-in-saxs">spherical average of scattering wave function in SAXS</h3>
 <p>SAXS uses x-ray's scattering and diffraction to study structural features of particles. If <span class="math inline">\(\pmb{k}_{0}\)</span> and <span class="math inline">\(\pmb{k}_{1}\)</span> are wave vectors of the incident ray and the scattered ray, respectively, for simplicity, we just describe the part about diffracted wave,</p>
 <p><span class="math display">\[ \exp(i \pmb{q} \cdot \pmb{s}) \]</span></p>
 <p>where <span class="math inline">\(\pmb{q}\)</span> is the displacement between two electrons that scatter x-rays, and <span class="math inline">\(\pmb{s}=\pmb{k}_{1} - \pmb{k}_{0}\)</span> is the scattering vector.</p>
@@ -390,7 +390,7 @@ z &amp;= r \cos\theta \\
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-derivative-with-respect-to-a-scalar-variable"><span class="nav-number">1.</span> <span class="nav-text">Vector derivative with respect to a scalar variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#curvature"><span class="nav-number">2.</span> <span class="nav-text">Curvature</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gradient"><span class="nav-number">3.</span> <span class="nav-text">Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#steepest-descent"><span class="nav-number">3.1.</span> <span class="nav-text">Steepest descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#normal-vector-to-surface"><span class="nav-number">3.2.</span> <span class="nav-text">Normal vector to surface</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#different-coordinate-system"><span class="nav-number">4.</span> <span class="nav-text">Different coordinate system</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spherical-corrdinates"><span class="nav-number">4.1.</span> <span class="nav-text">spherical corrdinates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spherical-average-of-scattering-wave-function-in-saxs"><span class="nav-number">4.2.</span> <span class="nav-text">Spherical average of scattering wave function in SAXS</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-derivative-with-respect-to-a-scalar-variable"><span class="nav-number">1.</span> <span class="nav-text">Vector derivative with respect to a scalar variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#curvature"><span class="nav-number">2.</span> <span class="nav-text">Curvature</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gradient"><span class="nav-number">3.</span> <span class="nav-text">Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#steepest-descent"><span class="nav-number">3.1.</span> <span class="nav-text">steepest descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#normal-vector-to-surface"><span class="nav-number">3.2.</span> <span class="nav-text">normal vector to surface</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#different-coordinate-system"><span class="nav-number">4.</span> <span class="nav-text">Different coordinate system</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spherical-corrdinates"><span class="nav-number">4.1.</span> <span class="nav-text">spherical corrdinates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spherical-average-of-scattering-wave-function-in-saxs"><span class="nav-number">4.2.</span> <span class="nav-text">spherical average of scattering wave function in SAXS</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
