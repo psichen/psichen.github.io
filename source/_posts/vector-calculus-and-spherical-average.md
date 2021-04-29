@@ -66,12 +66,12 @@ $$ \frac{d \phi(\pmb{r})}{ds} = \nabla{\phi(\pmb{r})} \cdot \frac{\delta {\pmb{v
 
 It has two interesting geometric properties.
 
-### Steepest descent
+### steepest descent
 
 Since the directional derivative is $\nabla{\phi(\pmb{r})} \cdot \hat{\pmb{v}} = |\nabla{\phi(\pmb{r})}| \cos\theta$, clearly $\nabla{\phi(\pmb{r})}$ lies in the direction of largest possible rate of increase in $\phi(\pmb{r})$, and $- \nabla{\phi(\pmb{r})}$ the largest possible rate of the decrease in $\phi(\pmb{r})$.
 
 
-### Normal vector to surface
+### normal vector to surface
 
 For a surface function $\phi(\pmb{r}) = c$ ($c$ is a constant), the directional derivative is,
 
@@ -151,7 +151,7 @@ The solid angle is defined as,
 
 $$ d\Omega = \frac{dA}{r^{2}} = \sin\theta d\phi d\theta $$
 
-### Spherical average of scattering wave function in SAXS
+### spherical average of scattering wave function in SAXS
 
 SAXS uses x-ray's scattering and diffraction to study structural features of particles. If $\pmb{k}_{0}$ and $\pmb{k}_{1}$ are wave vectors of the incident ray and the scattered ray, respectively, for simplicity, we just describe the part about diffracted wave,
 

@@ -107,7 +107,7 @@ In the next section we will use the fact that $\delta C_j(\vec{r}', t)$ are the 
 
 ### eigendecomposition and exponential function of matrices
 
-If the matrix $\pmb{M}$ has the eigenvector matrix $\pmb{\mathsf{X}}$ and eigenvalue matrix $\pmb{\Lambda_2} \,au it can be decomposed as the product as following,
+If the matrix $\pmb{M}$ has the eigenvector matrix $\pmb{\mathsf{X}}$ and eigenvalue matrix $\pmb{\Lambda}$, it can be decomposed as the product as following,
 
 $$\begin{aligned}
 \pmb{M} \pmb{V} &= \lambda \pmb{V} \\
