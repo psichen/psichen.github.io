@@ -28,7 +28,7 @@
 <meta property="og:description" content="Partial differential equations provide information about the relationship between the variables instead of the specific form of the solution function. Determining the specific form of solution needs o">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-15T12:26:17.000Z">
-<meta property="article:modified_time" content="2021-05-15T13:05:41.294Z">
+<meta property="article:modified_time" content="2021-05-15T13:10:57.040Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="differential equations">
 <meta property="article:tag" content="wave function">
@@ -182,7 +182,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-05-15 20:26:17 / Modified: 21:05:41" itemprop="dateCreated datePublished" datetime="2021-05-15T20:26:17+08:00">2021-05-15</time>
+              <time title="Created: 2021-05-15 20:26:17 / Modified: 21:10:57" itemprop="dateCreated datePublished" datetime="2021-05-15T20:26:17+08:00">2021-05-15</time>
             </span>
 
           
@@ -252,7 +252,7 @@ u = \begin{pmatrix}
 \frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial t^2} + (\frac{\partial p}{\partial t})^{2} \frac{\partial^2 f}{\partial p^2} \\
 \end{pmatrix} 
 \end{equation} 
-\label{chain_rule} \]</span></p>
+\label{chain} \]</span></p>
 <p>From the wave function we get,</p>
 <p><span class="math display">\[ \frac{\partial f}{\partial p} ( \frac{\partial^2 p}{\partial x^2} - \frac{1}{c^{2}} \frac{\partial^2 p}{\partial t^2} ) + \frac{\partial^2 f}{\partial p^2} [ (\frac{\partial p}{\partial x})^{2} - \frac{1}{c^{2}} (\frac{\partial p}{\partial t})^{2} ] = 0 \]</span></p>
 <p>This equation is still a little complicated. Because the combination <span class="math inline">\(p(x,t)\)</span> is an arbitrary function, let's add a constraint that the combination <span class="math inline">\(p(x,t)\)</span> is linear,</p>
@@ -265,7 +265,7 @@ u = \begin{pmatrix}
 <h3 id="diffusion-function">diffusion function</h3>
 <p>Another important PDE is diffusion function,</p>
 <p><span class="math display">\[ D \frac{\partial^2 u}{\partial x^2} - \frac{\partial u}{\partial t} = 0 \]</span></p>
-<p>Let's also suppose <span class="math inline">\(p = p(x,t)\)</span>. According the equation <span class="math inline">\(\eqref{chain_rule}\)</span>, the diffusion function is transformed as,</p>
+<p>Let's also suppose <span class="math inline">\(p = p(x,t)\)</span>. According the equation <span class="math inline">\(\eqref{chain}\)</span>, the diffusion function is transformed as,</p>
 <p><span class="math display">\[ \frac{\partial f}{\partial p} ( D \frac{\partial^2 p}{\partial x^2} - \frac{\partial p}{\partial t} ) + D \frac{\partial^2 f}{\partial p^2} (\frac{\partial p}{\partial x})^{2} = 0 \]</span></p>
 <p>It's still too complicated to solve explicitly. But if the terms in parentheses have the same dimension, we may be able to pick them out. Then we can get a second-order ordinary differential equation about <span class="math inline">\(f\)</span>. The dimension of diffusion coefficient is <span class="math inline">\([D]_{m} = 2, [D]_{t} = -1\)</span>, so if the terms share the same dimension for the length <span class="math inline">\([m]\)</span> and time <span class="math inline">\([s]\)</span>, the following equations should hold,</p>
 <p><span class="math display">\[ [p]_{m} = 2 + 2 [p]_{m} - 2 \]</span> <span class="math display">\[ [p]_{t} - 1 = 2 [p]_{s} - 1 \]</span></p>
