@@ -65,36 +65,42 @@ Many physical processes can be described by second-order PDEs such as wave funct
 
 $$ \frac{\partial^2 u}{\partial x^2} - \frac{1}{c^{2}} \frac{\partial^2 u}{\partial t^2} = 0 $$
 
-We can get some guidance by supposing the combination $p(x,t)$. Thus according to the chain rule, the differentials are,
+We can get some guidance by supposing the combination $p=p(x,t)$. Thus according to the chain rule, the differentials are,
+
+$$ u(x,t) = f(p) $$
 
 $$ \begin{equation}
-\begin{aligned}
-\frac{\partial u}{\partial x} &= \frac{\partial f}{\partial p} \frac{\partial p}{\partial x} \\
-\frac{\partial^2 u}{\partial x^2} &= \frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial x^2} + (\frac{\partial p}{\partial x})^{2} \frac{\partial^2 f}{\partial p^2} \\
-\frac{\partial u}{\partial t} &= \frac{\partial f}{\partial p} \frac{\partial p}{\partial t} \\
-\frac{\partial^2 u}{\partial t^2} &= \frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial t^2} + (\frac{\partial p}{\partial t})^{2} \frac{\partial^2 f}{\partial p^2} 
-\end{aligned}
-\end{equation} \label{chain_rule} $$
+\begin{pmatrix}
+\frac{\partial}{\partial x} & \frac{\partial^2}{\partial x^2} \\
+\frac{\partial}{\partial t} & \frac{\partial^2}{\partial t^2} \\
+\end{pmatrix} 
+u = \begin{pmatrix}
+\frac{\partial f}{\partial p} \frac{\partial p}{\partial x} &
+\frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial x^2} + (\frac{\partial p}{\partial x})^{2} \frac{\partial^2 f}{\partial p^2} \\
+\frac{\partial f}{\partial p} \frac{\partial p}{\partial t} &
+\frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial t^2} + (\frac{\partial p}{\partial t})^{2} \frac{\partial^2 f}{\partial p^2} \\
+\end{pmatrix} 
+\end{equation} $$
 
 From the wave function we get,
 
 $$ \frac{\partial f}{\partial p} ( \frac{\partial^2 p}{\partial x^2} - \frac{1}{c^{2}} \frac{\partial^2 p}{\partial t^2} ) + \frac{\partial^2 f}{\partial p^2} [ (\frac{\partial p}{\partial x})^{2} - \frac{1}{c^{2}} (\frac{\partial p}{\partial t})^{2} ] = 0 $$
 
-This equation is still a little complicated. Because the combination $p(x,y)$ is an arbitrary function, let's add a constraint that the combination $p(x,y)$ is linear,
+This equation is still a little complicated. Because the combination $p(x,t)$ is an arbitrary function, let's add a constraint that the combination $p(x,t)$ is linear,
 
-$$ p = A x + B y $$
-$$ \frac{\partial p}{\partial x} = A, \frac{\partial p}{\partial y} = B $$
-$$ \frac{\partial^2 p}{\partial x^2} = \frac{\partial^2 p}{\partial y^2} = 0 $$
+$$ p = A x + B t $$
+$$ \frac{\partial p}{\partial x} = A, \frac{\partial p}{\partial t} = B $$
+$$ \frac{\partial^2 p}{\partial x^2} = \frac{\partial^2 p}{\partial t^2} = 0 $$
 
 So the first term of the differential equation vanishes and,
 
 $$ \frac{B}{A} = \pm c $$
 
-Then $p$ can be redefined as $p = x \pm c y$ and the solution is,
+Then $p$ can be redefined as $p = x \pm c t$ and the solution is,
 
-$$ u(x,y) = f(x+cy) + g(x-cy) $$
+$$ u(x,t) = f(x+ct) + f'(x-ct) $$
 
-where $f(p)$ and $g(p)$ are arbitrary functions.
+where $f(p)$ and $f'(p)$ are arbitrary functions.
 
 ### diffusion function
 
@@ -102,7 +108,7 @@ Another important PDE is diffusion function,
 
 $$ D \frac{\partial^2 u}{\partial x^2} - \frac{\partial u}{\partial t} = 0 $$
 
-Let's also suppose $p = p(x,t)$. According the equation $\eqref{chain_rule}$, the diffusion function is transformed as,
+Let's also suppose $p = p(x,t)$. According the chain rule, the diffusion function is transformed as,
 
 $$ \frac{\partial f}{\partial p} ( D \frac{\partial^2 p}{\partial x^2} - \frac{\partial p}{\partial t} ) + D \frac{\partial^2 f}{\partial p^2} (\frac{\partial p}{\partial x})^{2} = 0 $$
 
