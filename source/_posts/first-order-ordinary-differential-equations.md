@@ -1,10 +1,10 @@
 ---
-title: First-degree ordinary differential equations
+title: First-order ordinary differential equations
 date: 2021-05-02 12:32:36
-tags: [ordinary differential equation, integrating factor]
+tags: [differential equation, integrating factor]
 ---
 
-Ordinary differential equations (ODE) are impartant in physical modeling and deduction.
+Ordinary differential equations (ODE) are important in physical modeling and deduction.
 
 <!--more-->
 
@@ -86,7 +86,7 @@ More generally, if the ODE isn't homogeneous but it has the form,
 
 $$ \frac{dy}{dx} = \frac{A(x,y)}{B(x,y)} $$
 
-It may then be solved by making the substituion,
+It may then be solved by making the substitution,
 
 $$ y = \nu x^{m} $$
 
@@ -183,7 +183,7 @@ If the ODE can be written as,
 
 $$ x = F(y, y') $$
 
-We can eliminate $x$ by differentitating both sides with respect to $y$,
+We can eliminate $x$ by differentiating both sides with respect to $y$,
 
 $$ \frac{dx}{dy} = \frac{1}{y'} = \frac{\partial F}{\partial y} + \frac{\partial F}{\partial y'} \frac{dy'}{dy}  $$
 

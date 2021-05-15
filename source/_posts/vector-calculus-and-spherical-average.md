@@ -56,7 +56,7 @@ The directional derivative of a scalar function $\phi(\pmb{r})$ in the direction
 
 $$ \frac{d \phi(\pmb{r})}{ds} = \lim_{|\delta \pmb{v}| \to 0} \frac{\phi(\pmb{r} + \delta \pmb{v}) - \phi(\pmb{r})}{|\delta \pmb{v}|} $$
 
-where $ds$ is the infinitesimal arc length in the direcction of $\delta \pmb{v}$. Transform the above equation using the first order approxmation of the Taylor series,
+where $ds$ is the infinitesimal arc length in the direction of $\delta \pmb{v}$. Transform the above equation using the first order approximation of the Taylor series,
 
 $$ \frac{d \phi(\pmb{r})}{ds} = \lim_{|\delta \pmb{v}| \to 0} \frac{\phi(\pmb{r} + \delta \pmb{v}) - \phi(\pmb{r})}{|\delta \pmb{v}|} = \lim_{|\delta \pmb{v}| \to 0} (\frac{\partial \phi(\pmb{r})}{\partial x} \pmb{i} + \frac{\partial \phi(\pmb{r})}{\partial y} \pmb{j} + \frac{\partial \phi(\pmb{r})}{\partial z} \pmb{k})\frac{\delta \pmb{v}}{|\delta \pmb{v}|} $$
 
@@ -105,7 +105,7 @@ as well as the infinitesimal change in $\pmb{r}$ along three directions,
 
 $$ d \pmb{r} = |\frac{\partial \pmb{r}}{\partial u}| \hat{\pmb{e}}_{u} du + |\frac{\partial \pmb{r}}{\partial v}| \hat{\pmb{e}}_{v} dv + |\frac{\partial \pmb{r}}{\partial w}| \hat{\pmb{e}}_{w} dw $$
 
-### spherical corrdinates
+### spherical coordinates
 
 For spherical coordinates, $xyz$ can be described by $r\phi\theta$ as,
 
