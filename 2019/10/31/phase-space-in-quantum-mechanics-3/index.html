@@ -329,6 +329,7 @@ I_3 &amp;= \int \left( \frac{1}{2\pi} \int i \omega&#39; g(\omega&#39;) e^{i \om
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -557,6 +558,26 @@ I_3 &amp;= \int \left( \frac{1}{2\pi} \int i \omega&#39; g(\omega&#39;) e^{i \om
     
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '5e04ce290375a219d90e',
+      clientSecret: '84f206e0045d654be745c7c55a39a48c1f852fa6',
+      repo        : 'gitalk',
+      owner       : 'psichen',
+      admin       : ['psichen'],
+      id          : '3e33c0e393f66184fae8b5e3443dec68',
+        language: 'en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>

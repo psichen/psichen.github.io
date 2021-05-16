@@ -473,6 +473,7 @@ G_R(\tau) &amp;= \frac{(AA+AB+BA+BB)(1+K)^{-1}}{V (Q_A \bar{C}_A + Q_B \bar{C}_B
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -701,6 +702,26 @@ G_R(\tau) &amp;= \frac{(AA+AB+BA+BB)(1+K)^{-1}}{V (Q_A \bar{C}_A + Q_B \bar{C}_B
     
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '5e04ce290375a219d90e',
+      clientSecret: '84f206e0045d654be745c7c55a39a48c1f852fa6',
+      repo        : 'gitalk',
+      owner       : 'psichen',
+      admin       : ['psichen'],
+      id          : '57fdfb9c2afd3b62ce2204753bc1e1e2',
+        language: 'en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>

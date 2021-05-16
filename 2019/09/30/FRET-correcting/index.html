@@ -341,6 +341,7 @@ x           &amp;= x(u) \\
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -569,6 +570,26 @@ x           &amp;= x(u) \\
     
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '5e04ce290375a219d90e',
+      clientSecret: '84f206e0045d654be745c7c55a39a48c1f852fa6',
+      repo        : 'gitalk',
+      owner       : 'psichen',
+      admin       : ['psichen'],
+      id          : 'a22cfaa2db93f9b7e618740e2ae90e97',
+        language: 'en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
