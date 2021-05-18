@@ -1,7 +1,7 @@
 ---
 title: Partial differential equations
 date: 2021-05-15 20:26:17
-tags: [differential equations, wave function, diffusion equation]
+tags: [differential equation, wave function, diffusion equation]
 ---
 
 Partial differential equations provide information about the relationship between the variables instead of the specific form of the solution function. Determining the specific form of solution needs other constraints such as boundary conditions. 
@@ -69,8 +69,7 @@ We can get some guidance by supposing the combination $p=p(x,t)$. Thus according
 
 $$ u(x,t) = f(p) $$
 
-$$ \begin{equation}
-\begin{pmatrix}
+$$ \begin{pmatrix}
 \frac{\partial}{\partial x} & \frac{\partial^2}{\partial x^2} \\
 \frac{\partial}{\partial t} & \frac{\partial^2}{\partial t^2} \\
 \end{pmatrix} 
@@ -79,8 +78,7 @@ u = \begin{pmatrix}
 \frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial x^2} + (\frac{\partial p}{\partial x})^{2} \frac{\partial^2 f}{\partial p^2} \\
 \frac{\partial f}{\partial p} \frac{\partial p}{\partial t} &
 \frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial t^2} + (\frac{\partial p}{\partial t})^{2} \frac{\partial^2 f}{\partial p^2} \\
-\end{pmatrix} 
-\end{equation} $$
+\end{pmatrix} $$
 
 From the wave function we get,
 
