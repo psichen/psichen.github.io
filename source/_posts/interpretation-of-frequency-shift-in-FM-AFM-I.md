@@ -1,14 +1,14 @@
 ---
-title: Interpretation of frequency shift originated from various force in FM-AFM (I)
+title: Interpretation of frequency shift in FM-AFM (I)
 date: 2021-05-18 19:51:30
 tags: [mechanics, Hamilton, Jacobi, harmonic oscillation, generating function, AFM, transformation, perturbation]
 ---
 
 In the Frequency-Modulation mode of AFM, the cantilever keeps harmonically oscillating during measurement. In contrast to optic microscopy or scanning tunneling microscopy, in which the electromagnetic signals are detected directly by detectors, FM-AFM detects the frequency shift of the cantilever's harmonic oscillation when the distance between sample surface and cantilever's tip changes.
 
-When there are potential fields between sample surface and tip (Van der Waals force, electromagnetic force, etc), the force exerted on the oscillation system will change as the distance changes. If we know the relation between frequency shift $\Delta f$ and external force $F$ as the gradient of potential fields, the distance between surface and tip can be measured in nearly real time by detecting the frequency of oscillation. In addition, the height of sample surface can also be imaged through a feedback system which control the frequency to maintain a constant distance between surface and tip.
-
 <!--more-->
+
+When there are potential fields between sample surface and tip (Van der Waals force, electromagnetic force, etc), the force exerted on the oscillation system will change as the distance changes. If we know the relation between frequency shift $\Delta f$ and external force $F$ as the gradient of potential fields, the distance between surface and tip can be measured in nearly real time by detecting the frequency of oscillation. In addition, the height of sample surface can also be imaged through a feedback system which control the frequency to maintain a constant distance between surface and tip.
 
 ## Classical mechanics
 
@@ -123,7 +123,7 @@ In physics there are 4 types of generating functions whose partial derivatives g
 | $F = F_{3}(p,Q,t) = F_{1}(q,Q,t) - qp$ | $q = - \frac{\partial F}{\partial p}$ and $P = - \frac{\partial F}{\partial Q}$ |
 | $F = F_{4}(p,P,t) = F_{1}(q,Q,t) + QP - qp$ | $q = - \frac{\partial F}{\partial p}$ and $Q = \frac{\partial F}{\partial P}$ |
 
-They're converted by the [Legendre transformation](https://www.psichen.com/2019/09/25/Legendre-transformation/).
+They're converted by the [Legendre transformation](https://www.psichen.com/2019/09/25/Legendre-transformation/). Among them, $F_{2}(q,P,t)$ (type-2 Generating function) is called Hamilton's principal function.
 
 Substituting $p = \frac{\partial F}{\partial q}$ into the Hamilton-Jacobi equation $\eqref{HJ_equation}$,
 
@@ -142,7 +142,7 @@ F(q,Q,t) = W(q,Q) - \alpha(Q) t
 \label{generating_function}
 \end{equation} $$
 
-where $\alpha(Q)$ is constant with respect to time and equal to the Hamiltonian $H_{0}$.
+where $\alpha(Q)$ is constant with respect to time and equal to the Hamiltonian $H_{0}$, and $W(q,Q)$ is called the Hamilton's characteristic function.
 
 ### the action as the generating function in canonical transformation
 
