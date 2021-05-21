@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Periodic motion in dynamic systems are of especial importance. Very often we are interested not so much in the motion trajectories as in the frequencies of the motion.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Interpretation of frequency shift in FM AFM (II)">
+<meta property="og:url" content="http://www.psichen.com/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/index.html">
+<meta property="og:site_name" content="pan.world">
+<meta property="og:description" content="Periodic motion in dynamic systems are of especial importance. Very often we are interested not so much in the motion trajectories as in the frequencies of the motion.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-21T10:32:09.000Z">
+<meta property="article:modified_time" content="2021-05-21T10:34:14.181Z">
+<meta property="article:author" content="psichen">
+<meta property="article:tag" content="transformation">
+<meta property="article:tag" content="generating function">
+<meta property="article:tag" content="mechanics">
+<meta property="article:tag" content="Hamilton">
+<meta property="article:tag" content="Jacobi">
+<meta property="article:tag" content="harmonic oscillation">
+<meta property="article:tag" content="AFM">
+<meta property="article:tag" content="perturbation">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.psichen.com/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Interpretation of frequency shift in FM AFM (II) | pan.world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">pan.world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Interpretation of frequency shift in FM AFM (II)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-05-21 18:32:09 / Modified: 18:34:14" itemprop="dateCreated datePublished" datetime="2021-05-21T18:32:09+08:00">2021-05-21</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Periodic motion in dynamic systems are of especial importance. Very often we are interested not so much in the motion trajectories as in the frequencies of the motion.</p>
+<a id="more"></a>
+<h2 id="action-angle-variables">Action-Angle variables</h2>
+<p>For a conserved system, its Hamiltonian is constant,</p>
+<p><span class="math display">\[ H(q,p) = \alpha \]</span></p>
+<p>Thus we can know the momentum <span class="math inline">\(p\)</span> is a function <span class="math inline">\(p(q,\alpha)\)</span>. For a periodic motion we introduce a new variable <span class="math inline">\(J(\alpha)\)</span> designed as the transformed constant momentum. The so-called abbreviated action variable <span class="math inline">\(J(\alpha)\)</span> is defined,</p>
+<p><span class="math display">\[ J(\alpha) = \oint p(q,\alpha) \ dq \]</span></p>
+<p>where the momentum <span class="math inline">\(p\)</span> is integrated by <span class="math inline">\(q\)</span> over a complete period of the motion, and <span class="math inline">\(J(\alpha)\)</span> is a function solely dependent on <span class="math inline">\(\alpha\)</span>. Thus the Hamiltonian can be represented by <span class="math inline">\(\alpha=K(J)\)</span> as well. Supposed the new conjugated variable is <span class="math inline">\(\beta\)</span>, from the equation of motion we also have,</p>
+<p><span class="math display">\[ \dot{\beta} = \frac{\partial K}{\partial J} \ , \ \dot{J} = - \frac{\partial K}{\partial \beta} \]</span></p>
+<p>Because <span class="math inline">\(K(J)\)</span> is a function of the variable <span class="math inline">\(J\)</span> only, we may designate <span class="math inline">\(\omega(J) = \frac{\partial K}{\partial J}\)</span>, then we can get <span class="math inline">\(\beta\)</span> from the above partial differential equation,</p>
+<p><span class="math display">\[ \beta = \omega(J) t + \beta_{0} \]</span></p>
+<p>Considering the change in <span class="math inline">\(\beta\)</span> as <span class="math inline">\(q\)</span> goes through a complete cycle in the motion,</p>
+<p><span class="math display">\[ \begin{aligned}
+\Delta \beta &amp;= \oint \frac{\partial \beta}{\partial q} \ dq \\
+&amp;= \oint \frac{\partial}{\partial q} (\frac{\partial W}{\partial J}) \ dq \\
+&amp;= \frac{d}{dJ} \oint \frac{\partial W}{\partial q} \ dq \\
+&amp;= \frac{d}{dJ} \oint p \ dq \\
+&amp;= 1 \\
+\end{aligned}  \]</span></p>
+<p>The above equation states that <span class="math inline">\(\beta\)</span> changes by unity as <span class="math inline">\(q\)</span> goes through a complete cycle. Then we have,</p>
+<p><span class="math display">\[ \Delta \beta = \omega(J) \tau = 1 \]</span></p>
+<p>So <span class="math inline">\(\omega(J)\)</span> is the reciprocal of the period <span class="math inline">\(\tau\)</span> of a complete cycle, namely, the frequency.</p>
+<p><span class="math display">\[ \dot{\beta} = \omega(J) = \frac{1}{\tau} = f \]</span></p>
+<p>The dimension of the variable <span class="math inline">\(J\)</span> is an angular momentum and that of the variable <span class="math inline">\(\beta\)</span> is an angle, hence given the name of Action-Angle variables. The Action-Angle variable transformation provides a way to obtain the frequency of periodic motion without find a complete solution to the motion of the system.</p>
+<h2 id="perturbation-theory">Perturbation theory</h2>
+<p>Not all of classic mechanical problems have exact solutions, but we can use perturbation Hamiltonian to approximate the solution of the rather complicated mechanical problems. The idea of finding a solution of perturbation Hamiltonian is to iterate the canonical variables by the equation of motion again and again.</p>
+<p>The Hamiltonian with perturbation,</p>
+<p><span class="math display">\[ H = H_{0} + \Delta H \]</span></p>
+<p>where <span class="math inline">\(H_{0}\)</span> is the unperturbed Hamiltonian and <span class="math inline">\(\Delta H\)</span> is the perturbed Hamiltonian. The canonical property of a given coordinate transformation is independent of the particular form the Hamiltonian. Only now the new Hamiltonian won't vanish and the transformed variables may not be constant,</p>
+<p><span class="math display">\[ K(Q,P,t) = H(q,p,t) + \Delta H(q,p,t) + \frac{\partial S}{\partial t} = \Delta K(Q,P,t) \]</span></p>
+<p><span class="math display">\[ \dot{Q} = \frac{\partial \Delta K}{\partial P} \ , \ \dot{P} = - \frac{\partial \Delta K}{\partial Q} \]</span></p>
+<p>In the perturbed scenario, <span class="math inline">\(\Delta H\)</span> is small compared to <span class="math inline">\(H_{0}\)</span>. Therefore the quantities <span class="math inline">\((Q,P)\)</span> don't change rapidly. So converged <span class="math inline">\((Q,P)\)</span> may be obtained by repeatedly replacing <span class="math inline">\(Q\)</span> and <span class="math inline">\(P\)</span> in the following equations,</p>
+<p><span class="math display">\[ \begin{aligned}
+\dot{Q}_{i+1} &amp;= \frac{\partial \Delta K}{\partial P}(Q_{i},P_{i},t) \\
+\dot{P}_{i+1} &amp;= - \frac{\partial \Delta K}{\partial Q} (Q_{i},P_{i},t) \\
+\end{aligned}  \]</span></p>
+<h2 id="cantilever-in-fm-afm">Cantilever in FM-AFM</h2>
+<p>The external force between the sample surface and the tip usually is supposed to obey an inverse power law,</p>
+<p><span class="math display">\[ F_{ts}(q) = - C q^{-n} \]</span></p>
+<p>resulting in the perturbation Hamiltonian,</p>
+<p><span class="math display">\[ \Delta H = V(q) =
+\begin{cases}
+-\frac{C}{(n-1) q^{n-1}} \ &amp; n\gt1 \\
+C \ln(q) \ &amp; n = 1 \\
+\end{cases} \]</span></p>
+<p>and the corresponding perturbation Kamiltonian <span class="math inline">\(\Delta K(J)\)</span>. So the frequency shift is,</p>
+<p><span class="math display">\[ \Delta f = \langle \Delta \dot{\beta} \rangle = \langle \frac{\partial K}{\partial J} - \frac{\partial K_{0}}{\partial J} \rangle = \langle \frac{\partial \Delta K}{\partial J} \rangle = \langle \frac{\partial V(q)}{\partial q} \frac{\partial q}{\partial J} \rangle \]</span></p>
+<p>The average is taken for a complete cycle of the motion because the action variable <span class="math inline">\(J\)</span> is defined over a complete cycle.</p>
+<p>From the reference 3, the deflection <span class="math inline">\(q&#39;\)</span> is,</p>
+<p><span class="math display">\[ q&#39; = \sqrt{\frac{2 f_{0} J}{k}} \sin 2 \pi (f_{0} t + \beta) \]</span></p>
+<p>It yields,</p>
+<p><span class="math display">\[ \frac{\partial q&#39;}{\partial J} =  \frac{q&#39;}{2 J} = \frac{f_{0}}{k A_{0}^{2}} q&#39; \]</span></p>
+<p>where <span class="math inline">\(A_{0}\)</span> is the amplitude of the deflection, <span class="math inline">\(k\)</span> is the spring constant of the cantilever and <span class="math inline">\(f_{0}\)</span> is the original resonance frequency under free oscillation when the tip is very far from the surface. Finally,</p>
+<p><span class="math display">\[ \Delta f = - \frac{f_{0}}{k A_{0}^{2}}  \langle F_{ts} q&#39; \rangle = \frac{1}{2 \pi} \frac{f_{0}}{k A_{0}} \frac{C}{d^{n}} \int_{0}^{2\pi} \frac{\cos x}{[1 + (A_{0}/d) (\cos x + 1)]^{n}} \ d{x} \]</span></p>
+<p>where <span class="math inline">\(d\)</span> is the distance between the surface and the lowest position of the tip.</p>
+<h3 id="small-amplitudes">small amplitudes</h3>
+<p>When the tip oscillates at a small amplitude,</p>
+<p><span class="math display">\[ A_{0} &lt;&lt; d \]</span></p>
+<p>making use of the first order Taylor series of</p>
+<p><span class="math display">\[ (1 + \epsilon)^{-n} = 1 - n \epsilon + O(\epsilon^{2}) \]</span></p>
+<p>we can approximate <span class="math inline">\(\Delta f\)</span> as,</p>
+<p><span class="math display">\[ \Delta f = \frac{f_{0} C}{2 \pi k A_{0} d^{n}} \int_{0}^{2 \pi} \cos x[ 1 -n (A_{0}/d) (\cos x + 1) ] \ d{x} = -\frac{C f_{0} n}{2 k d^{n+1}} = - \frac{f_{0}}{2 k} (\nabla \cdot F_{ts}|_{q=d}) \]</span></p>
+<p>It states that the frequency shift is related with the gradient of the external force <span class="math inline">\(F_{ts}\)</span> on the <span class="math inline">\(z\)</span>-axis, corresponding to the first-order expansion of Taylor series of the expression,</p>
+<p><span class="math display">\[ f = \frac{1}{2 \pi} \sqrt{\frac{k_{eff}}{m}} \]</span></p>
+<p>where <span class="math inline">\(k_{eff} = k - \nabla \cdot F_{ts}\)</span>.</p>
+<h1 id="references">References</h1>
+<ol type="1">
+<li><p>Goldstein, Herbert, Charles Poole, and John Safko. "Classical mechanics." (2002).</p></li>
+<li><p><a target="_blank" rel="noopener" href="https://www.asc.ohio-state.edu/mathur.16/821hj.pdf">Notes for Classical Mechanics 821: Hamilton-Jacobi equation</a></p></li>
+<li><p>Giessibl, Franz J. "Forces and frequency shifts in atomic-resolution dynamic-force microscopy." <em>Physical Review B</em> 56.24 (1997): 16010.</p></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/transformation/" rel="tag"># transformation</a>
+              <a href="/tags/generating-function/" rel="tag"># generating function</a>
+              <a href="/tags/mechanics/" rel="tag"># mechanics</a>
+              <a href="/tags/Hamilton/" rel="tag"># Hamilton</a>
+              <a href="/tags/Jacobi/" rel="tag"># Jacobi</a>
+              <a href="/tags/harmonic-oscillation/" rel="tag"># harmonic oscillation</a>
+              <a href="/tags/AFM/" rel="tag"># AFM</a>
+              <a href="/tags/perturbation/" rel="tag"># perturbation</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/18/interpretation-of-frequency-shift-in-FM-AFM-I/" rel="prev" title="Interpretation of frequency shift in FM-AFM (I)">
+      <i class="fa fa-chevron-left"></i> Interpretation of frequency shift in FM-AFM (I)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#action-angle-variables"><span class="nav-number">1.</span> <span class="nav-text">Action-Angle variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perturbation-theory"><span class="nav-number">2.</span> <span class="nav-text">Perturbation theory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cantilever-in-fm-afm"><span class="nav-number">3.</span> <span class="nav-text">Cantilever in FM-AFM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#small-amplitudes"><span class="nav-number">3.1.</span> <span class="nav-text">small amplitudes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">psichen</p>
+  <div class="site-description" itemprop="description">There are no facts, only interpretations.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">psichen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '5e04ce290375a219d90e',
+      clientSecret: '84f206e0045d654be745c7c55a39a48c1f852fa6',
+      repo        : 'gitalk',
+      owner       : 'psichen',
+      admin       : ['psichen'],
+      id          : 'baa1b80bc27f1befa7aa9a152e4815c1',
+        language: 'en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

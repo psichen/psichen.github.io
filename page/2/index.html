@@ -152,6 +152,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/01/21/combinations-and-particle-statistics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/combinations-and-particle-statistics/" class="post-title-link" itemprop="url">Combinations and particle statistics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-21 23:55:00" itemprop="dateCreated datePublished" datetime="2021-01-21T23:55:00+08:00">2021-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-02-12 16:51:55" itemprop="dateModified" datetime="2021-02-12T16:51:55+08:00">2021-02-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="permutation">Permutation</h2>
+<p>Let's first consider a set of <span class="math inline">\(n\)</span> objects, which are all different. The number of all possible arrangements (permutations) is</p>
+<p><span class="math display">\[ n(n-1) \cdots 1 = n! \]</span></p>
+<p>Generally, if we select <span class="math inline">\(k (&lt;n)\)</span> objects from <span class="math inline">\(n\)</span>, the number of permuations is</p>
+<p><span class="math display">\[ n(n-1)\cdot\cdot\cdot(n-k+1) = \frac{n!}{(n-k)!} = P(n, k) \]</span></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/21/combinations-and-particle-statistics/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2020/02/10/crawler-university-postdoc-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -831,88 +907,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/09/25/photobleaching/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/25/photobleaching/" class="post-title-link" itemprop="url">荧光猝灭的原理与避免方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-25 09:28:15" itemprop="dateCreated datePublished" datetime="2019-09-25T09:28:15+08:00">2019-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-05 16:30:18" itemprop="dateModified" datetime="2021-02-05T16:30:18+08:00">2021-02-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>荧光染料分子被激发后，会从ground state(S<sub>0</sub>)变到first excited singlet state (S<sub>1</sub>)，之后会包含以下几个过程：</p>
-<ol type="1">
-<li>重新回到S<sub>0</sub>，并在ns的时间尺度内发出fluorescence</li>
-<li>经过inter-system crossing弛豫到first excited triplet state (T<sub>1</sub>)，并在μs的时间尺度内发出phosphorescence</li>
-<li>如果存在FRET，则会将能量传递给acceptor,令acceptor从S<sub>0</sub>到S<sub>1</sub>,然后acceptor染料同样也会经历相同的弛豫过程</li>
-</ol>
-<p>染料分子达到triplet state或发生猝灭，都会降低光子产生速率，对成像、荧光单分子检测，特别是对快过程的研究都会造成影响。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/09/25/photobleaching/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -978,7 +976,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
