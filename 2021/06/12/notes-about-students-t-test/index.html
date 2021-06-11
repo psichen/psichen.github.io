@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Almost every graduate student knows how to use t-test to test whether their experimental data is significantly different from the reference. As a widely used test statistic, it&#39;s useful to know the de">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notes about Student&#39;s t-test and t-distribution">
+<meta property="og:url" content="http://www.psichen.com/2021/06/12/notes-about-students-t-test/index.html">
+<meta property="og:site_name" content="pan.world">
+<meta property="og:description" content="Almost every graduate student knows how to use t-test to test whether their experimental data is significantly different from the reference. As a widely used test statistic, it&#39;s useful to know the de">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-11T18:03:32.000Z">
+<meta property="article:modified_time" content="2021-06-11T18:05:31.496Z">
+<meta property="article:author" content="psichen">
+<meta property="article:tag" content="probability density function">
+<meta property="article:tag" content="gamma">
+<meta property="article:tag" content="t-test">
+<meta property="article:tag" content="maximum likelihood estimation">
+<meta property="article:tag" content="test statistic">
+<meta property="article:tag" content="likelihood ratio">
+<meta property="article:tag" content="type I error">
+<meta property="article:tag" content="type II error">
+<meta property="article:tag" content="power">
+<meta property="article:tag" content="delta function">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.psichen.com/2021/06/12/notes-about-students-t-test/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Notes about Student's t-test and t-distribution | pan.world</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">pan.world</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/06/12/notes-about-students-t-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Notes about Student's t-test and t-distribution
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-06-12 02:03:32 / Modified: 02:05:31" itemprop="dateCreated datePublished" datetime="2021-06-12T02:03:32+08:00">2021-06-12</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Almost every graduate student knows how to use t-test to test whether their experimental data is significantly different from the reference. As a widely used test statistic, it's useful to know the derivation of the t-distribution's analytic form, which prevents us from abusing or misinterpreting the t-test.</p>
+<a id="more"></a>
+<h2 id="maximum-likelihood-estimation">Maximum likelihood estimation</h2>
+<p>Let's suppose samples <span class="math inline">\(\{x_{1},x_{2},\dots,x_{n}\} \in \mathcal{X} = \mathbb{R}^{n}\)</span> are drown independently from a Gaussian distribution for which both the mean <span class="math inline">\(\mu\)</span> and the variance <span class="math inline">\(\sigma^{2}\)</span> are unknown. The likelihood function is,</p>
+<p><span class="math display">\[ L(\pmb{x};\mu,\sigma^{2}) = (2 \pi \sigma^{2})^{-\frac{n}{2}} \exp[- \frac{\sum_{i=1}^{n} (x_{i} - \mu)^{2}}{2 \sigma^{2}}] \]</span></p>
+<p>We choose the estimator <span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{\sigma^{2}}\)</span> which maximize the likelihood,</p>
+<p><span class="math display">\[ \begin{aligned}
+\partial_{\mu} \ln L(\pmb{x};\mu,\sigma^{2}) |_{\mu = \hat{\mu}} = \frac{\sum_{i=1}^{n} (x_{i} - \hat{\mu})}{2 \sigma^{2}} = 0 \ &amp;\Rightarrow \ \hat{\mu} = \bar{x} \\
+\partial_{\sigma^{2}} \ln L(\pmb{x};\mu,\sigma^{2}) |_{\sigma^{2} = \hat{\sigma^{2}}} = -\frac{n}{2 \hat{\sigma^{2}}} + \frac{\sum_{i=1}^{n} (x_{i} - \mu)^{2}}{2 (\hat{\sigma^{2}})^{2}} = 0 \ &amp;\Rightarrow \ \hat{\sigma^{2}} = \frac{\sum_{i=1}^{n} (x_{i} - \mu)^{2}}{n} = s^{2}
+\end{aligned}  \]</span></p>
+<p>where <span class="math inline">\(s^{2}\)</span> is the sample variance when the mean of population <span class="math inline">\(\mu\)</span> is known (degree of freedom = <span class="math inline">\(n\)</span>).</p>
+<h3 id="bias-estimator">bias estimator</h3>
+<p>The maximum likelihood estimator <span class="math inline">\(\hat{\sigma^{2}} = s^{2}\)</span> is unbiased when the mean <span class="math inline">\(\mu\)</span> is known. However, if <span class="math inline">\(\mu\)</span> is unknown, an intuitive idea is to replace <span class="math inline">\(\mu\)</span> with the estimator <span class="math inline">\(\hat{\mu} = \bar{x}\)</span>. Here, <span class="math inline">\(\hat{\mu}\)</span> is also a random variable which spreads values around <span class="math inline">\(\mu\)</span>. Then, the uncorrected estimator <span class="math inline">\(\hat{\sigma^{2}}\)</span> is biased,</p>
+<p><span class="math display">\[ \begin{aligned}
+E[ \hat{\sigma^{2}} ] &amp;= \frac{1}{n} E[ \sum_{i=1}^{n} (x_{i} - \bar{x})^{2} ] \\
+&amp;= \frac{1}{n} E[ \sum_{i=1}^{n} (x_{i} - \mu)^{2} - \sum_{i=1}^{n} 2 (x_{i} - \mu) (\bar{x} - \mu) + \sum_{i=1}^{n} (\bar{x} - \mu)^{2}] \\
+&amp;[ \text{split as } (x_{i} - \mu + \mu - \bar{x})] \\
+&amp;= \frac{\sum_{i=1}^{n} (x_{i} - \mu)^{2}}{n} - \frac{\sum_{i=1}^{n} (\bar{x} - \mu)^{2}}{n} \\
+&amp;= (1 - \frac{1}{n}) \sigma^{2}
+\end{aligned}  \]</span></p>
+<p>It underestimates the population variance because the estimator <span class="math inline">\(\hat{\mu}\)</span> introduces new uncertainty into the equation. Further, it can be thought as the estimator <span class="math inline">\(\hat{\mu}\)</span> introduces a new constraint which "consumes" one degree of freedom. Thus, the unbiased estimator can be corrected by <span class="math inline">\(\hat{\sigma^{2}} = \sum_{i=1}^{n} (x_{i} - \bar{x})^{2} / (n-1)\)</span>.</p>
+<h3 id="standard-deviation-standard-error">standard deviation &amp; standard error</h3>
+<p>As we can see, simples and estimators are both random variables. They have corresponding terms to describe their spread.</p>
+<p><strong>standard deviation</strong></p>
+<p>Standard deviation (SD) is the positive root of the variance, or the root of 2nd-order central moment <span class="math inline">\(\frac{1}{N} \sum_{i=1}^{N} (x_{i} - m_{1})^{2}\)</span>.</p>
+<p><strong>standard error</strong></p>
+<p>Standard error (SE) is the uncertainty of the estimator <span class="math inline">\(\hat{a}\)</span>, namely the standard deviation of the sampling distribution <span class="math inline">\(P(\hat{a}|a)\)</span>. For the biased estimator <span class="math inline">\(E(\hat{a}) = a + b(a)\)</span>, the spread around the true value <span class="math inline">\(a\)</span> is,</p>
+<p><span class="math display">\[ \epsilon^{2}_{\hat{a}} = E[ (\hat{a} - a)^{2} ] = E[ (\hat{a} - E[\hat{a}] + E[\hat{a}] - a)^{2} ] = E[ (\hat{a} - E[\hat{a}])^{2} ] + E[ (E[\hat{a}] - a)^{2} ] = V(\hat{a}) + b^{2}(a) \]</span></p>
+<p>So <span class="math inline">\(\epsilon^{2}_{\hat{a}}\)</span> is the sum of squares of the statistical and systematic errors. In addition, <span class="math inline">\(\epsilon_{\hat{a}}\)</span> is called the root mean square error (RMSE). Specifically, if the estimator is the unbiased mean estimator <span class="math inline">\(\hat{\mu} = \bar{x}\)</span>, the standard error of mean (SEM) is the root of the variance of sample mean,</p>
+<p><span class="math display">\[ \epsilon_{\hat{\mu}} = (E[ (\bar{x} - \mu)^{2} ])^{\frac{1}{2}} = \frac{\sigma}{\sqrt{n}} \]</span></p>
+<p>where <span class="math inline">\(\sigma\)</span> is the standard deviation of the population and <span class="math inline">\(n\)</span> is the number of groups of samples.</p>
+<h2 id="neyman-pearson-lemma">Neyman-Pearson lemma</h2>
+<p>Neyman-Pearson lemma tells us which test statistic we should use. Before introducing Neyman-Pearson lemma, we should know the type I error <span class="math inline">\(\alpha\)</span> and the type II error <span class="math inline">\(\beta\)</span> in test statistics.</p>
+<h3 id="type-i-error-type-ii-error">type I error &amp; type II error</h3>
+<p>In the test of null hypothesis <span class="math inline">\(H_{0}\)</span> against alternative hypothesis <span class="math inline">\(H_{1}\)</span>, false negative is called type I error denoted by <span class="math inline">\(\alpha\)</span> and false positve is called type II error denoted by <span class="math inline">\(\beta\)</span>. Supposing the rejection region <span class="math inline">\(\mathcal{R} = \{x : \text{reject } H_{0} \}\)</span> and the acceptance region <span class="math inline">\(\bar{\mathcal{R}} = \mathcal{X} - \mathcal{R}\)</span>, some definition is listed,</p>
+<p><span class="math display">\[ \text{Table 1 Type I &amp; II error and related items} \\
+\begin{array}{cccc}
+\hline
+\text{ Denotation } &amp; \text{ PDF integral } &amp; \text{ Event fraction } &amp; \text{ Term } \\
+\hline
+\alpha &amp; \int_{\mathcal{R}} f(x | H_{0}) \ dx &amp; FP/(TN + FP) &amp; \text{ Type I error/Significance level } \\
+\beta &amp; \int_{\bar{\mathcal{R}}} f(x | H_{1}) \ dx &amp; FN/(TP + FN) &amp; \text{ Type II error } \\
+1 - \alpha &amp; \int_{\bar{\mathcal{R}}} f(x | H_{0}) \ dx &amp; TN/(TN + FP) &amp; \text{ Specificity } \\
+1 - \beta &amp; \int_{\mathcal{R}} f(x | H_{1}) \ dx &amp; TP/(TP + FN) &amp; \text{ Sensitivity/Power } \\
+( 1-\beta )/( 1-\beta+\alpha ) &amp; - &amp; TP/(TP + FP) &amp; \text{PPV} \\
+( 1-\alpha )/( 1-\alpha+\beta ) &amp; - &amp; TN/(TN + FN) &amp; \text{NPV} \\
+\hline
+\text{* PPV: Positive precdicted value;} &amp; \text{NPV: Negative predicted value;} \\
+\end{array} \]</span></p>
+<p>The graphic demonstration can be seen on <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity#/media/File:PPV,_NPV,_Sensitivity_and_Specificity.svg">wiki</a>.</p>
+<h3 id="the-compromised-test">the compromised test</h3>
+<p>Since <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are counter-parts, we usually can't minimize them simultaneously. So we have a compromise that the type I error (significance level) of the test statistic has an up limit <span class="math inline">\(\alpha_{0}\)</span> while the power <span class="math inline">\(1 - \beta_{0}\)</span> is maximized.</p>
+<p>In order to find such a test statistic, we consider a set of the rejection probability functions <span class="math inline">\(\phi(x)\)</span> represents the probability of rejecting the null hypothesis <span class="math inline">\(H_{0}\)</span> given the data <span class="math inline">\(x\)</span>,</p>
+<p><span class="math display">\[ \phi(x) =
+\begin{cases}
+1, \ &amp; x \in \mathcal{R} \\
+0, \ &amp; x \in \mathcal{\bar{R}}
+\end{cases}
+\]</span> Thus type I error can be interpreted as the expectation of <span class="math inline">\(\phi(x)\)</span> under the null hypothesis <span class="math inline">\(H_{0}\)</span> and power as the expectation of <span class="math inline">\(\phi(x)\)</span> under the alternative hypothesis <span class="math inline">\(H_{1}\)</span>,</p>
+<p><span class="math display">\[ \begin{aligned}
+\alpha &amp;= E_{H_{0}} [ \phi(x) ] = \int_{\mathcal{R}} f(x|H_{0}) \ dx \\
+1 - \beta &amp;= E_{H_{1}} [ \phi(x) ] = \int_{\mathcal{R}} f(x|H_{1}) \ dx
+\end{aligned} \]</span></p>
+<p>Different test statistic functions <span class="math inline">\(\lambda(x)\)</span> may have different rejection region <span class="math inline">\(\mathcal{R}\)</span>, hence defining level and power of the test. Then the question is to find a suitable rejection region <span class="math inline">\(\mathcal{R}\)</span> where <span class="math inline">\(x\)</span> satisfy,</p>
+<p><span class="math display">\[ \begin{aligned}
+\text{maximize } &amp;\int_{\mathcal{R}} f(x | H_{1}) \ dx = 1 - \beta_{0} \\
+\text{ s.t. } &amp;\int_{\mathcal{R}} f(x | H_{0}) \ dx \leq \alpha_{0}
+\end{aligned}  \]</span></p>
+<p>It's equivalent to following states,</p>
+<p><span class="math display">\[ \begin{array}{ll}
+(a) &amp; E_{H_{0}}[ \phi(x) ] = \alpha_{0} \\
+(b) &amp; \phi(x) =
+\begin{cases}
+1, \ &amp; x \in \mathcal{R} = \{ x : \frac{f(x|H_{0})}{f(x|H_{1})} \lt k \} \\
+\gamma, \ &amp; x \in \{ x : \frac{f(x|H_{0})}{f(x|H_{1})} = k \} \\
+0, \ &amp; x \in \mathcal{\bar{R}} = \{ x : \frac{f(x|H_{0})}{f(x|H_{1})} \gt k \}
+\end{cases}
+\end{array} \]</span></p>
+<p>where <span class="math inline">\(\gamma\)</span> is the reject probability when the likelihood ratio <span class="math inline">\(\frac{f(x|H_{0})}{f(x|H_{1})}\)</span> equals <span class="math inline">\(k\)</span> and is chosen to satisfy the state (a).</p>
+<p><strong>Sufficiency</strong>:</p>
+<p><em>If <span class="math inline">\(\phi(x)\)</span> satisfies state (a) and (b), then it is most powerful over other test statistics at the significance level <span class="math inline">\(\alpha_{0}\)</span>.</em></p>
+<p>From the state (b), we have the inequality,</p>
+<p><span class="math display">\[ \int_{\mathcal{X}} [ \phi(x) - \phi&#39;(x) ][ f(x|H_{0}) - k \cdot f(x|H_{1}) ] \ dx \le 0 \]</span> <span class="math display">\[ \text{[ the definition of $\phi(x)$ ]} \]</span></p>
+<p>where <span class="math inline">\(\phi&#39;(x)\)</span> is an arbitrary test. Expand the integrand,</p>
+<p><span class="math display">\[ \int_{\mathcal{X}} [ \phi(x) f(x|H_{0}) - \phi&#39;(x) f(x|H_{0}) - k \cdot \phi(x) f(x|H_{1}) + k \cdot \phi&#39;(x) f(x|H_{1})] \ dx \le 0 \]</span></p>
+<p>Since <span class="math inline">\(\int_{\mathcal{X}} \phi&#39;(x) f(x|H_{0}) \ dx = \int_{\mathcal{R}} f(x|H_{0}) \ dx = \alpha&#39; \le \alpha_{0}\)</span>,</p>
+<p><span class="math display">\[ (1 - \beta_{0}) - (1 - \beta&#39;) \ge ( \alpha_{0} - \alpha&#39; )/k \ge 0 \]</span></p>
+<p>Thus the test <span class="math inline">\(\phi(x)\)</span> is most powerful at the significance level <span class="math inline">\(\alpha_{0}\)</span>.</p>
+<p><strong>Necessity</strong>:</p>
+<p><em>If a test <span class="math inline">\(\phi&#39;(x)\)</span> is most powerful at significance level <span class="math inline">\(\alpha&#39;\)</span> (where <span class="math inline">\(\alpha&#39; \le \alpha_{0}\)</span> by hypothesis), it satisfies the state (a) and the state (b), namely <span class="math inline">\(\alpha&#39; = \alpha_{0}\)</span> and <span class="math inline">\(\phi&#39;(x) = \phi(x)\)</span>, except possibly where <span class="math inline">\(\frac{f(x|H_{0})}{f(x|H_{1})} = k\)</span>, or <span class="math inline">\(\alpha&#39; \lt \alpha_{0}\)</span> while the power of <span class="math inline">\(\phi&#39;(x)\)</span> is 1.</em></p>
+<p>We may assume <span class="math inline">\(\phi&#39;(x) \neq \phi(x)\)</span> for <span class="math inline">\(\forall x \in S\)</span>, then we can define the sets,</p>
+<p><span class="math display">\[ \begin{aligned}
+S^{+} &amp;= \{ x : \phi&#39;(x) &gt; \phi(x) \} \\
+S^{=} &amp;= \{ x : \phi&#39;(x) = \phi(x) \} \\
+S^{-} &amp;= \{ x : \phi&#39;(x) &lt; \phi(x) \} \\
+S &amp;= S^{+} \cup S^{-}
+\end{aligned}  \]</span></p>
+<p>Also, considering the integral,</p>
+<p><span class="math display">\[ \int_{\mathcal{X}} [ \phi&#39;(x) - \phi(x) ] [ f(x|H_{0}) - k \cdot f(x|H_{1}) ] \ dx = \int_{S} (\cdot) + \int_{S^{=}} (\cdot) + \int_{\{x : f(x|H_{0}) = k \cdot f(x|H_{1})\}} (\cdot) \ge 0 \]</span></p>
+<p>where the last two integrals are zero over their intgrated domain,</p>
+<p><span class="math display">\[ \int_{S} [ \phi&#39;(x) - \phi(x) ] [ f(x|H_{0}) - k \cdot f(x|H_{1}) ] \ dx \gt 0 \]</span></p>
+<p><span class="math display">\[ (1-\beta) - (1-\beta&#39;) \gt \frac{1}{k} (\alpha_{0} - \alpha&#39;) \ge 0 \]</span></p>
+<p>which contradicts the assumption that the test <span class="math inline">\(\phi&#39;(x)\)</span> is most powerful. So <span class="math inline">\(\phi&#39;(x)\)</span> should satisfy the state (b).</p>
+<p>As for the state (a), because the significance level <span class="math inline">\(\alpha&#39;\)</span> and the power <span class="math inline">\(1-\beta&#39;\)</span> are both monotonically increasing function of the measure of rejection region <span class="math inline">\(\mu(\mathcal{R})\)</span>. So we can keep increasing <span class="math inline">\(\mu(\mathcal{R})\)</span> until either <span class="math inline">\(\alpha&#39; = \alpha_{0}\)</span> (the power reaches its maximum) or <span class="math inline">\(1 - \beta&#39; = 1\)</span> (<span class="math inline">\(\alpha&#39;\)</span> is still less than <span class="math inline">\(\alpha_{0}\)</span>).</p>
+<p>Here we omit the proof of its existence. Readers may find it out from the reference.</p>
+<p>From above discussion we may come to the conclusion that the likelihood ratio is the test statistic which is most powerful at most type I error. It should be noticed there may be a test statistic of which the power is 1 while the significance level is less than <span class="math inline">\(\alpha_{0}\)</span>. However, in such the case data are so distinguished that there is no need to test.</p>
+<h2 id="generalized-likelihood-ratio">Generalized likelihood ratio</h2>
+<p>If null hypothesis <span class="math inline">\(H_{0}\)</span> or alternative hypothesis <span class="math inline">\(H_{1}\)</span> is composite, we don't have a unique form of likelihood function because the composite hypothesis covers a set of values from parameter space. However, we can still use the maximum likelihood estimation to get a likelihood function using estimated parameters as long as we know the functional form of the population from which data is drawn.</p>
+<p>Suppose we want to test the null hypothesis <span class="math inline">\(H_{0} = \{ \pmb{a} : \pmb{a} \in \mathcal{S} \}\)</span> against the alternative hypothesis <span class="math inline">\(H_{1} = \{ \pmb{a} : \pmb{a} \in \mathcal{\bar{S}} = \mathcal{A} - \mathcal{S} \}\)</span>, where <span class="math inline">\(\mathcal{S}\)</span> is the parameter subspace of the full parameter space <span class="math inline">\(\mathcal{A}\)</span>. If the parameter values are allowed to vary only over the subspace <span class="math inline">\(\mathcal{S}\)</span>, then the likelihood function will be maximized at the point <span class="math inline">\(\hat{\pmb{a}}_{\mathcal{S}}\)</span>, which may or may not coincide with the global maximum <span class="math inline">\(\hat{\pmb{a}}\)</span> over the full space <span class="math inline">\(\mathcal{A}\)</span>. So we can write down the generalized likelihood ratio,</p>
+<p><span class="math display">\[ \lambda(x) = \frac{L(x; \hat{\pmb{a}}_{\mathcal{S}})}{L(x; \hat{\pmb{a}})} \]</span></p>
+<p>The ratio illustrates the general situation that if the global estimator <span class="math inline">\(\hat{\pmb{a}}\)</span> fall in or near the subspace <span class="math inline">\(\mathcal{S}\)</span> then the sample will be considered consistent with the null hypothesis <span class="math inline">\(H_{0}\)</span> and the value of <span class="math inline">\(\lambda\)</span> will be near unity. If <span class="math inline">\(\hat{\pmb{a}}\)</span> is distant from <span class="math inline">\(\mathcal{S}\)</span> then the sample will not be in accord with <span class="math inline">\(H_{0}\)</span> and ordinarily <span class="math inline">\(\lambda\)</span> will have a small positive value. So <span class="math inline">\(\lambda(x)\)</span> represents the probability that the sample data is drawn from <span class="math inline">\(H_{0}\)</span>.</p>
+<p>If samples are all drawn independently from Gaussian distribution for which both the mean and variance are unknown and we want to test the hypotheses,</p>
+<p><span class="math display">\[ H_{0} : \mu = \mu_{0} \text{ and } H_{1} : \mu \neq \mu_{0} \]</span></p>
+<p>Then the most powerful test at level <span class="math inline">\(\alpha\)</span> is the t-test.</p>
+<p>Under <span class="math inline">\(H_{0}\)</span>, the maximum-likelihood estimator for the variance over the parameter subspace <span class="math inline">\(\mathcal{S}\)</span> is</p>
+<p><span class="math display">\[ \hat{\sigma_{\mathcal{S}}^{2}} = \frac{1}{n} \sum_{i=1}^{n} (x_{i} - \mu_{0})^{2} \]</span></p>
+<p>and under <span class="math inline">\(H_{1}\)</span>, the maximum-likelihood estimators for the mean and variance over the full parameter sapce <span class="math inline">\(\mathcal{A}\)</span> are,</p>
+<p><span class="math display">\[ \begin{aligned}
+\hat{\mu} &amp;= \bar{x} \\
+\hat{\sigma^{2}} &amp;= \frac{1}{n} \sum_{i=1}^{n} (x_{i} - \bar{x})^{2} = s^{2}
+\end{aligned}  \]</span></p>
+<p>Substitute these parameter estimators into the functional form of likelihood function, we will get the generalized likelihood ratio,</p>
+<p><span class="math display">\[ \lambda(x) = \frac{L(x; \mu_{0}, \hat{\sigma_{\mathcal{S}}^{2}})}{L(x; \bar{x}, s^{2})} = ( \frac{\hat{\sigma_{\mathcal{S}}^{2}}}{s^{2}} )^{-\frac{n}{2}} = [ \frac{\sum_{i=1}^{n} (x_{i} - \mu_{0})^{2}}{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}} ]^{-\frac{n}{2}} = ( 1 + \frac{(\bar{x} - \mu_{0})^{2}}{s^{2}} )^{-\frac{n}{2}} \]</span> <span class="math display">\[ \text{[ split $\sum_{i=1}^{n} (x_{i} - \mu_{0})^{2}$ as $\sum_{i=1}^{n} (x_{i} - \bar{x} + \bar{x} - \mu_{0})^{2} = \sum_{i=1}^{n} (x_{i} - \bar{x})^{2} +  \sum_{i=1}^{n} (\bar{x} - \mu_{0})^{2}]$} \]</span></p>
+<p>Substitute <span class="math inline">\(t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n-1}}\)</span> as the normalization of sample mean distribution into <span class="math inline">\(\lambda(x)\)</span>,</p>
+<p><span class="math display">\[ T(t) = ( 1 + \frac{t^{2}}{n-1} )^{-\frac{n}{2}} \]</span></p>
+<p>We can replace the biased estimator <span class="math inline">\(s^{2}\)</span> by the unbiased estimator <span class="math inline">\(s&#39;^{2} = \frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{n-1}\)</span>,</p>
+<p><span class="math display">\[ T(t) = (1 + \frac{t^{2}}{n})^{-\frac{n}{2}} \]</span></p>
+<p>where <span class="math inline">\(t = \frac{\bar{x} - \mu_{0}}{s&#39; / \sqrt{n}}\)</span>.</p>
+<h2 id="students-t-test">Student's t-test</h2>
+<p>As <span class="math inline">\(T(t)\)</span> represents the probability that sample data is drawn from <span class="math inline">\(H_{0}\)</span>, we may reject <span class="math inline">\(H_{0}\)</span> if <span class="math inline">\(T(t)\)</span> is small, say <span class="math inline">\(T(t) &lt; k\)</span>. Because <span class="math inline">\(T(t)\)</span> is a monotonically decreasing function of <span class="math inline">\(t\)</span>, the rejection region <span class="math inline">\(\mathcal{R} = \{ t : T(t) &lt; k \}\)</span> is equivalent to <span class="math inline">\(\mathcal{R} = \{ t : t &gt; p \}\)</span>, where <span class="math inline">\(k\)</span> and <span class="math inline">\(p\)</span> are some constants satisfying <span class="math inline">\(T(p) = k\)</span>. The significance level of the test then can be determined by the measure of <span class="math inline">\(\mathcal{R}\)</span>,</p>
+<p><span class="math display">\[ \alpha = \mu(\mathcal{R}) = \int_{\mathcal{R}} f(t|H_{0}) \ dt \]</span></p>
+<p>To carry out a test, we need to determine the significance level <span class="math inline">\(\alpha\)</span> first (usually <span class="math inline">\(\alpha = 0.05\)</span>). From <span class="math inline">\(\alpha\)</span> we can derive reversely <span class="math inline">\(p\)</span> which defines <span class="math inline">\(\mathcal{R}\)</span>. In order to do that, we need to know the function <span class="math inline">\(f(t|H_{0})\)</span>.</p>
+<p>We already have <span class="math inline">\(t = \frac{\bar{x} - \mu_{0}}{ s/\sqrt{n-1} }\)</span>, where <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s\)</span> are both random variables. We may get <span class="math inline">\(f(t|H_{0})\)</span> by considering changes of variables in probability function,</p>
+<p><span class="math display">\[ f_{t,s}(t,s | H_{0}) \ dt ds = f_{\bar{x},s}(\bar{x}, s | H_{0}) \ d\bar{x} ds \]</span></p>
+<p>and its marginal probability density function,</p>
+<p><span class="math display">\[ f(t|H_{0}) = \int f_{t,s}(t,s | H_{0}) \ ds \]</span></p>
+<h3 id="independent-mean-and-variance">independent mean and variance</h3>
+<p>The joint sampling distribution (mean and sampling) for Gaussian distribution is the product of two sample distribution because the mean and variance are allowed to vary independently in Gaussian distribution, namely, <span class="math inline">\(f(\bar{x}, s) = f(\bar{x}) f(s)\)</span>. Suppose we have the Gaussian distribution of independent samples <span class="math inline">\(x_{i}\)</span>,</p>
+<p><span class="math display">\[ f(\pmb{x} | H_{0}) = (2 \pi \sigma^{2})^{-\frac{n}{2}} \exp[ -\frac{\sum_{i=1}^{n} (x_{i} - \mu_{0})^{2}}{2 \sigma^{2}} ] \]</span></p>
+<p>Let's define new variables <span class="math inline">\(y_{1} = \bar{x}\)</span> and <span class="math inline">\(y_{i} = x_{i} - \bar{x}, (i = 2, 3, \dots, n)\)</span> corresponding to the old <span class="math inline">\(n\)</span> variables <span class="math inline">\(x_{i}\)</span> before transformation, we have,</p>
+<p><span class="math display">\[ f(\pmb{x}|H_{0}) \ dV = f(\pmb{x}(\pmb{y})| H_{0}) |J| \ dy_{1} \cdots dy_{n} \]</span></p>
+<p>where the <a href="https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/">Jacobian determinant</a> is a constant,</p>
+<p><span class="math display">\[ J = \frac{\partial (x_{1}, x_{2}, \cdots, x_{n})}{\partial (y_{1}, y_{2}, \cdots, y_{n})} =
+\begin{bmatrix}
+1 &amp; -1 &amp; -1 &amp; \cdots &amp; -1 \\
+1 &amp; 1 &amp; 0 &amp; \cdots &amp; 0 \\
+1 &amp; 0 &amp; 1 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; 0 &amp; 0 &amp; \cdots &amp; 1 \\
+\end{bmatrix}
+= c \]</span></p>
+<p>So we have,</p>
+<p><span class="math display">\[ f(\pmb{x} | H_{0}) \ dV = A \exp[ -\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}} ] \exp[ - \frac{n (\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}} ] \ dV = A&#39; \exp[-\frac{(-\sum_{i=2}^{n} y_{i})^{2} + \sum_{i=2}^{n} y_{i}^{2}}{2 \sigma^{2}}] \exp[-\frac{n (y_{1} - \mu_{0})^{2}}{2 \sigma^{2}}] \ dy_{1} \cdots dy_{n}\]</span> <span class="math display">\[ [ \sum_{i=1}^{n} (x_{i} - \bar{x}) = 0 \Rightarrow (x_{1} - \bar{x}) = - \sum_{i=2}^{n} (x_{i} - \bar{x}) ] \]</span></p>
+<p>Because <span class="math inline">\(f_{Y_{1}, Y_{2}, \dots, Y_{n}}(y_{1}, y_{2}, \dots, y_{n})\)</span> can be factored into a product of functions that only depend respective set of statistics, it follows that <span class="math inline">\(Y_{1} = \bar{X}\)</span> is independent of <span class="math inline">\(Y_{i} = X_{i} - \bar{X}, i = 2,3,\dots,n\)</span>. Further, since <span class="math inline">\(X_{1} - \bar{X}\)</span> is a function of <span class="math inline">\(Y_{i} = X_{i} - \bar{X}, i = 2, 3, \dots, n\)</span>, <span class="math inline">\(\bar{X}\)</span> is also independent of <span class="math inline">\(X_{1} - \bar{X}\)</span>. Therefore <span class="math inline">\(\bar{X}\)</span> is independent of <span class="math inline">\(X_{i} - \bar{X}, i=1,2,\dots,n\)</span>. Similarly, the sample variance <span class="math inline">\(s^{2} = \frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{n}\)</span> is a function of <span class="math inline">\(X_{i} - \bar{X}\)</span>, so the sample mean <span class="math inline">\(\bar{X}\)</span> is independent of the sample variance <span class="math inline">\(s^{2}\)</span> or the sample standard deviation <span class="math inline">\(s\)</span>.</p>
+<h3 id="joint-sampling-distribution">joint sampling distribution</h3>
+<p>Because <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s\)</span> are independent, or orthogonal in vector space, the volume in <span class="math inline">\(\bar{x}-s\)</span> axis is the direct product of the measure <span class="math inline">\(\mu(\bar{x})\)</span> and the measure <span class="math inline">\(\mu(s)\)</span>. Since <span class="math inline">\(n \bar{x} = \sum_{i=1}^{n} x_{i}\)</span> is a <span class="math inline">\(n-1\)</span> dimensional hyperplane and <span class="math inline">\(n s^{2} = \sum_{i=1}^{n} (x_{i} - \bar{x})^{2}\)</span> is a <span class="math inline">\(n-1\)</span> dimensional hypersphere, the intersection is a <span class="math inline">\(n-2\)</span> hypersphere of which the volume is proportional to <span class="math inline">\(s^{n-1}\)</span>. So the infinitesimal volume <span class="math inline">\(dV\)</span> is equal to <span class="math inline">\(s^{n-2} \ ds d\bar{x}\)</span>. We have already known that <span class="math inline">\(f(\pmb{x}|H_{0}) = A \exp[-\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}}] \exp[-\frac{n(\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}}]\)</span>, so the joint sampling distribution <span class="math inline">\(f_{\bar{x},s}(\bar{x},s|H_{0})\)</span> should satisfy,</p>
+<p><span class="math display">\[ f(\pmb{x}|H_{0}) \ dV = A \exp[ -\frac{n s^{2}}{2 \sigma^{2}} ] \exp[ -\frac{n(\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}} ] s^{n-2} \ d\bar{x}ds = f_{\bar{x}, s}(\bar{x},s|H_{0}) \ d\bar{x}ds \]</span></p>
+<p>where <span class="math inline">\(A\)</span> can be gotten from the normalization condition <span class="math inline">\(\iint f_{\bar{x},s}(\bar{x},s|H_{0}) \ d\bar{x}ds = 1\)</span>.</p>
+<h3 id="t-distribution">t-distribution</h3>
+<p>As we can see,</p>
+<p><span class="math display">\[ f_{\bar{x},s}(\bar{x},s|H_{0}) \sim \exp[-\frac{n (\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}}] \exp[ -\frac{n s^{2}}{2 \sigma^{2}} ] s^{n-2} \]</span></p>
+<p>Replace <span class="math inline">\(\bar{x}\)</span> with <span class="math inline">\(t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n-1}}\)</span>,</p>
+<p><span class="math display">\[ f_{t,s}(t,s|H_{0}) \sim \exp[ -\frac{n s^{2} t^{2}}{2 \sigma^{2} (n-1)} ] \exp[ -\frac{n s^{2}}{2 \sigma^{2}} ] s^{n-1} \]</span></p>
+<p>So we can get the t-distribution from marginal probability density function,</p>
+<p><span class="math display">\[ f_{t}(t|H_{0}) = \int f_{t,s}(t,s|H_{0}) \ ds \sim \int_{0}^{\infty} \exp[ -\frac{n s^{2} t^{2}}{2 \sigma^{2} (n-1)} ] \exp[ -\frac{n s^{2}}{2 \sigma^{2}} ] s^{n-1} \ ds \]</span></p>
+<p>Recall the gamma integral <span class="math inline">\(\Gamma(r) = \int_{0}^{\infty} x^{r-1} e^{-x} \ d{x}\)</span>, we may substitute <span class="math inline">\(x = s \sqrt{\frac{n}{2 \sigma^{2}} (1 + \frac{t^{2}}{n-1})}\)</span> into the integral,</p>
+<p><span class="math display">\[ f_{t}(t|H_{0}) \sim (1 + \frac{t^{2}}{n-1})^{-\frac{n}{2}} \underbrace{\int_{0}^{\infty} x^{n-1} e^{-x^{2}} \ d{x}}_{\frac{1}{2} \Gamma(\frac{n}{2})} \sim (1 + \frac{t^{2}}{n-1})^{-\frac{n}{2}} \]</span></p>
+<p>The normalization factor can be gotten from the integral <span class="math inline">\(\int f_{t}(t|H_{0}) \ dt = 1\)</span>.</p>
+<p>Otherwise, considering that <span class="math inline">\(u = \frac{\bar{x} - \mu}{\sigma / \sqrt{n}}\)</span> follows the <a href="https://www.psichen.com/2021/03/10/common-probability-density-functions/">standard normal distribution</a> <span class="math inline">\(N(0,1)\)</span> and <span class="math inline">\(v = \frac{n s^{2}}{\sigma^{2}}\)</span> follows the <a href="https://www.psichen.com/2021/03/10/common-probability-density-functions/">Chi-square distribution</a> <span class="math inline">\(\chi^{2}(n-1)\)</span>, then <span class="math inline">\(t\)</span> may be rearranged as,</p>
+<p><span class="math display">\[ t = \frac{\bar{x} - \mu}{s / \sqrt{n-1}} = \frac{u}{\sqrt{v / (n-1)}}\]</span></p>
+<p>Also, <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> should be independent. It seem like a bit complicated for the change of variables, but it brings simple distributions that the variables follow. Using <span class="math inline">\(\delta\)</span> function, we have the probability density function for <span class="math inline">\(t\)</span>,</p>
+<p><span class="math display">\[ f(t) = \iint \delta(t - \frac{u}{\sqrt{v / (n-1)}}) \underbrace{\frac{1}{\sqrt{2 \pi}} \exp[ -\frac{u^{2}}{2} ]}_{g(u)} \underbrace{\frac{v^{(n-2)/2} \exp[ -v/2 ]}{2^{n/2} \Gamma(n/2)}}_{h_{n-1}(v)} \ dudv \]</span></p>
+<p>Substitute <span class="math inline">\(y = \frac{u}{\sqrt{v/(n-1)}}\)</span>, then,</p>
+<p><span class="math display">\[ \begin{aligned}
+f(t) &amp;= \iint \delta(t - y) g(\sqrt{\frac{v}{n-1}}y) h_{n-1}(v) \sqrt{\frac{v}{n-1}} \ dydv = \int_{0}^{\infty} \sqrt{\frac{v}{n-1}} h_{n-1}(v) g(\sqrt{\frac{v}{n-1}}t) \ dv \\
+&amp;= \int_{0}^{\infty} \sqrt{\frac{v}{n-1}} \frac{1}{\sqrt{2 \pi}} \exp[ -\frac{v t^{2}}{2 (n-1)} ] \frac{v^{(n-3)/2} \exp[ -v/2 ]}{2^{(n-1)/2} \Gamma(\frac{n-1}{2})} \ dv \\
+&amp;= \frac{1}{\sqrt{\pi (n-1)} 2^{\frac{n}{2}} \Gamma(\frac{n-1}{2})} \int_{0}^{\infty} v^{\frac{n-2}{2}} \exp[ - \frac{v}{2} (1 + \frac{t^{2}}{n-1}) ] \ dv \\
+&amp;[ x = \frac{v}{2} (1 + \frac{t^{2}}{n-1}) ] \\
+&amp;= \frac{1}{\sqrt{\pi (n-1)} \Gamma(\frac{n-1}{2})} (1 + \frac{t^{2}}{n-1})^{-\frac{n}{2}} \int_{0}^{\infty} x^{-\frac{n}{2}} e^{-x} \ dx
+\end{aligned}  \]</span></p>
+<p>Finally, we get the analytic form t-distribution for testing sample data drawn independently from Gaussian distribution with unknown <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^{2}\)</span>,</p>
+<p><span class="math display">\[ f_{t}(t|H_{0}) =  \frac{1}{\sqrt{(n-1) \pi}} \frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{2})} (1 + \frac{t^{2}}{n-1})^{-\frac{n}{2}} \]</span></p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/archive/stats/stats200/stats200.1172/Lecture06.pdf">Simple alternatives and the Neyman-Pearson lemma</a></li>
+<li><a target="_blank" rel="noopener" href="https://web.stanford.edu/~lmackey/stats300a/doc/stats300a-fall15-lecture13.pdf">Neyman-Pearson Lemma</a></li>
+<li><a target="_blank" rel="noopener" href="http://www2.stat.duke.edu/courses/Fall18/sta611.01/Lecture/lec12_mean_var_indep.pdf">Show <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^{2}\)</span> are independent</a></li>
+<li><a target="_blank" rel="noopener" href="https://shoichimidorikawa.github.io/Lec/ProbDistr/t-e.pdf">Derivation of the <span class="math inline">\(t\)</span>-Distribution</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/probability-density-function/" rel="tag"># probability density function</a>
+              <a href="/tags/gamma/" rel="tag"># gamma</a>
+              <a href="/tags/t-test/" rel="tag"># t-test</a>
+              <a href="/tags/maximum-likelihood-estimation/" rel="tag"># maximum likelihood estimation</a>
+              <a href="/tags/test-statistic/" rel="tag"># test statistic</a>
+              <a href="/tags/likelihood-ratio/" rel="tag"># likelihood ratio</a>
+              <a href="/tags/type-I-error/" rel="tag"># type I error</a>
+              <a href="/tags/type-II-error/" rel="tag"># type II error</a>
+              <a href="/tags/power/" rel="tag"># power</a>
+              <a href="/tags/delta-function/" rel="tag"># delta function</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/" rel="prev" title="Interpretation of frequency shift in FM AFM (II)">
+      <i class="fa fa-chevron-left"></i> Interpretation of frequency shift in FM AFM (II)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#maximum-likelihood-estimation"><span class="nav-number">1.</span> <span class="nav-text">Maximum likelihood estimation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bias-estimator"><span class="nav-number">1.1.</span> <span class="nav-text">bias estimator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#standard-deviation-standard-error"><span class="nav-number">1.2.</span> <span class="nav-text">standard deviation &amp; standard error</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#neyman-pearson-lemma"><span class="nav-number">2.</span> <span class="nav-text">Neyman-Pearson lemma</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#type-i-error-type-ii-error"><span class="nav-number">2.1.</span> <span class="nav-text">type I error &amp; type II error</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-compromised-test"><span class="nav-number">2.2.</span> <span class="nav-text">the compromised test</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generalized-likelihood-ratio"><span class="nav-number">3.</span> <span class="nav-text">Generalized likelihood ratio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#students-t-test"><span class="nav-number">4.</span> <span class="nav-text">Student&#39;s t-test</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#independent-mean-and-variance"><span class="nav-number">4.1.</span> <span class="nav-text">independent mean and variance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#joint-sampling-distribution"><span class="nav-number">4.2.</span> <span class="nav-text">joint sampling distribution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#t-distribution"><span class="nav-number">4.3.</span> <span class="nav-text">t-distribution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">psichen</p>
+  <div class="site-description" itemprop="description">There are no facts, only interpretations.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">79</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">psichen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '5e04ce290375a219d90e',
+      clientSecret: '84f206e0045d654be745c7c55a39a48c1f852fa6',
+      repo        : 'gitalk',
+      owner       : 'psichen',
+      admin       : ['psichen'],
+      id          : '54f9b156cd613d817cae34e265217db9',
+        language: 'en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

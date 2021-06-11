@@ -8,7 +8,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -148,6 +147,78 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="psichen">
+      <meta itemprop="description" content="There are no facts, only interpretations.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pan.world">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/04/geometric-interpretation-about-Jacobian-determinant/" class="post-title-link" itemprop="url">Geometric interpretation about Jacobian determinant</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-02-04 18:10:26" itemprop="dateCreated datePublished" datetime="2021-02-04T18:10:26+08:00">2021-02-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-06-09 17:42:48" itemprop="dateModified" datetime="2021-06-09T17:42:48+08:00">2021-06-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>In scientific computing, integration by substitution is a very common skill. <a href="https://www.psichen.com/2019/09/30/FRET-correcting/">For example</a>, we measured a series of practical values of a variable (<span class="math inline">\(x&#39;\)</span>), of which the distribution (<span class="math inline">\(g(x&#39;)\)</span>) was unknown. But we know the theoretic distribution of the variable (<span class="math inline">\(f(x)\)</span>) and the correction relationship or mapping relationship between theoretic and practical values (<span class="math inline">\(x=h(x&#39;)\)</span>).
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/04/geometric-interpretation-about-Jacobian-determinant/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -829,84 +900,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://www.psichen.com/2019/09/25/Legendre-transformation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="psichen">
-      <meta itemprop="description" content="There are no facts, only interpretations.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pan.world">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/25/Legendre-transformation/" class="post-title-link" itemprop="url">Legendre变换的理解和在热力学中的应用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-25 20:41:00" itemprop="dateCreated datePublished" datetime="2019-09-25T20:41:00+08:00">2019-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-02-05 16:58:19" itemprop="dateModified" datetime="2021-02-05T16:58:19+08:00">2021-02-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>热力学中有几个函数概念十分容易混淆：内能(<span class="math inline">\(U\)</span>)，焓(<span class="math inline">\(H\)</span>)，亥姆霍兹自由能(<span class="math inline">\(A\)</span>)和吉布斯自由能(<span class="math inline">\(G\)</span>)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。</p>
-<h2 id="legendre变换">Legendre变换</h2>
-<h3 id="基本形式">基本形式</h3>
-<p>对于一个函数<span class="math inline">\(f(x_1,...,x_k)\)</span>，其微分形式为：</p>
-<p><span class="math display">\[ df = \sum_{i=1}^{k} \frac{\partial f}{\partial x_i} dx_i \]</span></p>
-<p>令<span class="math inline">\(u_i \equiv \frac{\partial f}{\partial x_i}\)</span>，<span class="math inline">\(u_i\)</span>与<span class="math inline">\(x_i\)</span>就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：</p>
-<p><span class="math display">\[ g \equiv f-\sum_{i=1}^{r} u_ix_i \quad (r \le k) \]</span></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/09/25/Legendre-transformation/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -976,14 +969,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-count">79</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
