@@ -203,7 +203,7 @@ Because $X=\mu \pm \sigma \sqrt{Y}$, according to [Jacobian determinant](https:/
 
 $$ \begin{aligned}
 f(y) &= \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{y}{2}} |\frac{d (\mu+\sigma \sqrt{y})}{dy}| + \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{y}{2}} |\frac{d (\mu-\sigma \sqrt{y})}{dy}| \\
-     &= \frac{1}{{2\sqrt\pi}} e^{-\frac{y}{2}}  (\frac{y}{2})^{-\frac{1}{2}} = \Gamma(\frac{1}{2}, \frac{1}{2}) \\
+     &= \frac{1}{\sqrt{2 \pi}} e^{-\frac{y}{2}}  (\frac{y}{2})^{-\frac{1}{2}} = \Gamma(\frac{1}{2}, \frac{1}{2}) \\
 \end{aligned} $$
 
 Now let's consider $n$ independent Gaussian random variables $X_i \sim Gaussian(\mu_i, \sigma_i^2)$ and define $\chi_n^2 = \sum_{i=1}^{n} \frac{(x_i-\mu_i)^2}{\sigma_i^2}$. 

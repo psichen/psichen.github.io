@@ -116,12 +116,12 @@ Thus a dynamic system can be simply described by static functions.
 
 In physics there are 4 types of generating functions whose partial derivatives generate differential equations that determine a system's dynamics.
 
-| Generating function | Derivatives |
-| --- | --- |
-| $F = F_{1}(q,Q,t)$ | $p = \frac{\partial F}{\partial q}$ and $P = - \frac{\partial F}{\partial Q}$ |
-| $F = F_{2}(q,P,t) = F_{1}(q,Q,t) + PQ$ | $p = \frac{\partial F}{\partial q}$ and $Q = \frac{\partial F}{\partial P}$ |
-| $F = F_{3}(p,Q,t) = F_{1}(q,Q,t) - qp$ | $q = - \frac{\partial F}{\partial p}$ and $P = - \frac{\partial F}{\partial Q}$ |
-| $F = F_{4}(p,P,t) = F_{1}(q,Q,t) + QP - qp$ | $q = - \frac{\partial F}{\partial p}$ and $Q = \frac{\partial F}{\partial P}$ |
+| Generating function                         | Derivatives                                                                     |
+| ---                                         | ---                                                                             |
+| $F = F_{1}(q,Q,t)$                          | $p = \frac{\partial F}{\partial q}$ and $P = - \frac{\partial F}{\partial Q}$   |
+| $F = F_{2}(q,P,t) = F_{1}(q,Q,t) + PQ$      | $p = \frac{\partial F}{\partial q}$ and $Q = \frac{\partial F}{\partial P}$     |
+| $F = F_{3}(p,Q,t) = F_{1}(q,Q,t) - qp$      | $q = - \frac{\partial F}{\partial p}$ and $P = - \frac{\partial F}{\partial Q}$ |
+| $F = F_{4}(p,P,t) = F_{1}(q,Q,t) + QP - qp$ | $q = - \frac{\partial F}{\partial p}$ and $Q = \frac{\partial F}{\partial P}$   |
 
 They're converted by the [Legendre transformation](https://www.psichen.com/2019/09/25/Legendre-transformation/). Among them, $F_{2}(q,P,t)$ (type-2 Generating function) is called Hamilton's principal function.
 

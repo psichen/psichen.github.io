@@ -43,7 +43,7 @@ which is the area of the parallelogram having $\mathbf{a}$ and $\mathbf{b}$ as s
 
 For double integrals $\iint f(x,y) dxdy$, we take an infinitesimal area as the integral element. Usually it was written as the direct product as $dxdy$ because $x$-axis and $y$-axis are orthogonal ($|dx \times dy| = |dxdy\sin\frac{\pi}{2}|$).
 
-Now let's consider the variables substitution $dxdy \to dudv$ where $x=x(u,v)$ and $y=y(u,v)$. So the function $f(x,y) = f(x(u,v),y(u,v))$. Similarily, if we want to calculate the integral $\iint f(x,y) dxdy$ after substitution, we should find the equivalent infinitesimal area of $dxdy$ represented by $dudv$.
+Now let's consider the variables substitution $dxdy \to dudv$ where $x=x(u,v)$ and $y=y(u,v)$. So the function $f(x,y) = f(x(u,v),y(u,v))$. Similarly, if we want to calculate the integral $\iint f(x,y) dxdy$ after substitution, we should find the equivalent infinitesimal area of $dxdy$ represented by $dudv$.
 
 Let's first decompse $dx$ and $dy$ on the $u$-axis and $v$-axis,
 
@@ -56,7 +56,7 @@ It's a wrong way to get the infinitesimal area by multiplying the vector compone
 
 $$ |dx \times dy| = |\begin{bmatrix} x_u du \\ x_v dv \end{bmatrix} \times \begin{bmatrix} y_u du \\ y_v dv \end{bmatrix}| = (x_uy_v-x_vy_u)dudv = \frac{\partial(x,y)}{\partial(u,v)} dudv $$
 
-$\frac{\partial(x,y)}{\partial(u,v)}$ is called the Jacobian determinant. It can be seen as the scaling factor of area (or volume *etc.*) after variables substitution. The analytic form of the interand function after variable substitution is equal to
+$\frac{\partial(x,y)}{\partial(u,v)}$ is called the Jacobian determinant. It can be seen as the scaling factor of area (or volume *etc.*) after variables substitution. The analytic form of the integrand function after variable substitution is equal to
 
 $$ g(u,v) = f(x(u,v),y(u,v)) \frac{\partial (x,y)}{\partial (u,v)} $$
 

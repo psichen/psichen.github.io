@@ -121,7 +121,7 @@ $$ f = \frac{1}{2 \pi} \sqrt{\frac{k_{eff}}{m}} $$
 
 where $k_{eff} = k - \nabla \cdot F_{ts}$.
 
-# References
+## References
 
 1. Goldstein, Herbert, Charles Poole, and John Safko. "Classical mechanics." (2002).
 
