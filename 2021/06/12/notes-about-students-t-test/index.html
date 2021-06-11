@@ -27,7 +27,7 @@
 <meta property="og:description" content="Almost every graduate student knows how to use t-test to test whether their experimental data is significantly different from the reference. As a widely used test statistic, it&#39;s useful to know the de">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-11T18:03:32.000Z">
-<meta property="article:modified_time" content="2021-06-11T18:05:31.496Z">
+<meta property="article:modified_time" content="2021-06-11T18:10:45.592Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="probability density function">
 <meta property="article:tag" content="gamma">
@@ -188,7 +188,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-06-12 02:03:32 / Modified: 02:05:31" itemprop="dateCreated datePublished" datetime="2021-06-12T02:03:32+08:00">2021-06-12</time>
+              <time title="Created: 2021-06-12 02:03:32 / Modified: 02:10:45" itemprop="dateCreated datePublished" datetime="2021-06-12T02:03:32+08:00">2021-06-12</time>
             </span>
 
           
@@ -236,7 +236,10 @@ E[ \hat{\sigma^{2}} ] &amp;= \frac{1}{n} E[ \sum_{i=1}^{n} (x_{i} - \bar{x})^{2}
 <p>Standard deviation (SD) is the positive root of the variance, or the root of 2nd-order central moment <span class="math inline">\(\frac{1}{N} \sum_{i=1}^{N} (x_{i} - m_{1})^{2}\)</span>.</p>
 <p><strong>standard error</strong></p>
 <p>Standard error (SE) is the uncertainty of the estimator <span class="math inline">\(\hat{a}\)</span>, namely the standard deviation of the sampling distribution <span class="math inline">\(P(\hat{a}|a)\)</span>. For the biased estimator <span class="math inline">\(E(\hat{a}) = a + b(a)\)</span>, the spread around the true value <span class="math inline">\(a\)</span> is,</p>
-<p><span class="math display">\[ \epsilon^{2}_{\hat{a}} = E[ (\hat{a} - a)^{2} ] = E[ (\hat{a} - E[\hat{a}] + E[\hat{a}] - a)^{2} ] = E[ (\hat{a} - E[\hat{a}])^{2} ] + E[ (E[\hat{a}] - a)^{2} ] = V(\hat{a}) + b^{2}(a) \]</span></p>
+<p><span class="math display">\[ \begin{aligned}
+\epsilon^{2}_{\hat{a}} &amp;= E[ (\hat{a} - a)^{2} ] = E[ (\hat{a} - E[\hat{a}] + E[\hat{a}] - a)^{2} ] \\
+&amp;= E[ (\hat{a} - E[\hat{a}])^{2} ] + E[ (E[\hat{a}] - a)^{2} ] = V(\hat{a}) + b^{2}(a)
+\end{aligned}  \]</span></p>
 <p>So <span class="math inline">\(\epsilon^{2}_{\hat{a}}\)</span> is the sum of squares of the statistical and systematic errors. In addition, <span class="math inline">\(\epsilon_{\hat{a}}\)</span> is called the root mean square error (RMSE). Specifically, if the estimator is the unbiased mean estimator <span class="math inline">\(\hat{\mu} = \bar{x}\)</span>, the standard error of mean (SEM) is the root of the variance of sample mean,</p>
 <p><span class="math display">\[ \epsilon_{\hat{\mu}} = (E[ (\bar{x} - \mu)^{2} ])^{\frac{1}{2}} = \frac{\sigma}{\sqrt{n}} \]</span></p>
 <p>where <span class="math inline">\(\sigma\)</span> is the standard deviation of the population and <span class="math inline">\(n\)</span> is the number of groups of samples.</p>
@@ -244,8 +247,7 @@ E[ \hat{\sigma^{2}} ] &amp;= \frac{1}{n} E[ \sum_{i=1}^{n} (x_{i} - \bar{x})^{2}
 <p>Neyman-Pearson lemma tells us which test statistic we should use. Before introducing Neyman-Pearson lemma, we should know the type I error <span class="math inline">\(\alpha\)</span> and the type II error <span class="math inline">\(\beta\)</span> in test statistics.</p>
 <h3 id="type-i-error-type-ii-error">type I error &amp; type II error</h3>
 <p>In the test of null hypothesis <span class="math inline">\(H_{0}\)</span> against alternative hypothesis <span class="math inline">\(H_{1}\)</span>, false negative is called type I error denoted by <span class="math inline">\(\alpha\)</span> and false positve is called type II error denoted by <span class="math inline">\(\beta\)</span>. Supposing the rejection region <span class="math inline">\(\mathcal{R} = \{x : \text{reject } H_{0} \}\)</span> and the acceptance region <span class="math inline">\(\bar{\mathcal{R}} = \mathcal{X} - \mathcal{R}\)</span>, some definition is listed,</p>
-<p><span class="math display">\[ \text{Table 1 Type I &amp; II error and related items} \\
-\begin{array}{cccc}
+<p><span class="math display">\[ \text{Table 1 Type I &amp; II error and related items} \]</span> <span class="math display">\[ \begin{array}{cccc}
 \hline
 \text{ Denotation } &amp; \text{ PDF integral } &amp; \text{ Event fraction } &amp; \text{ Term } \\
 \hline
@@ -361,7 +363,10 @@ S &amp;= S^{+} \cup S^{-}
 \end{bmatrix}
 = c \]</span></p>
 <p>So we have,</p>
-<p><span class="math display">\[ f(\pmb{x} | H_{0}) \ dV = A \exp[ -\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}} ] \exp[ - \frac{n (\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}} ] \ dV = A&#39; \exp[-\frac{(-\sum_{i=2}^{n} y_{i})^{2} + \sum_{i=2}^{n} y_{i}^{2}}{2 \sigma^{2}}] \exp[-\frac{n (y_{1} - \mu_{0})^{2}}{2 \sigma^{2}}] \ dy_{1} \cdots dy_{n}\]</span> <span class="math display">\[ [ \sum_{i=1}^{n} (x_{i} - \bar{x}) = 0 \Rightarrow (x_{1} - \bar{x}) = - \sum_{i=2}^{n} (x_{i} - \bar{x}) ] \]</span></p>
+<p><span class="math display">\[ \begin{aligned}
+f(\pmb{x} | H_{0}) \ dV &amp;= A \exp[ -\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}} ] \exp[ - \frac{n (\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}} ] \ dV \\
+&amp;= A&#39; \exp[-\frac{(-\sum_{i=2}^{n} y_{i})^{2} + \sum_{i=2}^{n} y_{i}^{2}}{2 \sigma^{2}}] \exp[-\frac{n (y_{1} - \mu_{0})^{2}}{2 \sigma^{2}}] \ dy_{1} \cdots dy_{n}
+\end{aligned}  \]</span> <span class="math display">\[ [ \sum_{i=1}^{n} (x_{i} - \bar{x}) = 0 \Rightarrow (x_{1} - \bar{x}) = - \sum_{i=2}^{n} (x_{i} - \bar{x}) ] \]</span></p>
 <p>Because <span class="math inline">\(f_{Y_{1}, Y_{2}, \dots, Y_{n}}(y_{1}, y_{2}, \dots, y_{n})\)</span> can be factored into a product of functions that only depend respective set of statistics, it follows that <span class="math inline">\(Y_{1} = \bar{X}\)</span> is independent of <span class="math inline">\(Y_{i} = X_{i} - \bar{X}, i = 2,3,\dots,n\)</span>. Further, since <span class="math inline">\(X_{1} - \bar{X}\)</span> is a function of <span class="math inline">\(Y_{i} = X_{i} - \bar{X}, i = 2, 3, \dots, n\)</span>, <span class="math inline">\(\bar{X}\)</span> is also independent of <span class="math inline">\(X_{1} - \bar{X}\)</span>. Therefore <span class="math inline">\(\bar{X}\)</span> is independent of <span class="math inline">\(X_{i} - \bar{X}, i=1,2,\dots,n\)</span>. Similarly, the sample variance <span class="math inline">\(s^{2} = \frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{n}\)</span> is a function of <span class="math inline">\(X_{i} - \bar{X}\)</span>, so the sample mean <span class="math inline">\(\bar{X}\)</span> is independent of the sample variance <span class="math inline">\(s^{2}\)</span> or the sample standard deviation <span class="math inline">\(s\)</span>.</p>
 <h3 id="joint-sampling-distribution">joint sampling distribution</h3>
 <p>Because <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s\)</span> are independent, or orthogonal in vector space, the volume in <span class="math inline">\(\bar{x}-s\)</span> axis is the direct product of the measure <span class="math inline">\(\mu(\bar{x})\)</span> and the measure <span class="math inline">\(\mu(s)\)</span>. Since <span class="math inline">\(n \bar{x} = \sum_{i=1}^{n} x_{i}\)</span> is a <span class="math inline">\(n-1\)</span> dimensional hyperplane and <span class="math inline">\(n s^{2} = \sum_{i=1}^{n} (x_{i} - \bar{x})^{2}\)</span> is a <span class="math inline">\(n-1\)</span> dimensional hypersphere, the intersection is a <span class="math inline">\(n-2\)</span> hypersphere of which the volume is proportional to <span class="math inline">\(s^{n-1}\)</span>. So the infinitesimal volume <span class="math inline">\(dV\)</span> is equal to <span class="math inline">\(s^{n-2} \ ds d\bar{x}\)</span>. We have already known that <span class="math inline">\(f(\pmb{x}|H_{0}) = A \exp[-\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}}] \exp[-\frac{n(\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}}]\)</span>, so the joint sampling distribution <span class="math inline">\(f_{\bar{x},s}(\bar{x},s|H_{0})\)</span> should satisfy,</p>
