@@ -49,7 +49,10 @@ Standard deviation (SD) is the positive root of the variance, or the root of 2nd
 
 Standard error (SE) is the uncertainty of the estimator $\hat{a}$, namely the standard deviation of the sampling distribution $P(\hat{a}|a)$. For the biased estimator $E(\hat{a}) = a + b(a)$, the spread around the true value $a$ is,
 
-$$ \epsilon^{2}_{\hat{a}} = E[ (\hat{a} - a)^{2} ] = E[ (\hat{a} - E[\hat{a}] + E[\hat{a}] - a)^{2} ] = E[ (\hat{a} - E[\hat{a}])^{2} ] + E[ (E[\hat{a}] - a)^{2} ] = V(\hat{a}) + b^{2}(a) $$
+$$ \begin{aligned}
+\epsilon^{2}_{\hat{a}} &= E[ (\hat{a} - a)^{2} ] = E[ (\hat{a} - E[\hat{a}] + E[\hat{a}] - a)^{2} ] \\
+&= E[ (\hat{a} - E[\hat{a}])^{2} ] + E[ (E[\hat{a}] - a)^{2} ] = V(\hat{a}) + b^{2}(a)
+\end{aligned}  $$
 
 So $\epsilon^{2}_{\hat{a}}$ is the sum of squares of the statistical and systematic errors. In addition, $\epsilon_{\hat{a}}$ is called the root mean square error (RMSE). Specifically, if the estimator is the unbiased mean estimator $\hat{\mu} = \bar{x}$, the standard error of mean (SEM) is the root of the variance of sample mean,
 
@@ -65,8 +68,8 @@ Neyman-Pearson lemma tells us which test statistic we should use. Before introdu
 
 In the test of null hypothesis $H_{0}$ against alternative hypothesis $H_{1}$, false negative is called type I error denoted by $\alpha$ and false positve is called type II error denoted by $\beta$. Supposing the rejection region $\mathcal{R} = \{x : \text{reject } H_{0} \}$ and the acceptance region $\bar{\mathcal{R}} = \mathcal{X} - \mathcal{R}$, some definition is listed,
 
-$$ \text{Table 1 Type I & II error and related items} \\
-\begin{array}{cccc}
+$$ \text{Table 1 Type I & II error and related items} $$
+$$ \begin{array}{cccc}
 \hline
 \text{ Denotation } & \text{ PDF integral } & \text{ Event fraction } & \text{ Term } \\
 \hline
@@ -254,7 +257,10 @@ $$ J = \frac{\partial (x_{1}, x_{2}, \cdots, x_{n})}{\partial (y_{1}, y_{2}, \cd
 
 So we have,
 
-$$ f(\pmb{x} | H_{0}) \ dV = A \exp[ -\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}} ] \exp[ - \frac{n (\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}} ] \ dV = A' \exp[-\frac{(-\sum_{i=2}^{n} y_{i})^{2} + \sum_{i=2}^{n} y_{i}^{2}}{2 \sigma^{2}}] \exp[-\frac{n (y_{1} - \mu_{0})^{2}}{2 \sigma^{2}}] \ dy_{1} \cdots dy_{n}$$
+$$ \begin{aligned}
+f(\pmb{x} | H_{0}) \ dV &= A \exp[ -\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}} ] \exp[ - \frac{n (\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}} ] \ dV \\
+&= A' \exp[-\frac{(-\sum_{i=2}^{n} y_{i})^{2} + \sum_{i=2}^{n} y_{i}^{2}}{2 \sigma^{2}}] \exp[-\frac{n (y_{1} - \mu_{0})^{2}}{2 \sigma^{2}}] \ dy_{1} \cdots dy_{n}
+\end{aligned}  $$
 $$ [ \sum_{i=1}^{n} (x_{i} - \bar{x}) = 0 \Rightarrow (x_{1} - \bar{x}) = - \sum_{i=2}^{n} (x_{i} - \bar{x}) ] $$
 
 Because $f_{Y_{1}, Y_{2}, \dots, Y_{n}}(y_{1}, y_{2}, \dots, y_{n})$ can be factored into a product of functions that only depend respective set of statistics, it follows that $Y_{1} = \bar{X}$ is independent of $Y_{i} = X_{i} - \bar{X}, i = 2,3,\dots,n$. Further, since $X_{1} - \bar{X}$ is a function of $Y_{i} = X_{i} - \bar{X}, i = 2, 3, \dots, n$, $\bar{X}$ is also independent of $X_{1} - \bar{X}$. Therefore $\bar{X}$ is independent of $X_{i} - \bar{X}, i=1,2,\dots,n$. Similarly, the sample variance $s^{2} = \frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{n}$ is a function of $X_{i} - \bar{X}$, so the sample mean $\bar{X}$ is independent of the sample variance $s^{2}$ or the sample standard deviation $s$.
