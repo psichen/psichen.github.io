@@ -23,4 +23,28 @@ Because $f(y_{1},y_{2})$ can be factored into a product of functions that **depe
 
 ## Scenarios
 
-## Idea cloud
+## Ideas cloud
+
+<div id='wordcloud'></div>
+<script>
+var entries = [
+		{
+				label: 'NompC',
+				url: '#!',
+				target: '_top'
+		},
+		{
+				label: 'membrane curvature',
+				url: '#!',
+				target: '_top'
+		},
+		{
+				label: 'mechanosensitive fluorescent probes',
+				url: '#!',
+				target: '_top'
+		},
+];
+</script>
+<script src='./jquery.min.js'></script>
+<script src='./jquery.svg3dtagcloud.min.js'></script>
+<script src='./wordcloud.js'></script>
