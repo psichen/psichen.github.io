@@ -263,7 +263,7 @@ M_X(t) &amp;= \lim_{n \to \infty} (1-\frac{\lambda}{n}+\frac{\lambda}{n} e^t)^n 
        &amp;= e^{\lambda (e^t-1)}
 \end{aligned} \]</span></p>
 <h1 id="references">References</h1>
-<p><a target="_blank" rel="noopener" href="http://www.math.wm.edu/~leemis/chart/UDR/UDR.html">Univariate Distribution Relationships</a></p>
+<p><a href="http://www.math.wm.edu/~leemis/chart/UDR/UDR.html">Univariate Distribution Relationships</a></p>
 
     </div>
 
@@ -475,6 +475,19 @@ M_X(t) &amp;= \lim_{n \to \infty} (1-\frac{\lambda}{n}+\frac{\lambda}{n} e^t)^n 
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'neutral',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
   

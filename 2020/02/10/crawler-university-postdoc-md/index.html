@@ -217,7 +217,7 @@
 <p>言归正传，这次用python的bs4、requests包来爬取网页信息，获得最近几年世界各地大学的变化趋势，以及postdoc的发布信息。</p>
 <a id="more"></a>
 <h2 id="大学排名">大学排名</h2>
-<p>数据来源：<a target="_blank" rel="noopener" href="http://www.zuihaodaxue.com/ARWU2019.html">世界大学学术排名</a></p>
+<p>数据来源：<a href="http://www.zuihaodaxue.com/ARWU2019.html">世界大学学术排名</a></p>
 <p>首先看综合排名，图中只画出了总体的相对变化率&gt;60%的学校（像哈佛牛津这些每年都是100的，反正也申不上，刚好可以一并筛掉）。</p>
 <figure>
 <img src="https://i.loli.net/2020/02/10/1SWRxUrfwkhPoY8.png" alt="total_score.png" /><figcaption>total_score.png</figcaption>
@@ -230,7 +230,7 @@
 <p>Wow，University of Copenhagen又吸引了眼球，看来这所大学这些年开始great again了。联想到量子力学发展的那段历史，哥本哈根确实令人神往。</p>
 <h2 id="postdoc信息">postdoc信息</h2>
 <p>接下来找找postdoc的信息。</p>
-<p>数据来源：<a target="_blank" rel="noopener" href="https://www.nature.com/naturecareers/jobs/science-jobs">nature careers</a>, <a target="_blank" rel="noopener" href="https://jobs.sciencecareers.org/jobs/postdoc/">science careers</a></p>
+<p>数据来源：<a href="https://www.nature.com/naturecareers/jobs/science-jobs">nature careers</a>, <a href="https://jobs.sciencecareers.org/jobs/postdoc/">science careers</a></p>
 <p>nature和science的官网上有postdoc的招聘信息，然而很多招聘信息其实是无效的，因为美国的老板常常是已经有了postdoc的人选后，再放出招聘信息，来走一个程序。所以在nature上主要爬取放出postdoc位置的国家，看看目前哪个国家对postdoc的需求最旺盛。</p>
 <figure>
 <img src="https://i.loli.net/2020/02/10/f41WmVl9onLURjK.png" alt="postdoc_coun.png" /><figcaption>postdoc_coun.png</figcaption>
@@ -457,6 +457,19 @@
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'neutral',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
   

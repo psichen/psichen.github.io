@@ -259,7 +259,7 @@ E[ \hat{\sigma^{2}} ] &amp;= \frac{1}{n} E[ \sum_{i=1}^{n} (x_{i} - \bar{x})^{2}
 \hline
 \text{* PPV: Positive precdicted value;} &amp; \text{NPV: Negative predicted value;} \\
 \end{array} \]</span></p>
-<p>The graphic demonstration can be seen on <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity#/media/File:PPV,_NPV,_Sensitivity_and_Specificity.svg">wiki</a>.</p>
+<p>The graphic demonstration can be seen on <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity#/media/File:PPV,_NPV,_Sensitivity_and_Specificity.svg">wiki</a>.</p>
 <h3 id="the-compromised-test">the compromised test</h3>
 <p>Since <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are counter-parts, we usually can't minimize them simultaneously. So we have a compromise that the type I error (significance level) of the test statistic has an up limit <span class="math inline">\(\alpha_{0}\)</span> while the power <span class="math inline">\(1 - \beta_{0}\)</span> is maximized.</p>
 <p>In order to find such a test statistic, we consider a set of the rejection probability functions <span class="math inline">\(\phi(x)\)</span> represents the probability of rejecting the null hypothesis <span class="math inline">\(H_{0}\)</span> given the data <span class="math inline">\(x\)</span>,</p>
@@ -397,10 +397,10 @@ f(t) &amp;= \iint \delta(t - y) g(\sqrt{\frac{v}{n-1}}y) h_{n-1}(v) \sqrt{\frac{
 <p><span class="math display">\[ f_{t}(t|H_{0}) =  \frac{1}{\sqrt{(n-1) \pi}} \frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{2})} (1 + \frac{t^{2}}{n-1})^{-\frac{n}{2}} \]</span></p>
 <h2 id="references">References</h2>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/archive/stats/stats200/stats200.1172/Lecture06.pdf">Simple alternatives and the Neyman-Pearson lemma</a></li>
-<li><a target="_blank" rel="noopener" href="https://web.stanford.edu/~lmackey/stats300a/doc/stats300a-fall15-lecture13.pdf">Neyman-Pearson Lemma</a></li>
-<li><a target="_blank" rel="noopener" href="http://www2.stat.duke.edu/courses/Fall18/sta611.01/Lecture/lec12_mean_var_indep.pdf">Show <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^{2}\)</span> are independent</a></li>
-<li><a target="_blank" rel="noopener" href="https://shoichimidorikawa.github.io/Lec/ProbDistr/t-e.pdf">Derivation of the <span class="math inline">\(t\)</span>-Distribution</a></li>
+<li><a href="https://web.stanford.edu/class/archive/stats/stats200/stats200.1172/Lecture06.pdf">Simple alternatives and the Neyman-Pearson lemma</a></li>
+<li><a href="https://web.stanford.edu/~lmackey/stats300a/doc/stats300a-fall15-lecture13.pdf">Neyman-Pearson Lemma</a></li>
+<li><a href="http://www2.stat.duke.edu/courses/Fall18/sta611.01/Lecture/lec12_mean_var_indep.pdf">Show <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S^{2}\)</span> are independent</a></li>
+<li><a href="https://shoichimidorikawa.github.io/Lec/ProbDistr/t-e.pdf">Derivation of the <span class="math inline">\(t\)</span>-Distribution</a></li>
 </ol>
 
     </div>
@@ -614,6 +614,19 @@ f(t) &amp;= \iint \delta(t - y) g(\sqrt{\frac{v}{n-1}}y) h_{n-1}(v) \sqrt{\frac{
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'neutral',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
   

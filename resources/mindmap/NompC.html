@@ -18,17 +18,19 @@
     var CONFIG = {"hostname":"www.psichen.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="There are no facts, only interpretations.">
+  <meta name="description" content="stateDiagram-v2  NompC --&gt; Function NompC --&gt; Structure  state Function { gentle: gentle-touch sensation necessity: NompC is necessary for gentle-touch sensation function sufficiency: NompC is suffici">
 <meta property="og:type" content="website">
 <meta property="og:title" content="pan.world">
-<meta property="og:url" content="http://www.psichen.com/tags/particle-statistics/index.html">
+<meta property="og:url" content="http://www.psichen.com/resources/mindmap/NompC.html">
 <meta property="og:site_name" content="pan.world">
-<meta property="og:description" content="There are no facts, only interpretations.">
+<meta property="og:description" content="stateDiagram-v2  NompC --&gt; Function NompC --&gt; Structure  state Function { gentle: gentle-touch sensation necessity: NompC is necessary for gentle-touch sensation function sufficiency: NompC is suffici">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-16T11:22:32.412Z">
+<meta property="article:modified_time" content="2021-06-16T11:22:32.412Z">
 <meta property="article:author" content="psichen">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://www.psichen.com/tags/particle-statistics/">
+<link rel="canonical" href="http://www.psichen.com/resources/mindmap/NompC">
 
 
 <script id="page-configurations">
@@ -41,7 +43,8 @@
   };
 </script>
 
-  <title>Tag: particle statistics | pan.world</title>
+  <title> | pan.world
+</title>
   
 
 
@@ -143,58 +146,75 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+  
+  
 
-          <div class="content tag">
+          <div class="content page posts-expand">
             
 
+    
+    
+    
+    <div class="post-block" lang="en">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">
+</h1>
+
+<div class="post-meta">
   
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">particle statistics
-          <small>Tag</small>
-        </h2>
-      </div>
+  <ul class="breadcrumb">
+          
+            <li><a href="/resources/">RESOURCES</a></li>
+            <li><a href="/resources/mindmap/">MINDMAP</a></li>
+            <li>NOMPC</li>
+          
+  </ul>
+
+</div>
+
+</header>
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
+      
+      
+      <div class="post-body">
+          <pre class="mermaid">stateDiagram-v2
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+NompC --> Function
+NompC --> Structure
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-01-21T23:55:00+08:00"
-              content="2021-01-21">
-          01-21
-        </time>
+state Function {
+gentle: gentle-touch sensation
+necessity: NompC is necessary for gentle-touch sensation function
+sufficiency: NompC is sufficient for gentle-touch sensation function
+
+gentle --> necessity: null mutant 
+gentle --> sufficiency: ectopic expression
+}</pre>
+
       </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/01/21/combinations-and-particle-statistics/" itemprop="url">
-            <span itemprop="name">Combinations and particle statistics</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+      
+      
+      
     </div>
-  </div>
-  
-  
-  
+    
+  <ul class="breadcrumb">
+          
+            <li><a href="/resources/">RESOURCES</a></li>
+            <li><a href="/resources/mindmap/">MINDMAP</a></li>
+            <li>NOMPC</li>
+          
+  </ul>
 
-  
-
+    
+    
+    
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -436,6 +456,25 @@ if (document.querySelectorAll('pre.mermaid').length) {
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '5e04ce290375a219d90e',
+      clientSecret: '84f206e0045d654be745c7c55a39a48c1f852fa6',
+      repo        : 'gitalk',
+      owner       : 'psichen',
+      admin       : ['psichen'],
+      id          : 'e3af74c5d5b1a976cd65411117dc3fb3',
+        language: 'en',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>

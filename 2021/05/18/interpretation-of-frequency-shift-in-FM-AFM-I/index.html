@@ -366,7 +366,7 @@ p &amp;= \sqrt{ 2 m \alpha - m^{2} \omega^{2} q^{2} } = \sqrt{2 m \alpha} \cos(\
 <h2 id="references">References</h2>
 <ol type="1">
 <li><p>Goldstein, Herbert, Charles Poole, and John Safko. "Classical mechanics." (2002).</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://www.asc.ohio-state.edu/mathur.16/821hj.pdf">Notes for Classical Mechanics 821: Hamilton-Jacobi equation</a></p></li>
+<li><p><a href="https://www.asc.ohio-state.edu/mathur.16/821hj.pdf">Notes for Classical Mechanics 821: Hamilton-Jacobi equation</a></p></li>
 <li><p>Giessibl, Franz J. "Forces and frequency shifts in atomic-resolution dynamic-force microscopy." <em>Physical Review B</em> 56.24 (1997): 16010.</p></li>
 </ol>
 
@@ -582,6 +582,19 @@ p &amp;= \sqrt{ 2 m \alpha - m^{2} \omega^{2} q^{2} } = \sqrt{2 m \alpha} \cos(\
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'neutral',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
   
