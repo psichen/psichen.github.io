@@ -25,8 +25,8 @@
 <meta property="og:site_name" content="pan.world">
 <meta property="og:description" content="State diagram stateDiagram-v2  NompC --&gt; Function NompC --&gt; Structure  state Function { gentle: gentle-touch sensation necessity: NompC is necessary for gentle-touch sensation function sufficiency: No">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-06-16T11:51:40.031Z">
-<meta property="article:modified_time" content="2021-06-16T11:51:40.031Z">
+<meta property="article:published_time" content="2021-06-16T12:16:56.091Z">
+<meta property="article:modified_time" content="2021-06-16T12:16:56.091Z">
 <meta property="article:author" content="psichen">
 <meta name="twitter:card" content="summary">
 
@@ -189,9 +189,11 @@ state Function {
 gentle: gentle-touch sensation
 necessity: NompC is necessary for gentle-touch sensation function
 sufficiency: NompC is sufficient for gentle-touch sensation function
+selectivity: non-selectivity cation channels
 
 gentle --> necessity: null mutant 
-gentle --> sufficiency: ectopic expression
+gentle --> sufficiency: ectopic/heterologous expression
+sufficiency --> selectivity: Reversal potential measurement
 }
 
 note left of Function: 1</pre>
