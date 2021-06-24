@@ -26,10 +26,11 @@
 <meta property="og:description" content="Ordinary differential equations (ODE) are important in physical modeling and deduction.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-02T04:32:36.000Z">
-<meta property="article:modified_time" content="2021-06-24T11:36:43.336Z">
+<meta property="article:modified_time" content="2021-06-24T11:50:36.375Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="differential equation">
 <meta property="article:tag" content="integrating factor">
+<meta property="article:tag" content="Langevin equation">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://www.psichen.com/2021/05/02/first-order-ordinary-differential-equations/">
@@ -185,7 +186,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-06-24 19:36:43" itemprop="dateModified" datetime="2021-06-24T19:36:43+08:00">2021-06-24</time>
+                <time title="Modified: 2021-06-24 19:50:36" itemprop="dateModified" datetime="2021-06-24T19:50:36+08:00">2021-06-24</time>
               </span>
 
           
@@ -221,7 +222,7 @@
 <p>Thus, the 2nd partial derivative is symmetric,</p>
 <p><span class="math display">\[ \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x} \]</span></p>
 <p>We use this criteria to judge whether the function is exact differential.</p>
-<h3 id="exact-differential-equations">Exact differential equations</h3>
+<h3 id="exact-differential-equations">exact differential equations</h3>
 <p>If the ODE satisfies,</p>
 <p><span class="math display">\[ A(x,y) dx + B(x,y) dy = 0 \text{, where } \frac{\partial A}{\partial y} = \frac{\partial B}{\partial x} \]</span></p>
 <p>It's the exact differential equation which can be solved by,</p>
@@ -230,7 +231,7 @@ dU(x,y) &amp;= A(x,y) dx + B(x,y) dy = 0 \\
 U(x,y) &amp;= \int A(x,y) \: dx + F(y) = c_{1} \\
 F(y) &amp;= \int [ B(x,y) - A(x,y) ] \: dy
 \end{aligned}  \]</span></p>
-<h3 id="inexact-differential-equations">Inexact differential equations</h3>
+<h3 id="inexact-differential-equations">inexact differential equations</h3>
 <p>If the ODE is,</p>
 <p><span class="math display">\[ A(x,y) dx + B(x,y) dy = 0 \text{, where } \frac{\partial A}{\partial y} \neq \frac{\partial B}{\partial x} \]</span></p>
 <p>We should introduce an integrating factor <span class="math inline">\(\mu\)</span> where <span class="math inline">\(\mu\)</span> satisfies,</p>
@@ -256,14 +257,14 @@ F(t) &amp;= - \int_{0}^{t} \exp[ \xi \tau ] R(\tau) \ d{\tau}
 <p>Inserting <span class="math inline">\(F(t)\)</span> into <span class="math inline">\(U(t, u)\)</span> and considering the boundary condition <span class="math inline">\(u = u_{0}\)</span> at the initial time <span class="math inline">\(t=0\)</span>, we get the solution <span class="math inline">\(u(t)\)</span> to the Langevin equation,</p>
 <p><span class="math display">\[ u = u_{0} \exp[- \xi t] + \exp[- \xi t] \int_{0}^{t} \exp[\xi \tau] R(\tau) \ d{\tau} \]</span></p>
 <h2 id="substitution-method-to-separate-variables">Substitution method to separate variables</h2>
-<h3 id="homogeneous-equations">Homogeneous equations</h3>
+<h3 id="homogeneous-equations">homogeneous equations</h3>
 <p>For the <span class="math inline">\(n\)</span>-degree homogeneous function <span class="math inline">\(f(x,y)\)</span>, we have <span class="math inline">\(f(\lambda x, \lambda y)=\lambda^{n} f(x,y)\)</span>. Thus for the ODE,</p>
 <p><span class="math display">\[ \frac{dy}{dx} = \frac{A(x,y)}{B(x,y)} = F(\frac{y}{x}) \]</span></p>
 <p>where <span class="math inline">\(A(x,y)\)</span> and <span class="math inline">\(B(x,y)\)</span> are both homogeneous functions of the same degree, it may then be solved by making the substitution <span class="math inline">\(y = \nu (x) x\)</span>. Because <span class="math inline">\(y\)</span> equals a function of <span class="math inline">\(x\)</span>, <span class="math inline">\(\frac{y}{x}\)</span> should also be a function of <span class="math inline">\(x\)</span> as <span class="math inline">\(\nu (x)\)</span>. Differentiate <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span>, we get,</p>
 <p><span class="math display">\[\frac{dy}{dx} = \nu + x \frac{d\nu}{dx}\]</span></p>
 <p>Thus the ODE can be solved as,</p>
 <p><span class="math display">\[ \int \frac{d\nu}{F(\nu) - \nu} = \int \frac{dx}{x}\]</span></p>
-<h3 id="isobaric-equations">Isobaric equations</h3>
+<h3 id="isobaric-equations">isobaric equations</h3>
 <p>More generally, if the ODE isn't homogeneous but it has the form,</p>
 <p><span class="math display">\[ \frac{dy}{dx} = \frac{A(x,y)}{B(x,y)} \]</span></p>
 <p>It may then be solved by making the substitution,</p>
@@ -271,7 +272,7 @@ F(t) &amp;= - \int_{0}^{t} \exp[ \xi \tau ] R(\tau) \ d{\tau}
 <p>if the substitution makes the ODE dimensionally consistent,</p>
 <p><span class="math display">\[ \pmb{[} A(x,y) \pmb{]} + 1 = \pmb{[} B(x,y) \pmb{]} + m \]</span></p>
 <p>where the dimension of <span class="math inline">\(x\)</span> and <span class="math inline">\(dx\)</span> is <span class="math inline">\(1\)</span> and of <span class="math inline">\(y\)</span> and <span class="math inline">\(dy\)</span> is <span class="math inline">\(m\)</span>. Then try to substitute it into the ODE, cancel the <span class="math inline">\(\nu\)</span> factors containing <span class="math inline">\(x\)</span> and make the ODE separable.</p>
-<h3 id="bernoullis-equation">Bernoulli's equation</h3>
+<h3 id="bernoullis-equation">bernoulli's equation</h3>
 <p>Bernoulli's equation is the form,</p>
 <p><span class="math display">\[ \frac{dy}{dx} + P(x)y = Q(x)y^{n} \text{, where } n \neq 0 \text{ or } 1 \]</span></p>
 <p>which can be transformed by dividing <span class="math inline">\(y^{n}\)</span> on both side,</p>
@@ -337,6 +338,7 @@ Y &amp;= y + \beta
           <div class="post-tags">
               <a href="/tags/differential-equation/" rel="tag"># differential equation</a>
               <a href="/tags/integrating-factor/" rel="tag"># integrating factor</a>
+              <a href="/tags/Langevin-equation/" rel="tag"># Langevin equation</a>
           </div>
 
         
@@ -411,7 +413,7 @@ Y &amp;= y + \beta
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#integrating-factor-method"><span class="nav-number">1.</span> <span class="nav-text">Integrating factor method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exact-differential-equations"><span class="nav-number">1.1.</span> <span class="nav-text">Exact differential equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inexact-differential-equations"><span class="nav-number">1.2.</span> <span class="nav-text">Inexact differential equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solutions-to-langevin-equation"><span class="nav-number">1.3.</span> <span class="nav-text">solutions to Langevin equation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#substitution-method-to-separate-variables"><span class="nav-number">2.</span> <span class="nav-text">Substitution method to separate variables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#homogeneous-equations"><span class="nav-number">2.1.</span> <span class="nav-text">Homogeneous equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isobaric-equations"><span class="nav-number">2.2.</span> <span class="nav-text">Isobaric equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bernoullis-equation"><span class="nav-number">2.3.</span> <span class="nav-text">Bernoulli&#39;s equation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#miscellaneous-equations"><span class="nav-number">3.</span> <span class="nav-text">Miscellaneous equations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#higher-degree-first-order-odes"><span class="nav-number">4.</span> <span class="nav-text">Higher-degree first-order ODEs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#equations-soluble-for-y"><span class="nav-number">4.1.</span> <span class="nav-text">equations soluble for y&#39;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equations-soluble-for-x"><span class="nav-number">4.2.</span> <span class="nav-text">equations soluble for x</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equations-soluble-for-y-1"><span class="nav-number">4.3.</span> <span class="nav-text">equations soluble for y</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#integrating-factor-method"><span class="nav-number">1.</span> <span class="nav-text">Integrating factor method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exact-differential-equations"><span class="nav-number">1.1.</span> <span class="nav-text">exact differential equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inexact-differential-equations"><span class="nav-number">1.2.</span> <span class="nav-text">inexact differential equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solutions-to-langevin-equation"><span class="nav-number">1.3.</span> <span class="nav-text">solutions to Langevin equation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#substitution-method-to-separate-variables"><span class="nav-number">2.</span> <span class="nav-text">Substitution method to separate variables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#homogeneous-equations"><span class="nav-number">2.1.</span> <span class="nav-text">homogeneous equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isobaric-equations"><span class="nav-number">2.2.</span> <span class="nav-text">isobaric equations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bernoullis-equation"><span class="nav-number">2.3.</span> <span class="nav-text">bernoulli&#39;s equation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#miscellaneous-equations"><span class="nav-number">3.</span> <span class="nav-text">Miscellaneous equations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#higher-degree-first-order-odes"><span class="nav-number">4.</span> <span class="nav-text">Higher-degree first-order ODEs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#equations-soluble-for-y"><span class="nav-number">4.1.</span> <span class="nav-text">equations soluble for y&#39;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equations-soluble-for-x"><span class="nav-number">4.2.</span> <span class="nav-text">equations soluble for x</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equations-soluble-for-y-1"><span class="nav-number">4.3.</span> <span class="nav-text">equations soluble for y</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -432,7 +434,7 @@ Y &amp;= y + \beta
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">79</span>
+        <span class="site-state-item-count">80</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
