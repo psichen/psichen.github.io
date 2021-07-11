@@ -1,7 +1,7 @@
 ---
 title: First-order ordinary differential equations
 date: 2021-05-02 12:32:36
-tags: [differential equation, integrating factor]
+tags: [differential equation, integrating factor, Langevin equation]
 ---
 
 Ordinary differential equations (ODE) are important in physical modeling and deduction.
@@ -29,7 +29,7 @@ $$ \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \
 
 We use this criteria to judge whether the function is exact differential.
 
-### Exact differential equations
+### exact differential equations
 
 If the ODE satisfies,
 
@@ -43,7 +43,7 @@ U(x,y) &= \int A(x,y) \: dx + F(y) = c_{1} \\
 F(y) &= \int [ B(x,y) - A(x,y) ] \: dy
 \end{aligned}  $$
 
-### Inexact differential equations
+### inexact differential equations
 
 If the ODE is, 
 
@@ -64,9 +64,36 @@ $$ \frac{dy}{dx} + P(x)y = Q(x) $$
 
 where the integrating factor $\mu(x) = \exp[\int P(x) \: dx]$.
 
+### solutions to Langevin equation
+
+The Langevin  equation can be solved by integrating factor method as below. Let's say the Langevin equation is,
+
+$$ \partial_{t} u = - \xi u + R(t) $$
+
+where $u$ is velocity, $\xi$ is the friction constant and $R(t)$ is random force independent of coordinates. We can easily get the integrating factor $\mu = \exp[ \xi t ]$. Inserting the integrating factor into the differential equation,
+
+$$ \exp[ \xi t ][ \xi u - R(t) ] \ dt + \exp[ \xi t ] \ du = 0 $$
+
+Integrating the second term, we can get,
+
+$$ U(t, u) = u \exp[ \xi t ] + F(t) = C $$
+
+where $F(t)$ is a sole function about $t$, which can be determined by the derivative of $U(t, u)$ with respect to $t$,
+
+$$ \begin{aligned}
+\xi u \exp[ \xi t ] + F'(t) &= \exp[ \xi t ] [ \xi u - R(t) ] \\
+F'(t) &= - \exp[ \xi t ] R(t) \\
+F(t) &= - \int_{0}^{t} \exp[ \xi \tau ] R(\tau) \ d{\tau}
+\end{aligned} $$
+$$  $$
+
+Inserting $F(t)$ into $U(t, u)$ and considering the boundary condition $u = u_{0}$ at the initial time $t=0$, we get the solution $u(t)$ to the Langevin equation,
+
+$$ u = u_{0} \exp[- \xi t] + \exp[- \xi t] \int_{0}^{t} \exp[\xi \tau] R(\tau) \ d{\tau} $$
+
 ## Substitution method to separate variables
 
-### Homogeneous equations
+### homogeneous equations
 
 For the $n$-degree homogeneous function $f(x,y)$, we have $f(\lambda x, \lambda y)=\lambda^{n} f(x,y)$. Thus for the ODE,
 
@@ -80,7 +107,7 @@ Thus the ODE can be solved as,
 
 $$ \int \frac{d\nu}{F(\nu) - \nu} = \int \frac{dx}{x}$$
 
-### Isobaric equations
+### isobaric equations
 
 More generally, if the ODE isn't homogeneous but it has the form,
 
@@ -96,7 +123,7 @@ $$ \pmb{[} A(x,y) \pmb{]} + 1 = \pmb{[} B(x,y) \pmb{]} + m $$
 
 where the dimension of $x$ and $dx$ is $1$ and of $y$ and $dy$ is $m$. Then try to substitute it into the ODE, cancel the $\nu$ factors containing $x$ and make the ODE separable.
 
-### Bernoulli's equation
+### bernoulli's equation
 
 Bernoulli's equation is the form,
 

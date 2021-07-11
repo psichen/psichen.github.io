@@ -83,7 +83,7 @@ Because the derivative of original function equals to the product of the recipro
 
 $$ \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\infty} \frac{df(x)}{dx} e^{-i k x} dx = \frac{1}{\sqrt{2 \pi}} [f(x) e^{-i k x}|_{-\infty}^{\infty} - \int_{-\infty}^{\infty} f(x) (-i k) e^{-i k x} dx] = i k F(k) $$
 
-here the first term vanishes because $|e^{-i k x}| \leq 1$ and we assume $f(x)$ is absolutly integrable on the real space $\Re$.
+here the first term vanishes because $|e^{-i k x}| \leq 1$ and we assume $f(x)$ is absolutly integrable on the real space $\mathbb{R}$.
 
 The equation can be simplified to the first-order ordinary differential equation by using the above properity of Fourier transformation,
 
