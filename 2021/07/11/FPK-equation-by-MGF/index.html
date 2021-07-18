@@ -26,7 +26,7 @@
 <meta property="og:description" content="Fokker-Planck-Kramers equation is a stochastic differential function describing the motion in phase space. It can degenerate to diffusion function (in coordinate space) or Fokker-Planck function (in v">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-11T03:03:42.000Z">
-<meta property="article:modified_time" content="2021-07-11T03:10:48.685Z">
+<meta property="article:modified_time" content="2021-07-18T15:16:49.478Z">
 <meta property="article:author" content="psichen">
 <meta property="article:tag" content="Langevin equation">
 <meta property="article:tag" content="Fokker-Planck-Kramers equation">
@@ -180,10 +180,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-07-11 11:03:42 / Modified: 11:10:48" itemprop="dateCreated datePublished" datetime="2021-07-11T11:03:42+08:00">2021-07-11</time>
+              <time title="Created: 2021-07-11 11:03:42" itemprop="dateCreated datePublished" datetime="2021-07-11T11:03:42+08:00">2021-07-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-18 23:16:49" itemprop="dateModified" datetime="2021-07-18T23:16:49+08:00">2021-07-18</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -257,7 +263,7 @@ solution --> |ensemble average in the form of \n moment generating function| FPK
 <p><span class="math inline">\(&lt;\exp( \int_{0}^{t} \mathcal{L}_{s} \ d{t&#39;} )&gt;\)</span> is <a href="https://www.psichen.com/2021/02/11/generating-functions-of-probability-distribution/">the moment generating function</a> <span class="math inline">\(M_{X}(\tau)\)</span> of variable <span class="math inline">\(X = \int_{0}^{t} \mathcal{L}_{s} \ d{t&#39;}\)</span> when <span class="math inline">\(\tau = 1\)</span>. The integral of Gaussian variable <span class="math inline">\(\eta(t)\)</span> is also Gaussian, thus <a href="https://www.psichen.com/2021/03/10/common-probability-density-functions/">its moment generating function</a> is,</p>
 <p><span class="math display">\[ M_{X}(1) = \exp( \mu + \frac{\sigma^{2}}{2} ) \]</span></p>
 <p>Substituting it into the equation <span class="math inline">\(\eqref{ensemble}\)</span>,</p>
-<p><span class="math display">\[ &lt;\rho&gt; = \exp(\mathcal{L}_{0} t) \exp( \kappa \int_{0}^{t} \nabla \cdot \big[ \pmb{g}(\pmb{r})\nabla \cdot [ \pmb{g}(\pmb{r}) ] \big] \ d{t&#39;} ) \rho_{0} \]</span></p>
+<p><span class="math display">\[ &lt;\rho&gt; = \exp( - \nabla \cdot [\pmb{f}(\pmb{r})] t) \exp( \kappa \int_{0}^{t} \nabla \cdot \big[ \pmb{g}(\pmb{r})\nabla \cdot [ \pmb{g}(\pmb{r}) ] \big] \ d{t&#39;} ) \rho_{0} \]</span></p>
 <h2 id="partial-derivative-of-time">Partial derivative of time</h2>
 <p>Then we take the partial derivative of <span class="math inline">\(&lt;\rho&gt;\)</span> with respect to time,</p>
 <p><span class="math display">\[ \begin{equation}
