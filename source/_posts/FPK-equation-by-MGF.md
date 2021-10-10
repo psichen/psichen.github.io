@@ -91,7 +91,7 @@ $$ M_{X}(1) = \exp( \mu + \frac{\sigma^{2}}{2} ) $$
 
 Substituting it into the equation $\eqref{ensemble}$,
 
-$$ <\rho> = \exp(\mathcal{L}_{0} t) \exp( \kappa \int_{0}^{t} \nabla \cdot \big[ \pmb{g}(\pmb{r})\nabla \cdot [ \pmb{g}(\pmb{r}) ] \big] \ d{t'} ) \rho_{0} $$
+$$ <\rho> = \exp( - \nabla \cdot [\pmb{f}(\pmb{r})] t) \exp( \kappa \int_{0}^{t} \nabla \cdot \big[ \pmb{g}(\pmb{r})\nabla \cdot [ \pmb{g}(\pmb{r}) ] \big] \ d{t'} ) \rho_{0} $$
 
 ## Partial derivative of time
 

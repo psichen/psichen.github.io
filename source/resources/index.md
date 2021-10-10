@@ -14,11 +14,13 @@ date: 2021-06-07 02:05:35
 | contradict      | /kɒntrəˈdɪkt/         |                                                                       |
 | concomitant     | /kənˈkɒmɪtənt/        | bleaching of Acceptor concomitant with an intensity increase of Donor |
 | draw/drew/drawn | /drɔː/ /dru:/ /drɑːn/ | The data sample is drawn from a population                            |
+| enigmatic       | /enig'mætik/          | Adding to hte enigmatic complexity of VIPP1 function                  |
 | equivalent      | /ɪ'kwɪvələnt/         |                                                                       |
 | miscellaneous   | /ˌmɪsə'leɪnɪəs/       |                                                                       |
 | monotonically   | /ˌmɑːnəˈtɑːnɪkli/     | monotonically increasing function                                     |
 | orthogonal      | /ɔːˈθɒɡənəl/          |                                                                       |
 | paradigm        | /ˈparədʌɪm/           | as a paradigm of the tether model                                     |
+| posit           | /'pɒzit/              | the tether model posits that...                                       |
 | promiscuity     | /prɒmɪˈskjuːətɪ/      | molecular basis for Skp promiscuity                                   |
 
 ### phrase verbs
@@ -36,6 +38,10 @@ Nevertheless, major limitations of the HMM framework **stem from** the difficult
 *statistics & distributions, etc.*
 
 Because $f(y_{1},y_{2})$ can be factored into a product of functions that **depend** *[transitive verb]* only their respective **set of statistics, it follows that** $y_{1}$ **is independent of** $y_{2}$.
+
+protein structures & functions, etc.
+
+The helix α4 establishes important intersubunit contacts in the central core of the polymers, **which is reflected in a stretch of residues with properties conserved between PspA/IM30 and ESCRT-III proteins.**
 
 *methods & validation, etc.*
 
@@ -70,11 +76,16 @@ Because $f(y_{1},y_{2})$ can be factored into a product of functions that **depe
 
 ### binomial nomenclature
 
-| Latin name               | Abbreviation | Syllable      | Meaning                            |
-| ---                      | ---          | ---           | ---                                |
-| *Escherichia coli*       | *E. Coli*    | /iːˈkəʊlʌɪ/   | one kind of Gram-negative bacteria |
-| *Caenorhabditis elegans* | *C. elegans* | /si:'ɛləɡæns/ | roundworm                          |
-| *Drosophila*             |              | /drəˈsɒfɪlə/  | fruit fly                          |
+| Latin name               | Abbreviation     | Syllable                     | Meaning                                                |
+| ---                      | ---              | ---                          | ---                                                    |
+| *Arabidopsis thaliana*   | *A. thaliana*    | /ærəbɪ'dəʊpsɪs/ /θaɪliænə/   | small flowering plant, model organism in plant biology |
+| *Caenorhabditis elegans* | *C. elegans*     | /si:nɔ:hæb'daɪtɪs/ /ɛləɡæns/ | roundworm                                              |
+| *Chlamydomonas*          |                  |                              |
+| *Drosophila*             |                  | /drəˈsɒfɪlə/                 | fruit fly                                              |
+| *Escherichia coli*       | *E. Coli*        | /eʃә'rikiә/ /kəʊlʌɪ/         | one kind of Gram-negative bacteria                     |
+| *Nostoc punctiforme*     | *N. punctiforme* |                              |
+| *Synechocystis*          |                  |                              |
+| *Synechococcus*          |                  |                              |
 
 ### number
 
@@ -100,6 +111,11 @@ Because $f(y_{1},y_{2})$ can be factored into a product of functions that **depe
 <div id='wordcloud'></div>
 <script>
 var entries = [
+		{
+				label: 'ESCRT-III',
+				url: '#!',
+				target: '_top'
+		},
 		{
 				label: 'NompC',
 				url: 'mindmap/NompC',
