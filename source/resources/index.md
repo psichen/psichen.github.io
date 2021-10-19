@@ -112,8 +112,8 @@ The helix α4 establishes important intersubunit contacts in the central core of
 <script>
 var entries = [
 		{
-				label: 'ESCRT-III',
-				url: '#!',
+				label: 'VIPP1',
+				url: 'mindmap/VIPP1',
 				target: '_top'
 		},
 		{
