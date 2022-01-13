@@ -5,7 +5,8 @@ flowchart TB
 
 VIPP1 --- |2015_DS_NC| membrane_fusion_by_destabilization
 membrane_fusion_by_destabilization --- |2018_DS_JBC| Mg2+_hydrophobic_surface_ring_stacking
-Mg2+_hydrophobic_surface_ring_stacking ---> |2021_DS_CS_Cell| PspA_rods_like_ESCRTIII_folds
+Mg2+_hydrophobic_surface_ring_stacking --- |2020_DS_bioRxiv| Mg2+_shift_IM30_from_protection_to_destabilization
+Mg2+_shift_IM30_from_protection_to_destabilization ---> |2021_DS_CS_Cell| PspA_rods_like_ESCRTIII_folds
 
 VIPP1 ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
 
@@ -74,6 +75,30 @@ compact --- |digested by trypsin \n SDS-PAGE \n WB of C-terminus| C-terminus
 compact --- |intermolecular FRET \n TEM| ringStacking
 ```
 
+### 2020_DS_bioRxiv
+
+```mermaid
+flowchart TB
+
+%% OBJECTS==================================================
+theme(Mg2+ shifts IM30 from membrane protection to membrane destabilization)
+affinity(Mg2+ increases IM30's affinity to membrane)
+ability(Mg2+ - binding to IM30 boosts its ability to bind to native as well as model membrane)
+viscoelasticity(Mg2+ alters the viscoelastic properties of IM30-membrane)
+puncta(IM30 forms puncta with higher thickness and diameters in presence of Mg2+)
+carpet(No carpet-like structures observed on membrane in presence of Mg2+ and 1.5 uM IM30)
+defects(Some puncta grew into pores as membrane defects)
+
+
+%% RELATIONS==================================================
+theme --- |Cellular extracts / DOPG liposome model \n sucrose density gradient centrifugation to get membrane \n Immunoblotting| affinity
+affinity --- |DOPG/DOPC GUV \n fluorescence microscopy colocalization| ability
+theme --- |Quartz-crystal microbalance \n bidning of IM30 to DOPG/DOPC SLB \n in presence/absence of Mg2+| viscoelasticity
+theme --- |AFM in presence/absence of Mg2+| puncta
+puncta --- carpet
+carpet --- defects
+puncta --- |longer incubation time /n in presence of Mg2+| defects
+```
 
 ### 2021_BDE_Cell
 
