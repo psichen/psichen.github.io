@@ -11,6 +11,8 @@ Mg2+_shift_IM30_from_protection_to_destabilization ---> |2021_DS_CS_Cell| PspA_r
 VIPP1 ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
 
 VIPP1 ---> |2021_HHL_Cell| VIPP1_PspA_ESCRTIII_superfamily
+
+VIPP1_PspA_ESCRTIII_superfamily ---> |2021_DS_FEBSLett| Purine_NOT_required_ring_formation
 ```
 
 ## Lectures
@@ -98,6 +100,30 @@ theme --- |AFM in presence/absence of Mg2+| puncta
 puncta --- carpet
 carpet --- defects
 puncta --- |longer incubation time /n in presence of Mg2+| defects
+```
+
+### 2021_DS_FEBSLett
+
+```mermaid
+flowchart TB
+
+%% OBJECTS==================================================
+theme(Binding/hydrolysis of ATP/GTP is not required for IM30 ring formation)
+specificity(IM30 hydrolyze ATP/GTP but not CTP/UTP)
+copurified(no nucleotides copurified)
+ringForming(IM30 rings/rods)
+denature(IM30 denatured then renatured)
+independent(nucleotide-independent mechanism for IM30 oligomerization to rings/rods)
+
+
+%% RELATIONS==================================================
+theme --- |Pi release| specificity
+theme --- |"Extracted ion chromatograms (EIC) \n didn't observe nucleotides"| copurified
+theme --- |Neg stain EM| ringForming
+theme --- |CD \n SEC| denature
+denature --- |Neg stain EM| ringForming
+ringForming --- independent
+copurified --- independent
 ```
 
 ### 2021_BDE_Cell
