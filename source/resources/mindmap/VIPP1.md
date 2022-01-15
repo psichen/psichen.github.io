@@ -7,12 +7,11 @@ VIPP1 --- |2015_DS_NC| membrane_fusion_by_destabilization
 membrane_fusion_by_destabilization --- |2018_DS_JBC| Mg2+_hydrophobic_surface_ring_stacking
 Mg2+_hydrophobic_surface_ring_stacking --- |2020_DS_bioRxiv| Mg2+_shift_IM30_from_protection_to_destabilization
 Mg2+_shift_IM30_from_protection_to_destabilization ---> |2021_DS_CS_Cell| PspA_rods_like_ESCRTIII_folds
+PspA_rods_like_ESCRTIII_folds ---> |2021_DS_FEBSLett| Purine_NOT_required_ring_formation
 
 VIPP1 ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
 
 VIPP1 ---> |2021_HHL_Cell| VIPP1_PspA_ESCRTIII_superfamily
-
-VIPP1_PspA_ESCRTIII_superfamily ---> |2021_DS_FEBSLett| Purine_NOT_required_ring_formation
 ```
 
 ## Lectures
