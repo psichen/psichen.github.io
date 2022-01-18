@@ -141,8 +141,8 @@ vmap <Leader>a, :Tabularize /,<CR>
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<C-n>"
-let g:UltiSnipsJumpBackwardTrigger="<C-p>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 
 " vim-surround

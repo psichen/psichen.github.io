@@ -20,12 +20,7 @@ def env(name):
 endglobal
 
 snippet mk "Math" wA
-$${1}$`!p
-if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
-	snip.rv = ' '
-else:
-	snip.rv = ''
-`$2
+$${1}$${0}
 endsnippet
 
 snippet dm "Math" wA
@@ -265,32 +260,6 @@ snippet xmm "x" iA
 x_{m}
 endsnippet
 
-snippet R0+ "R0+" iA
-\\R_0^+
-endsnippet
-
-snippet plot "Plot" w
-\begin{figure}[$1]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			xmin= ${2:-10}, xmax= ${3:10},
-			ymin= ${4:-10}, ymax = ${5:10},
-			axis lines = middle,
-		]
-			\addplot[domain=$2:$3, samples=${6:100}]{$7};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{$8}
-	\label{${9:$8}}
-\end{figure}
-endsnippet
-
-snippet nn "Tikz node" w
-\node[$5] (${1/[^0-9a-zA-Z]//g}${2}) ${3:at (${4:0,0}) }{$${1}$};
-$0
-endsnippet
-
 context "math()"
 snippet mcal "mathcal" iA
 \mathcal{$1}$0
@@ -509,17 +478,9 @@ snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
-snippet letw "let omega" iA
-Let $\Omega \subset \C$ be open.
-endsnippet
-
-
-snippet HH "H" iA
-\mathbb{H}
-endsnippet
-
-snippet DD "D" iA
-\mathbb{D}
+context "math()"
+snippet bf "boldface" iA
+\mathbf{$1}$0
 endsnippet
 
 # vim:ft=snippets:
