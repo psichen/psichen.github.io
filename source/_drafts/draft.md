@@ -30,6 +30,9 @@ The response function $\chi(\mathbf{x}-\mathbf{x}',t-t')$ is also called transfe
 
 In imaging, the photon detectors are typically linearly responded to photons, and convert the optical signals to digital signals. The pixel would be affected by the near activated pixels, so the final image is actually a convolution of spatial distribution of detected photons and point spread function (PSF).
 
+## contrast transfer function ##
+
+
 ## SNR ##
 Bell is the unit to describe the ratio of power,
 $$
