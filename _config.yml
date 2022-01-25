@@ -12,9 +12,8 @@ language: en
 timezone: ''
 
 # URL
-## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: http://www.psichen.com
-root: /
+## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
+url: http://psichen.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -36,7 +35,7 @@ new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link:
-  enable: false # Open external links in new tab
+  enable: true # Open external links in new tab
   field: site # Apply to the whole site
   exclude: ''
 filename_case: 0
@@ -104,10 +103,10 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:psichen/psichen.github.io.git
+  repo: git@github.com:psichen/psichen.github.io
   branch: master
-
-# renderer pandoc for katex
+ 
+# renderer pa
 pandoc:
   filters:
   extra:
@@ -117,6 +116,6 @@ pandoc:
 
 # mermaid chart
 mermaid:
-enable: true
-version: "7.1.2"
-options:
+  enable: true
+  version: "8.13.10"
+  options:

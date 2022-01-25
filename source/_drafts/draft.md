@@ -12,6 +12,50 @@ $$
 The sum of variables in function $f$ and $g$ is equal to the variable in the convolved function $(f*g)$.
 It's a widely-used concept in probability theory and linear response.
 
+``` chart
+{
+    "type": "line",
+    "data": {
+        "labels": ["January", "February", "March", "April", "May", "June", "July"],
+        "datasets": [{
+            "label": "My First dataset",
+            "backgroundColor": "rgb(255, 99, 132)",
+            "borderColor": "rgb(255, 99, 132)",
+            "data": [0, 10, 5, 2, 20, 30, 45]
+        }]
+    },
+    "options": {
+        "responsive": true,
+        "title": {
+            "display": true,
+            "text": "The first chart"
+        }
+    }
+}
+```
+
+{% chart 80% 300 %}
+{
+    type: 'line',
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45]
+        }]
+    },
+    options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'The second chart'
+        }
+    }
+};
+{% endchart %}
+
 #### probability theory ####
 
 For random variables $X$ and $Y$ with known probability density funciton (PDF), the PDF of a new random variable $N := X+Y$ is given by,
