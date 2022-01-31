@@ -127,7 +127,7 @@ let g:rainbow_active = 1
 
 " auto-pairs
 let g:AutoPairsFlyMode = 1
-let g:AutoPairsShortcutBackInsert='<S-tab>'
+let g:AutoPairsShortcutBackInsert='<C-p>'
 
 " tabular
 nmap <Leader>a= :Tabularize /=<CR>

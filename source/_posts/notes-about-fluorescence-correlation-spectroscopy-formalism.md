@@ -243,7 +243,7 @@ G(\tau)
 
 where $V = \pi^{\frac{3}{2}} \omega_{xy}^2 \omega_z$ is defined as the effective sampling volume, $\tau_D=\frac{\omega_{xy}^2}{4D}$ is the diffusion time over the $xy$ plane and $\epsilon = \frac{\omega_z}{\omega_{xy}}$ is the waist ratio of the light field.
 
-### diffusion coupled with reaction scenario (perect dark state)
+### diffusion coupled with reaction scenario (perfect dark state)
 
 Considering a simple isomerization reaction (e.g. the transformation from singlet state to triplet state of fluorescent dyes),
 

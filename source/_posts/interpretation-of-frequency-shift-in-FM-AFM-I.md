@@ -75,7 +75,7 @@ $$ \begin{aligned}
 
 It means the variation of the action is zero. So the integrals should be equal by adding a factor,
 
-$$ \int_{t_{0}}^{t_{1}} ( p \dot{q} = H ) \ d{t} = \int_{t_{0}}^{t_{1}} ( P \dot{Q} - K ) \ d{t} + F $$
+$$ \int_{t_{0}}^{t_{1}} ( p \dot{q} - H ) \ d{t} = \int_{t_{0}}^{t_{1}} ( P \dot{Q} - K ) \ d{t} + F $$
 
 So both above Hamilton's principle will be satisfied if the integrands are connected by a relation of the form,
 
