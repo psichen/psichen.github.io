@@ -5,7 +5,8 @@ flowchart TB
 
 VIPP1 --- |2015_DS_NC| membrane_fusion_by_destabilization
 membrane_fusion_by_destabilization --- |2018_DS_JBC| Mg2+_hydrophobic_surface_ring_stacking
-Mg2+_hydrophobic_surface_ring_stacking --- |2020_DS_bioRxiv| Mg2+_shift_IM30_from_protection_to_destabilization
+Mg2+_hydrophobic_surface_ring_stacking --- |2020_DS_SR| GTP_doesnot_affect_memrbane_remodeling
+GTP_doesnot_affect_memrbane_remodeling --- |2020_DS_bioRxiv| Mg2+_shift_IM30_from_protection_to_destabilization
 Mg2+_shift_IM30_from_protection_to_destabilization ---> |2021_DS_CS_Cell| PspA_rods_like_ESCRTIII_folds
 PspA_rods_like_ESCRTIII_folds ---> |2021_DS_FEBSLett| Purine_NOT_required_ring_formation
 
@@ -74,6 +75,42 @@ hydrophobicSurface --- |FTIR \n amide I band changes| secondaryStructure
 secondaryStructure --- |CD with increasing urea \n burried W71 quenching| compact
 compact --- |digested by trypsin \n SDS-PAGE \n WB of C-terminus| C-terminus
 compact --- |intermolecular FRET \n TEM| ringStacking
+```
+
+### 2020_DS_SR
+
+```mermaid
+flowchart TB
+
+%% OBJECTS==================================================
+theme(GTP doesnot affect membrane remodeling)
+malachite(20 uM Pi relase at 2 ug/100 uL IM30 concentration)
+thermodynamic(MM constant 0.65 mM \n Hill coefficient 1.29 \n Kcat 2.16 min-1)
+kinetic(1.79 x 10-2 min-1 in prescence of 10 uM GTP)
+apparent(apparent GTP hydrolysis activity)
+noGTPactivity(no GTP hydrolysis activity detected)
+hydrolysis(synIM30 catalyze the hydrolysis of GTP)
+oligomeric(GTP hydrolysis depends on the oligomeric state of VIPP1)
+membraneBinding(IM30 binding to membrane is not influenced by GTP)
+MgIndependence(GTP binding & hydrolysis is independent of Mg2+)
+fusion(GTP increases fusion rate marginally \n GDP decreases fusion rate marginally)
+
+
+%% RELATIONS==================================================
+theme --- |Pi-release by malachite green| malachite
+theme --- |Fluoreophore-labeled phosphate-bind protein| kinetic
+theme --- |PK/LDH-coupled assay to detect released GDP| noGTPactivity
+
+malachite --- |gradient of GTP concentration| thermodynamic
+thermodynamic --- |thermodynamic| apparent
+kinetic --- |kinetic| apparent
+apparent --- hydrolysis
+noGTPactivity --- |IM30 inhibiting the assay or low Koff for GDP \n luciferase-coupled GTPase assay| hydrolysis
+
+hydrolysis --- |FERM_EE mutants| oligomeric
+hydrolysis --- |in absence/prescence of Mg \n MM constant 0.61 mM \n Kcat 1.65 min-1| MgIndependence
+hydrolysis --- |Laurdan's fluorescence| membraneBinding
+membraneBinding --- |FRET-liposome fusion| fusion
 ```
 
 ### 2020_DS_bioRxiv
