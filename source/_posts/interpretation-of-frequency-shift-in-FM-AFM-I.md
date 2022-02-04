@@ -45,7 +45,7 @@ $$ \begin{equation}
 \end{aligned}
 \end{equation} \label{Lagrangian} $$
 
-Hamiltonian can be gotten by [Legendre transformation](https://www.psichen.com/2019/09/25/Legendre-transformation/) of Lagrangian mechanics, where $p$ and $\dot{q}$ are conjugated variables.
+Hamiltonian can be gotten by [Legendre transformation](https://psichen.github.io/2019/09/25/Legendre-transformation/) of Lagrangian mechanics, where $p$ and $\dot{q}$ are conjugated variables.
 
 $$ H(q,p,t) = - [ L(q,\dot{q},t) - p \dot{q} ] = - [ T(\dot{q},t)  - p \dot{q} ] + V(q,t) $$
 
@@ -123,7 +123,7 @@ In physics there are 4 types of generating functions whose partial derivatives g
 | $F = F_{3}(p,Q,t) = F_{1}(q,Q,t) - qp$      | $q = - \frac{\partial F}{\partial p}$ and $P = - \frac{\partial F}{\partial Q}$ |
 | $F = F_{4}(p,P,t) = F_{1}(q,Q,t) + QP - qp$ | $q = - \frac{\partial F}{\partial p}$ and $Q = \frac{\partial F}{\partial P}$   |
 
-They're converted by the [Legendre transformation](https://www.psichen.com/2019/09/25/Legendre-transformation/). Among them, $F_{2}(q,P,t)$ (type-2 Generating function) is called Hamilton's principal function.
+They're converted by the [Legendre transformation](https://psichen.github.io/2019/09/25/Legendre-transformation/). Among them, $F_{2}(q,P,t)$ (type-2 Generating function) is called Hamilton's principal function.
 
 Substituting $p = \frac{\partial F}{\partial q}$ into the Hamilton-Jacobi equation $\eqref{HJ_equation}$,
 
