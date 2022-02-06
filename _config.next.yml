@@ -611,7 +611,7 @@ livere_uid: # <your_uid>
 # Gitalk
 # For more information: https://gitalk.github.io
 gitalk:
-  enable: true
+  enable: false
   github_id: psichen # GitHub repo owner
   repo: gitalk # Repository name to store issues
   client_id: 5e04ce290375a219d90e # GitHub Application Client ID
