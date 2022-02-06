@@ -46,36 +46,6 @@ The response function $\chi(\mathbf{x}-\mathbf{x}',t-t')$ is also called transfe
 
 In imaging, the photon detectors are typically linearly responded to photons, and convert the optical signals to digital signals. The pixel would be affected by the near activated pixels, so the final image is actually a convolution of spatial distribution of detected photons and point spread function (PSF).
 
-## contrast transfer function ##
-
-The phase of an electron wave is shifted when the electron wave pass near the nucleus of atoms, thus giving a phase contrast in cryo-EM imaging.
-
-### scattered electrons ###
-
-Let's say the incident electron has the time-independent wavefunction,
-$$
-\Psi = \exp(i \boldsymbol{k} \cdot \boldsymbol{z})
-$$
-where $\boldsymbol{k}$ is the wave vector and has the amplitude of $\frac{2 \pi}{\lambda}$. The wave is the propagating direction in the $\boldsymbol{z}$ direction.
-
-After the electron passes through the thin specimen, the wave function reflects the phase shift as,
-$$
-\Psi = \exp[ i (\boldsymbol{k} \cdot \boldsymbol{z} + \phi(x)) ]
-$$
-Assuming $\boldsymbol{z} = 0$ and applying Taylor expansion,
-$$
-\exp(i \phi(x)) \approx 1 + i \phi(x)
-$$
-It's called *Weak Phase Approximation*.
-
-The phase of scattered electrons are 90 degrees in advanced.
-
-$$
-CTF = \sin(- \pi \Delta z \lambda k^2 + \frac{\pi C_{s} \lambda^3 k^4}{2})
-$$
-
-The CTF is the Fourier transfer of the point spread function (PSF).
-
 ## SNR ##
 Bell is the unit to describe the ratio of power,
 $$
