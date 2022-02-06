@@ -29,7 +29,6 @@ $$
 &=  \mathscr{F}^{-1}[ e^{ (\lambda + \mu) (e^{-it} - 1) } ] \\
 \end{align*}
 $$
-
 So the probability mass function of $X+Y$ is,
 $$
 X+Y \sim P(\lambda + \mu) = \frac{(\lambda+\mu)^k e^{-(\lambda + \mu)}}{k!}

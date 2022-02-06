@@ -118,3 +118,7 @@ $$
 \end{align*}
 $$
 Thus the CTF is the Fourier transfer of the PSF. 
+
+## References ##
+
+[Phase-contrast imaging in the EM](https://nccat.nysbc.org/wp-content/uploads/2020/03/2-Phase-contrast.pdf)
