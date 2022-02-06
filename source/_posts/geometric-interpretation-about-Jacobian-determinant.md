@@ -4,7 +4,7 @@ date: 2021-02-04 18:10:26
 tags: [Jacobian, determinant, integration by substitution, cross product, infinitesimal area]
 ---
 
-In scientific computing, integration by substitution is a very common skill. [For example](https://www.psichen.com/2019/09/30/FRET-correcting/), we measured a series of practical values of a variable ($x'$), of which the distribution ($g(x')$) was unknown. But we know the theoretic distribution of the variable ($f(x)$) and the correction relationship or mapping relationship between theoretic and practical values ($x=h(x')$). <!--more-->So we can get the analytic formula of the distribution $g(x')$ as following
+In scientific computing, integration by substitution is a very common skill. [For example](https://psichen.github.io/2019/09/30/FRET-correcting/), we measured a series of practical values of a variable ($x'$), of which the distribution ($g(x')$) was unknown. But we know the theoretic distribution of the variable ($f(x)$) and the correction relationship or mapping relationship between theoretic and practical values ($x=h(x')$). <!--more-->So we can get the analytic formula of the distribution $g(x')$ as following
 
 $$ g(x') = f(h(x')) \frac{dx}{dx'} $$
 

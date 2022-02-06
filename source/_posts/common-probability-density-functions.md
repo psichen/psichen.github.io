@@ -53,7 +53,7 @@ which is exactly the form of Gaussian distribution, regardless of the type of pr
 
 # Log-normal distribution
 
-If $X \sim Gaussian(\mu, \sigma^2)$, then the variable $Y = e^X$ follows the log-normal distribution, and $\ln Y$ follows the normal distribution, hence the name. According to the [Jacobian determinant](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/), the probability density function of $Y$ is the following equation,
+If $X \sim Gaussian(\mu, \sigma^2)$, then the variable $Y = e^X$ follows the log-normal distribution, and $\ln Y$ follows the normal distribution, hence the name. According to the [Jacobian determinant](https://psichen.github.io/2021/02/04/geometric-interpretation-about-Jacobian-determinant/), the probability density function of $Y$ is the following equation,
 
 $$ f(y) = f(x(y)) \frac{\partial x}{\partial y} = \frac{1}{\sigma \sqrt{2\pi}} \frac{1}{y} e^{-\frac{1}{2} (\frac{\ln y-\mu}{\sigma})^2} $$
 
@@ -141,7 +141,7 @@ In other words, exponential distribution is a special case of gamma distribution
 
 ## continuation from Poisson distribution
 
-[Poisson distribution](https://www.psichen.com/2021/02/13/common-porobability-mass-functions/) describes the probability of the number of independent random events occurring. It's a discrete distribution in which the random variable must be integers. We can extend the Poisson distribution from integer space to real space by replacing factorial $k!$ with gamma function $\Gamma(k+1)$,
+[Poisson distribution](https://psichen.github.io/2021/02/13/common-probability-mass-functions/) describes the probability of the number of independent random events occurring. It's a discrete distribution in which the random variable must be integers. We can extend the Poisson distribution from integer space to real space by replacing factorial $k!$ with gamma function $\Gamma(k+1)$,
 
 $$ P(x=k) = \frac{\lambda^k e^{-\lambda}}{\Gamma(k+1)} = Gamma(1, k+1) $$
 
@@ -199,7 +199,7 @@ it's just the sum of parameters of Beta and binomial distributions.
 
 If $X \sim Gaussian(\mu, \sigma^2)$, then the variable $Y=\frac{(X-\mu)^2}{\sigma^2}$ is distributed as $Gamma(\frac{1}{2}, \frac{1}{2})$.
 
-Because $X=\mu \pm \sigma \sqrt{Y}$, according to [Jacobian determinant](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/), the probability density function of $Y$ needs sum of two parts,
+Because $X=\mu \pm \sigma \sqrt{Y}$, according to [Jacobian determinant](https://psichen.github.io/2021/02/04/geometric-interpretation-about-Jacobian-determinant/), the probability density function of $Y$ needs sum of two parts,
 
 $$ \begin{aligned}
 f(y) &= \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{y}{2}} |\frac{d (\mu+\sigma \sqrt{y})}{dy}| + \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{y}{2}} |\frac{d (\mu-\sigma \sqrt{y})}{dy}| \\
@@ -261,7 +261,7 @@ Because $w=x+y, z=\frac{x}{x+y}$, so $x=wz, y=w(1-z)$. The Jacobian determinant 
 
 $$ \begin{vmatrix} \frac{\partial x}{\partial w} & \frac{\partial y}{\partial w} \\ \frac{\partial x}{\partial z} & \frac{\partial y}{\partial z} \\ \end{vmatrix} = \begin{vmatrix} z & 1-z \\ w & -w \\ \end{vmatrix} = -w $$
 
-we just take the absolute value of the Jacobian determinant because it's [the scale factor of the infinitesimal area](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/). Thus we have,
+we just take the absolute value of the Jacobian determinant because it's [the scale factor of the infinitesimal area](https://psichen.github.io/2021/02/04/geometric-interpretation-about-Jacobian-determinant/). Thus we have,
 
 $$\begin{aligned}
 f(w, z) &= \frac{\lambda^{\alpha}(wz)^{\alpha-1}e^{-\lambda wz}}{\Gamma(\alpha)} \frac{\lambda^{\beta}(w(1-z))^{\beta-1}e^{-\lambda w(1-z)}}{\Gamma(\beta)}w \\

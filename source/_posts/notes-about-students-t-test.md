@@ -243,7 +243,7 @@ Let's define new variables $y_{1} = \bar{x}$ and $y_{i} = x_{i} - \bar{x}, (i = 
 
 $$ f(\pmb{x}|H_{0}) \ dV = f(\pmb{x}(\pmb{y})| H_{0}) |J| \ dy_{1} \cdots dy_{n} $$
 
-where the [Jacobian determinant](https://www.psichen.com/2021/02/04/geometric-interpretation-about-Jacobian-determinant/) is a constant,
+where the [Jacobian determinant](https://psichen.github.io/2021/02/04/geometric-interpretation-about-Jacobian-determinant/) is a constant,
 
 $$ J = \frac{\partial (x_{1}, x_{2}, \cdots, x_{n})}{\partial (y_{1}, y_{2}, \cdots, y_{n})} =
 \begin{bmatrix}
@@ -293,7 +293,7 @@ $$ f_{t}(t|H_{0}) \sim (1 + \frac{t^{2}}{n-1})^{-\frac{n}{2}} \underbrace{\int_{
 
 The normalization factor can be gotten from the integral $\int f_{t}(t|H_{0}) \ dt = 1$.
 
-Otherwise, considering that $u = \frac{\bar{x} - \mu}{\sigma / \sqrt{n}}$ follows the [standard normal distribution](https://www.psichen.com/2021/03/10/common-probability-density-functions/) $N(0,1)$ and $v = \frac{n s^{2}}{\sigma^{2}}$ follows the [Chi-square distribution](https://www.psichen.com/2021/03/10/common-probability-density-functions/) $\chi^{2}(n-1)$, then $t$ may be rearranged as,
+Otherwise, considering that $u = \frac{\bar{x} - \mu}{\sigma / \sqrt{n}}$ follows the [standard normal distribution](https://psichen.github.io/2021/03/10/common-probability-density-functions/) $N(0,1)$ and $v = \frac{n s^{2}}{\sigma^{2}}$ follows the [Chi-square distribution](https://psichen.github.io/2021/03/10/common-probability-density-functions/) $\chi^{2}(n-1)$, then $t$ may be rearranged as,
 
 $$ t = \frac{\bar{x} - \mu}{s / \sqrt{n-1}} = \frac{u}{\sqrt{v / (n-1)}}$$
 

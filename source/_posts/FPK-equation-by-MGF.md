@@ -85,7 +85,7 @@ and,
 
 ### MGF for Gaussian variables
 
-$<\exp( \int_{0}^{t} \mathcal{L}_{s} \ d{t'} )>$ is [the moment generating function](https://www.psichen.com/2021/02/11/generating-functions-of-probability-distribution/) $M_{X}(\tau)$ of variable $X = \int_{0}^{t} \mathcal{L}_{s} \ d{t'}$ when $\tau = 1$. The integral of Gaussian variable $\eta(t)$ is also Gaussian, thus [its moment generating function](https://www.psichen.com/2021/03/10/common-probability-density-functions/) is,
+$<\exp( \int_{0}^{t} \mathcal{L}_{s} \ d{t'} )>$ is [the moment generating function](https://psichen.github.io/2021/02/11/generating-functions-of-probability-distribution/) $M_{X}(\tau)$ of variable $X = \int_{0}^{t} \mathcal{L}_{s} \ d{t'}$ when $\tau = 1$. The integral of Gaussian variable $\eta(t)$ is also Gaussian, thus [its moment generating function](https://psichen.github.io/2021/03/10/common-probability-density-functions/) is,
 
 $$ M_{X}(1) = \exp( \mu + \frac{\sigma^{2}}{2} ) $$
 
