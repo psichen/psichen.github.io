@@ -14,14 +14,14 @@ VIPP1 ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
 
 VIPP1 ---> |2021_HHL_Cell| VIPP1_PspA_ESCRTIII_superfamily
 
-click membrane_fusion_by_destabilization href "./#ds_nc"
-click Mg2+_hydrophobic_surface_ring_stacking href "./#ds_jbc"
-click GTP_doesnot_affect_memrbane_remodeling href "./#ds_sr"
-click Mg2+_shift_IM30_from_protection_to_destabilization href "./#ds_biorxiv"
-click PspA_rods_like_ESCRTIII_folds href "./#ds_cs_cell"
-click Purine_NOT_required_ring_formation href "./#ds_febslett"
-click VIPP1_thylakoid_integrity href "./#bde_cell"
-click VIPP1_PspA_ESCRTIII_superfamily href "./#hhl_cell"
+click membrane_fusion_by_destabilization href "./VIPP1#ds_nc" _self
+click Mg2+_hydrophobic_surface_ring_stacking href "./VIPP1#ds_jbc" _self
+click GTP_doesnot_affect_memrbane_remodeling href "./VIPP1#ds_sr" _self
+click Mg2+_shift_IM30_from_protection_to_destabilization href "./VIPP1#ds_biorxiv" _self
+click PspA_rods_like_ESCRTIII_folds href "./VIPP1#ds_cs_cell" _self
+click Purine_NOT_required_ring_formation href "./VIPP1#ds_febslett" _self
+click VIPP1_thylakoid_integrity href "./VIPP1#bde_cell" _self
+click VIPP1_PspA_ESCRTIII_superfamily href "./VIPP1#hhl_cell" _self
 ```
 
 ## Lectures
