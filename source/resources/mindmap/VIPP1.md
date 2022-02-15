@@ -13,6 +13,15 @@ PspA_rods_like_ESCRTIII_folds ---> |2021_DS_FEBSLett| Purine_NOT_required_ring_f
 VIPP1 ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
 
 VIPP1 ---> |2021_HHL_Cell| VIPP1_PspA_ESCRTIII_superfamily
+
+click membrane_fusion_by_destabilization href "./#ds_nc"
+click Mg2+_hydrophobic_surface_ring_stacking href "./#ds_jbc"
+click GTP_doesnot_affect_memrbane_remodeling href "./#ds_sr"
+click Mg2+_shift_IM30_from_protection_to_destabilization href "./#ds_biorxiv"
+click PspA_rods_like_ESCRTIII_folds href "./#ds_cs_cell"
+click Purine_NOT_required_ring_formation href "./#ds_febslett"
+click VIPP1_thylakoid_integrity href "./#bde_cell"
+click VIPP1_PspA_ESCRTIII_superfamily href "./#hhl_cell"
 ```
 
 ## Lectures
