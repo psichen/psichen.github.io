@@ -122,8 +122,8 @@ var entries = [
 				target: '_top'
 		},
 		{
-				label: 'membrane curvature',
-				url: '#!',
+				label: 'ESCRT-III',
+				url: 'mindmap/ESCRT-III',
 				target: '_top'
 		},
 		{

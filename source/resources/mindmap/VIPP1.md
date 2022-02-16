@@ -10,7 +10,8 @@ GTP_doesnot_affect_memrbane_remodeling --- |2020_DS_bioRxiv| Mg2+_shift_IM30_fro
 Mg2+_shift_IM30_from_protection_to_destabilization ---> |2021_DS_CS_Cell| PspA_rods_like_ESCRTIII_folds
 PspA_rods_like_ESCRTIII_folds ---> |2021_DS_FEBSLett| Purine_NOT_required_ring_formation
 
-VIPP1 ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
+VIPP1 ---> |2019_MS_SR| crVIPP1_rods_engulf_PI4P_membrane
+crVIPP1_rods_engulf_PI4P_membrane ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
 
 VIPP1 ---> |2021_HHL_Cell| VIPP1_PspA_ESCRTIII_superfamily
 
@@ -20,6 +21,7 @@ click GTP_doesnot_affect_memrbane_remodeling href "./VIPP1#ds_sr" _self
 click Mg2+_shift_IM30_from_protection_to_destabilization href "./VIPP1#ds_biorxiv" _self
 click PspA_rods_like_ESCRTIII_folds href "./VIPP1#ds_cs_cell" _self
 click Purine_NOT_required_ring_formation href "./VIPP1#ds_febslett" _self
+click crVIPP1_rods_engulf_PI4P_membrane href "./VIPP1#ms_sr" _self
 click VIPP1_thylakoid_integrity href "./VIPP1#bde_cell" _self
 click VIPP1_PspA_ESCRTIII_superfamily href "./VIPP1#hhl_cell" _self
 ```
@@ -169,6 +171,38 @@ theme --- |CD \n SEC| denature
 denature --- |Neg stain EM| ringForming
 ringForming --- independent
 copurified --- independent
+```
+
+### 2019_MS_SR ###
+
+```mermaid
+flowchart TB
+
+%% OBJECTS==================================================
+theme(crVIPP1 rods engulf PI4P membranes)
+interaction(strong interaction with PI4P)
+rotation(PI4P considerably slows down the rotation of VIPP1)
+insignificant(no significant effects)
+encapsulated(PC-PI4P liposomes were encopsulated with high efficiency)
+diameter("crVIPP1 alone: 42 nm \n crVIPP1 + PC-PI4P: 46 nm \n rather dependent on [crVIPP1]")
+striation("continuous tubules with striations visible on the surface \n helical pitches abruptly changed")
+drawn("liposomes were drawn into the rods by a strong interaction with the rod's inner surface")
+subtomogram("16 striation per rod \n Rod-liposome distance: ~5 nm \n highly heterogenous rod helical pitches")
+energy("typical Delta G_bend between basic aa and acidic lipids: -6 kJ/mol \n estimated required Delta G: -3 kJ/mol")
+
+%% RELATIONS==================================================
+theme --- |lipid-assembly assay| interaction
+interaction --- |2 Trp in crVIPP1 \n time-resolved anisotropy| rotation
+rotation --- |Delta C-terminus| insignificant
+rotation --- |add 10 mM Mg2+| insignificant
+
+theme --- |neg-stain EM| encapsulated
+encapsulated --- |diameters of crVIPP1 rods| diameter
+diameter --- |cryo EM| striation
+diameter --- |cryo EM| drawn
+striation --- |subtomogram of crVIPP1 rods| subtomogram
+drawn --- |subtomogram of crVIPP1 rods| subtomogram
+subtomogram --- |Delta G_bend of membrane| energy
 ```
 
 ### 2021_BDE_Cell
