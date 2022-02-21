@@ -379,7 +379,7 @@ flowchart TB
 
 %% OBJECTS==================================================
 theme(VIPP1 localization in thylakoid membrane for photosynthetic competency)
-puncta("VIPP1 forms puncta independently \n <number per cell> = 1.36")
+puncta("VIPP1 forms puncta independently \n number per cell = 1.36")
 peripheral(VIPP1 forms peripheral puncta)
 colocalization(VIPP1 colocalizes with CurT)
 curvature(VIPP1 locates at high thylakoid curvature)
