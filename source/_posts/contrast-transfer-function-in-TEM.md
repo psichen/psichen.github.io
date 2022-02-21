@@ -92,7 +92,7 @@ In glass lenses the light is bent more strongly at the periphery than it should.
 $$
 CTF = \sin(- \pi \delta \lambda f^2 + \frac{\pi C_{s} \lambda^3 f^4}{2})
 $$
-### Envelope function
+### Envelope function ###
 
 Due to spatial and thermal incoherence, the image will be blurred at high spatial frequency and the CTF has a Gaussian decay with the increasing spatial frequency. So it can be written by including the Envelope function,
 $$
@@ -114,7 +114,7 @@ where $I$ is the image and $S$ is the specimen. We also know the image is genera
 $$
 \begin{align*}
         I &=  S * PSF \\
-        \color{blue}{[ \text{Fourier transfer} ]} \mathscr{F}[I] &=  \mathscr{F}[S] \cdot \mathscr{F}[PSF] \\
+        \color{blue}{[ \text{Fourier transfer} ]} \mathscr{F} [I] &=  \mathscr{F}[S] \cdot \mathscr{F}[PSF] \\
 \end{align*}
 $$
 Thus the CTF is the Fourier transfer of the PSF. 

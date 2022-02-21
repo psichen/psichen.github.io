@@ -15,6 +15,8 @@ crVIPP1_rods_engulf_PI4P_membrane ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
 
 VIPP1 ---> |2021_HHL_Cell| VIPP1_PspA_ESCRTIII_superfamily
 
+VIPP1 ---> |2018_EKOS_MM| VIPP1_localization_for_photosynthetic_competency
+
 click membrane_fusion_by_destabilization href "./VIPP1#ds_nc" _self
 click Mg2+_hydrophobic_surface_ring_stacking href "./VIPP1#ds_jbc" _self
 click GTP_doesnot_affect_memrbane_remodeling href "./VIPP1#ds_sr" _self
@@ -24,6 +26,7 @@ click Purine_NOT_required_ring_formation href "./VIPP1#ds_febslett" _self
 click crVIPP1_rods_engulf_PI4P_membrane href "./VIPP1#ms_sr" _self
 click VIPP1_thylakoid_integrity href "./VIPP1#bde_cell" _self
 click VIPP1_PspA_ESCRTIII_superfamily href "./VIPP1#hhl_cell" _self
+click VIPP1_localization_for_photosynthetic_competency href "./VIPP1#ekos_mm" _self
 ```
 
 ## Lectures
@@ -367,4 +370,31 @@ fusion --- |leaflet separation found in \n vesicles with perimeters > 175 nm| po
 remodel --- |leaflet separation \n increased bilayer thickness| postFusion
 remodel --- |superimposing PspA+EPL rods \n with PspA+liposome Tomography| attaches
 remodel --- |multiple vesicles connected \n proteinaceous high-density zones \n HDZ formed in high lipid curvature area/internal budding| LTZ
+```
+
+### 2018_EKOS_MM
+
+```mermaid
+flowchart TB
+
+%% OBJECTS==================================================
+theme(VIPP1 localization in thylakoid membrane for photosynthetic competency)
+puncta("VIPP1 forms puncta independently \n <number per cell> = 1.36")
+peripheral(VIPP1 forms peripheral puncta)
+colocalization(VIPP1 colocalizes with CurT)
+curvature(VIPP1 locates at high thylakoid curvature)
+time("VIPP1 puncta on the time scale of 1~2 min")
+transition(dark-light transition cells have defects \n dark-grown cells OK \n light-grown cells OK)
+thylakoid_membrane(VIPP1 is not required in thylakoid membrane growth)
+
+%% RELATIONS==================================================
+theme --- |VIPP1-GFP \n thylakoid farred from photosynthetic proteins| puncta
+puncta --- |position of VIPP1 alongthe standardized cell radius| peripheral
+puncta --- |super-resolution| colocalization
+colocalization --- |immunoEM \n VIPP1 detected on the thylakoid edge| curvature
+peripheral --- |time-lapse fluorescent imaging| time
+colocalization --- |time-lapse fluorescent imaging| time
+
+theme --- |anchor-away to perturb the \n native location of VIPP1| transition
+transition --- |thylakoid membrane grows after \n VIPP1 is anchorred away| thylakoid_membrane
 ```

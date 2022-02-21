@@ -15,7 +15,8 @@ Plug 'godlygeek/tabular'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'md'}
@@ -57,6 +58,10 @@ nmap <Leader>7 "7p
 nmap <Leader>8 "8p
 nmap <Leader>9 "9p
 nmap <Leader>0 "0p
+
+nnoremap <c-m-z> <nop>
+vnoremap <c-m-z> <nop>
+inoremap <c-m-z> <nop>
 
 set hlsearch
 nnoremap <c-j> 10j
