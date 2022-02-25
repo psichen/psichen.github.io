@@ -49,7 +49,7 @@ Canonical ensemble would exchange energy bewteen systems, but the total energy s
 $$
 \sum_n p(n) E_n = <E> = E_t / \Omega = \overline{E} 
 $$
-So in canonical ensembles the averaged energy should be fixed. The Langrange multiplier is,
+So in canonical ensembles the averaged energy should be fixed. The Lagrange multiplier is,
 $$
 \begin{align*}
         \partial_{p(n)} S &= k_B \partial_{p(n)} \Big{(} \alpha ( \sum_n p(n) - 1) + \beta ( \sum_n p(n) E_n - \overline{E} ) \Big{)} \\
@@ -60,7 +60,7 @@ It tells us the state probability in the form of *Boltzmann distribution* $\exp(
 
 ### grandcanoncial ensemble ###
 
-If particles can move between systems and the reservioir, then the number of particles $N$ is not fixed but conserved $\sum_n N_n = N$. The Langrange multiplier is,
+If particles can move between systems and the reservioir, then the number of particles $N$ is not fixed but conserved $\sum_n N_n = N$. The Lagrange multiplier is,
 $$
 \begin{align*}
         \partial_{p(n)} S &= k_B \partial_{p(n)} \Big{(} \alpha ( \sum_n p(n) - 1) + \beta ( \sum_n p(n) E_n - \overline{E} ) + \mu ( \sum_n N_n - N ) \Big{)} \\
@@ -106,13 +106,28 @@ heat_capacity(heat capacity)
 %% RELATIONS====================
 temperature --- heat_capacity
 ```
-### derivate of entropy
+### derivatives of entropy
 
-Because $S_1 + S_2$ takes the maximum value when $E=E_*$, we know,
+If there are $n$ systems with the respective energy $E_n$, the relation $\sum_n E_n = E_t$ should hold due to energy conservation. Then we can find the solution to maximize the entropy under the constrain by using Lagrange multiplier,
 $$
-\frac{\partial S_1(E)}{\partial E}|_{E=E_*} - \frac{\partial S_2(E_{total} - E)}{\partial E}|_{E=E_{total} - E_*} = 0
+\nabla S = \lambda \nabla (\sum_n E_n - E_t)
 $$
-it means the derivates $\frac{\partial S}{\partial E}$ between different systems should be equal when they reach the equilibrium. The temperature is defined as,
+$$
+\begin{bmatrix}
+\frac{\partial}{\partial E_1} \\
+\frac{\partial}{\partial E_2} \\
+\vdots \\
+\frac{\partial}{\partial E_n} \\
+\end{bmatrix}
+S = \lambda
+\begin{bmatrix}
+1 \\
+1 \\
+\vdots \\
+1 \\
+\end{bmatrix} 
+$$
+it means the derivates $\frac{\partial S}{\partial E}$ between different systems should be equal when they reach the equilibrium. The derivate is defined as the reciprocal temperature,
 $$
 \frac{1}{T} = \frac{\partial S}{\partial E}
 $$
