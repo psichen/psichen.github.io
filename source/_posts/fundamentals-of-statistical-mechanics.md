@@ -1,10 +1,10 @@
 ---
-title: Fundamentals of statistical mechanistics
+title: Fundamentals of statistical mechanics
 date: 2022-02-27 18:38:24
-tags: [statistical mechanistics, entropy, Legendre, approximation, fluctuation, saddle point, temperature, chemical potential, free energy, thermodynamics]
+tags: [statistical mechanics, entropy, Legendre, approximation, fluctuation, saddle point, temperature, chemical potential, free energy, thermodynamics]
 ---
 
-Here are some fundamentals about thermodynamic concepts from a statistical mechanistics perspective.
+Here are some fundamentals about thermodynamic concepts from a statistical mechanics perspective.
 
 <!--more-->
 
