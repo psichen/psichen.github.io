@@ -48,7 +48,7 @@ temperature --- Boltzmann_distribution
 chemical_potential --- Boltzmann_distribution
 ```
 
-## phase space
+## number of states
 $$
 \Omega(E) = \text{number of states with energy } E
 $$
@@ -214,7 +214,7 @@ $$
 
 ## Gibbs entropy
 
-The Gibbs entropy is a function of a probability distribution over phase space. In contrast, the Boltzmann entropy is a function on phase space.
+The Gibbs entropy is a function of a probability distribution over phase space. In contrast, the Boltzmann entropy is a function of total number of states.
 
 Now we consider particles of number $N$ in which there are $n_i$ in the energy state $i$. So the Boltzmann entropy should be,
 $$

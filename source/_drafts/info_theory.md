@@ -59,6 +59,13 @@ $$
 dB = 20 \log(\frac{V_{1}}{V_{2}})
 $$
 
+## Entropy ##
+For a 8-bit image,
+$$
+H = - \sum_{i=0}^{255} p_i \log_2 p_i = <\log_2 \frac{1}{p_i}>
+$$
+
+
 ## Bandwidth ##
 
 ## B-splines ##
