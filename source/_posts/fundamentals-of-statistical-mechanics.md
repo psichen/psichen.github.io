@@ -186,6 +186,7 @@ $$
 Z = \sum_n \exp(- \beta E_n)
 $$
 ### averaged energy ###
+
 From the partition function of the canonical ensemble, we can derive the averaged energy as,
 $$
 <E> = \sum_n p(n) E_n = \sum_n \frac{E_n \exp(- \beta E_n)}{Z} = - \frac{\partial}{\partial \beta} \ln Z
@@ -195,6 +196,7 @@ $$
 \Delta E^2 = <E^2> - <E>^2 = - \frac{\partial <E>}{\partial \beta} = \frac{\partial^2}{\partial \beta^2} \ln Z
 $$
 ### fluctuation-dissipation relation ###
+
 In canonical ensemble, the heat capacity is defined as,
 $$
 C_V = \frac{\partial <E>}{\partial T}|_V
