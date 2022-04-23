@@ -66,6 +66,10 @@ inoremap <c-m-z> <nop>
 set hlsearch
 nnoremap <c-j> 10j
 nnoremap <c-k> 10k
+vnoremap <c-j> 10j
+vnoremap <c-k> 10k
+inoremap <c-j> 10j
+inoremap <c-k> 10k
 nnoremap <silent> <leader>s :set spell<cr>
 nnoremap <silent> <leader><cr> :noh<cr>:set nospell<cr>
 
@@ -131,8 +135,7 @@ let g:lightline = {
 let g:rainbow_active = 1
 
 " auto-pairs
-let g:AutoPairsFlyMode = 1
-let g:AutoPairsShortcutBackInsert='<C-p>'
+let g:AutoPairsFlyMode = 0
 
 " tabular
 nmap <Leader>a= :Tabularize /=<CR>
@@ -169,3 +172,5 @@ let g:Lf_PreviewInPopup=1
 
 " vim-mma
 "let g:mma_candy = 1
+nnoremap <c-j> 10j
+nnoremap <c-k> 10k

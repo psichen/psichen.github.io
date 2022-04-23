@@ -7,3 +7,19 @@ snippet nmp "import numpy" b
 import numpy as np
 $0
 endsnippet
+
+snippet imshow "plt.imshow()" b
+plt.imshow($0, interpolation=None, cmap='gray')
+plt.show()
+endsnippet
+
+snippet plt "plt.show()" b
+plt.show()$0
+endsnippet
+
+snippet napari "napari snippet" b
+import napari
+viewer = napari.Viewer()
+$0
+napari.run()
+endsnippet

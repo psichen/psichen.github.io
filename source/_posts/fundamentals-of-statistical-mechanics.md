@@ -12,7 +12,7 @@ Here are some fundamentals about thermodynamic concepts from a statistical mecha
 flowchart TB
 
 %% OBJECTS====================
-phase(phase space)
+number(number of states)
 Boltzmann_entropy(Boltzmann entropy)
 second_law(the second law of thermodynamics)
 
@@ -30,7 +30,7 @@ minimal_free_energy(minimal free energy)
 spontaneous(spontaneous process)
 
 %% RELATIONS====================
-phase --- |volume of phase space| Boltzmann_entropy 
+number --- |total number of states| Boltzmann_entropy 
 Boltzmann_entropy --- |saddle point approximation| second_law
 
 Boltzmann_entropy --- |Stirling's approximation \n microcanonical ensemble| Gibbs_entropy
@@ -123,6 +123,8 @@ $$
 \frac{\partial S}{\partial E} \equiv \frac{1}{T}
 $$
 
+which can be derived from the equations of state of ideal gas.
+
 ## chemical potential
 
 Similarly, if the number of molecules exchange within systems, we would consider the Langrange multiplier,
@@ -185,6 +187,7 @@ The term $1 / k_B T$ is very common in the expression so we define the factor $\
 $$
 Z = \sum_n \exp(- \beta E_n)
 $$
+
 ### averaged energy ###
 
 From the partition function of the canonical ensemble, we can derive the averaged energy as,
@@ -195,6 +198,7 @@ and the variance of energy as,
 $$
 \Delta E^2 = <E^2> - <E>^2 = - \frac{\partial <E>}{\partial \beta} = \frac{\partial^2}{\partial \beta^2} \ln Z
 $$
+
 ### fluctuation-dissipation relation ###
 
 In canonical ensemble, the heat capacity is defined as,
@@ -212,6 +216,38 @@ $$
 Because $C_V$ is at the scale of $N$, so the relative scale of fluctuation is,
 $$
 \frac{\Delta E}{E} = \frac{1}{\sqrt{N}}
+$$
+
+## Ideal gas model ##
+
+Let's assume the simplest situation that $N$ molecules won't interact with each other. So the partition function over the phase space should be,
+$$
+\begin{align*}
+Z &= \big( \frac{1}{(2 \pi \hat{h})^3} \int \int \exp( - \beta H ) d \vec{\boldsymbol{p}} d \vec{\boldsymbol{q}} \big)^N \\
+\color{blue}{[ H = T(\vec{\boldsymbol{p}}) + V(\vec{\boldsymbol{q}}) ]} &= \big( \frac{1}{(2 \pi \hat{h})^3} V \int \exp( - \beta \frac{\vec{\boldsymbol{p}}^2}{2m} ) d \vec{\boldsymbol{p}} \big)^N \\
+\end{align*}
+$$
+
+where $H$ is the Hamiltonian, $T(\vec{\boldsymbol{p}})$ is kinetic energy, $V(\vec{\boldsymbol{q}})$ is potential energy and equal to zero in ideal gas model, and $V$ is volume.
+
+Tha above integral is Gaussian integral so we can easily get the partition function of ideal gas,
+$$
+Z = V^N (\frac{m}{2 \pi \hat{h}^2 \beta})^{\frac{3}{2} N}
+$$
+Thus the Helmholtz free energy $F$ is,
+$$
+F = - \frac{\ln Z}{\beta} = - \frac{N \ln V}{\beta} - \frac{3 N}{2 \beta} \ln (\frac{m}{2 \pi \hat{h}^2 \beta})
+$$
+and the pressure $p$ is,
+$$
+p = - \frac{\partial F}{\partial V} = \frac{N}{V \beta}
+$$
+According to the equation of state $pV = N k_B T$ of classic gas, we know,
+$$
+\begin{align*}
+        \beta &= \frac{1}{k_B T} \\
+        \frac{\partial S}{\partial E} &= \frac{1}{T} \\
+\end{align*}
 $$
 
 ## Gibbs entropy
