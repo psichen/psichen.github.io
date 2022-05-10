@@ -64,12 +64,12 @@ vnoremap <c-m-z> <nop>
 inoremap <c-m-z> <nop>
 
 set hlsearch
-nnoremap <c-j> 10j
-nnoremap <c-k> 10k
-vnoremap <c-j> 10j
-vnoremap <c-k> 10k
-inoremap <c-j> 10j
-inoremap <c-k> 10k
+nnoremap <c-j> 20j
+nnoremap <c-k> 20k
+vnoremap <c-j> 20j
+vnoremap <c-k> 20k
+inoremap <c-j> 20j
+inoremap <c-k> 20k
 nnoremap <silent> <leader>s :set spell<cr>
 nnoremap <silent> <leader><cr> :noh<cr>:set nospell<cr>
 
