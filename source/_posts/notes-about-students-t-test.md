@@ -39,7 +39,7 @@ It underestimates the population variance because the estimator $\hat{\mu}$ intr
 
 ### standard deviation & standard error
 
-As we can see, simples and estimators are both random variables. They have corresponding terms to describe their spread.
+As we can see, samples and estimators are both random variables. They have corresponding terms to describe their spread.
 
 **standard deviation**
 
