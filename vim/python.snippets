@@ -1,11 +1,15 @@
+snippet spt "import sp_toolbox" b
+import sys
+sys.path.append('/Users/psichen/Library/CloudStorage/OneDrive-med.cornell.edu/Data/sp_toolbox')
+import sp_toolbox as spt$0
+endsnippet
+
 snippet mpl "import matplotlib" b
-from matplotlib import pyplot as plt
-$0
+from matplotlib import pyplot as plt$0
 endsnippet
 
 snippet nmp "import numpy" b
-import numpy as np
-$0
+import numpy as np$0
 endsnippet
 
 snippet imshow "plt.imshow()" b
@@ -22,4 +26,11 @@ import napari
 viewer = napari.Viewer()
 $0
 napari.run()
+endsnippet
+
+snippet com "comment warp" bA
+# $0
+#----------------------------------------
+${VISUAL}
+#========================================
 endsnippet
