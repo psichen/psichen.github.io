@@ -80,7 +80,7 @@ func! CompileRun()
 if &filetype == 'wls'
         exec "!wolframscript -print -f %"
 elseif &filetype == 'python'
-        exec "!python3 %"
+        exec "!python3 % | more"
 endif
 endfunc
 
