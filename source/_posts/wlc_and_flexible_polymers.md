@@ -1,9 +1,11 @@
 ---
 title: worm-like chain model and flexible polymers
-tags: [wlc, persistence length, bending rigidity, bending energy, polymers, elastic rod]
+tags: [wlc, persistence length, bending rigidity, bending energy, polymers, elastic rod, correlation]
 ---
 
 The worm-like chain model is the most widely used model to describe polymers. Here are some notes about the derivation of the relationship between wlc model and the theory of elasticity.
+
+<!--more-->
 
 ## elastic rod ##
 ### Young's modulus ###
