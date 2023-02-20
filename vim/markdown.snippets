@@ -465,4 +465,8 @@ snippet bf "boldface" iA
 \boldsymbol{$1}$0
 endsnippet
 
+snippet "(\w+),(\w+)\s(\d{4})\s\((.*)\)\s(.*)$" "reference" br
+`!p snip.rv = f'{match.group(1)}_{match.group(3)}["{match.group(2)} ({match.group(3)}) {match.group(4)} \\n {match.group(5)}"]'`$0
+endsnippet
+
 # vim:ft=snippets:

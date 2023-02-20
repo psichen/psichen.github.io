@@ -172,5 +172,3 @@ let g:Lf_PreviewInPopup=1
 
 " vim-mma
 "let g:mma_candy = 1
-nnoremap <c-j> 10j
-nnoremap <c-k> 10k

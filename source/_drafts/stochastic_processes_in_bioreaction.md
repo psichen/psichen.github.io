@@ -6,6 +6,10 @@ tags: [probability transition matrix, correalton function, detailed balance]
 
 ## Master equation ##
 
+### waiting time ###
+
+For a reaction 
+
 ## Markov chain ##
 
 ## Wegscheider conditions ##
