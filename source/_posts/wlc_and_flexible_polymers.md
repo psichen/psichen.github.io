@@ -75,10 +75,10 @@ The bending rigidity or bending stiffness is defined as $\kappa = EI$.
 If the rod has an intrinsic curvature $c_0$, we can get the internal energy by Taylor expand the equation $\eqref{energy}$ to 2nd-order,
 $$
 \begin{equation*}
-U_{s} = \frac{1}{2} \kappa (c - c_0)^2 + O(c^3)
+U_{s}(c) = U_{s}(c_0) + \frac{1}{2} \kappa (c - c_0)^2 + O(c^3)
 \end{equation*}
 $$
-where the first term $U_{s}(c_0) = 0$ because the rod is relaxed when it's under intrinsic curvature and the second term $U_{s}'(c_0) = 0$ because the rod is under static equilibrium.
+where the first term $U_{s}(c_0) \ge 0$ is the bending energy at the rest bending curvature $c_0$. The second term $U_{s}'(c_0) = 0$ because the energy $U_s$ is minimal at the position $c_ 0$.
 
 ## worm-like chain at surface ##
 
