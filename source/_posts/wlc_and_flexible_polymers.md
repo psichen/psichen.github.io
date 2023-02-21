@@ -96,7 +96,7 @@ $$
 $$
 Because the angle deflection along the contour is additive, the distribution of the angle deflection at distance $s$ is thus a convolution of many distributions of $\delta s$,
 $$
-P(\theta) = \exp(-\frac{1}{2} \frac{\kappa}{k_BT s} \theta) / Z \label(dist)
+P(\theta) = \exp(-\frac{1}{2} \frac{\kappa}{k_BT s} \theta) / Z \label{dist}
 $$
 where $s = \Sigma ~ \delta s$.
 
