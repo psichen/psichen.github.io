@@ -162,9 +162,12 @@ let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
 let g:tex_conceal="adbgm"
 
 " vimtex
-map <leader>l :VimtexCompile<CR>
-"let g:vimtex_view_method='skim'
-let g:vimtex_quickfix_ignore_filters=0
+map <leader>l :w<CR>:VimtexCompileSS<CR>:VimtexView<CR>
+filetype plugin indent on
+syntax enable
+let g:vimtex_view_method='sioyek'
+let g:vimtex_quickfix_mode=0
+"let g:vimtex_indent_enabled=0
 
 " LeaderF
 let g:Lf_WindowPosition='popup'
