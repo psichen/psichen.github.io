@@ -9,7 +9,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'luochen1990/rainbow'
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
-"Plug 'liuchengxu/vista.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'godlygeek/tabular'
 Plug 'SirVer/ultisnips'
@@ -18,10 +17,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 "Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'md'}
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'lervag/vimtex'
-"Plug 'voldikss/vim-mma'
 
 call plug#end()
 
@@ -32,6 +30,7 @@ call plug#end()
 
 " User custom
 colorscheme gruvbox
+set termguicolors
 let mapleader = " "
 set nu rnu
 set tabstop=4
@@ -46,7 +45,8 @@ set nobackup
 set autowrite
 set conceallevel=2
 set foldmethod=indent
-hi clear conceal
+
+au BufNewFile,BufRead *.ejs set filetype=html
 
 nmap <Leader>1 "1p
 nmap <Leader>2 "2p
@@ -58,10 +58,6 @@ nmap <Leader>7 "7p
 nmap <Leader>8 "8p
 nmap <Leader>9 "9p
 nmap <Leader>0 "0p
-
-nnoremap <c-m-z> <nop>
-vnoremap <c-m-z> <nop>
-inoremap <c-m-z> <nop>
 
 set hlsearch
 nnoremap <c-j> 20j
@@ -100,24 +96,6 @@ let g:instant_markdown_mermaid = 1
 let g:instant_markdown_autoscroll = 0
 nmap <Leader>p :InstantMarkdownPreview<CR>
 
-" vim-markdown
-let g:vim_markdown_math=1
-let g:vim_markdown_folding_disabled=1
-
-"" Vista
-"let g:vista_default_executive = 'coc'
-"let g:vista#renderer#enable_icon = 1
-"let g:vista_icon_indent = ["▸", ""]
-"noremap <Leader>v :Vista!!<CR>
-
-"function! NearestMethodOrFunction() abort
-  "return get(b:, 'vista_nearest_method_or_function', '')
-"endfunction
-
-"set statusline+=%{NearestMethodOrFunction()}
-
-"autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
 " lightline
 set laststatus=2
 let g:lightline = {
@@ -152,15 +130,19 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME."/Documents/Github/psichen.github.io/scripts"]
+let g:UltiSnipsSnippetDirectories=["UltiSnips", $HOME."/Documents/Github/psichen.github.io/.scripts"]
 
 " vim-surround
 nmap <Leader>" yst)"
 
-" tex-conceal.vim
-let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
-let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
-let g:tex_conceal="adbgm"
+" vim-pandoc
+let g:pandoc#modules#disabled = ['folding', 'spell']
+
+" vim-pandoc-syntax
+let g:pandoc#syntax#conceal#cchar_overrides = {"\\(" : ""}
+let g:pandoc#syntax#conceal#cchar_overrides = {"\\)" : ""}
+let g:pandoc#syntax#conceal#cchar_overrides = {"\\[" : ""}
+let g:pandoc#syntax#conceal#cchar_overrides = {"\\]" : ""}
 
 " vimtex
 map <leader>l :w<CR>:VimtexCompileSS<CR>:VimtexView<CR>
@@ -173,6 +155,3 @@ let g:vimtex_quickfix_mode=0
 " LeaderF
 let g:Lf_WindowPosition='popup'
 let g:Lf_PreviewInPopup=1
-
-" vim-mma
-"let g:mma_candy = 1

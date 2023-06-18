@@ -1,0 +1,3 @@
+[submodule "themes/hexo-theme-maple"]
+	path = themes/hexo-theme-maple
+	url = git@github.com:psichen/hexo-theme-maple.git

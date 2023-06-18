@@ -8,11 +8,14 @@ The worm-like chain model is the most widely used model to describe polymers. He
 <!--more-->
 
 ## elastic rod ##
+
 ### Young's modulus ###
 
 For a rod with a cross-section area $A$ and length $L$, when the deformation is small, the force follows the linear relation to the deforamtion, namely the to Hooke's law,
 $$
+\begin{equation}
 F = k \Delta x \label{Hooke}
+\end{equation}
 $$
 If we consider the stress $\sigma = \frac{F}{A}$ and the strain $\epsilon = \frac{\Delta x}{L}$, then we can rewrite the above equation into,
 $$
@@ -26,28 +29,36 @@ where $E = \frac{kL}{A}$ is the Young's modulus.
 
 For a *negative* bending rod as shown below, the length of the neutral axis is the same with the rest length of the rod. So we can put the origin on the neutral axis and calculate the arc length $H'G'$ at the distance $y$ from the neutral axis.
 
-![bending](https://roymech.org/images/beam_2.gif "bending rod")
+![bending rod](https://roymech.org/images/beam_2.gif "bending rod")
 
 So the strain of the infinitesimal arc $H'G'$ is,
 $$
+\begin{equation}
 \epsilon = - \frac{(R+y)\theta - R\theta}{R\theta} = - \frac{y}{R} \label{strain}
+\end{equation}
 $$
 where $R$ is the radius of the curvature and $\theta$ is the angle. Because it's negative bending, so $R < 0$. But the minus sign in the above equation guarantees that the strain above the neutral axis is tensile and the strain below the neutral axis is compressive.
 
 So we can easily get the stress,
 $$
+\begin{equation}
 \sigma = E\epsilon = - E \frac{y}{R} \label{stress}
+\end{equation}
 $$
 
 ### moment ###
 
 Because the rod is under the static equilibrium, the external force and moment should be equal to the internal force and moment. Now we already know the stress $\sigma$ in the cross section, so the momment is,
 $$
+\begin{equation}
 M = - \int_{A} \sigma y dA = \frac{E}{R} \int_{A} y^2 dA \label{moment}
+\end{equation}
 $$
 The minus sign comes from the sign convention that negative bending rod has a negative bending moment. The moment of inertia $I$ of the rectangular cross section is,
 $$
+\begin{equation}
 I = \int_A y^2 dA = \frac{hw^3}{12} \label{inertia}
+\end{equation}
 $$ 
 where $h$ and $w$ are the height and the width of the rectangular cross section.
 
@@ -68,7 +79,9 @@ U &= \int_{0}^{\epsilon} A \sigma L d\epsilon = AL \cdot \frac{1}{2} E \epsilon^
 $$
 Substituting $\epsilon = -\frac{y}{R}$ into the above equation, we get the internal energy per unit length, 
 $$
+\begin{equation}
 \partial_{s}U = \frac{1}{2} \frac{EI}{R^2} = \frac{1}{2} EIc^2 \label{energy}
+\end{equation}
 $$
 The bending rigidity or bending stiffness is defined as $\kappa = EI$.
 
@@ -96,17 +109,23 @@ $$
 $$
 Because the angle deflection along the contour is additive, the distribution of the angle deflection at distance $s$ is thus a convolution of many distributions of $\delta s$,
 $$
+\begin{equation}
 P(\theta) = \exp(-\frac{1}{2} \frac{\kappa}{k_BT s} \theta) / Z \label{dist}
+\end{equation}
 $$
 where $s = \Sigma ~ \delta s$.
 
 Let's say $\boldsymbol{t}(s)$ is the unit tangent vector along the contour of the polymer chain. So we can use the tangent vector correlation function to describe the fluctuation extent of the polymer,
 $$
+\begin{equation}
 <\boldsymbol{t}(0) \cdot \boldsymbol{t}(s)> = <\cos(\theta)> \label{corr}
+\end{equation}
 $$
 Here $\cos(\theta)$ can be seen as the real part of $\exp(-i \omega \theta)$ when $\omega=1$, so the above correlation is equivalent to the Fourier trnasform,
 $$
+\begin{equation}
 < \cos(\theta) > = \Big{(} \int \exp(-i \omega \theta) P(\theta) d\theta \Big{)}_{\omega=1} = \widetilde{P}(1) = \exp(- \frac{1}{2} \frac{k_BT}{\kappa} s) = \exp(- \frac{s}{2 l_p}) \label{decay}
+\end{equation}
 $$
 where the persistence length $l_{p}$ is defined as $\kappa / k_BT$.
 
@@ -129,7 +148,9 @@ $$
 $$
 If the polymer is isotropic, then the tangent correlation decay would be doubled,
 $$
+\begin{equation}
 < \cos(\alpha) > = \widetilde{P}(1)^2 = \exp(- \frac{s}{l_p}) \label{decay_3d}
+\end{equation}
 $$
 
 ### Cauchy's exponential functional equation ###
@@ -191,7 +212,9 @@ $$
 $$
 So we have,
 $$
+\begin{equation}
 < \delta \theta^2 > = \frac{\delta s}{l_p} \label{eq1}
+\end{equation}
 $$
 
 According to [statistic mechanics](https://psichen.github.io/2022/02/27/fundamentals-of-statistical-mechanics/), we can calculate the correlation of bending angle from the energy,
@@ -220,14 +243,18 @@ $$
 $$
 So we get the second moment of Gaussian distribution,
 $$
+\begin{equation}
 M^{(2)} = - \partial_{s}I(1) = \frac{\sqrt{\pi}}{2} \label{secint}
+\end{equation}
 $$
 
 ### persistence length and bending rigidity ###
 
 Substituting equation $\eqref{secint}$ into equation $\eqref{secmom}$,
 $$
+\begin{equation}
 < \delta \theta^2 > = (\frac{1}{2} \frac{\kappa}{k_BT \delta s})^{-\frac{3}{2}} \frac{\sqrt{\pi}}{2} \Big{/} (\frac{1}{2} \frac{\kappa}{k_BT \delta s})^{-\frac{1}{2}} \sqrt{\pi} = \frac{k_BT \delta s}{\kappa} \label{eq2}
+\end{equation}
 $$
 
 Compared $\eqref{eq1}$ and $\eqref{eq2}$, we get,
