@@ -40,8 +40,13 @@ It's the exact differential equation which can be solved by,
 $$ \begin{aligned}
 dU(x,y) &= A(x,y) dx + B(x,y) dy = 0 \\
 U(x,y) &= \int A(x,y) \: dx + F(y) = c_{1} \\
-F(y) &= \int [ B(x,y) - A(x,y) ] \: dy
 \end{aligned}  $$
+
+The $F(y)$ can be found by differentiating the above $U(x,y)$ with respect to $y$, which should yield $B(x,y)$,
+
+$$
+F(y) = \int [ B(x,y) - \partial_y ( \int A(x,y) dx ) ] dy
+$$
 
 ### inexact differential equations
 

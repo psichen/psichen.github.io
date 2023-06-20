@@ -107,4 +107,6 @@ $$
 \end{align*}
 $$
 
+Just transpose $\boldsymbol{A}$ and switch $\boldsymbol{b}$ and $\boldsymbol{c}$.
+
 If $\boldsymbol{A} \boldsymbol{x} = \boldsymbol{b}$ and $\boldsymbol{A}^T \boldsymbol{y} \le \boldsymbol{c}$, then $\boldsymbol{b}^T \boldsymbol{y} = (\boldsymbol{A} \boldsymbol{x})^T \boldsymbol{y} = \boldsymbol{x}^T \boldsymbol{A}^T \boldsymbol{y} \le  \boldsymbol{x}^T \boldsymbol{c}$

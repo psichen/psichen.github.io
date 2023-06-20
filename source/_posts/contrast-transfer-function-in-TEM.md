@@ -92,6 +92,7 @@ In glass lenses the light is bent more strongly at the periphery than it should.
 $$
 CTF = \sin(- \pi \delta \lambda f^2 + \frac{\pi C_{s} \lambda^3 f^4}{2})
 $$
+
 ### Envelope function ###
 
 Due to spatial and thermal incoherence, the image will be blurred at high spatial frequency and the CTF has a Gaussian decay with the increasing spatial frequency. So it can be written by including the Envelope function,
