@@ -343,7 +343,8 @@ it should. In magnetic lenses the effect is approximated by the same
 spherical aberration coefficient <span
 class="math inline">\(C_s\)</span>, <span class="math display">\[
 CTF = \sin(- \pi \delta \lambda f^2 + \frac{\pi C_{s} \lambda^3 f^4}{2})
-\]</span> ### Envelope function ###</p>
+\]</span></p>
+<h3 id="envelope-function">Envelope function</h3>
 <p>Due to spatial and thermal incoherence, the image will be blurred at
 high spatial frequency and the CTF has a Gaussian decay with the
 increasing spatial frequency. So it can be written by including the
@@ -452,6 +453,7 @@ imaging in the EM</a></p>
   MathJax.Hub.Queue(function() {
       var all = MathJax.Hub.getAllJax(), i;
       for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.parentNode.className = 'overflow-x-auto';
           all[i].SourceElement().parentNode.className += ' has-jax';
       }
   });

@@ -809,6 +809,7 @@ Journal of Physical Chemistry B</em> 115.17 (2011): 5001-5007.</p>
   MathJax.Hub.Queue(function() {
       var all = MathJax.Hub.getAllJax(), i;
       for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.parentNode.className = 'overflow-x-auto';
           all[i].SourceElement().parentNode.className += ' has-jax';
       }
   });

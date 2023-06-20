@@ -250,8 +250,14 @@ differential.</p>
 <p><span class="math display">\[ \begin{aligned}
 dU(x,y) &amp;= A(x,y) dx + B(x,y) dy = 0 \\
 U(x,y) &amp;= \int A(x,y) \: dx + F(y) = c_{1} \\
-F(y) &amp;= \int [ B(x,y) - A(x,y) ] \: dy
 \end{aligned}  \]</span></p>
+<p>The <span class="math inline">\(F(y)\)</span> can be found by
+differentiating the above <span class="math inline">\(U(x,y)\)</span>
+with respect to <span class="math inline">\(y\)</span>, which should
+yield <span class="math inline">\(B(x,y)\)</span>,</p>
+<p><span class="math display">\[
+F(y) = \int [ B(x,y) - \partial_y ( \int A(x,y) dx ) ] dy
+\]</span></p>
 <h3 id="inexact-differential-equations">inexact differential
 equations</h3>
 <p>If the ODE is,</p>
@@ -528,6 +534,7 @@ separable.</p>
   MathJax.Hub.Queue(function() {
       var all = MathJax.Hub.getAllJax(), i;
       for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.parentNode.className = 'overflow-x-auto';
           all[i].SourceElement().parentNode.className += ' has-jax';
       }
   });

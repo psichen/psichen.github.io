@@ -468,16 +468,6 @@ expansion by Taylor series.</p>
       </a>
       
       <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
-      <a href="/tags/fluctuation/">
-        fluctuation
-      </a>
-      
-      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
-      <a href="/tags/diffusion-equation/">
-        diffusion equation
-      </a>
-      
-      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
       <a href="/tags/Fokker-Planck-Kramers-equation/">
         Fokker-Planck-Kramers equation
       </a>
@@ -490,6 +480,16 @@ expansion by Taylor series.</p>
       <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
       <a href="/tags/phase-space/">
         phase space
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/fluctuation/">
+        fluctuation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/diffusion-equation/">
+        diffusion equation
       </a>
       
       </p>
@@ -817,6 +817,7 @@ modeling and deduction.</p>
   MathJax.Hub.Queue(function() {
       var all = MathJax.Hub.getAllJax(), i;
       for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.parentNode.className = 'overflow-x-auto';
           all[i].SourceElement().parentNode.className += ' has-jax';
       }
   });

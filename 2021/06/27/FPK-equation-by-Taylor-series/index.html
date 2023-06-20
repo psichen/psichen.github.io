@@ -453,14 +453,6 @@ Fokker-Planck Equation</a></li>
         </span>
       
         <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
-          <a href="/tags/fluctuation/">fluctuation</a>
-        </span>
-      
-        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
-          <a href="/tags/diffusion-equation/">diffusion equation</a>
-        </span>
-      
-        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
           <a href="/tags/Fokker-Planck-Kramers-equation/">Fokker-Planck-Kramers equation</a>
         </span>
       
@@ -470,6 +462,14 @@ Fokker-Planck Equation</a></li>
       
         <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
           <a href="/tags/phase-space/">phase space</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/fluctuation/">fluctuation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/diffusion-equation/">diffusion equation</a>
         </span>
       
     
@@ -526,6 +526,7 @@ Fokker-Planck Equation</a></li>
   MathJax.Hub.Queue(function() {
       var all = MathJax.Hub.getAllJax(), i;
       for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.parentNode.className = 'overflow-x-auto';
           all[i].SourceElement().parentNode.className += ' has-jax';
       }
   });
