@@ -16,6 +16,11 @@ $$
 
 ### logistic regression ###
 
-## Support vector machine ##
+## Deep learning ##
 
+A popular deep learning framework is `pytorch`.
+
+### cross-entropy loss function ###
+
+### gradient decent ###
 
