@@ -1,6 +1,6 @@
-# Operation system initialization (MacOS) #
+# MacOS #
 
-Softwares to install via brew:
+## Softwares to install via brew ##
 * Alacritty
 * AIDente
 * BibDesk
@@ -79,3 +79,36 @@ Put custom `*.snippets` in `$HOME/.config/coc/ultisnips/` to enable custom snipp
 Link config fiels `prefs_user.config` and `keys_user.config` to `~/.config/sioyek/`.
 
 Notably, the `shared.db` is located in Onedrive `/Users/psichen/Library/CloudStorag/OneDrive-med.cornell.edu/Literatures/shared.db`
+
+# Ubuntu #
+
+Using `git clone` to download corresponding plugins in the directory `.oh-my-zsh/custom/plugins/`. Then add the plugin name in `.zshrc`.
+
+Install `haskell-stack` from repository to build and install haskell applications like `KMonad` and `XMonad`.
+
+## KMonad ##
+Install `KMonad` from source via `stack install` and add the installed path to `$PATH`.
+
+get `uinput` permission via:
+```
+sudo groupadd uinput
+sudo usermod -aG input username
+sudo usermod -aG uinput username
+```
+
+add a udev rule in `/etc/udev/rules.d/50-kmonad.rules`:
+```
+KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+```
+
+check the `uinput` drivers are loaded: `sudo modprobe uinput`
+
+Check the `input` in the KMonad configuration file and the path `/dev/input/by-id/*-kbd`.
+
+A reboot may be needed.
+
+touch a file `~/.xsessionrc` and add `kmonad Path/To/KMonad/Configure/file.kbd`.
+
+## XMonad ##
+`sudo apt install xmonad` and change the session to `xmonad` after logout.
+Configure file `~/.xmonad/xmonad.hs`
