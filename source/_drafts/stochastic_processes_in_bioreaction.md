@@ -3,6 +3,28 @@ title: stochastic processes in bioreaction
 tags: [probability transition matrix, correalton function, detailed balance]
 ---
 
+The likelihood of $X$ becoming $Y$, or $Y$ becoming $X$, is determined by the chemical potential difference according to Gibbsian chemical thermodynamics,
+$$
+\mu_X = \mu_X^o+k_BT \ln c_X \\
+\mu_Y = \mu_Y^o+k_BT \ln c_Y \\
+$$
+The internal energy of reactants ($\mu_X^o$ and $\mu_Y^o$) can be determined by rate constants,
+$$
+\mu_Y^o - \mu_X^o = k_BT \ln (\frac{c_X^*}{c_Y^*}) = k_BT \ln (\frac{k^-}{k^+})
+$$
+Therefore, for an arbitrary reaction:
+$$
+X \Leftrightarrow Y
+$$
+the chemical potential difference is determined by flux,
+$$
+\Delta \mu = k_BT \ln (\frac{k^-}{k^+}) + k_BT \ln (\frac{c_Y}{c_X}) = k_BT \ln (\frac{J^-}{J^+})
+$$
+Besides, $\Delta \mu$ and the net flux $J=J^+ - J^-$ hold the inequality,
+$$
+\Delta \mu \times J \le 0
+$$
+representing the amount of energy consumed per unit time.
 
 ## Master equation ##
 
