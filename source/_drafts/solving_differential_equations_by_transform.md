@@ -5,7 +5,7 @@ tags: [transformation, Fourier transform, Laplace transform, differential equait
 
 ## Solving ODE in hard way ##
 
-### homogeneous high-order ODE ###
+### homogeneous linear ODE ###
 
 Let's start with the following homogeneous ODE,
 $$
@@ -39,10 +39,17 @@ $$
 
 If the roots $r=\lambda \pm \mu i$ are complex with multiplicity $k$, the solution $y(t)$ is the set of solutions,
 $$
-\exp((\lambda + \mu i)t), \\ \exp((\lambda - \mu i)t)
+\begin{align*}
+        \exp((\lambda + \mu i) t) && t \exp((\lambda + \mu i) t) && ... && t^{k-1} \exp((\lambda + \mu i) t) \\
+        \exp((\lambda - \mu i) t) && t \exp((\lambda - \mu i) t) && ... && t^{k-1} \exp((\lambda - \mu i) t) \\
+\end{align*}
+$$
+The imaginary parts can be cancelled according to Euler's rule, so the solution $y(t)$ is a linear combination,
+$$
+y(t) = \sum_{i=1}^k t^{i-1} \exp(\lambda t) \big ( C_i \cos(\mu t) + C_i^{'} \sin(\mu t) \big )
 $$
 
-### inhomogeneous high-order ODE ###
+### inhomogeneous linear ODE ###
 
 
 Although we can solve these ODEs, it's too tricky to understand the method for solving differential equations systematically. However, Laplace transform can give a better explanation.
