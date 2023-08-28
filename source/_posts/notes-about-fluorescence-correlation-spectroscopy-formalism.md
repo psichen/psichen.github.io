@@ -1,7 +1,7 @@
 ---
 title: Notes about fluorescence correlation spectroscopy formalism
 date: 2021-03-27 23:20:23
-tags: [differential equation, diffusion equation, Fourier transformation, correlation function, fluctuation]
+tags: [differential equation, diffusion equation, Fourier transform, correlation function, fluctuation]
 ---
 
 Let's say the concentration of the component $j$ in the solution is $C_j(\vec{r}, t)$, which is a scalar function of coordinates $\vec{r}$ and time $t$. For a well-mixed solution, the average of concentration over coordinates and time should be a constant $<C_j(\vec{r}, t)> = \bar{C}_j$. The local concentration $C_j(\vec{r}, t)$, however, fluctuates with coordinates and time. The amount of local fluctuation is $\delta C_j(\vec{r}, t) = C_j(\vec{r}, t)-\bar{C}_j$.

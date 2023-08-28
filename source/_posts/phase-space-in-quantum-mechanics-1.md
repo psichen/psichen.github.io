@@ -1,7 +1,7 @@
 ---
 title: 量子力学里的相空间体积--Fourier变换
 date: 2019-10-29 10:08:07
-tags: [Fourier transformation, Dirac function]
+tags: [Fourier transform, Dirac function]
 ---
 
 最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵$S$和相空间$\Gamma$的体积有关：

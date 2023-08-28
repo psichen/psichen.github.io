@@ -39,7 +39,7 @@ which is consistent with the additivity of Poisson distribution.
 
 We can imagine an input $h(\mathbf{x},t)$ (e.g. force) and an output $s(\mathbf{x},t)$ (e.g. position). If $h(\mathbf{x},t)$ is a weak perturbation, we can presume a linear response, but usually the response will dependent not only on the present $h(\mathbf{x},t)$ but also the past values. It's intuitive because system needs time to decay or relax after stimulated. Approximately $s(\mathbf{x},t)$ is a weighted sum of the previous values of $h(\mathbf{x}',t')$, and the weights are given by the linear response function $\chi(\mathbf{x}-\mathbf{x}',t-t')$
 $$
-s(\mathbf{x}, t) = \int d\mathbf{x'} \int_{-\infty}^{t} dt' \chi(\mathbf{x} - \mathbf{x}', t-t') h(\mathbf{x}', t')
+s(\mathbf{x}, t) = \int \,d\mathbf{x'} \int_{-\infty}^{t} \,dt' \chi(\mathbf{x} - \mathbf{x}', t-t') h(\mathbf{x}', t')
 $$
 The response function $\chi(\mathbf{x}-\mathbf{x}',t-t')$ is also called transfer function, point spread function, susceptibility, impulse response or impedance, dependent on which scenario it is.
 
