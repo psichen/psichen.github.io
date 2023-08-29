@@ -51,8 +51,35 @@ $$
 
 ### inhomogeneous linear ODE ###
 
+For inhomogeneous linear ODE,
+$$
+\sum_{i=0}^n a_i y^{(n)} = f(t)
+$$
 
-Although we can solve these ODEs, it's too tricky to understand the method for solving differential equations systematically. However, Laplace transform can give a better explanation.
+where $f(t) \neq 0$. First we need to find general solutions $y_g$ for the corresponding homogeneous linear ODEs. Then we can use undetermined coefficients to find particular solutions $y_p$ for different $f(t)$. So the final solution for the inhomogeneous linear ODE is the linear combination of $y_g$ and $y_p$ because,
+$$
+\begin{align*}
+        \sum_{i=0}^n a_i (C_g y_g + y_p)^{(n)} &= \sum_{i=0}^n a_i C_g y_g^{(n)} + \sum_{i=0}^n a_i y_p^{(n)} \\
+        &= 0 + f(t) \\
+        &= f(t) \\
+\end{align*}
+$$
+There are different type of $f(t)$ and corresponding forms of particular solutions,
+
+$$ \text{Table 1 undetermined coefficient form} $$
+$$ \begin{array}{ll}
+\hline
+f(t) & y_p(t) \\
+\hline
+\alpha \exp(\beta t) & A \exp(\beta t) \\
+\alpha \cos(\beta t) & A \cos(\beta t) + B \sin(\beta t) \\
+\alpha \sin(\beta t) & A \cos(\beta t) + B \sin(\beta t) \\
+\sum_{i=0}^n \alpha_i x^i & \sum_{i=0}^n A_i x^i \\
+\exp(\beta t) \sum_{i=0}^n \alpha_i x^i & \exp(\beta t) \sum_{i=0}^n A_i x^i \\
+\hline
+\end{array} $$
+
+Although we can solve these ODEs, it's too tedious and tricky to understand the method for solving differential equations systematically. Fortunately, Laplace transform can give a better explanation.
 
 ## Laplace transform ##
 
@@ -77,3 +104,20 @@ $$
 \Big \downarrow \\
 \mathscr{L}[g^{(n)}] = s^n \cdot \mathscr{L}[g] - \sum_{i=1}^{n} s^{i-1} \cdot g^{(n-i)}(0) \\
 $$
+By applying the above property to $g(t)$ and $\int_0^t g(\tau) \,d\tau$, we have the Laplace transform of integral,
+$$
+\mathscr{L}[\int_0^t g(\tau)\,d\tau] = \frac{1}{s} \mathscr{L}[g(t)]
+$$
+
+### Laplace transform of ODEs ###
+
+For simplicity, let's consider a second order ODE,
+$$
+y'' + p y' + q y = f(t)
+$$
+with the initial condition $y(0)=y_0$ and $y'(0)=y_1$.
+
+## References ##
+
+1. [section 3: Laplace transforms & transfer functions](https://web.engr.oregonstate.edu/~webbky/ESE499_files/)
+
