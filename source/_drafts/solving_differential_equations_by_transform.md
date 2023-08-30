@@ -85,7 +85,7 @@ Although we can solve these ODEs, it's too tedious and tricky to understand the 
 
 A transform is a mapping of a function from one domain to another. The Laplace transform is defined as, 
 $$
-F(s) = \mathscr{L}[f(t)] = \int_0^{\infty} f(t) \exp(-st) \,dt
+G(s) = \mathscr{L}[g(t)] = \int_0^{\infty} g(t) \exp(-st) \,dt
 $$
 where $s=\sigma+i \omega$ is a complex variable.
 
@@ -108,6 +108,21 @@ By applying the above property to $g(t)$ and $\int_0^t g(\tau) \,d\tau$, we have
 $$
 \mathscr{L}[\int_0^t g(\tau)\,d\tau] = \frac{1}{s} \mathscr{L}[g(t)]
 $$
+Also, we can treat $\int_0^t g(\tau)\,d\tau$ as the convolution $\int_{0}^{\infty} u(t-\tau) g(\tau)\,d\tau$, where $u(t)$ is the *Heaiside step function*,
+$$
+u(t) = \begin{cases}
+        0, & t \lt 0 \\
+        1, & t \geq 0 \\
+\end{cases}
+$$
+Besides, the Laplace transform of Heaiside step functino is,
+$$
+\mathscr{L}[u(t)] = \int_0^{\infty} \exp(-st)\,dt = -\frac{1}{s} \exp(-st)|_0^{\infty} = \frac{1}{s}
+$$
+Therefore, similar to Fourier transform, the Laplace transform of convolution is equal to the product of their respective Laplace transforms,
+$$
+\mathscr{L}[g(t)*f(t)] = \mathscr{L}[g(t)] \cdot \mathscr{L}[f(t)]
+$$
 
 ### Laplace transform of ODEs ###
 
@@ -117,7 +132,8 @@ y'' + p y' + q y = f(t)
 $$
 with the initial condition $y(0)=y_0$ and $y'(0)=y_1$.
 
+[List of Laplace transform of common functions](https://en.wikipedia.org/wiki/List_of_Laplace_transforms#Table)
+
 ## References ##
 
 1. [section 3: Laplace transforms & transfer functions](https://web.engr.oregonstate.edu/~webbky/ESE499_files/)
-
