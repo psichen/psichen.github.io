@@ -17,7 +17,9 @@ $$
 $$
 In order for the above eqaution to be zero we need to require the auxiliary polynomial equation to be zero,
 $$
-\sum_{i=0}^n a_i r^n = 0
+\begin{equation}
+\sum_{i=0}^n a_i r^n = 0 \label{auxiliary}
+\end{equation}
 $$
 According to the roots, we have
 
@@ -85,9 +87,14 @@ Although we can solve these ODEs, it's too tedious and tricky to understand the 
 
 A transform is a mapping of a function from one domain to another. The Laplace transform is defined as, 
 $$
-G(s) = \mathscr{L}[g(t)] = \int_0^{\infty} g(t) \exp(-st) \,dt
+\begin{equation}
+\mathscr{L}[g(t)] = G(s) = \int_0^{\infty} g(t) \exp(-st) \,dt \label{laplace}
+\end{equation}
 $$
 where $s=\sigma+i \omega$ is a complex variable.
+
+### transform of derivatives ###
+
 
 One of important properties of Laplace transform is to transform derivatives,
 $$
@@ -95,33 +102,40 @@ $$
         \mathscr{L}[\dot{g}(t)] &= \int_0^\infty \dot{g}(t) \exp(-st) \,dt \\
         \color{blue}{\text{[integration by parts]}} &= \exp(-st)g(t)|_{t=0}^\infty - (-s) \int_0^\infty g(t) \exp(-st) \,dt \\
         \color{blue}{\text{[integrable functions decay at infinity]}} &= s \int_0^\infty g(t) \exp(-st) \,dt - g(0) \\
-        &= s \cdot \mathscr{L}[g(t)] - g(0) \\
+        &= s \cdot G(s) - g(0) \\
 \end{align*}
 $$
 In general, the Laplace transform of $n^{th}$ derivatives is,
 $$
-\mathscr{L}[g^{(n)}] = s \cdot \mathscr{L}[g^{(n-1)}] - g^{(n-1)}(0) \\
-\Big \downarrow \\
-\mathscr{L}[g^{(n)}] = s^n \cdot \mathscr{L}[g] - \sum_{i=1}^{n} s^{i-1} \cdot g^{(n-i)}(0) \\
+\begin{align}
+\mathscr{L}[g^{(n)}]
+&= s \cdot \mathscr{L}[g^{(n-1)}] - g^{(n-1)}(0) \\
+&= s^n \cdot G(s) - \sum_{i=1}^{n} s^{i-1} \cdot g^{(n-i)}(0) \label{derivative} \\
+\end{align}
 $$
+
+### convolution property ###
+
 By applying the above property to $g(t)$ and $\int_0^t g(\tau) \,d\tau$, we have the Laplace transform of integral,
 $$
 \mathscr{L}[\int_0^t g(\tau)\,d\tau] = \frac{1}{s} \mathscr{L}[g(t)]
 $$
-Also, we can treat $\int_0^t g(\tau)\,d\tau$ as the convolution $\int_{0}^{\infty} u(t-\tau) g(\tau)\,d\tau$, where $u(t)$ is the *Heaiside step function*,
+Also, we can treat $\int_0^t g(\tau)\,d\tau$ as the convolution $\int_{0}^{\infty} u(t-\tau) g(\tau)\,d\tau$, where $u(t)$ is the *Heaviside step function*,
 $$
 u(t) = \begin{cases}
         0, & t \lt 0 \\
         1, & t \geq 0 \\
 \end{cases}
 $$
-Besides, the Laplace transform of Heaiside step functino is,
+Besides, the Laplace transform of Heaviside step function is,
 $$
 \mathscr{L}[u(t)] = \int_0^{\infty} \exp(-st)\,dt = -\frac{1}{s} \exp(-st)|_0^{\infty} = \frac{1}{s}
 $$
 Therefore, similar to Fourier transform, the Laplace transform of convolution is equal to the product of their respective Laplace transforms,
 $$
-\mathscr{L}[g(t)*f(t)] = \mathscr{L}[g(t)] \cdot \mathscr{L}[f(t)]
+\begin{equation}
+\mathscr{L}[g(t)*f(t)] = \mathscr{L}[g(t)] \cdot \mathscr{L}[f(t)] \label{convolution}
+\end{equation}
 $$
 
 ### Laplace transform of ODEs ###
@@ -130,9 +144,29 @@ For simplicity, let's consider a second order ODE,
 $$
 y'' + p y' + q y = f(t)
 $$
-with the initial condition $y(0)=y_0$ and $y'(0)=y_1$.
+with the initial condition $y(0)=y_0$ and $y'(0)=y_1$. Apply Laplace transform to both sides of the equation and we get,
+$$
+s^2 Y(s) - s \cdot y(0) - y'(0) + p (s \cdot Y(s) - y(0)) + q Y(s) = F(s)
+$$
+So the solution in $s$-domain is,
+$$
+\begin{equation}
+Y(s) = \frac{F(s) + s \cdot y_0 + y_1 + p \cdot y_0}{s^2 + p \cdot s + q} \label{solution}
+\end{equation}
+$$
+Next we need to decompose $Y(s)$ by partial fraction expansion so we can get $Y(s)$ as the linear combination of some typical Laplace transformed functions and eventually $y(t)$ by inverse Laplace transform. For example,
+$$
+Y(s) = \sum_{i=0}^{n} C_i \cdot Y_i(s) \\
+y(t) = \sum_{i=0}^n C_i \cdot \mathscr{L}^{-1}[Y_i(s)]
+$$
 
-[List of Laplace transform of common functions](https://en.wikipedia.org/wiki/List_of_Laplace_transforms#Table)
+Here is the [List of Laplace transform of common functions](https://en.wikipedia.org/wiki/List_of_Laplace_transforms#Table).
+
+According to the Laplace transform of derivatives $\eqref{derivative}$, the denominator of $\eqref{solution}$ was only determined by coefficients of the ODE (here $p$ and $q$), and the roots of the denominator determine the form of partial fractions and thus the inverse Laplace transform. The numerator of $\eqref{solution}$ only affects coefficients $C_i$.
+
+In fact, the denominator of $\eqref{solution}$ has the same form with the ODE's auxiliary equation $\eqref{auxiliary}$. So Laplace transform explains the tricky way to solve ODEs.
+
+## Green's function ##
 
 ## References ##
 
