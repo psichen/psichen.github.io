@@ -1,7 +1,11 @@
 ---
 title: Solving differential equations by transforms
-tags: [transformation, Fourier transform, Laplace transform, differential equaiton, Green's function]
+tags: [transformation, Fourier transform, Laplace transform, differential equaiton, Green's function, vector space, vector]
 ---
+
+Ordinary differential equations (ODE) can be solved via roots of auxiliary equations or complement equations, but the rationale is not so clear in text books I read.
+
+<!--more-->
 
 ## Solving ODE in hard way ##
 
@@ -167,6 +171,83 @@ According to the Laplace transform of derivatives $\eqref{derivative}$, the deno
 In fact, the denominator of $\eqref{solution}$ has the same form with the ODE's auxiliary equation $\eqref{auxiliary}$. So Laplace transform explains the tricky way to solve ODEs.
 
 ## Green's function ##
+
+Another powerful way to solve ODEs is Green's function, which introduces the concept of infinte-dimensional vector space.
+
+In general, $n$-dimensional vector can be expressed as,
+$$
+\boldsymbol{v} = \sum_{i=1}^n c_i \hat{\boldsymbol{e}}_i
+$$
+where $\boldsymbol{\hat{e}}_i$ is the unitary orthonormal vector. So the inner product of two vectors is,
+$$
+\left< \boldsymbol{v} \mid \boldsymbol{v}' \right> = \sum_{i=1}^n \sum_{j=1}^n c_i c_j' \left< \hat{\boldsymbol{e}}_i \mid \hat{\boldsymbol{e}}_j \right> = \sum_{i=1}^n c_i c_i'
+$$
+If we expand the $n$-dimensional space to infinite-dimensional space, the vector $\boldsymbol{v}$ can be represented by function $f(x)$. Namely, the discrete dimensions where $\hat{\boldsymbol{e}}_i$ stays become the continuous dimension where $x$ stays. So we can define the inner product of two functions,
+$$
+\left< f \mid f' \right> = \int_a^b f^*(x) f'(x) \,dx
+$$
+Therefore, a linearly independent and orthonormal functions $\hat{\phi}_n(x)$ can be used as the basis of an infinite-dimensional vector space of functions, which is called *Hilbert space*.
+
+### sets of functions ###
+
+If the function $f(x)$ is expressed in terms of an orthonormal basis $\hat{\phi}_n(x)$ as,
+$$
+f(x) = \sum_{n=0}^{\infty} c_n \hat{\phi}_n(x)
+$$
+then the cofficients $c_n$ are given by the inner product,
+$$
+c_n = \left \langle \hat{\phi}_n \mid f \right \rangle = \int_a^b \hat{\phi}_n^*(x) f(x) \,dx
+$$
+which is reminiscent of Fourier transform again.
+
+### eigenfunctions ###
+
+The inhomogeneous ODE can be expressed as,
+$$
+\begin{equation}
+\mathcal{L} y(x) = f(x) \label{operator}
+\end{equation}
+$$
+where $\mathcal{L}$ stands for a linear differential operator acting upon the function $y(x)$.
+
+The eigenfunction $y_i(x)$ of $\mathcal{L}$ satisfies,
+$$
+\begin{equation}
+\mathcal{L} y_i(x) = \lambda_i y_i(x) \label{eigenfunction}
+\end{equation}
+$$
+which is an homogeneous ODE and can be solved by Laplace transform.
+
+### superposition of eigenfunctions ###
+
+Now we concern the full solution $y(x)$ as a superposition of eigenfunctions $y_i(x)$ of $\mathcal{L}$,
+$$
+y(x) = \sum_{i=0}^{\infty} c_i y_i(x)
+$$
+where the operator $\mathcal{L}$ should be Hermitian operator and thus the eigenfunctinos $y_i(x)$ are orthogonal and complete.
+
+Substituting the above $y(x)$ into the differential equation $\eqref{operator}$,
+$$
+f(x) = \mathcal{L} \left( \sum_{i=0}^{\infty} c_i y_i(x) \right) = \sum_{i=0}^{\infty} c_i \lambda_i y_i(x)
+$$
+Considering that eigenfunctions $y_i(x)$ are orthogonal,
+$$
+\left< y_j^* \mid f \right> = \sum_{i=0}^{\infty} c_i \lambda_i \left< y_j^* \mid y_i \right> = c_j \lambda_j \left| y_j \right|^2
+$$
+So we obtain the coefficients before eigenfunctions,
+$$
+c_j = \frac{1}{\lambda_j} \frac{ \left< y_j^* \mid f \right> }{ |y_j(x)|^2 }
+$$
+If we use normalized eigenfunctions $|\hat{y}_i(x)|^2=1$, the full solution $y(x)$ is,
+$$
+\begin{align*}
+y(x)
+&= \sum_{j=0}^{\infty} \frac{ \left< \hat{y}_j^* \mid f \right> }{\lambda_j} \hat{y}_j(x) \\
+\color{blue}{ \text{[interchange summation and integration]} }&= \int_a^b \left\{ \sum_{j=0}^{\infty} \left[ \frac{\hat{y}_j(x) \hat{y}_j^*(z)}{\lambda_j} \right] \right\} f(z) \,dz \\
+&= \int_a^b G(x,z) f(z) \,dz \\
+\end{align*}
+$$
+where $G(x,y)=\sum_{j=0}^{\infty} \left[ \frac{1}{\lambda_j} \hat{y}_j(x) \hat{y}_j^*(z) \right]$ is the *Green's function*. So the full solution $y(x)$ has the form of an integral transform where the Green's function is the kernel.
 
 ## References ##
 
