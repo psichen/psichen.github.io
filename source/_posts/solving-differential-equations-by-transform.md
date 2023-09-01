@@ -210,7 +210,7 @@ $$
 $$
 where $\mathcal{L}$ stands for a linear differential operator acting upon the function $y(x)$.
 
-The eigenfunction $y_i(x)$ of $\mathcal{L}$ satisfies,
+The eigenfunction $y_i(x)$ of $\mathcal{L}$ exists, it should satisfies,
 $$
 \begin{equation}
 \mathcal{L} y_i(x) = \lambda_i y_i(x) \label{eigenfunction}
@@ -252,3 +252,4 @@ where $G(x,y)=\sum_{j=0}^{\infty} \left[ \frac{1}{\lambda_j} \hat{y}_j(x) \hat{y
 ## References ##
 
 1. [section 3: Laplace transforms & transfer functions](https://web.engr.oregonstate.edu/~webbky/ESE499_files/)
+2. Riley, Kenneth Franklin, Michael Paul Hobson, and Stephen John Bence. "Mathematical methods for physics and engineering." (1999): 165-169.
