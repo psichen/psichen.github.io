@@ -208,9 +208,9 @@
       </h1>
       <div>
         <section class="flex items-center gap-3 text-sm">
-          <time>2023-09-01</time>
+          <time>2023-11-06</time>
           <span class="text-gray-400">·</span>
-          <span>1.8k words</span>
+          <span>2k words</span>
         </section>
       </div>
     </div>
@@ -393,17 +393,53 @@ Y(s) = \frac{F(s) + s \cdot y_0 + y_1 + p \cdot y_0}{s^2 + p \cdot s +
 q} \label{solution}
 \end{equation}
 \]</span> Next we need to decompose <span
-class="math inline">\(Y(s)\)</span> by partial fraction expansion so we
-can get <span class="math inline">\(Y(s)\)</span> as the linear
-combination of some typical Laplace transformed functions and eventually
-<span class="math inline">\(y(t)\)</span> by inverse Laplace transform.
-For example, <span class="math display">\[
+class="math inline">\(Y(s)\)</span> by <em>partial fraction
+expansion</em> so we can get <span class="math inline">\(Y(s)\)</span>
+as the linear combination of some typical Laplace transformed functions
+and eventually <span class="math inline">\(y(t)\)</span> by inverse
+Laplace transform. For example, <span class="math display">\[
 Y(s) = \sum_{i=0}^{n} C_i \cdot Y_i(s) \\
 y(t) = \sum_{i=0}^n C_i \cdot \mathscr{L}^{-1}[Y_i(s)]
 \]</span></p>
 <p>Here is the <a
 target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_Laplace_transforms#Table">List
 of Laplace transform of common functions</a>.</p>
+<h3 id="partial-fraction-expansion">Partial fraction expansion</h3>
+<p>Similar to the auxiliary polynomial equation, there are three
+different scenarios according to the denominator,</p>
+<ol type="1">
+<li>roots are all different and real</li>
+<li>roots are real but some are duplicated</li>
+<li>some roots are complex</li>
+</ol>
+<p>For the first scenario, we can get the coefficients of each term by
+multiplying the corresponding denominator and set the value to zero,
+<span class="math display">\[
+\begin{align*}
+        \prod_i \frac{f(s)}{(s - r_i)} &amp;= \sum_i \frac{A_i}{s-r_i} =
+F(s) \\
+        A_j &amp;= (s-r_j) F(s) |_{s=r_i} \\
+\end{align*}
+\]</span> For the second scenario, besides the coefficients determined
+by the above methods, the additional coefficient from the repeated root
+is determined by the equvialence of the coefficient before the variable
+at the same order <span class="math inline">\(n\)</span>, <span
+class="math display">\[
+\begin{align*}
+       f(s) &amp;= \prod_i (s-r_i) F(s) \\
+       f(s) &amp;= \sum_n C_n s^n = \prod_i (s-r_i) F(s) = \sum_n
+C&#39;_n s^n \\
+       \iff C_n &amp;= C&#39;_n
+\end{align*}
+\]</span> For the third scenario, we can try to construct a homogeneous
+numerator, e.g., <span class="math display">\[
+F(s) = \frac{f(s)}{(s+\gamma)^2+\omega^2} \prod \frac{1}{(s-r_i)} =
+\frac{B(s+\gamma)+C\omega}{(s+\gamma)^2+\omega^2} + \sum_i
+\frac{A_i}{s-r_i}
+\]</span> The coefficients can be found through comparing coefficients
+before varibales at the same order <span
+class="math inline">\(n\)</span> between both sides of the polynomial
+equation.</p>
 <p>According to the Laplace transform of derivatives <span
 class="math inline">\(\eqref{derivative}\)</span>, the denominator of
 <span class="math inline">\(\eqref{solution}\)</span> was only
@@ -468,8 +504,8 @@ class="math display">\[
 for a linear differential operator acting upon the function <span
 class="math inline">\(y(x)\)</span>.</p>
 <p>The eigenfunction <span class="math inline">\(y_i(x)\)</span> of
-<span class="math inline">\(\mathcal{L}\)</span> satisfies, <span
-class="math display">\[
+<span class="math inline">\(\mathcal{L}\)</span> exists, it should
+satisfies, <span class="math display">\[
 \begin{equation}
 \mathcal{L} y_i(x) = \lambda_i y_i(x) \label{eigenfunction}
 \end{equation}
@@ -523,8 +559,11 @@ transform where the Green's function is the kernel.</p>
 <h2 id="references">References</h2>
 <ol type="1">
 <li><a
-target="_blank" rel="noopener" href="https://web.engr.oregonstate.edu/~webbky/ESE499_files/">section 3:
-Laplace transforms &amp; transfer functions</a></li>
+target="_blank" rel="noopener" href="https://web.engr.oregonstate.edu/~webbky/ESE330_files/Section%205%20Laplace%20Transforms.pdf">section
+3: Laplace transforms &amp; transfer functions</a></li>
+<li>Riley, Kenneth Franklin, Michael Paul Hobson, and Stephen John
+Bence. "Mathematical methods for physics and engineering." (1999):
+165-169.</li>
 </ol>
 
   </article>
@@ -534,10 +573,6 @@ Laplace transforms &amp; transfer functions</a></li>
       
         <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
           <a href="/tags/transformation/">transformation</a>
-        </span>
-      
-        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
-          <a href="/tags/vector/">vector</a>
         </span>
       
         <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
@@ -558,6 +593,10 @@ Laplace transforms &amp; transfer functions</a></li>
       
         <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
           <a href="/tags/vector-space/">vector space</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/vector/">vector</a>
         </span>
       
     
