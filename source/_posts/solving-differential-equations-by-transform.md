@@ -158,13 +158,43 @@ $$
 Y(s) = \frac{F(s) + s \cdot y_0 + y_1 + p \cdot y_0}{s^2 + p \cdot s + q} \label{solution}
 \end{equation}
 $$
-Next we need to decompose $Y(s)$ by partial fraction expansion so we can get $Y(s)$ as the linear combination of some typical Laplace transformed functions and eventually $y(t)$ by inverse Laplace transform. For example,
+Next we need to decompose $Y(s)$ by *partial fraction expansion* so we can get $Y(s)$ as the linear combination of some typical Laplace transformed functions and eventually $y(t)$ by inverse Laplace transform. For example,
 $$
 Y(s) = \sum_{i=0}^{n} C_i \cdot Y_i(s) \\
 y(t) = \sum_{i=0}^n C_i \cdot \mathscr{L}^{-1}[Y_i(s)]
 $$
 
 Here is the [List of Laplace transform of common functions](https://en.wikipedia.org/wiki/List_of_Laplace_transforms#Table).
+
+### Partial fraction expansion ###
+
+Similar to the auxiliary polynomial equation, there are three different scenarios according to the denominator,
+
+1. roots are all different and real
+2. roots are real but some are duplicated
+3. some roots are complex
+
+For the first scenario, we can get the coefficients of each term by multiplying the corresponding denominator and set the value to zero,
+$$
+\begin{align*}
+        \prod_i \frac{f(s)}{(s - r_i)} &= \sum_i \frac{A_i}{s-r_i} = F(s) \\
+        A_j &= (s-r_j) F(s) |_{s=r_i} \\
+\end{align*}
+$$
+For the second scenario, besides the coefficients determined by the above methods, the additional coefficient from the repeated root is determined by the equvialence of the coefficient before the variable at the same order $n$,
+$$
+\begin{align*}
+       f(s) &= \prod_i (s-r_i) F(s) \\
+       f(s) &= \sum_n C_n s^n = \prod_i (s-r_i) F(s) = \sum_n C'_n s^n \\
+       \iff C_n &= C'_n
+\end{align*}
+$$
+For the third scenario, we can try to construct a homogeneous numerator, e.g.,
+$$
+F(s) = \frac{f(s)}{(s+\gamma)^2+\omega^2} \prod \frac{1}{(s-r_i)} = \frac{B(s+\gamma)+C\omega}{(s+\gamma)^2+\omega^2} + \sum_i \frac{A_i}{s-r_i}
+$$
+The coefficients can be found through comparing coefficients before varibales at the same order $n$ between both sides of the polynomial equation.
+
 
 According to the Laplace transform of derivatives $\eqref{derivative}$, the denominator of $\eqref{solution}$ was only determined by coefficients of the ODE (here $p$ and $q$), and the roots of the denominator determine the form of partial fractions and thus the inverse Laplace transform. The numerator of $\eqref{solution}$ only affects coefficients $C_i$.
 
