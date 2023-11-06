@@ -251,5 +251,5 @@ where $G(x,y)=\sum_{j=0}^{\infty} \left[ \frac{1}{\lambda_j} \hat{y}_j(x) \hat{y
 
 ## References ##
 
-1. [section 3: Laplace transforms & transfer functions](https://web.engr.oregonstate.edu/~webbky/ESE499_files/)
+1. [section 3: Laplace transforms & transfer functions](https://web.engr.oregonstate.edu/~webbky/ESE330_files/Section%205%20Laplace%20Transforms.pdf)
 2. Riley, Kenneth Franklin, Michael Paul Hobson, and Stephen John Bence. "Mathematical methods for physics and engineering." (1999): 165-169.
