@@ -16,7 +16,7 @@ $$
 $$
 It means that the displacement of the wave at the position $\boldsymbol{r}$ and time $t$ is equal to $\Psi(\boldsymbol{r}, t)$, and the phase $\phi$ of the wave is equal to $(\boldsymbol{k} \cdot \boldsymbol{r} - \omega t)$.
 
-### interfence ###
+### interference ###
 
 When multiple waves meet, they would interfere with each other and the generated displacement is the sum of their respective displacement,
 $$
