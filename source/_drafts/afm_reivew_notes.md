@@ -3,6 +3,34 @@ title: AFM review notes
 tags: [AFM]
 ---
 
+## natural/damped frequency of oscillation ##
+
+If an oscillation system is damped, the damped term will bring to an exponential decay term in the output function in time domain.
+
+|time domain|Laplace $s$-domain|
+|---|---|
+|$\sin(\omega t) \cdot u(t)$|$\omega / (s^2 + \omega^2)$|
+|$\cos(\omega t) \cdot u(t)$|$s / (s^2 + \omega^2)$|
+|$\exp(-\alpha t) \sin(\omega t) \cdot u(t)$|$\omega / \big((s+\alpha)^2 + \omega^2\big)$|
+|$\exp(-\alpha t) \cos(\omega t) \cdot u(t)$|$s / \big((s+\alpha)^2 + \omega^2\big)$|
+
+In general, an oscillation system in Laplace $s$-domain is,
+$$
+F(s) = \frac{A}{(s+\alpha)^2 + \omega_d^2} = \frac{A}{s^2 + 2 \alpha s + \alpha^2 + \omega_d^2}
+$$
+We can also rewrite it as,
+$$
+F(s) = \frac{A}{s^2+2 \zeta \omega_n s + \omega_n^2}
+$$
+where $\zeta = \frac{\alpha}{\omega_n}$ is the damping ratio and $\omega_d = \omega_n \sqrt{1-\zeta^2}$. The poles are $s = -\zeta \omega_n \pm \omega_n \sqrt{\zeta^2 - 1}$ and now it's easy to classify the dynamics of oscillation based on $\zeta$,
+
+|$\zeta$|Laplace $s$-domain|time domain|poles|class|
+|---|---|---|---|---|
+|0|$A / (s^2+\omega_n^2)$|$B \sin(\omega_n t) \cdot u(t)$|two pure, conjugated imaginary roots|undamped|
+|(0,1)|$A / \big( (s+\alpha)^2 + \omega_d^2 \big)$|$B \exp(-\alpha t) \sin(\omega_d t) \cdot u(t)$|two conjugated complex roots|under damped|
+|1|$A / (s+\omega_n)^2$|$B t \exp(-\omega_n t) \cdot u(t)$|two identical real roots|critically damped|
+|(1,$+\infty$)|$A / \big( (s+\sigma_1)(s+\sigma_2) \big)$|$B\exp(-\sigma_1 t)+C\exp(-\sigma_2 t)$|two different real roots|over damped|
+
 ## Contact mode AFM ##
 
 ```mermaid
