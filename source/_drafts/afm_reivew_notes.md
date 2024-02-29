@@ -33,15 +33,24 @@ where $\zeta = \frac{\alpha}{\omega_n}$ is the damping ratio and $\omega_d = \om
 
 ## Contact mode AFM ##
 
-```mermaid
-flowchart TB
-    top["===================="]
-    bottom["===================="]
-    mass[m]
-    top o--spring\nk--o mass
-    top x--dumping\nb--x mass
-    mass <--> force\nF
-    mass o--spring\nk_s---o bottom
+```tikz
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{circuitikz}
+\begin{document}
+\begin{tikzpicture}
+\node (M) at (0,0) [draw, minimum width=1.8cm, minimum height=1cm] {$m$};
+\draw [pattern=north east lines] (-1,2) rectangle ++(2,.2);
+\draw ($(M.north west)+(.5, 1.5)$) to[spring, l_=$k$] ++(0,-1.5);
+\draw ($(M.north east)+(-.5, 1.5)$) to[damper, l^=$b$] ++(0,-1.5);
+\draw ($(M.south west)+(.5, 0)$) to[spring, -*, l_=$k_s$] ++(0,-1.5);
+\draw [thick, Latex-] ($(M.south east)+(-.5, 0)$) -- ++(0,-1.2) node [midway, right] {$F_0$};
+\draw [] ($(M.north east)+(.2,0)$) -- ($(M.north east)+(.5,0)$);
+\draw [-Latex] ($(M.north east)+(.5,0)$) -- ++(0,.5) node [midway, right] {$z$};
+\draw [] ($(M.south west)+(.7,-1.5)$) -- ($(M.south east)+(.5,-1.5)$);
+\draw [-Latex] ($(M.south east)+(.5,-1.5)$) -- ++(0,.5) node [midway, right] {$s(x)$};
+\end{tikzpicture}
+\end{document}
 ```
 
 $$
