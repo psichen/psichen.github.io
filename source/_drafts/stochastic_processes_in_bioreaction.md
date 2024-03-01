@@ -40,12 +40,26 @@ For each oriented cycle of elementary processes the product of kinetic constants
 
 Let's consider a circular reaction,
 
-```mermaid
-flowchart LR
+```tikz
+\usetikzlibrary {arrows.meta}
+\begin{document}
+\begin{tikzpicture}
 
-p_i <--> |k_ij / k_ji| p_j
-p_j <--> |k_jk / k_kj| p_k
-p_k <--> |k_ki / k_ik| p_i
+\node(i) at (0,0) [] {$p_i$};
+\node(j) at (-2,-3) [] {$p_j$};
+\node(k) at (2,-3) [] {$p_k$};
+
+\draw [arrows = {-Stealth[left]}] (i) to [bend left=5] node [midway, above left] {$k_{ij}$} (j);
+\draw [arrows = {-Stealth[left]}] (j) to [bend left=5] node [midway, below right] {$k_{ji}$} (i);
+
+\draw [arrows = {-Stealth[left]}] (i) to [bend left=5] node [midway, above right] {$k_{ik}$} (k);
+\draw [arrows = {-Stealth[left]}] (k) to [bend left=5] node [midway, below left] {$k_{ki}$} (i);
+
+\draw [arrows = {-Stealth[left]}] (j) to [bend left=5] node [midway, above] {$k_{jk}$} (k);
+\draw [arrows = {-Stealth[left]}] (k) to [bend left=5] node [midway, below] {$k_{kj}$} (j);
+
+\end{tikzpicture}
+\end{document}
 ```
 
 We therefore have as the conditions imposed by the principle of detail balancing,
@@ -54,7 +68,7 @@ k_{ij} p_i = k_{ji} p_j \\
 k_{jk} p_j = k_{kj} p_k \\
 k_{ki} p_k = k_{ik} p_i \\
 $$
-where $k_{ij}$ is the rate constant of the reaction $i \rightarrow j$. So we can get the Wegscheider condition by timing all the above equations. In general case, for every pathway connecting states $i_n, (n=0,1,\dots,n)$, the Wegscheider condition is,
+where $k_{ij}$ is the rate constant of the reaction $i \rightarrow j$. So we can get the Wegscheider condition by multiplying all the above equations. In general case, for every pathway connecting states $i_n, (n=0,1,\dots,n)$, the Wegscheider condition is,
 $$
 \frac{k_{i_0, i_1} k_{i_1, i_2} \cdots k_{i_n, i_0}}{k_{i_1, i_0} k_{i_2, i_1} \cdot k_{i_0 i_n}} = 1
 $$
