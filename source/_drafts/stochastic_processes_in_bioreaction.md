@@ -13,9 +13,19 @@ $$
 \mu_Y^o - \mu_X^o = k_BT \ln (\frac{c_X^*}{c_Y^*}) = k_BT \ln (\frac{k^-}{k^+})
 $$
 Therefore, for an arbitrary reaction:
-$$
-X \Leftrightarrow Y
-$$
+
+```tikz
+\usetikzlibrary {arrows.meta}
+\begin{document}
+\begin{tikzpicture}
+\node (X) {\Large X};
+\node [xshift=2cm] (Y) {\Large Y};
+\draw [arrows={-Stealth[left]}] (X) to [bend left=5] node [midway, above] {\large $k^+$} (Y);
+\draw [arrows={-Stealth[left]}] (Y) to [bend left=5] node [midway, below] {\large $k^-$} (X);
+\end{tikzpicture}
+\end{document}
+```
+
 the chemical potential difference is determined by flux,
 $$
 \Delta \mu = k_BT \ln (\frac{k^-}{k^+}) + k_BT \ln (\frac{c_Y}{c_X}) = k_BT \ln (\frac{J^-}{J^+})
@@ -45,18 +55,18 @@ Let's consider a circular reaction,
 \begin{document}
 \begin{tikzpicture}
 
-\node(i) at (0,0) [] {$p_i$};
-\node(j) at (-2,-3) [] {$p_j$};
-\node(k) at (2,-3) [] {$p_k$};
+\node(i) at (0,0) [] {\Large $p_i$};
+\node(j) at (-2,-3) [] {\Large $p_j$};
+\node(k) at (2,-3) [] {\Large $p_k$};
 
-\draw [arrows = {-Stealth[left]}] (i) to [bend left=5] node [midway, above left] {$k_{ij}$} (j);
-\draw [arrows = {-Stealth[left]}] (j) to [bend left=5] node [midway, below right] {$k_{ji}$} (i);
+\draw [arrows = {-Stealth[left]}] (i) to [bend left=5] node [midway, above left] {\large $k_{ij}$} (j);
+\draw [arrows = {-Stealth[left]}] (j) to [bend left=5] node [midway, below right] {\large $k_{ji}$} (i);
 
-\draw [arrows = {-Stealth[left]}] (i) to [bend left=5] node [midway, above right] {$k_{ik}$} (k);
-\draw [arrows = {-Stealth[left]}] (k) to [bend left=5] node [midway, below left] {$k_{ki}$} (i);
+\draw [arrows = {-Stealth[left]}] (i) to [bend left=5] node [midway, above right] {\large $k_{ik}$} (k);
+\draw [arrows = {-Stealth[left]}] (k) to [bend left=5] node [midway, below left] {\large $k_{ki}$} (i);
 
-\draw [arrows = {-Stealth[left]}] (j) to [bend left=5] node [midway, above] {$k_{jk}$} (k);
-\draw [arrows = {-Stealth[left]}] (k) to [bend left=5] node [midway, below] {$k_{kj}$} (j);
+\draw [arrows = {-Stealth[left]}] (j) to [bend left=5] node [midway, above] {\large $k_{jk}$} (k);
+\draw [arrows = {-Stealth[left]}] (k) to [bend left=5] node [midway, below] {\large $k_{kj}$} (j);
 
 \end{tikzpicture}
 \end{document}

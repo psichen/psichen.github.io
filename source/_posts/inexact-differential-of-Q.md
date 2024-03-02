@@ -9,7 +9,21 @@ $$ \int_{L_1} \delta Q \neq \int_{L_2} \delta Q $$
 
 类似的，体积功$\delta W$的积分也与路径有关，这一点很好理解。假设有2个过程A, B：
 
-![path function](http://muchongimg.xmcimg.com/data/bcs/2014/0701/w108h1175073_1404207867_483.jpg#opennewwindow)
+```tikz
+\begin{document}
+\begin{tikzpicture}
+\draw [thick, ->] (0,0) -- ++(8,0) node [midway, below] {\large $V$};
+\draw [thick, ->] (0,0) -- ++(0,5) node [midway, left] {\large $P$};
+
+\node (A) at (1,1) {};
+\node (B) at (6,4) {};
+
+\draw [thick] (A.north east) .. controls (2,3) .. node [midway, above] {$A$} (B.south west);
+\draw [thick] (A.north east) .. controls (5,2) .. node [midway, below] {$B$} (B.south west);
+
+\end{tikzpicture}
+\end{document}
+```
 
 由于$W=\int PdV$，曲线A, B下方与x轴形成的面积即对应的体积功，很容易看出：
 
