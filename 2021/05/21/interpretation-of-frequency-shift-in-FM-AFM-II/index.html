@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Interpretation of frequency shift in FM AFM (II) | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Interpretation of frequency shift in FM AFM (II)
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-05-21</time>
+          <span class="text-gray-400">·</span>
+          <span>1k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Periodic motion in dynamic systems are of especial importance. Very
+often we are interested not so much in the motion trajectories as in the
+frequencies of the motion.</p>
+<span id="more"></span>
+<h2 id="action-angle-variables">Action-Angle variables</h2>
+<p>For a conserved system, its Hamiltonian is constant,</p>
+<p><span class="math display">\[ H(q,p) = \alpha \]</span></p>
+<p>Thus we can know the momentum <span class="math inline">\(p\)</span>
+is a function <span class="math inline">\(p(q,\alpha)\)</span>. For a
+periodic motion we introduce a new variable <span
+class="math inline">\(J(\alpha)\)</span> designed as the transformed
+constant momentum. The so-called abbreviated action variable <span
+class="math inline">\(J(\alpha)\)</span> is defined,</p>
+<p><span class="math display">\[ J(\alpha) = \oint p(q,\alpha) \ dq
+\]</span></p>
+<p>where the momentum <span class="math inline">\(p\)</span> is
+integrated by <span class="math inline">\(q\)</span> over a complete
+period of the motion, and <span class="math inline">\(J(\alpha)\)</span>
+is a function solely dependent on <span
+class="math inline">\(\alpha\)</span>. Thus the Hamiltonian can be
+represented by <span class="math inline">\(\alpha=K(J)\)</span> as well.
+Supposed the new conjugated variable is <span
+class="math inline">\(\beta\)</span>, from the equation of motion we
+also have,</p>
+<p><span class="math display">\[ \dot{\beta} = \frac{\partial
+K}{\partial J} \ , \ \dot{J} = - \frac{\partial K}{\partial \beta}
+\]</span></p>
+<p>Because <span class="math inline">\(K(J)\)</span> is a function of
+the variable <span class="math inline">\(J\)</span> only, we may
+designate <span class="math inline">\(\omega(J) = \frac{\partial
+K}{\partial J}\)</span>, then we can get <span
+class="math inline">\(\beta\)</span> from the above partial differential
+equation,</p>
+<p><span class="math display">\[ \beta = \omega(J) t + \beta_{0}
+\]</span></p>
+<p>Considering the change in <span class="math inline">\(\beta\)</span>
+as <span class="math inline">\(q\)</span> goes through a complete cycle
+in the motion,</p>
+<p><span class="math display">\[ \begin{aligned}
+\Delta \beta &amp;= \oint \frac{\partial \beta}{\partial q} \ dq \\
+&amp;= \oint \frac{\partial}{\partial q} (\frac{\partial W}{\partial J})
+\ dq \\
+&amp;= \frac{d}{dJ} \oint \frac{\partial W}{\partial q} \ dq \\
+&amp;= \frac{d}{dJ} \oint p \ dq \\
+&amp;= 1 \\
+\end{aligned}  \]</span></p>
+<p>The above equation states that <span
+class="math inline">\(\beta\)</span> changes by unity as <span
+class="math inline">\(q\)</span> goes through a complete cycle. Then we
+have,</p>
+<p><span class="math display">\[ \Delta \beta = \omega(J) \tau = 1
+\]</span></p>
+<p>So <span class="math inline">\(\omega(J)\)</span> is the reciprocal
+of the period <span class="math inline">\(\tau\)</span> of a complete
+cycle, namely, the frequency.</p>
+<p><span class="math display">\[ \dot{\beta} = \omega(J) =
+\frac{1}{\tau} = f \]</span></p>
+<p>The dimension of the variable <span class="math inline">\(J\)</span>
+is an angular momentum and that of the variable <span
+class="math inline">\(\beta\)</span> is an angle, hence given the name
+of Action-Angle variables. The Action-Angle variable transformation
+provides a way to obtain the frequency of periodic motion without find a
+complete solution to the motion of the system.</p>
+<h2 id="perturbation-theory">Perturbation theory</h2>
+<p>Not all of classic mechanical problems have exact solutions, but we
+can use perturbation Hamiltonian to approximate the solution of the
+rather complicated mechanical problems. The idea of finding a solution
+of perturbation Hamiltonian is to iterate the canonical variables by the
+equation of motion again and again.</p>
+<p>The Hamiltonian with perturbation,</p>
+<p><span class="math display">\[ H = H_{0} + \Delta H \]</span></p>
+<p>where <span class="math inline">\(H_{0}\)</span> is the unperturbed
+Hamiltonian and <span class="math inline">\(\Delta H\)</span> is the
+perturbed Hamiltonian. The canonical property of a given coordinate
+transformation is independent of the particular form the Hamiltonian.
+Only now the new Hamiltonian won't vanish and the transformed variables
+may not be constant,</p>
+<p><span class="math display">\[ K(Q,P,t) = H(q,p,t) + \Delta H(q,p,t) +
+\frac{\partial S}{\partial t} = \Delta K(Q,P,t) \]</span></p>
+<p><span class="math display">\[ \dot{Q} = \frac{\partial \Delta
+K}{\partial P} \ , \ \dot{P} = - \frac{\partial \Delta K}{\partial Q}
+\]</span></p>
+<p>In the perturbed scenario, <span class="math inline">\(\Delta
+H\)</span> is small compared to <span
+class="math inline">\(H_{0}\)</span>. Therefore the quantities <span
+class="math inline">\((Q,P)\)</span> don't change rapidly. So converged
+<span class="math inline">\((Q,P)\)</span> may be obtained by repeatedly
+replacing <span class="math inline">\(Q\)</span> and <span
+class="math inline">\(P\)</span> in the following equations,</p>
+<p><span class="math display">\[ \begin{aligned}
+\dot{Q}_{i+1} &amp;= \frac{\partial \Delta K}{\partial P}(Q_{i},P_{i},t)
+\\
+\dot{P}_{i+1} &amp;= - \frac{\partial \Delta K}{\partial Q}
+(Q_{i},P_{i},t) \\
+\end{aligned}  \]</span></p>
+<h2 id="cantilever-in-fm-afm">Cantilever in FM-AFM</h2>
+<p>The external force between the sample surface and the tip usually is
+supposed to obey an inverse power law,</p>
+<p><span class="math display">\[ F_{ts}(q) = - C q^{-n} \]</span></p>
+<p>resulting in the perturbation Hamiltonian,</p>
+<p><span class="math display">\[ \Delta H = V(q) =
+\begin{cases}
+-\frac{C}{(n-1) q^{n-1}} \ &amp; n\gt1 \\
+C \ln(q) \ &amp; n = 1 \\
+\end{cases} \]</span></p>
+<p>and the corresponding perturbation Kamiltonian <span
+class="math inline">\(\Delta K(J)\)</span>. So the frequency shift
+is,</p>
+<p><span class="math display">\[ \Delta f = \langle \Delta \dot{\beta}
+\rangle = \langle \frac{\partial K}{\partial J} - \frac{\partial
+K_{0}}{\partial J} \rangle = \langle \frac{\partial \Delta K}{\partial
+J} \rangle = \langle \frac{\partial V(q)}{\partial q} \frac{\partial
+q}{\partial J} \rangle \]</span></p>
+<p>The average is taken for a complete cycle of the motion because the
+action variable <span class="math inline">\(J\)</span> is defined over a
+complete cycle.</p>
+<p>From the reference 3, the deflection <span
+class="math inline">\(q&#39;\)</span> is,</p>
+<p><span class="math display">\[ q&#39; = \sqrt{\frac{2 f_{0} J}{k}}
+\sin 2 \pi (f_{0} t + \beta) \]</span></p>
+<p>It yields,</p>
+<p><span class="math display">\[ \frac{\partial q&#39;}{\partial J}
+=  \frac{q&#39;}{2 J} = \frac{f_{0}}{k A_{0}^{2}} q&#39; \]</span></p>
+<p>where <span class="math inline">\(A_{0}\)</span> is the amplitude of
+the deflection, <span class="math inline">\(k\)</span> is the spring
+constant of the cantilever and <span
+class="math inline">\(f_{0}\)</span> is the original resonance frequency
+under free oscillation when the tip is very far from the surface.
+Finally,</p>
+<p><span class="math display">\[ \Delta f = - \frac{f_{0}}{k
+A_{0}^{2}}  \langle F_{ts} q&#39; \rangle = \frac{1}{2 \pi}
+\frac{f_{0}}{k A_{0}} \frac{C}{d^{n}} \int_{0}^{2\pi} \frac{\cos x}{[1 +
+(A_{0}/d) (\cos x + 1)]^{n}} \ d{x} \]</span></p>
+<p>where <span class="math inline">\(d\)</span> is the distance between
+the surface and the lowest position of the tip.</p>
+<h3 id="small-amplitudes">small amplitudes</h3>
+<p>When the tip oscillates at a small amplitude,</p>
+<p><span class="math display">\[ A_{0} &lt;&lt; d \]</span></p>
+<p>making use of the first order Taylor series of</p>
+<p><span class="math display">\[ (1 + \epsilon)^{-n} = 1 - n \epsilon +
+O(\epsilon^{2}) \]</span></p>
+<p>we can approximate <span class="math inline">\(\Delta f\)</span>
+as,</p>
+<p><span class="math display">\[ \Delta f = \frac{f_{0} C}{2 \pi k A_{0}
+d^{n}} \int_{0}^{2 \pi} \cos x[ 1 -n (A_{0}/d) (\cos x + 1) ] \ d{x} =
+-\frac{C f_{0} n}{2 k d^{n+1}} = - \frac{f_{0}}{2 k} (\nabla \cdot
+F_{ts}|_{q=d}) \]</span></p>
+<p>It states that the frequency shift is related with the gradient of
+the external force <span class="math inline">\(F_{ts}\)</span> on the
+<span class="math inline">\(z\)</span>-axis, corresponding to the
+first-order expansion of Taylor series of the expression,</p>
+<p><span class="math display">\[ f = \frac{1}{2 \pi}
+\sqrt{\frac{k_{eff}}{m}} \]</span></p>
+<p>where <span class="math inline">\(k_{eff} = k - \nabla \cdot
+F_{ts}\)</span>.</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><p>Goldstein, Herbert, Charles Poole, and John Safko. "Classical
+mechanics." (2002).</p></li>
+<li><p><a
+target="_blank" rel="noopener" href="https://www.asc.ohio-state.edu/mathur.16/821hj.pdf">Notes for
+Classical Mechanics 821: Hamilton-Jacobi equation</a></p></li>
+<li><p>Giessibl, Franz J. "Forces and frequency shifts in
+atomic-resolution dynamic-force microscopy." <em>Physical Review B</em>
+56.24 (1997): 16010.</p></li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/AFM/">AFM</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/transformation/">transformation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/generating-function/">generating function</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/mechanics/">mechanics</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Hamilton/">Hamilton</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Jacobi/">Jacobi</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/harmonic-oscillation/">harmonic oscillation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/perturbation/">perturbation</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/06/12/notes-about-students-t-test/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Notes about Student's t-test and t-distribution
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/05/18/interpretation-of-frequency-shift-in-FM-AFM-I/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Interpretation of frequency shift in FM-AFM (I)
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Solving differential equations by transforms | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Solving differential equations by transforms
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2023-11-06</time>
+          <span class="text-gray-400">·</span>
+          <span>2k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Ordinary differential equations (ODE) can be solved via roots of
+auxiliary equations or complement equations, but the rationale is not so
+clear in text books I read.</p>
+<span id="more"></span>
+<h2 id="solving-ode-in-hard-way">Solving ODE in hard way</h2>
+<h3 id="homogeneous-linear-ode">homogeneous linear ODE</h3>
+<p>Let's start with the following homogeneous ODE, <span
+class="math display">\[
+\sum_{i=0}^n a_i y^{(n)} = 0
+\]</span> To solve such the differential equation, we can assume the
+solution will be the form <span
+class="math inline">\(y(t)=\exp(rt)\)</span> and substitute it into the
+ODE, <span class="math display">\[
+\exp(rt) \cdot \sum_{i=0}^{n} a_n r^n = 0
+\]</span> In order for the above eqaution to be zero we need to require
+the auxiliary polynomial equation to be zero, <span
+class="math display">\[
+\begin{equation}
+\sum_{i=0}^n a_i r^n = 0 \label{auxiliary}
+\end{equation}
+\]</span> According to the roots, we have</p>
+<ol type="1">
+<li><strong>roots are all different and real</strong></li>
+</ol>
+<p>Suppose roots for the auxiliary polynomial equaiton are <span
+class="math inline">\(r_i\,(i=1,2,...,n)\)</span>, the solution <span
+class="math inline">\(y(t)\)</span> is the linear combination of
+individual solution, <span class="math display">\[
+y(t) = \sum_{i=1}^n C_i \exp(r_i t)
+\]</span></p>
+<ol start="2" type="1">
+<li><strong>roots are real but some are duplicated</strong></li>
+</ol>
+<p>Suppose the duplicated roots are <span
+class="math inline">\(r\)</span> with the multiplicity <span
+class="math inline">\(k\)</span> and other roots are <span
+class="math inline">\(r_i\)</span>, the solution <span
+class="math inline">\(y(t)\)</span> is the linear combination, <span
+class="math display">\[
+y(t) = \sum_{i=1}^{n-k} C_i \exp(r_i t) + \sum_{j=1}^k C_j t^{j-1}
+\exp(r t)
+\]</span></p>
+<ol start="3" type="1">
+<li><strong>some roots are complex</strong></li>
+</ol>
+<p>If the roots <span class="math inline">\(r=\lambda \pm \mu i\)</span>
+are complex with multiplicity <span class="math inline">\(k\)</span>,
+the solution <span class="math inline">\(y(t)\)</span> is the set of
+solutions, <span class="math display">\[
+\begin{align*}
+        \exp((\lambda + \mu i) t) &amp;&amp; t \exp((\lambda + \mu i) t)
+&amp;&amp; ... &amp;&amp; t^{k-1} \exp((\lambda + \mu i) t) \\
+        \exp((\lambda - \mu i) t) &amp;&amp; t \exp((\lambda - \mu i) t)
+&amp;&amp; ... &amp;&amp; t^{k-1} \exp((\lambda - \mu i) t) \\
+\end{align*}
+\]</span> The imaginary parts can be cancelled according to Euler's
+rule, so the solution <span class="math inline">\(y(t)\)</span> is a
+linear combination, <span class="math display">\[
+y(t) = \sum_{i=1}^k t^{i-1} \exp(\lambda t) \big ( C_i \cos(\mu t) +
+C_i^{&#39;} \sin(\mu t) \big )
+\]</span></p>
+<h3 id="inhomogeneous-linear-ode">inhomogeneous linear ODE</h3>
+<p>For inhomogeneous linear ODE, <span class="math display">\[
+\sum_{i=0}^n a_i y^{(n)} = f(t)
+\]</span></p>
+<p>where <span class="math inline">\(f(t) \neq 0\)</span>. First we need
+to find general solutions <span class="math inline">\(y_g\)</span> for
+the corresponding homogeneous linear ODEs. Then we can use undetermined
+coefficients to find particular solutions <span
+class="math inline">\(y_p\)</span> for different <span
+class="math inline">\(f(t)\)</span>. So the final solution for the
+inhomogeneous linear ODE is the linear combination of <span
+class="math inline">\(y_g\)</span> and <span
+class="math inline">\(y_p\)</span> because, <span
+class="math display">\[
+\begin{align*}
+        \sum_{i=0}^n a_i (C_g y_g + y_p)^{(n)} &amp;= \sum_{i=0}^n a_i
+C_g y_g^{(n)} + \sum_{i=0}^n a_i y_p^{(n)} \\
+        &amp;= 0 + f(t) \\
+        &amp;= f(t) \\
+\end{align*}
+\]</span> There are different type of <span
+class="math inline">\(f(t)\)</span> and corresponding forms of
+particular solutions,</p>
+<p><span class="math display">\[ \text{Table 1 undetermined coefficient
+form} \]</span> <span class="math display">\[ \begin{array}{ll}
+\hline
+f(t) &amp; y_p(t) \\
+\hline
+\alpha \exp(\beta t) &amp; A \exp(\beta t) \\
+\alpha \cos(\beta t) &amp; A \cos(\beta t) + B \sin(\beta t) \\
+\alpha \sin(\beta t) &amp; A \cos(\beta t) + B \sin(\beta t) \\
+\sum_{i=0}^n \alpha_i x^i &amp; \sum_{i=0}^n A_i x^i \\
+\exp(\beta t) \sum_{i=0}^n \alpha_i x^i &amp; \exp(\beta t) \sum_{i=0}^n
+A_i x^i \\
+\hline
+\end{array} \]</span></p>
+<p>Although we can solve these ODEs, it's too tedious and tricky to
+understand the method for solving differential equations systematically.
+Fortunately, Laplace transform can give a better explanation.</p>
+<h2 id="laplace-transform">Laplace transform</h2>
+<p>A transform is a mapping of a function from one domain to another.
+The Laplace transform is defined as, <span class="math display">\[
+\begin{equation}
+\mathscr{L}[g(t)] = G(s) = \int_0^{\infty} g(t) \exp(-st) \,dt
+\label{laplace}
+\end{equation}
+\]</span> where <span class="math inline">\(s=\sigma+i \omega\)</span>
+is a complex variable.</p>
+<h3 id="transform-of-derivatives">transform of derivatives</h3>
+<p>One of important properties of Laplace transform is to transform
+derivatives, <span class="math display">\[
+\begin{align*}
+        \mathscr{L}[\dot{g}(t)] &amp;= \int_0^\infty \dot{g}(t)
+\exp(-st) \,dt \\
+        \color{blue}{\text{[integration by parts]}} &amp;=
+\exp(-st)g(t)|_{t=0}^\infty - (-s) \int_0^\infty g(t) \exp(-st) \,dt \\
+        \color{blue}{\text{[integrable functions decay at infinity]}}
+&amp;= s \int_0^\infty g(t) \exp(-st) \,dt - g(0) \\
+        &amp;= s \cdot G(s) - g(0) \\
+\end{align*}
+\]</span> In general, the Laplace transform of <span
+class="math inline">\(n^{th}\)</span> derivatives is, <span
+class="math display">\[
+\begin{align}
+\mathscr{L}[g^{(n)}]
+&amp;= s \cdot \mathscr{L}[g^{(n-1)}] - g^{(n-1)}(0) \\
+&amp;= s^n \cdot G(s) - \sum_{i=1}^{n} s^{i-1} \cdot g^{(n-i)}(0)
+\label{derivative} \\
+\end{align}
+\]</span></p>
+<h3 id="convolution-property">convolution property</h3>
+<p>By applying the above property to <span
+class="math inline">\(g(t)\)</span> and <span
+class="math inline">\(\int_0^t g(\tau) \,d\tau\)</span>, we have the
+Laplace transform of integral, <span class="math display">\[
+\mathscr{L}[\int_0^t g(\tau)\,d\tau] = \frac{1}{s} \mathscr{L}[g(t)]
+\]</span> Also, we can treat <span class="math inline">\(\int_0^t
+g(\tau)\,d\tau\)</span> as the convolution <span
+class="math inline">\(\int_{0}^{\infty} u(t-\tau)
+g(\tau)\,d\tau\)</span>, where <span class="math inline">\(u(t)\)</span>
+is the <em>Heaviside step function</em>, <span class="math display">\[
+u(t) = \begin{cases}
+        0, &amp; t \lt 0 \\
+        1, &amp; t \geq 0 \\
+\end{cases}
+\]</span> Besides, the Laplace transform of Heaviside step function is,
+<span class="math display">\[
+\mathscr{L}[u(t)] = \int_0^{\infty} \exp(-st)\,dt = -\frac{1}{s}
+\exp(-st)|_0^{\infty} = \frac{1}{s}
+\]</span> Therefore, similar to Fourier transform, the Laplace transform
+of convolution is equal to the product of their respective Laplace
+transforms, <span class="math display">\[
+\begin{equation}
+\mathscr{L}[g(t)*f(t)] = \mathscr{L}[g(t)] \cdot \mathscr{L}[f(t)]
+\label{convolution}
+\end{equation}
+\]</span></p>
+<h3 id="laplace-transform-of-odes">Laplace transform of ODEs</h3>
+<p>For simplicity, let's consider a second order ODE, <span
+class="math display">\[
+y&#39;&#39; + p y&#39; + q y = f(t)
+\]</span> with the initial condition <span
+class="math inline">\(y(0)=y_0\)</span> and <span
+class="math inline">\(y&#39;(0)=y_1\)</span>. Apply Laplace transform to
+both sides of the equation and we get, <span class="math display">\[
+s^2 Y(s) - s \cdot y(0) - y&#39;(0) + p (s \cdot Y(s) - y(0)) + q Y(s) =
+F(s)
+\]</span> So the solution in <span
+class="math inline">\(s\)</span>-domain is, <span
+class="math display">\[
+\begin{equation}
+Y(s) = \frac{F(s) + s \cdot y_0 + y_1 + p \cdot y_0}{s^2 + p \cdot s +
+q} \label{solution}
+\end{equation}
+\]</span> Next we need to decompose <span
+class="math inline">\(Y(s)\)</span> by <em>partial fraction
+expansion</em> so we can get <span class="math inline">\(Y(s)\)</span>
+as the linear combination of some typical Laplace transformed functions
+and eventually <span class="math inline">\(y(t)\)</span> by inverse
+Laplace transform. For example, <span class="math display">\[
+Y(s) = \sum_{i=0}^{n} C_i \cdot Y_i(s) \\
+y(t) = \sum_{i=0}^n C_i \cdot \mathscr{L}^{-1}[Y_i(s)]
+\]</span></p>
+<p>Here is the <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_Laplace_transforms#Table">List
+of Laplace transform of common functions</a>.</p>
+<h3 id="partial-fraction-expansion">Partial fraction expansion</h3>
+<p>Similar to the auxiliary polynomial equation, there are three
+different scenarios according to the denominator,</p>
+<ol type="1">
+<li>roots are all different and real</li>
+<li>roots are real but some are duplicated</li>
+<li>some roots are complex</li>
+</ol>
+<p>For the first scenario, we can get the coefficients of each term by
+multiplying the corresponding denominator and set the value to zero,
+<span class="math display">\[
+\begin{align*}
+        \prod_i \frac{f(s)}{(s - r_i)} &amp;= \sum_i \frac{A_i}{s-r_i} =
+F(s) \\
+        A_j &amp;= (s-r_j) F(s) |_{s=r_i} \\
+\end{align*}
+\]</span> For the second scenario, besides the coefficients determined
+by the above methods, the additional coefficient from the repeated root
+is determined by the equvialence of the coefficient before the variable
+at the same order <span class="math inline">\(n\)</span>, <span
+class="math display">\[
+\begin{align*}
+       f(s) &amp;= \prod_i (s-r_i) F(s) \\
+       f(s) &amp;= \sum_n C_n s^n = \prod_i (s-r_i) F(s) = \sum_n
+C&#39;_n s^n \\
+       \iff C_n &amp;= C&#39;_n
+\end{align*}
+\]</span> For the third scenario, we can try to construct a homogeneous
+numerator, e.g., <span class="math display">\[
+F(s) = \frac{f(s)}{(s+\gamma)^2+\omega^2} \prod \frac{1}{(s-r_i)} =
+\frac{B(s+\gamma)+C\omega}{(s+\gamma)^2+\omega^2} + \sum_i
+\frac{A_i}{s-r_i}
+\]</span> The coefficients can be found through comparing coefficients
+before varibales at the same order <span
+class="math inline">\(n\)</span> between both sides of the polynomial
+equation.</p>
+<p>According to the Laplace transform of derivatives <span
+class="math inline">\(\eqref{derivative}\)</span>, the denominator of
+<span class="math inline">\(\eqref{solution}\)</span> was only
+determined by coefficients of the ODE (here <span
+class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span>), and the roots of the denominator
+determine the form of partial fractions and thus the inverse Laplace
+transform. The numerator of <span
+class="math inline">\(\eqref{solution}\)</span> only affects
+coefficients <span class="math inline">\(C_i\)</span>.</p>
+<p>In fact, the denominator of <span
+class="math inline">\(\eqref{solution}\)</span> has the same form with
+the ODE's auxiliary equation <span
+class="math inline">\(\eqref{auxiliary}\)</span>. So Laplace transform
+explains the tricky way to solve ODEs.</p>
+<h2 id="greens-function">Green's function</h2>
+<p>Another powerful way to solve ODEs is Green's function, which
+introduces the concept of infinte-dimensional vector space.</p>
+<p>In general, <span class="math inline">\(n\)</span>-dimensional vector
+can be expressed as, <span class="math display">\[
+\boldsymbol{v} = \sum_{i=1}^n c_i \hat{\boldsymbol{e}}_i
+\]</span> where <span
+class="math inline">\(\boldsymbol{\hat{e}}_i\)</span> is the unitary
+orthonormal vector. So the inner product of two vectors is, <span
+class="math display">\[
+\left&lt; \boldsymbol{v} \mid \boldsymbol{v}&#39; \right&gt; =
+\sum_{i=1}^n \sum_{j=1}^n c_i c_j&#39; \left&lt; \hat{\boldsymbol{e}}_i
+\mid \hat{\boldsymbol{e}}_j \right&gt; = \sum_{i=1}^n c_i c_i&#39;
+\]</span> If we expand the <span
+class="math inline">\(n\)</span>-dimensional space to
+infinite-dimensional space, the vector <span
+class="math inline">\(\boldsymbol{v}\)</span> can be represented by
+function <span class="math inline">\(f(x)\)</span>. Namely, the discrete
+dimensions where <span
+class="math inline">\(\hat{\boldsymbol{e}}_i\)</span> stays become the
+continuous dimension where <span class="math inline">\(x\)</span> stays.
+So we can define the inner product of two functions, <span
+class="math display">\[
+\left&lt; f \mid f&#39; \right&gt; = \int_a^b f^*(x) f&#39;(x) \,dx
+\]</span> Therefore, a linearly independent and orthonormal functions
+<span class="math inline">\(\hat{\phi}_n(x)\)</span> can be used as the
+basis of an infinite-dimensional vector space of functions, which is
+called <em>Hilbert space</em>.</p>
+<h3 id="sets-of-functions">sets of functions</h3>
+<p>If the function <span class="math inline">\(f(x)\)</span> is
+expressed in terms of an orthonormal basis <span
+class="math inline">\(\hat{\phi}_n(x)\)</span> as, <span
+class="math display">\[
+f(x) = \sum_{n=0}^{\infty} c_n \hat{\phi}_n(x)
+\]</span> then the cofficients <span class="math inline">\(c_n\)</span>
+are given by the inner product, <span class="math display">\[
+c_n = \left \langle \hat{\phi}_n \mid f \right \rangle = \int_a^b
+\hat{\phi}_n^*(x) f(x) \,dx
+\]</span> which is reminiscent of Fourier transform again.</p>
+<h3 id="eigenfunctions">eigenfunctions</h3>
+<p>The inhomogeneous ODE can be expressed as, <span
+class="math display">\[
+\begin{equation}
+\mathcal{L} y(x) = f(x) \label{operator}
+\end{equation}
+\]</span> where <span class="math inline">\(\mathcal{L}\)</span> stands
+for a linear differential operator acting upon the function <span
+class="math inline">\(y(x)\)</span>.</p>
+<p>The eigenfunction <span class="math inline">\(y_i(x)\)</span> of
+<span class="math inline">\(\mathcal{L}\)</span> exists, it should
+satisfies, <span class="math display">\[
+\begin{equation}
+\mathcal{L} y_i(x) = \lambda_i y_i(x) \label{eigenfunction}
+\end{equation}
+\]</span> which is an homogeneous ODE and can be solved by Laplace
+transform.</p>
+<h3 id="superposition-of-eigenfunctions">superposition of
+eigenfunctions</h3>
+<p>Now we concern the full solution <span
+class="math inline">\(y(x)\)</span> as a superposition of eigenfunctions
+<span class="math inline">\(y_i(x)\)</span> of <span
+class="math inline">\(\mathcal{L}\)</span>, <span
+class="math display">\[
+y(x) = \sum_{i=0}^{\infty} c_i y_i(x)
+\]</span> where the operator <span
+class="math inline">\(\mathcal{L}\)</span> should be Hermitian operator
+and thus the eigenfunctinos <span class="math inline">\(y_i(x)\)</span>
+are orthogonal and complete.</p>
+<p>Substituting the above <span class="math inline">\(y(x)\)</span> into
+the differential equation <span
+class="math inline">\(\eqref{operator}\)</span>, <span
+class="math display">\[
+f(x) = \mathcal{L} \left( \sum_{i=0}^{\infty} c_i y_i(x) \right) =
+\sum_{i=0}^{\infty} c_i \lambda_i y_i(x)
+\]</span> Considering that eigenfunctions <span
+class="math inline">\(y_i(x)\)</span> are orthogonal, <span
+class="math display">\[
+\left&lt; y_j^* \mid f \right&gt; = \sum_{i=0}^{\infty} c_i \lambda_i
+\left&lt; y_j^* \mid y_i \right&gt; = c_j \lambda_j \left| y_j \right|^2
+\]</span> So we obtain the coefficients before eigenfunctions, <span
+class="math display">\[
+c_j = \frac{1}{\lambda_j} \frac{ \left&lt; y_j^* \mid f \right&gt; }{
+|y_j(x)|^2 }
+\]</span> If we use normalized eigenfunctions <span
+class="math inline">\(|\hat{y}_i(x)|^2=1\)</span>, the full solution
+<span class="math inline">\(y(x)\)</span> is, <span
+class="math display">\[
+\begin{align*}
+y(x)
+&amp;= \sum_{j=0}^{\infty} \frac{ \left&lt; \hat{y}_j^* \mid f
+\right&gt; }{\lambda_j} \hat{y}_j(x) \\
+\color{blue}{ \text{[interchange summation and integration]} }&amp;=
+\int_a^b \left\{ \sum_{j=0}^{\infty} \left[ \frac{\hat{y}_j(x)
+\hat{y}_j^*(z)}{\lambda_j} \right] \right\} f(z) \,dz \\
+&amp;= \int_a^b G(x,z) f(z) \,dz \\
+\end{align*}
+\]</span> where <span class="math inline">\(G(x,y)=\sum_{j=0}^{\infty}
+\left[ \frac{1}{\lambda_j} \hat{y}_j(x) \hat{y}_j^*(z) \right]\)</span>
+is the <em>Green's function</em>. So the full solution <span
+class="math inline">\(y(x)\)</span> has the form of an integral
+transform where the Green's function is the kernel.</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://web.engr.oregonstate.edu/~webbky/ESE330_files/Section%205%20Laplace%20Transforms.pdf">section
+3: Laplace transforms &amp; transfer functions</a></li>
+<li>Riley, Kenneth Franklin, Michael Paul Hobson, and Stephen John
+Bence. "Mathematical methods for physics and engineering." (1999):
+165-169.</li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/transformation/">transformation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Fourier-transform/">Fourier transform</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Laplace-transform/">Laplace transform</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/differential-equaiton/">differential equaiton</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Green-s-function/">Green's function</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/vector-space/">vector space</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/vector/">vector</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+    </div>
+    <div>
+      
+        <a href="/2023/10/30/wlc_and_flexible_polymers/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          worm-like chain model and flexible polymers
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

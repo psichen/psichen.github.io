@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Geometric interpretation about Jacobian determinant | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Geometric interpretation about Jacobian determinant
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-02-04</time>
+          <span class="text-gray-400">·</span>
+          <span>1.1k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>In scientific computing, integration by substitution is a very common
+skill. <a
+href="https://psichen.github.io/2019/09/30/FRET-correcting/">For
+example</a>, we measured a series of practical values of a variable
+(<span class="math inline">\(x&#39;\)</span>), of which the distribution
+(<span class="math inline">\(g(x&#39;)\)</span>) was unknown. But we
+know the theoretic distribution of the variable (<span
+class="math inline">\(f(x)\)</span>) and the correction relationship or
+mapping relationship between theoretic and practical values (<span
+class="math inline">\(x=h(x&#39;)\)</span>). <span id="more"></span>So we can get
+the analytic formula of the distribution <span
+class="math inline">\(g(x&#39;)\)</span> as following</p>
+<p><span class="math display">\[ g(x&#39;) = f(h(x&#39;))
+\frac{dx}{dx&#39;} \]</span></p>
+<p>This is the one dimension situation of Jacobian determinant in
+integrals by substitution.</p>
+<h2 id="cross-products-for-parallelogram-area">Cross products for
+parallelogram area</h2>
+<p>Let's consider two vectors <span class="math inline">\(\mathbf{a}^T =
+[a_i,a_j, a_k], \mathbf{b}^T = [b_i, b_j, b_k]\)</span>. We are very
+familar with the dot product or the inner product of the two
+vectors,</p>
+<p><span class="math display">\[ \mathbf{a} \cdot \mathbf{b} =
+\mathbf{a}^T\mathbf{b} = a_ib_i+a_jb_j+a_kb_k \]</span></p>
+<p>which is a scaler value. The name <em>inner</em> comes from the
+transpose symbol <span class="math inline">\(T\)</span> inside the two
+vectors. The inner product can also be calculated as</p>
+<p><span class="math display">\[ \mathbf{a} \cdot \mathbf{b} =
+|\mathbf{a}||\mathbf{b}|\cos\theta \]</span></p>
+<p>The cross product of two vectors, however, generally produces a new
+vector which is perpendicular to the plane consist of the two original
+vectors. If <span class="math inline">\(\mathbf{i}, \mathbf{j},
+\mathbf{k}\)</span> are orthogonal unitary vectors, they satisify the
+following relationship via cross product,</p>
+<p><span class="math display">\[ \mathbf{i} \times \mathbf{j} =
+\mathbf{k},~~ \mathbf{j} \times \mathbf{i} = -\mathbf{k} \]</span> <span
+class="math display">\[ \mathbf{j} \times \mathbf{k} = \mathbf{i},~~
+\mathbf{k} \times \mathbf{j} = -\mathbf{i} \]</span> <span
+class="math display">\[ \mathbf{k} \times \mathbf{i} = \mathbf{j},~~
+\mathbf{i} \times \mathbf{k} = -\mathbf{j} \]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[ \begin{aligned}
+\mathbf{a} \times \mathbf{b} &amp;=
+(a_i\mathbf{i}+a_j\mathbf{j}+a_k\mathbf{k}) \times
+(b_i\mathbf{i}+b_j\mathbf{j}+b_k\mathbf{k}) \\
+                             &amp;= \begin{vmatrix} a_j &amp; b_j \\ a_k
+&amp; b_k \end{vmatrix} \mathbf{i} + \begin{vmatrix} a_k &amp; b_k \\
+a_i &amp; b_i \end{vmatrix} \mathbf{j} + \begin{vmatrix} a_i &amp; b_i
+\\ a_j &amp; b_j \end{vmatrix} \mathbf{k} \\
+                             &amp;= \begin{vmatrix} \mathbf{i} &amp; a_i
+&amp; b_i \\ \mathbf{j} &amp; a_j &amp; b_j \\ \mathbf{k} &amp; a_k
+&amp; b_k \end{vmatrix}
+\end{aligned} \]</span></p>
+<p>The magnitude of the cross product of two vectors can also be
+calculated by <span class="math display">\[ |\mathbf{a} \times
+\mathbf{b}| = |\mathbf{a}||\mathbf{b}|\sin\theta \]</span></p>
+<p>which is the area of the parallelogram having <span
+class="math inline">\(\mathbf{a}\)</span> and <span
+class="math inline">\(\mathbf{b}\)</span> as sides (<span
+class="math inline">\(0 &lt; \theta &lt; \pi\)</span>).</p>
+<h2 id="infinitesimal-area-in-integration">Infinitesimal area in
+integration</h2>
+<p>For double integrals <span class="math inline">\(\iint f(x,y)
+dxdy\)</span>, we take an infinitesimal area as the integral element.
+Usually it was written as the direct product as <span
+class="math inline">\(dxdy\)</span> because <span
+class="math inline">\(x\)</span>-axis and <span
+class="math inline">\(y\)</span>-axis are orthogonal (<span
+class="math inline">\(|dx \times dy| =
+|dxdy\sin\frac{\pi}{2}|\)</span>).</p>
+<p>Now let's consider the variables substitution <span
+class="math inline">\(dxdy \to dudv\)</span> where <span
+class="math inline">\(x=x(u,v)\)</span> and <span
+class="math inline">\(y=y(u,v)\)</span>. So the function <span
+class="math inline">\(f(x,y) = f(x(u,v),y(u,v))\)</span>. Similarly, if
+we want to calculate the integral <span class="math inline">\(\iint
+f(x,y) dxdy\)</span> after substitution, we should find the equivalent
+infinitesimal area of <span class="math inline">\(dxdy\)</span>
+represented by <span class="math inline">\(dudv\)</span>.</p>
+<p>Let's first decompse <span class="math inline">\(dx\)</span> and
+<span class="math inline">\(dy\)</span> on the <span
+class="math inline">\(u\)</span>-axis and <span
+class="math inline">\(v\)</span>-axis,</p>
+<p><span class="math display">\[ dx = \frac{dx}{du}du+\frac{dx}{dv}dv
+\]</span> <span class="math display">\[ dy =
+\frac{dy}{du}du+\frac{dy}{dv}dv \]</span></p>
+<p>It's analogous that vector <span
+class="math inline">\(\mathbf{x}\)</span> has vector components <span
+class="math inline">\(\frac{dx}{du}du\)</span> or <span
+class="math inline">\(\frac{dx}{dv}dv\)</span> on <span
+class="math inline">\(u\)</span>-axis or <span
+class="math inline">\(v\)</span>-axis direction respectively, and same
+for <span class="math inline">\(\mathbf{y}\)</span>.</p>
+<p>It's a wrong way to get the infinitesimal area by multiplying the
+vector components of <span class="math inline">\(dx\)</span> and <span
+class="math inline">\(dy\)</span> directly. Because <span
+class="math inline">\(u\)</span>-axis and <span
+class="math inline">\(v\)</span>-axis are not guaranteed to be
+orthogonal (<span class="math inline">\(|du \times dv| \neq
+|du||dv|\)</span>). But we can get the infinitesimal area by calculating
+the cross product of <span class="math inline">\(dx\)</span> and <span
+class="math inline">\(dy\)</span>. Thus the infinitesimal area <span
+class="math inline">\(dxdy\)</span> can be described in terms of
+variables <span class="math inline">\(du\)</span> and <span
+class="math inline">\(dv\)</span>,</p>
+<p><span class="math display">\[ |dx \times dy| = |\begin{bmatrix} x_u
+du \\ x_v dv \end{bmatrix} \times \begin{bmatrix} y_u du \\ y_v dv
+\end{bmatrix}| = (x_uy_v-x_vy_u)dudv =
+\frac{\partial(x,y)}{\partial(u,v)} dudv \]</span></p>
+<p><span
+class="math inline">\(\frac{\partial(x,y)}{\partial(u,v)}\)</span> is
+called the Jacobian determinant. It can be seen as the scaling factor of
+area (or volume <em>etc.</em>) after variables substitution. The
+analytic form of the integrand function after variable substitution is
+equal to</p>
+<p><span class="math display">\[ g(u,v) = f(x(u,v),y(u,v))
+\frac{\partial (x,y)}{\partial (u,v)} \]</span></p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="proof-of-two-dot-product-expressions">proof of two dot product
+expressions</h3>
+<p>Because two vectors compose a plane. We can always choose two
+orthogonal basis vectors to describe all vectors in the plane. Let's
+consider two vectors <span class="math inline">\(\mathbf{a}\)</span> and
+<span class="math inline">\(\mathbf{b}\)</span>.</p>
+<p><span class="math display">\[ \mathbf{a}^T = [a_1, a_2] \]</span>
+<span class="math display">\[ \mathbf{b}^T = [b_1, b_2] \]</span></p>
+<p><span class="math inline">\(\theta_{\mathbf{a}}\)</span> and <span
+class="math inline">\(\theta_{\mathbf{b}}\)</span> are the respective
+angel between the vector and <span
+class="math inline">\(x\)</span>-axis.</p>
+<p><span class="math display">\[ \theta_{\mathbf{a}} =
+\arcsin{\frac{a_2}{|\mathbf{a}|}} = \arccos{\frac{a_1}{|\mathbf{a}|}}
+\]</span> <span class="math display">\[ \theta_{\mathbf{b}} =
+\arcsin{\frac{b_2}{|\mathbf{b}|}} = \arccos{\frac{b_1}{|\mathbf{b}|}}
+\]</span></p>
+<p>So the angel between vectors <span
+class="math inline">\(\mathbf{a}\)</span> and <span
+class="math inline">\(\mathbf{b}\)</span> is <span
+class="math inline">\(\theta = \theta_{\mathbf{b}} -
+\theta_{\mathbf{a}}\)</span>. According to the trigonometric
+function,</p>
+<p><span class="math display">\[ \cos\theta = \cos(\theta_{\mathbf{a}} -
+\theta_{\mathbf{b}}) = \cos\theta_{\mathbf{a}}\cos\theta_{\mathbf{b}} +
+\sin\theta_{\mathbf{a}}\sin\theta_{\mathbf{b}} =
+\frac{a_1}{|\mathbf{a}|} \frac{b_1}{|\mathbf{b}|}+
+\frac{a_2}{|\mathbf{a}|} \frac{b_2}{|\mathbf{b}|} \]</span></p>
+<p>Thus we get the two expressions of dot product of vectors,</p>
+<p><span class="math display">\[ |\mathbf{a}||\mathbf{b}|\cos\theta =
+a_1b_1+a_2b_2 \]</span></p>
+<h3 id="proof-of-two-cross-product-expressions">proof of two cross
+product expressions</h3>
+<p>Similarly, let's consider the trigonometric functions of <span
+class="math inline">\(\sin\theta\)</span>,</p>
+<p><span class="math display">\[ \sin(\theta) = \sin(\theta_{\mathbf{b}}
+- \theta_{\mathbf{a}}) =
+\sin\theta_{\mathbf{b}}\cos\theta_{\mathbf{a}}-\cos\theta_{\mathbf{b}}\sin\theta_{\mathbf{a}}
+=
+\frac{a_1}{|\mathbf{a}|}\frac{b_2}{|\mathbf{b}|}-\frac{a_2}{|\mathbf{a}|}\frac{b_1}{|\mathbf{b}|}
+\]</span></p>
+<p>Thus we get the two expressions of the magnitude of the cross product
+of vectors,</p>
+<p><span class="math display">\[ |\mathbf{a}||\mathbf{b}|\sin\theta =
+a_1b_2-a_2b_1 \]</span></p>
+<h3 id="proof-of-trigonometric-functions">proof of trigonometric
+functions</h3>
+<p><span class="math display">\[ \begin{aligned}
+e^{i(\theta_1-\theta_2)} &amp;= \cos(\theta_1-\theta_2) + i
+\sin(\theta_1-\theta_2) \\
+e^{i(\theta_1-\theta_2)} &amp;= e^{i\theta_1}/e^{i\theta_2} \\
+                         &amp;= \frac{\cos\theta_1 + i
+\sin\theta_1}{\cos\theta_2 + i \sin\theta_2} \\
+                         &amp;=
+(\cos\theta_1+i\sin\theta_1)(\cos\theta_2-i\sin\theta_2) \\
+                         &amp;= (\cos\theta_1 \cos\theta_2 +
+\sin\theta_1 \sin\theta_2) + i(\sin\theta_1 \cos\theta_2 - \cos\theta_1
+\sin\theta_2)
+\end{aligned} \]</span></p>
+<p>The real part and imaginary part should be identical, thus</p>
+<p><span class="math display">\[ \cos(\theta_1-\theta_2) = \cos\theta_1
+\cos\theta_2 + \sin\theta_1 \sin\theta_2 \]</span> <span
+class="math display">\[ \sin(\theta_1-\theta_2) = \sin\theta_1
+\cos\theta_2 - \cos\theta_1 \sin\theta_2 \]</span></p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Jacobian/">Jacobian</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/determinant/">determinant</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/integration-by-substitution/">integration by substitution</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/cross-product/">cross product</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/infinitesimal-area/">infinitesimal area</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/02/11/generating-functions-of-probability-distribution/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Generating functions of probability distributions
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/01/21/combinations-and-particle-statistics/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Combinations and particle statistics
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

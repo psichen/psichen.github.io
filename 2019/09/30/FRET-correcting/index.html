@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>自由扩散的单分子FRET中的校正 | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        自由扩散的单分子FRET中的校正
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2019-09-30</time>
+          <span class="text-gray-400">·</span>
+          <span>1.8k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>荧光共振能量转移(Förster resonance energy transfer,
+FRET)是生化实验中的常见手段，一般用于检测生物大分子是否有相互作用、共定位或构象变化。</p>
+<p>单分子FRET(single-molecule FRET,
+smFRET)将单分子超高时空分辨率的优势和FRET对距离变化的敏感性结合起来，是研究蛋白分子构象变化的有力武器。然而由于噪音、荧光染料自身性质和仪器检测效率等原因，我们只能得到表观的测量值，所以需要对其进行校正。</p>
+<span id="more"></span>
+<h2 id="背景噪音">背景噪音</h2>
+<p>背景噪音在时间分辨率<span
+class="math inline">\(dt\)</span>的情形下，光子数的分布服从Poisson分布，<span
+class="math inline">\(I_b \sim P(\lambda)\)</span>，其中<span
+class="math inline">\(\lambda = r \cdot dt\)</span>，<span
+class="math inline">\(r\)</span>为背景噪音的光子产生速率。首先需要对采集到的原始信号<span
+class="math inline">\(I_D\)</span>和<span
+class="math inline">\(I_A\)</span>扣除背景，对于背景噪音的拟合有三种办法。</p>
+<h3 id="平均值法">平均值法</h3>
+<p>将收集得到的单分子荧光trace直接求平均。由于一段荧光时间序列中的大部分都是噪音，所以直接求平均值（或给定一个阈值上限，排除掉由荧光分子产生的有效信号），就可近似地得到平均噪音水平。</p>
+<h3 id="对噪音的光子数分布进行拟合">对噪音的光子数分布进行拟合</h3>
+<p>在一段单分子荧光trace中，噪音会一直存在，而荧光分子只有经过聚焦体积时才会发出荧光，所以对于一段合适的荧光trace，大部分信号应该都是噪音，所以其光子数分布应该为一开始一个很高的poisson分布，再叠加上很小一部分的指数分布，该指数分布是由于荧光染料分子进入聚焦体积发光而产生的，对于噪音的poisson分布影响很小。所以我们可以对光子数分布的前面部分（例如前80%）进行Poisson拟合，从而得到平均噪音水平。</p>
+<h3 id="对噪音的光子寿命进行拟合">对噪音的光子寿命进行拟合</h3>
+<p>因为<span class="math inline">\(I_b \sim
+P(\lambda)\)</span>，所以噪音光子的抵达时间的间隔<span
+class="math inline">\(\tau_b \sim
+E(\lambda)\)</span>，可以通过时间相关单光子计数卡（time-correlated
+single photon counting,
+TCSPC）根据光子的间隔时间来区分背景噪音和有效信号。</p>
+<p>因为Poisson分布和Exponential分布密切相关，所以本质上和对光子数分布进行拟合是一样的。</p>
+<h2 id="漏光">漏光</h2>
+<p>Donor染料的发射光谱通常会有一部分和Acceptor通道的滤光片透光波段重叠，使得Acceptor通道可以检测到部分来自Donor的光子。这部分信号强度和Donor在Donor通道的信号强度呈正比，通常可以采用Donor-only的样品，检测其在两个通道的信号强度，然后做比得到Donor在Acceptor通道的漏光系数
+<span class="math inline">\(\alpha\)</span>。</p>
+<p><span class="math display">\[ \alpha = \frac{I_A}{I_D} \]</span></p>
+<p>也可以在测量双标样品的single-molecule
+FRET后，通过零峰的位置进行校正。因为漏光，校正前零峰不在FRET效率=0的位置，然而既然都叫零峰，其理论值=0，所以根据下式：</p>
+<p><span class="math display">\[ \alpha = (E^{-1} -1)^{-1} \]</span></p>
+<h2 id="量子产率与接收效率">量子产率与接收效率</h2>
+<p>在FRET过程中，不考虑漏光和直接激发的情况下，Donor和Acceptor发光强度为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+I_D &amp;= I_0 \sigma_D Q_D \eta_D (1-E) \\
+I_A &amp;= I_0 \sigma_D Q_A \eta_A E \\
+\end{aligned}
+\]</span></p>
+<p>其中<span class="math inline">\(I_0\)</span>为激发光光强，<span
+class="math inline">\(\sigma_D\)</span>为Donor荧光分子的吸收截面，<span
+class="math inline">\(Q_D\)</span>和<span
+class="math inline">\(Q_A\)</span>为对应的量子产率，<span
+class="math inline">\(\eta_D\)</span>和 <span
+class="math inline">\(\eta_A\)</span>为对应通道的接收效率，<span
+class="math inline">\(E\)</span>为理论FRET效率。对上式微分可得：</p>
+<p><span class="math display">\[
+\begin{aligned}
+dI_D &amp;= I_0 \sigma_D Q_D \eta_D \cdot d(-E) \\
+dI_A &amp;= I_0 \sigma_D Q_A \eta_A \cdot dE \\
+\end{aligned}
+\]</span></p>
+<p>我们可以设想一个Acceptor先于Donor猝灭的过程，这样Donor通道的信号强度会增加<span
+class="math inline">\(\Delta
+I_D\)</span>，Acceptor通道的信号强度会降低<span
+class="math inline">\(\Delta I_A\)</span>，FRET效率会从<span
+class="math inline">\(E\)</span>降到0，通过TIRF可以将Acceptor猝灭的过程挑出来，并测到<span
+class="math inline">\(\Delta I_D\)</span>和 <span
+class="math inline">\(\Delta
+I_A\)</span>，将上两式相除，就可以得到：</p>
+<p><span class="math display">\[ \gamma_T = \frac{Q_A \eta_A}{Q_D
+\eta_D} = \frac{\Delta I_A}{\Delta I_D} \]</span></p>
+<p>这样就得到了TIRF的校正系数<span
+class="math inline">\(\gamma_T\)</span>。</p>
+<p>对于Confocal显微镜，需要用一个双标的标准样品，在TIRF上测出一个理论值，再在Confocal显微镜上测FRET效率，根据理论值来反推出校正系数<span
+class="math inline">\(\gamma_c\)</span>。</p>
+<p><span class="math display">\[ \gamma_c =
+\frac{E^{-1}-1}{E_{app}^{-1}-1}\]</span></p>
+<p>其中<span
+class="math inline">\(E\)</span>为通过TIRF测得的标准样的FRET效率理论值，<span
+class="math inline">\(E_{app}\)</span>为标准样品在Confocal上测得的扣除了背景和漏光的表观FRET效率值。在得到了校正系数<span
+class="math inline">\(\gamma_c\)</span>后，Confocal的校正公式为：</p>
+<p><span class="math display">\[ E = (1+\gamma_c \frac{I_D}{I_A})^{-1}
+\]</span></p>
+<p>其中<span class="math inline">\(I_D\)</span>与<span
+class="math inline">\(I_A\)</span>是校正了背景和漏光后的信号。</p>
+<h2 id="直接激发">直接激发</h2>
+<p>直接激发项的校正需要用到ALEX (Alternating-Laser
+Excitation)激光光源，这在国内配备得较少，不过随着发展，应该会逐渐成为Confocal单分子测量的标配。简单讲，对于Acceptor-only的样品，有以下关系：</p>
+<p><span class="math display">\[
+\begin{aligned}
+I_A^{Dex} &amp;= I^{Dex} \sigma^{Dex}_{A} Q_A \eta_A \\
+I_A^{Aex} &amp;= I^{Aex} \sigma^{Aex}_{A} Q_A \eta_A \\
+\end{aligned}
+\]</span></p>
+<p>其中上标的<span class="math inline">\(Dex\)</span>和<span
+class="math inline">\(Aex\)</span>代表了采用Donor激发光还是Acceptor激发光，将两式相除就可得到直接激发的校正系数<span
+class="math inline">\(d\)</span>：</p>
+<p><span class="math display">\[ d = \frac {I^{Dex}
+\sigma_A^{Dex}}{I^{Aex} \sigma_A^{Aex}} \]</span></p>
+<p>于是直接激发项可以表示为：</p>
+<p><span class="math display">\[ I_A^{Dex} = d \cdot I_A^{Aex}
+\]</span></p>
+<p>在ALEX实验中对Acceptor通道信号减掉直接激发项即可。</p>
+<p>##Jacobian行列式</p>
+<p>Jacobian行列式常用于积分换元：</p>
+<p><span class="math display">\[
+J = \left|
+\begin{matrix}
+\frac{\partial x_1}{\partial u_1} &amp;\cdots &amp;\frac{\partial
+x_1}{\partial u_k} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial x_k}{\partial u_1} &amp;\cdots &amp;\frac{\partial
+x_k}{\partial u_k} \\
+\end{matrix}
+\right|
+\]</span></p>
+<p>通常可写为<span class="math inline">\(\frac{\partial (x, y)}{\partial
+(u, v)}\)</span>。Jacobi行列式具有下列重要性质：</p>
+<ol type="1">
+<li><p><span class="math inline">\(\left( \frac{\partial u}{\partial x}
+\right)_y = \frac{\partial (u, y)}{\partial (x, y)}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{\partial (u, v)}{\partial (x,
+y)} = -\frac{\partial (v, u)}{\partial (x, y)} = \frac{\partial (-v,
+u)}{\partial (x, y)}\)</span></p></li>
+<li><p>设<span class="math inline">\(u, v, r,
+s\)</span>都是独立变量<span class="math inline">\(x,
+y\)</span>的函数，则：<span class="math inline">\(\frac{\partial (u,
+v)}{\partial (x,y)} = \frac{\partial (u, v)}{\partial(r,
+s)}\frac{\partial (r, s)}{\partial (x, y)}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{\partial (u, v)}{\partial
+(x,y)} = 1/\frac{\partial (x,y)}{\partial (u, v)}\)</span></p></li>
+</ol>
+<p>对于一维情况： <span class="math display">\[
+\begin{aligned}
+x           &amp;= x(u) \\
+\int f(x)dx &amp;= \int f(x(u)) \cdot \frac{dx}{du} \cdot du \\
+\end{aligned}
+\]</span></p>
+<p>在FRET分布的校正中，理论FRET效率的概率密度函数应该服从高斯分布<span
+class="math inline">\(N(\mu,
+\sigma)\)</span>，而校正前的FRET效率的概率密度函数暂时未知，但是有如下关系：</p>
+<p><span class="math display">\[ f(E_{app}) = F(E)\cdot
+\frac{dE}{dE_{app}} \]</span></p>
+<p>其中<span class="math inline">\(F(E) =
+Ae^{\frac{-(E-\mu)^2}{2\sigma^2}}\)</span>为理论FRET分布的概率密度函数，根据FRET的校正公式：</p>
+<p><span class="math display">\[ E^{-1}-1 = \gamma_c \cdot
+(E^{-1}_{app}-1) \]</span></p>
+<p>可得到：</p>
+<p><span class="math display">\[ \frac{dE}{dE_{app}} = \gamma_c \cdot
+\frac{E^2}{E_{app}^2} \]</span></p>
+<p>代入上式即可得到表观FRET分布的概率密度函数<span
+class="math inline">\(f(E_{app})\)</span>。</p>
+<p>当校正系数<span
+class="math inline">\(\gamma\)</span>取不同值时，理论FRET效率与表观FRET效率呈非线性关系：
+<img src="https://i.loli.net/2019/10/13/btrFvNJigY8Cfhy.png"
+alt="gamma" /></p>
+<p>校正前的FRET分布呈现偏态： <img
+src="https://i.loli.net/2019/10/13/hyGIdLSTBbenN4m.png"
+alt="apparent FRET distribution" /></p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/fluorescence/">fluorescence</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/single-molecule/">single-molecule</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/FRET/">FRET</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/correct/">correct</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/free-diffusing/">free-diffusing</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2019/10/13/inexact-differential-of-Q/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          热力学中热量的非恰当微分
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2019/09/25/Legendre-transformation/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Legendre变换的理解和在热力学中的应用
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

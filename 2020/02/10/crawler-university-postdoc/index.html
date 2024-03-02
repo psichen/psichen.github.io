@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>python爬取大学及博士后信息 | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        python爬取大学及博士后信息
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2020-02-10</time>
+          <span class="text-gray-400">·</span>
+          <span>1.5k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>2020年开年不利，天启四骑士war, pestilence, famine,
+death已经降临了前3个，大家都宅在家里无法出门，于是我便利用这段时间学习一下爬虫的用法。</p>
+<p>其实以前也用过爬虫，不过后来放了很久，很多包也更新了，所以值得重新学一遍。记得在实习的时候，经理曾经给了我一个报价网，该网将市场上几乎所以药品的中标价格都放在了网上，而且网页似乎并没有做任何反爬处理，可惜我已经忘记了网址T
+T</p>
+<p>言归正传，这次用python的bs4、requests包来爬取网页信息，获得最近几年世界各地大学的变化趋势，以及postdoc的发布信息。</p>
+<span id="more"></span>
+<h2 id="大学排名">大学排名</h2>
+<p>数据来源：<a
+target="_blank" rel="noopener" href="http://www.zuihaodaxue.com/ARWU2019.html">世界大学学术排名</a></p>
+<p>首先看综合排名，图中只画出了总体的相对变化率&gt;60%的学校（像哈佛牛津这些每年都是100的，反正也申不上，刚好可以一并筛掉）。</p>
+<figure>
+<img src="https://i.loli.net/2020/02/10/1SWRxUrfwkhPoY8.png"
+alt="total_score.png" />
+<figcaption aria-hidden="true">total_score.png</figcaption>
+</figure>
+<p>可以看出，有三所大学这些年涨势迅猛，其中university of
+Copenhagen尤为瞩目。而university of California, Davis越来越疲软。</p>
+<p>接下来看看大学发表的nature&amp;science的论文数（我就是很俗），以相对增长率&gt;27%来筛选。</p>
+<figure>
+<img src="https://i.loli.net/2020/02/10/yRVXsbuj4Yr8iTL.png"
+alt="paper_of_NS.png" />
+<figcaption aria-hidden="true">paper_of_NS.png</figcaption>
+</figure>
+<p>Wow，University of
+Copenhagen又吸引了眼球，看来这所大学这些年开始great
+again了。联想到量子力学发展的那段历史，哥本哈根确实令人神往。</p>
+<h2 id="postdoc信息">postdoc信息</h2>
+<p>接下来找找postdoc的信息。</p>
+<p>数据来源：<a
+target="_blank" rel="noopener" href="https://www.nature.com/naturecareers/jobs/science-jobs">nature
+careers</a>, <a
+target="_blank" rel="noopener" href="https://jobs.sciencecareers.org/jobs/postdoc/">science
+careers</a></p>
+<p>nature和science的官网上有postdoc的招聘信息，然而很多招聘信息其实是无效的，因为美国的老板常常是已经有了postdoc的人选后，再放出招聘信息，来走一个程序。所以在nature上主要爬取放出postdoc位置的国家，看看目前哪个国家对postdoc的需求最旺盛。</p>
+<figure>
+<img src="https://i.loli.net/2020/02/10/f41WmVl9onLURjK.png"
+alt="postdoc_coun.png" />
+<figcaption aria-hidden="true">postdoc_coun.png</figcaption>
+</figure>
+<p>毫无疑问还是美国。然而其实这里的数据有一点问题，因为招聘postdoc并不是仅有nature
+这一个渠道，然后欧美可能会更加倾向于在nature、science等杂志上发表招聘信息，而如中国则不会，所以数据源存在一定的偏见。</p>
+<p>然后在science上看看招聘postdoc的学科都有哪些。</p>
+<figure>
+<img src="https://i.loli.net/2020/02/10/FioMQB6yCnGsK7J.png"
+alt="postdoc_disc.png" />
+<figcaption aria-hidden="true">postdoc_disc.png</figcaption>
+</figure>
+<p>果然生命科学仍是最大赢家。前十里面有九个都跟生命科学有关，唯一一个physical
+sciences恐怕也会和biology有诸多交叉。</p>
+<h2 id="结论">结论</h2>
+<p>这篇文章的内容只是一个简单的爬虫应用，结果似乎告诉了我们找university
+of Copenhagen的life science的postdoc是最优的结果。</p>
+<p>然而大学排名的数据是来自于国内的网站，它的排名是否权威尚待商榷。nature、science上的postdoc信息也并不全面。</p>
+<p>人的一生当然要靠自我奋斗，当然也要考虑历史的进程，而个人的发展和学校有关，但也不完全取决于学校。</p>
+<h3 id="相关代码">相关代码</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### crawler for university</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">crawler</span>(<span class="params">url</span>):</span></span><br><span class="line">    info = []</span><br><span class="line">    r = requests.get(url)</span><br><span class="line">    r.encoding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">    web = BeautifulSoup(r.text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> tr <span class="keyword">in</span> web.tbody(<span class="string">&#x27;tr&#x27;</span>, limit=<span class="number">100</span>): <span class="comment"># university of top 100</span></span><br><span class="line">        tds = tr(<span class="string">&#x27;td&#x27;</span>)</span><br><span class="line">        _t = tds[<span class="number">1</span>].a.get(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">        name = re.findall(<span class="string">r&#x27;/(.+).html&#x27;</span>, _t)[<span class="number">0</span>]</span><br><span class="line">        info.append(</span><br><span class="line">            [</span><br><span class="line">                name,</span><br><span class="line">                <span class="built_in">float</span>(tds[<span class="number">4</span>].string),</span><br><span class="line">                <span class="built_in">float</span>(tds[<span class="number">5</span>].string),</span><br><span class="line">                <span class="built_in">float</span>(tds[<span class="number">6</span>].string),</span><br><span class="line">                <span class="built_in">float</span>(tds[<span class="number">7</span>].string),</span><br><span class="line">                <span class="built_in">float</span>(tds[<span class="number">8</span>].string),</span><br><span class="line">                <span class="built_in">float</span>(tds[<span class="number">9</span>].string),</span><br><span class="line">                <span class="built_in">float</span>(tds[<span class="number">10</span>].string)</span><br><span class="line">            ]</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">return</span> info</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">wash</span>(<span class="params">info, data</span>):</span></span><br><span class="line">    temp = pd.DataFrame(info, columns=[<span class="string">&#x27;univ&#x27;</span>, <span class="string">&#x27;total&#x27;</span>, <span class="string">&#x27;alumni&#x27;</span>, <span class="string">&#x27;teaching&#x27;</span>, <span class="string">&#x27;cited&#x27;</span>, <span class="string">&#x27;N&amp;S&#x27;</span>, <span class="string">&#x27;international&#x27;</span>, <span class="string">&#x27;avg&#x27;</span>])</span><br><span class="line">    data = data.append(temp)</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line">data = pd.DataFrame()</span><br><span class="line"><span class="keyword">for</span> year <span class="keyword">in</span> <span class="number">2005</span>+np.arange(<span class="number">15</span>):</span><br><span class="line">    url = <span class="string">&quot;http://www.zuihaodaxue.com/ARWU&quot;</span>+<span class="built_in">str</span>(year)+<span class="string">&quot;.html&quot;</span></span><br><span class="line">    _data = pd.DataFrame()</span><br><span class="line">    info = crawler(url)</span><br><span class="line">    _d = wash(info, _data)</span><br><span class="line">    _d[<span class="string">&#x27;year&#x27;</span>] = year</span><br><span class="line">    data = data.append(_d)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;data of &#x27;</span>+<span class="built_in">str</span>(year))</span><br><span class="line"></span><br><span class="line"><span class="comment"># replace alternative name of university</span></span><br><span class="line">data.loc[data[<span class="string">&#x27;univ&#x27;</span>]==<span class="string">&#x27;The-Johns-Hopkins-University&#x27;</span>,<span class="string">&#x27;univ&#x27;</span>] = <span class="string">&#x27;Johns-Hopkins-University&#x27;</span></span><br><span class="line">data.loc[data[<span class="string">&#x27;univ&#x27;</span>]==<span class="string">&#x27;Washington-University-in-St.-Louis&#x27;</span>,<span class="string">&#x27;univ&#x27;</span>] = <span class="string">&#x27;Washington-University-in-St-Louis&#x27;</span></span><br><span class="line">data.loc[data[<span class="string">&#x27;univ&#x27;</span>]==<span class="string">&#x27;The-Imperial-College-of-Science-Technology-and-Medicine&#x27;</span>,<span class="string">&#x27;univ&#x27;</span>] = <span class="string">&#x27;Imperial-College-London&#x27;</span></span><br><span class="line">data.loc[data[<span class="string">&#x27;univ&#x27;</span>]==<span class="string">&#x27;University-of-Wisconsin---Madison&#x27;</span>,<span class="string">&#x27;univ&#x27;</span>] = <span class="string">&#x27;University-of-Wisconsin-Madison&#x27;</span></span><br><span class="line">data.to_pickle(<span class="string">&#x27;./univ_data.pk1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># crawler for postdoc countries in Nature</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"></span><br><span class="line">URL = <span class="string">&#x27;https://www.nature.com/naturecareers/jobs/science-jobs?location_range=25&amp;sort=newest&amp;page=1&#x27;</span></span><br><span class="line">PAGES = <span class="number">66</span></span><br><span class="line">data = pd.DataFrame()</span><br><span class="line">seen = <span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_data</span>(<span class="params">url</span>):</span></span><br><span class="line">    <span class="keyword">global</span> seen</span><br><span class="line">    _d = pd.DataFrame()</span><br><span class="line">    web = BeautifulSoup(requests.get(url).text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> div <span class="keyword">in</span> web(<span class="string">&#x27;div&#x27;</span>, class_=<span class="string">&#x27;p-card__info&#x27;</span>):</span><br><span class="line">        title = <span class="built_in">str</span>(div.h3.string).lower()</span><br><span class="line">        link = div.h3.a.get(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> link <span class="keyword">not</span> <span class="keyword">in</span> seen:</span><br><span class="line">            seen.add(link)</span><br><span class="line">            <span class="keyword">if</span> title.find(<span class="string">&#x27;postdoc&#x27;</span>)+<span class="number">1</span> <span class="keyword">or</span> title.find(<span class="string">&#x27;doctoral&#x27;</span>)+<span class="number">1</span>:</span><br><span class="line">                location = <span class="built_in">str</span>(div.select(<span class="string">&#x27;p.p-card__info-location&#x27;</span>)[<span class="number">0</span>].get_text())</span><br><span class="line">                location_ = location[::-<span class="number">1</span>]</span><br><span class="line">                _loc = location_.find(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">                country = location_[:_loc][::-<span class="number">1</span>]</span><br><span class="line">                city = location_[_loc:][::-<span class="number">1</span>][:-<span class="number">1</span>]</span><br><span class="line">                institute = <span class="built_in">str</span>(div.select(<span class="string">&#x27;p.p-card__info-subtitle&#x27;</span>)[<span class="number">0</span>].get_text())</span><br><span class="line"></span><br><span class="line">                _temp = pd.DataFrame(&#123;</span><br><span class="line">                    <span class="string">&#x27;coun&#x27;</span>:[country],</span><br><span class="line">                    <span class="string">&#x27;city&#x27;</span>:[city],</span><br><span class="line">                    <span class="string">&#x27;inst&#x27;</span>:[institute],</span><br><span class="line">                    <span class="string">&#x27;link&#x27;</span>:link</span><br><span class="line">                &#125;)</span><br><span class="line"></span><br><span class="line">                _d = _d.append(_temp, ignore_index=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> _d</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(PAGES):</span><br><span class="line">    <span class="built_in">print</span>(URL)</span><br><span class="line">    sleep(<span class="number">1</span>)</span><br><span class="line">    _data = get_data(URL)</span><br><span class="line">    data = data.append(_data, ignore_index=<span class="literal">True</span>)</span><br><span class="line">    URL = <span class="string">&#x27;https://www.nature.com/naturecareers/jobs/science-jobs?location_range=25&amp;sort=newest&amp;page=&#x27;</span>+<span class="built_in">str</span>(i+<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">data.to_pickle(<span class="string">&#x27;./postdoc_data.pk1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># crawler for postdoc disciplines of science</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">URL = <span class="string">&#x27;https://jobs.sciencecareers.org&#x27;</span></span><br><span class="line">PAGES = <span class="number">10</span></span><br><span class="line">seen = <span class="built_in">set</span>()</span><br><span class="line">data = pd.DataFrame()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_data</span>(<span class="params">url</span>):</span></span><br><span class="line">    <span class="keyword">global</span> seen</span><br><span class="line">    <span class="keyword">global</span> URL</span><br><span class="line">    _d = []</span><br><span class="line">    jobs = BeautifulSoup(requests.get(URL+url).text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> jobs(<span class="string">&#x27;p&#x27;</span>, class_=<span class="string">&#x27;lister__view-details&#x27;</span>):</span><br><span class="line">        link = p.a.get(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">        link = re.search(<span class="string">u&#x27;/(.*)/&#x27;</span>, link).group()</span><br><span class="line">        <span class="built_in">print</span>(link)</span><br><span class="line">        <span class="keyword">if</span> link <span class="keyword">not</span> <span class="keyword">in</span> seen:</span><br><span class="line">            seen.add(link)</span><br><span class="line">            URL_job = URL+<span class="built_in">str</span>(link)</span><br><span class="line">            sleep(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                job = BeautifulSoup(requests.get(URL_job).text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">            <span class="keyword">except</span> requests.ConnectionError:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;\nConnectionError&#x27;</span>)</span><br><span class="line">                <span class="built_in">print</span>(link)</span><br><span class="line">                sleep(<span class="number">2</span>)</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    job = BeautifulSoup(requests.get(URL_job).text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">                <span class="keyword">except</span> requests.ConnectionError:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&#x27;\nConnectionError&#x27;</span>)</span><br><span class="line">                    <span class="built_in">print</span>(link)</span><br><span class="line">                    sleep(<span class="number">2</span>)</span><br><span class="line">                    <span class="keyword">try</span>:</span><br><span class="line">                        job = BeautifulSoup(requests.get(URL_job).text, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">                    <span class="keyword">except</span> requests.ConnectionError:</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">&#x27;pass&#x27;</span>)</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">            aList = job.select(<span class="string">&#x27;div.job-detail-description__category-Discipline&#x27;</span>)[<span class="number">0</span>].dd(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">            <span class="keyword">for</span> a <span class="keyword">in</span> aList:</span><br><span class="line">                _d.append(a.string.lower())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _d</span><br><span class="line"></span><br><span class="line">URL_jobs_pre = <span class="string">&#x27;/jobs/postdoc/&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(PAGES):</span><br><span class="line">    URL_jobs = URL_jobs_pre + <span class="built_in">str</span>(i+<span class="number">1</span>)</span><br><span class="line">    d = get_data(URL_jobs)</span><br><span class="line">    data_ = pd.DataFrame(d, columns=[<span class="string">&#x27;disc&#x27;</span>])</span><br><span class="line">    data = data.append(data_, ignore_index=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">data.to_pickle(<span class="string">&#x27;./postdoc_data_S.pk1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/python/">python</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/crawler/">crawler</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/postdoc/">postdoc</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/01/21/combinations-and-particle-statistics/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Combinations and particle statistics
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2020/01/19/ideal-gas-state-function/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          理想气体状态方程的统计力学推导
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

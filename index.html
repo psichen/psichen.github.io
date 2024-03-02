@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <section class="px-6 max-w-4xl mx-auto gap-12 grid grid-cols-1">
+  <div class="flex flex-col h-48 items-center justify-center">
+    <h1 class="site-title text-4xl leading-relaxed">
+      pan.world
+    </h1>
+    <p class="text-gray-500 mt-2">
+    I have a proof of this theorem, but there is not enough space in this margin
+    </p>
+  </div>
+  
+  
+  
+  
+  <div class="relative pointer-events-none">
+    <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">2023</span>
+  </div>
+  
+  <div>
+    <a href="/2023/11/06/solving-differential-equations-by-transform/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Solving differential equations by transforms
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Ordinary differential equations (ODE) can be solved via roots of
+auxiliary equations or complement equations, but the rationale is not so
+clear in text books I read.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Nov 06
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/transformation/">
+        transformation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Fourier-transform/">
+        Fourier transform
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Laplace-transform/">
+        Laplace transform
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/differential-equaiton/">
+        differential equaiton
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Green-s-function/">
+        Green's function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/vector-space/">
+        vector space
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/vector/">
+        vector
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2023/10/30/wlc_and_flexible_polymers/">
+      <header>
+        <h2 class="font-bold text-xl">
+          worm-like chain model and flexible polymers
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>The worm-like chain model is the most widely used model to describe
+polymers. Here are some notes about the derivation of the relationship
+between wlc model and the theory of elasticity.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Oct 30
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/wlc/">
+        wlc
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/persistence-length/">
+        persistence length
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/bending-rigidity/">
+        bending rigidity
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/bending-energy/">
+        bending energy
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/polymers/">
+        polymers
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/elastic-rod/">
+        elastic rod
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/correlation/">
+        correlation
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div class="relative pointer-events-none">
+    <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">2022</span>
+  </div>
+  
+  <div>
+    <a href="/2022/02/27/fundamentals-of-statistical-mechanics/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Fundamentals of statistical mechanics
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Here are some fundamentals about thermodynamic concepts from a
+statistical mechanics perspective.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Feb 27
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/fluctuation/">
+        fluctuation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Legendre/">
+        Legendre
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/thermodynamics/">
+        thermodynamics
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/statistical-mechanics/">
+        statistical mechanics
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/entropy/">
+        entropy
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/approximation/">
+        approximation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/saddle-point/">
+        saddle point
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/temperature/">
+        temperature
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/chemical-potential/">
+        chemical potential
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/free-energy/">
+        free energy
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2022/02/06/contrast-transfer-function-in-TEM/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Contrast transfer function in TEM
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>The phase of an electron wave is shifted when the electron wave
+passes near the nucleus of atoms. So the electron wave is imaged on the
+detected after focused by lens giving a phase contrast in cryo-EM
+imaging.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Feb 06
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/CTF/">
+        CTF
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/PSF/">
+        PSF
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/envelope-function/">
+        envelope function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/TEM/">
+        TEM
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div class="relative pointer-events-none">
+    <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">2021</span>
+  </div>
+  
+  <div>
+    <a href="/2021/07/11/FPK-equation-by-MGF/">
+      <header>
+        <h2 class="font-bold text-xl">
+          FPK equation derived from moment generating function
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Fokker-Planck-Kramers equation is a stochastic differential function
+describing the motion in phase space. It can degenerate to diffusion
+function (in coordinate space) or Fokker-Planck function (in velocity
+space).</p>
+<p>The post describes the derivation of FPK equation from moment
+generating function.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Jul 11
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Langevin-equation/">
+        Langevin equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Fokker-Planck-Kramers-equation/">
+        Fokker-Planck-Kramers equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/stochastic-differential-eqaution/">
+        stochastic differential eqaution
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/phase-space/">
+        phase space
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/moment-generating-function/">
+        moment generating function
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/06/27/FPK-equation-by-Taylor-series/">
+      <header>
+        <h2 class="font-bold text-xl">
+          FPK equation derived from Taylor series
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Fokker-Planck-Kramers equation is a stochastic differential function
+describing the motion in phase space. It can degenerate to diffusion
+function (in coordinate space) or Fokker-Planck function (in velocity
+space).</p>
+<p>The post describes the derivation of FPK equation from Kramers Moyal
+expansion by Taylor series.</p>
+<p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Jun 27
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Langevin-equation/">
+        Langevin equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Fokker-Planck-Kramers-equation/">
+        Fokker-Planck-Kramers equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/stochastic-differential-eqaution/">
+        stochastic differential eqaution
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/phase-space/">
+        phase space
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/fluctuation/">
+        fluctuation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/diffusion-equation/">
+        diffusion equation
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/06/12/notes-about-students-t-test/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Notes about Student's t-test and t-distribution
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Almost every graduate student knows how to use t-test to test whether
+their experimental data is significantly different from the reference.
+As a widely used test statistic, it's useful to know the derivation of
+the t-distribution's analytic form, which prevents us from abusing or
+misinterpreting the t-test.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Jun 12
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/probability-density-function/">
+        probability density function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/gamma/">
+        gamma
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/t-test/">
+        t-test
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/maximum-likelihood-estimation/">
+        maximum likelihood estimation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/test-statistic/">
+        test statistic
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/likelihood-ratio/">
+        likelihood ratio
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/type-I-error/">
+        type I error
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/type-II-error/">
+        type II error
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/power/">
+        power
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/delta-function/">
+        delta function
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Interpretation of frequency shift in FM AFM (II)
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Periodic motion in dynamic systems are of especial importance. Very
+often we are interested not so much in the motion trajectories as in the
+frequencies of the motion.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      May 21
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/AFM/">
+        AFM
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/transformation/">
+        transformation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/generating-function/">
+        generating function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/mechanics/">
+        mechanics
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Hamilton/">
+        Hamilton
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Jacobi/">
+        Jacobi
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/harmonic-oscillation/">
+        harmonic oscillation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/perturbation/">
+        perturbation
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/05/18/interpretation-of-frequency-shift-in-FM-AFM-I/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Interpretation of frequency shift in FM-AFM (I)
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>In the Frequency-Modulation mode of AFM, the cantilever keeps
+harmonically oscillating during measurement. In contrast to optic
+microscopy or scanning tunneling microscopy, in which the
+electromagnetic signals are detected directly by detectors, FM-AFM
+detects the frequency shift of the cantilever's harmonic oscillation
+when the distance between sample surface and cantilever's tip
+changes.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      May 18
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/AFM/">
+        AFM
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/transformation/">
+        transformation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/generating-function/">
+        generating function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/mechanics/">
+        mechanics
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Hamilton/">
+        Hamilton
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Jacobi/">
+        Jacobi
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/harmonic-oscillation/">
+        harmonic oscillation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/perturbation/">
+        perturbation
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/05/15/partial-differential-equations/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Partial differential equations
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Partial differential equations provide information about the
+relationship between the variables instead of the specific form of the
+solution function. Determining the specific form of solution needs other
+constraints such as boundary conditions.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      May 15
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/diffusion-equation/">
+        diffusion equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/differential-equation/">
+        differential equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/wave-function/">
+        wave function
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  <nav class="flex justify-center gap-5">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">next</a>
+  </nav>
+
+
+</section>
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

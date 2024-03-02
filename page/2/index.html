@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <section class="px-6 max-w-4xl mx-auto gap-12 grid grid-cols-1">
+  <div class="flex flex-col h-48 items-center justify-center">
+    <h1 class="site-title text-4xl leading-relaxed">
+      pan.world
+    </h1>
+    <p class="text-gray-500 mt-2">
+    I have a proof of this theorem, but there is not enough space in this margin
+    </p>
+  </div>
+  
+  
+  
+  
+  <div class="relative pointer-events-none">
+    <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">2021</span>
+  </div>
+  
+  <div>
+    <a href="/2021/05/02/first-order-ordinary-differential-equations/">
+      <header>
+        <h2 class="font-bold text-xl">
+          First-order ordinary differential equations
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Ordinary differential equations (ODE) are important in physical
+modeling and deduction.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      May 02
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Langevin-equation/">
+        Langevin equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/differential-equation/">
+        differential equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/integrating-factor/">
+        integrating factor
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/04/21/vector-calculus-and-spherical-average/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Vector calculus and spherical average in SAXS
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>A vector is typically regarded as a geometric entity characterized by
+a magnitude and a direction. Here are some notes about vector calculus
+and its basic application in small-angle x-ray scattering (SAXS).</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Apr 21
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/vector/">
+        vector
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/calculus/">
+        calculus
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/SAXS/">
+        SAXS
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/spherical-average/">
+        spherical average
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/curvature/">
+        curvature
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/gradient/">
+        gradient
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/coordinate/">
+        coordinate
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/03/27/notes-about-fluorescence-correlation-spectroscopy-formalism/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Notes about fluorescence correlation spectroscopy formalism
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Let's say the concentration of the component <span
+class="math inline">\(j\)</span> in the solution is <span
+class="math inline">\(C_j(\vec{r}, t)\)</span>, which is a scalar
+function of coordinates <span class="math inline">\(\vec{r}\)</span> and
+time <span class="math inline">\(t\)</span>. For a well-mixed solution,
+the average of concentration over coordinates and time should be a
+constant <span class="math inline">\(&lt;C_j(\vec{r}, t)&gt; =
+\bar{C}_j\)</span>. The local concentration <span
+class="math inline">\(C_j(\vec{r}, t)\)</span>, however, fluctuates with
+coordinates and time. The amount of local fluctuation is <span
+class="math inline">\(\delta C_j(\vec{r}, t) = C_j(\vec{r},
+t)-\bar{C}_j\)</span>.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Mar 27
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/fluctuation/">
+        fluctuation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/diffusion-equation/">
+        diffusion equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/differential-equation/">
+        differential equation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Fourier-transform/">
+        Fourier transform
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/correlation-function/">
+        correlation function
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/03/10/common-probability-density-functions/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Common probability density functions
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Probability and statistics are one of the most common terminologies
+in scientific data interpretations. They provide us ways to find truths
+and make conclusions from this stochastic and noisy world. These
+different probability distributions are heavily coupled. In order to
+apply these distribution properly, we should understand their origin and
+derivation, which are the main purpose of this post (for continuous
+distributions).</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Mar 10
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/probability-density-function/">
+        probability density function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/exponential/">
+        exponential
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/gaussian/">
+        gaussian
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/gamma/">
+        gamma
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/beta/">
+        beta
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/chi-squared/">
+        chi-squared
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/log-normal/">
+        log-normal
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/bayesian/">
+        bayesian
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/02/13/common-probability-mass-functions/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Common probability mass functions
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Probability and statistics are one of the most common terminologies
+in scientific data interpretations. They provide us ways to find truths
+and make conclusions from this stochastic and noisy world. These
+different probability distributions are heavily coupled. In order to
+apply these distribution properly, we should understand their origin and
+derivation, which are the main purpose of this post (for discrete
+distributions).</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Feb 13
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/probability-mass-function/">
+        probability mass function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/poisson/">
+        poisson
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/binomial/">
+        binomial
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/geometric/">
+        geometric
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/hypergeometric/">
+        hypergeometric
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/bernoulli/">
+        bernoulli
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/02/11/generating-functions-of-probability-distribution/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Generating functions of probability distributions
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>Probability mass/density distribution have defined generating
+functions which faciliate the derivation and the understanding of
+different probability distributions.</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Feb 11
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/probability-density-function/">
+        probability density function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/probability-mass-function/">
+        probability mass function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/generating-function/">
+        generating function
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/02/04/geometric-interpretation-about-Jacobian-determinant/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Geometric interpretation about Jacobian determinant
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>In scientific computing, integration by substitution is a very common
+skill. <a
+href="https://psichen.github.io/2019/09/30/FRET-correcting/">For
+example</a>, we measured a series of practical values of a variable
+(<span class="math inline">\(x&#39;\)</span>), of which the distribution
+(<span class="math inline">\(g(x&#39;)\)</span>) was unknown. But we
+know the theoretic distribution of the variable (<span
+class="math inline">\(f(x)\)</span>) and the correction relationship or
+mapping relationship between theoretic and practical values (<span
+class="math inline">\(x=h(x&#39;)\)</span>).
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Feb 04
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Jacobian/">
+        Jacobian
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/determinant/">
+        determinant
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/integration-by-substitution/">
+        integration by substitution
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/cross-product/">
+        cross product
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/infinitesimal-area/">
+        infinitesimal area
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2021/01/21/combinations-and-particle-statistics/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Combinations and particle statistics
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <h2 id="permutation">Permutation</h2>
+<p>Let's first consider a set of <span class="math inline">\(n\)</span>
+objects, which are all different. The number of all possible
+arrangements (permutations) is</p>
+<p><span class="math display">\[ n(n-1) \cdots 1 = n! \]</span></p>
+<p>Generally, if we select <span class="math inline">\(k
+(&lt;n)\)</span> objects from <span class="math inline">\(n\)</span>,
+the number of permuations is</p>
+<p><span class="math display">\[ n(n-1)\cdot\cdot\cdot(n-k+1) =
+\frac{n!}{(n-k)!} = P(n, k) \]</span></p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Jan 21
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/permutation/">
+        permutation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/combination/">
+        combination
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/particle-statistics/">
+        particle statistics
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div class="relative pointer-events-none">
+    <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">2020</span>
+  </div>
+  
+  <div>
+    <a href="/2020/02/10/crawler-university-postdoc/">
+      <header>
+        <h2 class="font-bold text-xl">
+          python爬取大学及博士后信息
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>2020年开年不利，天启四骑士war, pestilence, famine,
+death已经降临了前3个，大家都宅在家里无法出门，于是我便利用这段时间学习一下爬虫的用法。</p>
+<p>其实以前也用过爬虫，不过后来放了很久，很多包也更新了，所以值得重新学一遍。记得在实习的时候，经理曾经给了我一个报价网，该网将市场上几乎所以药品的中标价格都放在了网上，而且网页似乎并没有做任何反爬处理，可惜我已经忘记了网址T
+T</p>
+<p>言归正传，这次用python的bs4、requests包来爬取网页信息，获得最近几年世界各地大学的变化趋势，以及postdoc的发布信息。</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Feb 10
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/python/">
+        python
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/crawler/">
+        crawler
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/postdoc/">
+        postdoc
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2020/01/19/ideal-gas-state-function/">
+      <header>
+        <h2 class="font-bold text-xl">
+          理想气体状态方程的统计力学推导
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>理想气体状态方程<span class="math inline">\(pV = nRT =
+Nk_BT\)</span>想必大家已经非常熟悉了。下面记一下如何从统计力学的角度推出理想气体状态方程。</p>
+<h2 id="系综">系综</h2>
+<p>一定条件下体系可能存在的状态的集合称之为ensemble（系综），是系统状态的概率分布，可与概率空间进行类比。</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Jan 19
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/phase-space/">
+        phase space
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/ideal-gas/">
+        ideal gas
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/statistic-mechanics/">
+        statistic mechanics
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  <nav class="flex justify-center gap-5">
+      <a class="extend prev" rel="prev" href="/">prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">next</a>
+  </nav>
+
+
+</section>
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

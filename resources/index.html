@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Resources | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <section class="px-6 max-w-4xl mx-auto md:px-0">
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Resources
+      </h1>
+    </div>
+  </header>
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <h2 id="academic-english">Academic English</h2>
+<h3 id="vocabularies">vocabularies</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Word</th>
+<th>Syllable</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>arbitrary</td>
+<td>/'ɑ:bɪtrəri/</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>autonomously</td>
+<td>/ɔːˈtɒnəməsli/</td>
+<td>that NOMPC functions cell autonomously in these neurons</td>
+</tr>
+<tr class="odd">
+<td>contradict</td>
+<td>/kɒntrəˈdɪkt/</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>concomitant</td>
+<td>/kənˈkɒmɪtənt/</td>
+<td>bleaching of Acceptor concomitant with an intensity increase of
+Donor</td>
+</tr>
+<tr class="odd">
+<td>draw/drew/drawn</td>
+<td>/drɔː/ /dru:/ /drɑːn/</td>
+<td>The data sample is drawn from a population</td>
+</tr>
+<tr class="even">
+<td>enigmatic</td>
+<td>/enig'mætik/</td>
+<td>Adding to hte enigmatic complexity of VIPP1 function</td>
+</tr>
+<tr class="odd">
+<td>equivalent</td>
+<td>/ɪ'kwɪvələnt/</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>miscellaneous</td>
+<td>/ˌmɪsə'leɪnɪəs/</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>monotonically</td>
+<td>/ˌmɑːnəˈtɑːnɪkli/</td>
+<td>monotonically increasing function</td>
+</tr>
+<tr class="even">
+<td>orthogonal</td>
+<td>/ɔːˈθɒɡənəl/</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>paradigm</td>
+<td>/ˈparədʌɪm/</td>
+<td>as a paradigm of the tether model</td>
+</tr>
+<tr class="even">
+<td>posit</td>
+<td>/'pɒzit/</td>
+<td>the tether model posits that...</td>
+</tr>
+<tr class="odd">
+<td>promiscuity</td>
+<td>/prɒmɪˈskjuːətɪ/</td>
+<td>molecular basis for Skp promiscuity</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phrase-verbs">phrase verbs</h3>
+<p><strong>give rise to</strong> + [n]</p>
+<p>It remains to be tested whether heterologous (/hɛtəˈrɒləɡəs/)
+expression of these channels <strong>gives rise to</strong>
+mechanosensitive channels.</p>
+<p><strong>stem from</strong> + [n]</p>
+<p>Nevertheless, major limitations of the HMM framework <strong>stem
+from</strong> the difficulties involved in the characterization of the
+molecule's state space.</p>
+<h3 id="sentences">sentences</h3>
+<p><em>statistics &amp; distributions, etc.</em></p>
+<p>Because <span class="math inline">\(f(y_{1},y_{2})\)</span> can be
+factored into a product of functions that <strong>depend</strong>
+<em>[transitive verb]</em> only their respective <strong>set of
+statistics, it follows that</strong> <span
+class="math inline">\(y_{1}\)</span> <strong>is independent of</strong>
+<span class="math inline">\(y_{2}\)</span>.</p>
+<p>protein structures &amp; functions, etc.</p>
+<p>The helix α4 establishes important intersubunit contacts in the
+central core of the polymers, <strong>which is reflected in a stretch of
+residues with properties conserved between PspA/IM30 and ESCRT-III
+proteins.</strong></p>
+<p><em>methods &amp; validation, etc.</em></p>
+<p><strong>Initially</strong>, we use synthetic photon intensity traces
+<strong>for which ground truth for benchmarking is readily available.
+Subsequently</strong>, we use real data sets obtained from single
+molecule experiments on Holliday junctions assessed through FRET pairs
+under different photostability regimes.</p>
+<h2 id="biology">Biology</h2>
+<h3 id="amino-acid-alphabet">amino acid alphabet</h3>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Amino acid</th>
+<th>Syllable</th>
+<th>Abbreviation</th>
+<th>Side chain</th>
+<th>pKa<sub>1</sub></th>
+<th>pKa<sub>2</sub></th>
+<th>pKa<sub>3</sub></th>
+<th>pI</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>glycine</td>
+<td>/'glaɪsiːn/</td>
+<td>Gly / G</td>
+<td>-</td>
+<td>2.34</td>
+<td>9.60</td>
+<td>-</td>
+<td>5.97</td>
+</tr>
+<tr class="even">
+<td>alanine</td>
+<td>/'ælənɪn/</td>
+<td>Ala / A</td>
+<td>methyl</td>
+<td>2.34</td>
+<td>9.69</td>
+<td>-</td>
+<td>6.00</td>
+</tr>
+<tr class="odd">
+<td>valine</td>
+<td>/ˈvælin/</td>
+<td>Val / V</td>
+<td>propyl</td>
+<td>2.32</td>
+<td>9.62</td>
+<td>-</td>
+<td>5.96</td>
+</tr>
+<tr class="even">
+<td>leucine</td>
+<td>/'luːsiːn/</td>
+<td>Leu / L</td>
+<td>butyl</td>
+<td>2.36</td>
+<td>9.60</td>
+<td>-</td>
+<td>5.98</td>
+</tr>
+<tr class="odd">
+<td>isoleucine</td>
+<td>/aɪsəʊ'lu:si:n/</td>
+<td>Ile / I</td>
+<td>butyl</td>
+<td>2.36</td>
+<td>9.60</td>
+<td>-</td>
+<td>6.02</td>
+</tr>
+<tr class="even">
+<td>phenylalanine</td>
+<td>/fɛnlˈælənin/</td>
+<td>Phe / F</td>
+<td>benzyl</td>
+<td>1.83</td>
+<td>9.13</td>
+<td>-</td>
+<td>5.48</td>
+</tr>
+<tr class="odd">
+<td>proline</td>
+<td>/ˈproʊliːn/</td>
+<td>Pro / P</td>
+<td>5-member cyclic</td>
+<td>1.99</td>
+<td>10.60</td>
+<td>-</td>
+<td>6.30</td>
+</tr>
+<tr class="even">
+<td>serine</td>
+<td>/ˈsɛriːn/</td>
+<td>Ser / S</td>
+<td>hydroxyl</td>
+<td>2.21</td>
+<td>9.15</td>
+<td>-</td>
+<td>5.68</td>
+</tr>
+<tr class="odd">
+<td>threonine</td>
+<td>/'θriːəniːn/</td>
+<td>Thr / T</td>
+<td>hydroxyl</td>
+<td>2.09</td>
+<td>9.10</td>
+<td>-</td>
+<td>5.60</td>
+</tr>
+<tr class="even">
+<td>tyrosine</td>
+<td>/ˈtaɪrəsin/</td>
+<td>Tyr / Y</td>
+<td>phenolic</td>
+<td>2.20</td>
+<td>9.11</td>
+<td>-</td>
+<td>5.66</td>
+</tr>
+<tr class="odd">
+<td>cysteine</td>
+<td>/ˈsɪstin/</td>
+<td>Cys / C</td>
+<td>thiol</td>
+<td>1.96</td>
+<td>8.18</td>
+<td>-</td>
+<td>5.07</td>
+</tr>
+<tr class="even">
+<td>methionine</td>
+<td>/məˈθaɪənin/</td>
+<td>Met / M</td>
+<td>sulfide</td>
+<td>2.28</td>
+<td>9.21</td>
+<td>-</td>
+<td>5.74</td>
+</tr>
+<tr class="odd">
+<td>asparagine</td>
+<td>/əˈspɛrədʒin/</td>
+<td>Asn / N</td>
+<td>amide</td>
+<td>2.02</td>
+<td>8.80</td>
+<td>-</td>
+<td>5.41</td>
+</tr>
+<tr class="even">
+<td>glutamine</td>
+<td>/ˈɡludəmin/</td>
+<td>Gln / Q</td>
+<td>amide</td>
+<td>2.17</td>
+<td>9.13</td>
+<td>-</td>
+<td>5.65</td>
+</tr>
+<tr class="odd">
+<td>tryptophan</td>
+<td>/ˈtrɪptəfæn/</td>
+<td>Trp / W</td>
+<td>indole</td>
+<td>2.83</td>
+<td>9.39</td>
+<td>-</td>
+<td>5.89</td>
+</tr>
+<tr class="even">
+<td>aspartic acid</td>
+<td>/əspɑrdɪkˈæsɪd/</td>
+<td>Asp / D</td>
+<td>carboxylic acid</td>
+<td>1.88</td>
+<td>9.60</td>
+<td>3.65</td>
+<td>2.77</td>
+</tr>
+<tr class="odd">
+<td>glutamic acid</td>
+<td>/ɡlutæmɪkˈæsɪd/</td>
+<td>Glu / E</td>
+<td>carboxylic acid</td>
+<td>2.19</td>
+<td>9.67</td>
+<td>4.25</td>
+<td>3.22</td>
+</tr>
+<tr class="even">
+<td>lysine</td>
+<td>/ˈlaɪsin/</td>
+<td>Lys / K</td>
+<td>amino</td>
+<td>2.18</td>
+<td>8.95</td>
+<td>10.53</td>
+<td>9.74</td>
+</tr>
+<tr class="odd">
+<td>arginine</td>
+<td>/ˈɑrdʒənin/</td>
+<td>Arg / R</td>
+<td>guanidino</td>
+<td>2.17</td>
+<td>9.04</td>
+<td>12.48</td>
+<td>10.76</td>
+</tr>
+<tr class="even">
+<td>histidine</td>
+<td>/ˈhɪstədin/</td>
+<td>His / H</td>
+<td>imidazole</td>
+<td>1.82</td>
+<td>9.17</td>
+<td>6.00</td>
+<td>7.59</td>
+</tr>
+</tbody>
+</table>
+<h3 id="binomial-nomenclature">binomial nomenclature</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Latin name</th>
+<th>Abbreviation</th>
+<th>Syllable</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Arabidopsis thaliana</em></td>
+<td><em>A. thaliana</em></td>
+<td>/ærəbɪ'dəʊpsɪs/ /θaɪliænə/</td>
+<td>small flowering plant, model organism in plant biology</td>
+</tr>
+<tr class="even">
+<td><em>Caenorhabditis elegans</em></td>
+<td><em>C. elegans</em></td>
+<td>/si:nɔ:hæb'daɪtɪs/ /ɛləɡæns/</td>
+<td>roundworm</td>
+</tr>
+<tr class="odd">
+<td><em>Chlamydomonas</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>Drosophila</em></td>
+<td></td>
+<td>/drəˈsɒfɪlə/</td>
+<td>fruit fly</td>
+</tr>
+<tr class="odd">
+<td><em>Escherichia coli</em></td>
+<td><em>E. Coli</em></td>
+<td>/eʃә'rikiә/ /kəʊlʌɪ/</td>
+<td>one kind of Gram-negative bacteria</td>
+</tr>
+<tr class="even">
+<td><em>Nostoc punctiforme</em></td>
+<td><em>N. punctiforme</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><em>Synechocystis</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><em>Synechococcus</em></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="number">number</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Number</th>
+<th>Oligomer (Greek prefixes)</th>
+<th>Syllable</th>
+<th>Tuple (Latin prefixes)</th>
+<th>Syllable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>monomer</td>
+<td>/ˈmɒnəmə/</td>
+<td>single</td>
+<td>/ˈsɪŋɡəl/</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>dimer</td>
+<td>/ˈdaɪmər/</td>
+<td>double</td>
+<td>/ˈdʌbəl/</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>trimer</td>
+<td>/ˈtraɪmər/</td>
+<td>triple</td>
+<td>/ˈtrɪpəl/</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>tetramer</td>
+<td>/ˈtɛtrəmər/</td>
+<td>quadruple</td>
+<td>/ˈkwɒdrʊpəl/</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>pentamer</td>
+<td>/ˈpɛntəmər/</td>
+<td>quintuple</td>
+<td>/ˈkwɪntjʊpəl/</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>hexamer</td>
+<td>/'hɛksəmər/</td>
+<td>sextuple</td>
+<td>/ˈsɛkstjʊpəl/</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>heptamer</td>
+<td>/'hɛptəmər/</td>
+<td>septuple</td>
+<td>/ˈsɛptjʊpəl/</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>octamer</td>
+<td>/'ɒkteɪmər/</td>
+<td>octuple</td>
+<td>/ˈɒktjʊpəl/</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>nonamer</td>
+<td>/'nɒnəmər/</td>
+<td>nonuple</td>
+<td>/'nɒnjʊpəl/</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>decamer</td>
+<td>/'dɛkæmər/</td>
+<td>decuple</td>
+<td>/dɛkjʊpəl/</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>undecamer</td>
+<td>/ʌn'dɛkæmər/</td>
+<td>undecuple</td>
+<td>/ʌn'dɛkjʊpəl/</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>dodecamer</td>
+<td>/dəʊ'dɛkæmər/</td>
+<td>duodecuple</td>
+<td>/djuə'dɛkjʊpəl/</td>
+</tr>
+<tr class="odd">
+<td>&gt; 1</td>
+<td>multimer</td>
+<td>/'mʌltɪmər/</td>
+<td>multiple</td>
+<td>/'mʌltɪpəl/</td>
+</tr>
+<tr class="even">
+<td>&gt;&gt; 1</td>
+<td>polymer</td>
+<td>/ˈpɒlɪmər/</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ideas-cloud">Ideas cloud</h2>
+<div id="wordcloud">
+
+</div>
+<script>
+var entries = [
+        {
+                label: 'VIPP1',
+                url: 'mindmap/VIPP1',
+                target: '_top'
+        },
+        {
+                label: 'NompC',
+                url: 'mindmap/NompC',
+                target: '_top'
+        },
+        {
+                label: 'ESCRT-III',
+                url: 'mindmap/ESCRT-III',
+                target: '_top'
+        },
+        {
+                label: 'mechanosensitive fluorescent probes',
+                url: '#!',
+                target: '_top'
+        },
+        {
+                label: 'force-optical microscopy',
+                url: 'mindmap/force-optical_microscopy',
+                target: '_top'
+        },
+];
+</script>
+<script src='./script/jquery.min.js'></script>
+<script src='./script/jquery.svg3dtagcloud.min.js'></script>
+<script src='./script/wordcloud.js'></script>
+
+  </article>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

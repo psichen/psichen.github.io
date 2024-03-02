@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Notes about Student&#39;s t-test and t-distribution | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Notes about Student's t-test and t-distribution
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-06-12</time>
+          <span class="text-gray-400">·</span>
+          <span>4k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Almost every graduate student knows how to use t-test to test whether
+their experimental data is significantly different from the reference.
+As a widely used test statistic, it's useful to know the derivation of
+the t-distribution's analytic form, which prevents us from abusing or
+misinterpreting the t-test.</p>
+<span id="more"></span>
+<h2 id="maximum-likelihood-estimation">Maximum likelihood
+estimation</h2>
+<p>Let's suppose samples <span
+class="math inline">\(\{x_{1},x_{2},\dots,x_{n}\} \in \mathcal{X} =
+\mathbb{R}^{n}\)</span> are drown independently from a Gaussian
+distribution for which both the mean <span
+class="math inline">\(\mu\)</span> and the variance <span
+class="math inline">\(\sigma^{2}\)</span> are unknown. The likelihood
+function is,</p>
+<p><span class="math display">\[ L(\pmb{x};\mu,\sigma^{2}) = (2 \pi
+\sigma^{2})^{-\frac{n}{2}} \exp[- \frac{\sum_{i=1}^{n} (x_{i} -
+\mu)^{2}}{2 \sigma^{2}}] \]</span></p>
+<p>We choose the estimator <span
+class="math inline">\(\hat{\mu}\)</span> and <span
+class="math inline">\(\hat{\sigma^{2}}\)</span> which maximize the
+likelihood,</p>
+<p><span class="math display">\[ \begin{aligned}
+\partial_{\mu} \ln L(\pmb{x};\mu,\sigma^{2}) |_{\mu = \hat{\mu}} =
+\frac{\sum_{i=1}^{n} (x_{i} - \hat{\mu})}{2 \sigma^{2}} = 0 \
+&amp;\Rightarrow \ \hat{\mu} = \bar{x} \\
+\partial_{\sigma^{2}} \ln L(\pmb{x};\mu,\sigma^{2}) |_{\sigma^{2} =
+\hat{\sigma^{2}}} = -\frac{n}{2 \hat{\sigma^{2}}} + \frac{\sum_{i=1}^{n}
+(x_{i} - \mu)^{2}}{2 (\hat{\sigma^{2}})^{2}} = 0 \ &amp;\Rightarrow \
+\hat{\sigma^{2}} = \frac{\sum_{i=1}^{n} (x_{i} - \mu)^{2}}{n} = s^{2}
+\end{aligned}  \]</span></p>
+<p>where <span class="math inline">\(s^{2}\)</span> is the sample
+variance when the mean of population <span
+class="math inline">\(\mu\)</span> is known (degree of freedom = <span
+class="math inline">\(n\)</span>).</p>
+<h3 id="bias-estimator">bias estimator</h3>
+<p>The maximum likelihood estimator <span
+class="math inline">\(\hat{\sigma^{2}} = s^{2}\)</span> is unbiased when
+the mean <span class="math inline">\(\mu\)</span> is known. However, if
+<span class="math inline">\(\mu\)</span> is unknown, an intuitive idea
+is to replace <span class="math inline">\(\mu\)</span> with the
+estimator <span class="math inline">\(\hat{\mu} = \bar{x}\)</span>.
+Here, <span class="math inline">\(\hat{\mu}\)</span> is also a random
+variable which spreads values around <span
+class="math inline">\(\mu\)</span>. Then, the uncorrected estimator
+<span class="math inline">\(\hat{\sigma^{2}}\)</span> is biased,</p>
+<p><span class="math display">\[ \begin{aligned}
+E[ \hat{\sigma^{2}} ] &amp;= \frac{1}{n} E[ \sum_{i=1}^{n} (x_{i} -
+\bar{x})^{2} ] \\
+&amp;= \frac{1}{n} E[ \sum_{i=1}^{n} (x_{i} - \mu)^{2} - \sum_{i=1}^{n}
+2 (x_{i} - \mu) (\bar{x} - \mu) + \sum_{i=1}^{n} (\bar{x} - \mu)^{2}] \\
+&amp;[ \text{split as } (x_{i} - \mu + \mu - \bar{x})] \\
+&amp;= \frac{\sum_{i=1}^{n} (x_{i} - \mu)^{2}}{n} - \frac{\sum_{i=1}^{n}
+(\bar{x} - \mu)^{2}}{n} \\
+&amp;= (1 - \frac{1}{n}) \sigma^{2}
+\end{aligned}  \]</span></p>
+<p>It underestimates the population variance because the estimator <span
+class="math inline">\(\hat{\mu}\)</span> introduces new uncertainty into
+the equation. Further, it can be thought as the estimator <span
+class="math inline">\(\hat{\mu}\)</span> introduces a new constraint
+which "consumes" one degree of freedom. Thus, the unbiased estimator can
+be corrected by <span class="math inline">\(\hat{\sigma^{2}} =
+\sum_{i=1}^{n} (x_{i} - \bar{x})^{2} / (n-1)\)</span>.</p>
+<h3 id="standard-deviation-standard-error">standard deviation &amp;
+standard error</h3>
+<p>As we can see, samples and estimators are both random variables. They
+have corresponding terms to describe their spread.</p>
+<p><strong>standard deviation</strong></p>
+<p>Standard deviation (SD) is the positive root of the variance, or the
+root of 2nd-order central moment <span class="math inline">\(\frac{1}{N}
+\sum_{i=1}^{N} (x_{i} - m_{1})^{2}\)</span>.</p>
+<p><strong>standard error</strong></p>
+<p>Standard error (SE) is the uncertainty of the estimator <span
+class="math inline">\(\hat{a}\)</span>, namely the standard deviation of
+the sampling distribution <span
+class="math inline">\(P(\hat{a}|a)\)</span>. For the biased estimator
+<span class="math inline">\(E(\hat{a}) = a + b(a)\)</span>, the spread
+around the true value <span class="math inline">\(a\)</span> is,</p>
+<p><span class="math display">\[ \begin{aligned}
+\epsilon^{2}_{\hat{a}} &amp;= E[ (\hat{a} - a)^{2} ] = E[ (\hat{a} -
+E[\hat{a}] + E[\hat{a}] - a)^{2} ] \\
+&amp;= E[ (\hat{a} - E[\hat{a}])^{2} ] + E[ (E[\hat{a}] - a)^{2} ] =
+V(\hat{a}) + b^{2}(a)
+\end{aligned}  \]</span></p>
+<p>So <span class="math inline">\(\epsilon^{2}_{\hat{a}}\)</span> is the
+sum of squares of the statistical and systematic errors. In addition,
+<span class="math inline">\(\epsilon_{\hat{a}}\)</span> is called the
+root mean square error (RMSE). Specifically, if the estimator is the
+unbiased mean estimator <span class="math inline">\(\hat{\mu} =
+\bar{x}\)</span>, the standard error of mean (SEM) is the root of the
+variance of sample mean,</p>
+<p><span class="math display">\[ \epsilon_{\hat{\mu}} = (E[ (\bar{x} -
+\mu)^{2} ])^{\frac{1}{2}} = \frac{\sigma}{\sqrt{n}} \]</span></p>
+<p>where <span class="math inline">\(\sigma\)</span> is the standard
+deviation of the population and <span class="math inline">\(n\)</span>
+is the number of groups of samples.</p>
+<h2 id="neyman-pearson-lemma">Neyman-Pearson lemma</h2>
+<p>Neyman-Pearson lemma tells us which test statistic we should use.
+Before introducing Neyman-Pearson lemma, we should know the type I error
+<span class="math inline">\(\alpha\)</span> and the type II error <span
+class="math inline">\(\beta\)</span> in test statistics.</p>
+<h3 id="type-i-error-type-ii-error">type I error &amp; type II
+error</h3>
+<p>In the test of null hypothesis <span
+class="math inline">\(H_{0}\)</span> against alternative hypothesis
+<span class="math inline">\(H_{1}\)</span>, false negative is called
+type I error denoted by <span class="math inline">\(\alpha\)</span> and
+false positve is called type II error denoted by <span
+class="math inline">\(\beta\)</span>. Supposing the rejection region
+<span class="math inline">\(\mathcal{R} = \{x : \text{reject } H_{0}
+\}\)</span> and the acceptance region <span
+class="math inline">\(\bar{\mathcal{R}} = \mathcal{X} -
+\mathcal{R}\)</span>, some definition is listed,</p>
+<p><span class="math display">\[ \text{Table 1 Type I &amp; II error and
+related items} \]</span> <span class="math display">\[
+\begin{array}{cccc}
+\hline
+\text{ Denotation } &amp; \text{ PDF integral } &amp; \text{ Event
+fraction } &amp; \text{ Term } \\
+\hline
+\alpha &amp; \int_{\mathcal{R}} f(x | H_{0}) \ dx &amp; FP/(TN + FP)
+&amp; \text{ Type I error/Significance level } \\
+\beta &amp; \int_{\bar{\mathcal{R}}} f(x | H_{1}) \ dx &amp; FN/(TP +
+FN) &amp; \text{ Type II error } \\
+1 - \alpha &amp; \int_{\bar{\mathcal{R}}} f(x | H_{0}) \ dx &amp; TN/(TN
++ FP) &amp; \text{ Specificity } \\
+1 - \beta &amp; \int_{\mathcal{R}} f(x | H_{1}) \ dx &amp; TP/(TP + FN)
+&amp; \text{ Sensitivity/Power } \\
+( 1-\beta )/( 1-\beta+\alpha ) &amp; - &amp; TP/(TP + FP) &amp;
+\text{PPV} \\
+( 1-\alpha )/( 1-\alpha+\beta ) &amp; - &amp; TN/(TN + FN) &amp;
+\text{NPV} \\
+\hline
+\text{* PPV: Positive precdicted value;} &amp; \text{NPV: Negative
+predicted value;} \\
+\end{array} \]</span></p>
+<p>The graphic demonstration can be seen on <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity#/media/File:PPV,_NPV,_Sensitivity_and_Specificity.svg">wiki</a>.</p>
+<h3 id="the-compromised-test">the compromised test</h3>
+<p>Since <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> are counter-parts, we usually can't
+minimize them simultaneously. So we have a compromise that the type I
+error (significance level) of the test statistic has an up limit <span
+class="math inline">\(\alpha_{0}\)</span> while the power <span
+class="math inline">\(1 - \beta_{0}\)</span> is maximized.</p>
+<p>In order to find such a test statistic, we consider a set of the
+rejection probability functions <span
+class="math inline">\(\phi(x)\)</span> represents the probability of
+rejecting the null hypothesis <span class="math inline">\(H_{0}\)</span>
+given the data <span class="math inline">\(x\)</span>,</p>
+<p><span class="math display">\[ \phi(x) =
+\begin{cases}
+1, \ &amp; x \in \mathcal{R} \\
+0, \ &amp; x \in \mathcal{\bar{R}}
+\end{cases}
+\]</span> Thus type I error can be interpreted as the expectation of
+<span class="math inline">\(\phi(x)\)</span> under the null hypothesis
+<span class="math inline">\(H_{0}\)</span> and power as the expectation
+of <span class="math inline">\(\phi(x)\)</span> under the alternative
+hypothesis <span class="math inline">\(H_{1}\)</span>,</p>
+<p><span class="math display">\[ \begin{aligned}
+\alpha &amp;= E_{H_{0}} [ \phi(x) ] = \int_{\mathcal{R}} f(x|H_{0}) \ dx
+\\
+1 - \beta &amp;= E_{H_{1}} [ \phi(x) ] = \int_{\mathcal{R}} f(x|H_{1}) \
+dx
+\end{aligned} \]</span></p>
+<p>Different test statistic functions <span
+class="math inline">\(\lambda(x)\)</span> may have different rejection
+region <span class="math inline">\(\mathcal{R}\)</span>, hence defining
+level and power of the test. Then the question is to find a suitable
+rejection region <span class="math inline">\(\mathcal{R}\)</span> where
+<span class="math inline">\(x\)</span> satisfy,</p>
+<p><span class="math display">\[ \begin{aligned}
+\text{maximize } &amp;\int_{\mathcal{R}} f(x | H_{1}) \ dx = 1 -
+\beta_{0} \\
+\text{ s.t. } &amp;\int_{\mathcal{R}} f(x | H_{0}) \ dx \leq \alpha_{0}
+\end{aligned}  \]</span></p>
+<p>It's equivalent to following states,</p>
+<p><span class="math display">\[ \begin{array}{ll}
+(a) &amp; E_{H_{0}}[ \phi(x) ] = \alpha_{0} \\
+(b) &amp; \phi(x) =
+\begin{cases}
+1, \ &amp; x \in \mathcal{R} = \{ x : \frac{f(x|H_{0})}{f(x|H_{1})} \lt
+k \} \\
+\gamma, \ &amp; x \in \{ x : \frac{f(x|H_{0})}{f(x|H_{1})} = k \} \\
+0, \ &amp; x \in \mathcal{\bar{R}} = \{ x :
+\frac{f(x|H_{0})}{f(x|H_{1})} \gt k \}
+\end{cases}
+\end{array} \]</span></p>
+<p>where <span class="math inline">\(\gamma\)</span> is the reject
+probability when the likelihood ratio <span
+class="math inline">\(\frac{f(x|H_{0})}{f(x|H_{1})}\)</span> equals
+<span class="math inline">\(k\)</span> and is chosen to satisfy the
+state (a).</p>
+<p><strong>Sufficiency</strong>:</p>
+<p><em>If <span class="math inline">\(\phi(x)\)</span> satisfies state
+(a) and (b), then it is most powerful over other test statistics at the
+significance level <span
+class="math inline">\(\alpha_{0}\)</span>.</em></p>
+<p>From the state (b), we have the inequality,</p>
+<p><span class="math display">\[ \int_{\mathcal{X}} [ \phi(x) -
+\phi&#39;(x) ][ f(x|H_{0}) - k \cdot f(x|H_{1}) ] \ dx \le 0 \]</span>
+<span class="math display">\[ \text{[ the definition of $\phi(x)$ ]}
+\]</span></p>
+<p>where <span class="math inline">\(\phi&#39;(x)\)</span> is an
+arbitrary test. Expand the integrand,</p>
+<p><span class="math display">\[ \int_{\mathcal{X}} [ \phi(x) f(x|H_{0})
+- \phi&#39;(x) f(x|H_{0}) - k \cdot \phi(x) f(x|H_{1}) + k \cdot
+\phi&#39;(x) f(x|H_{1})] \ dx \le 0 \]</span></p>
+<p>Since <span class="math inline">\(\int_{\mathcal{X}} \phi&#39;(x)
+f(x|H_{0}) \ dx = \int_{\mathcal{R}} f(x|H_{0}) \ dx = \alpha&#39; \le
+\alpha_{0}\)</span>,</p>
+<p><span class="math display">\[ (1 - \beta_{0}) - (1 - \beta&#39;) \ge
+( \alpha_{0} - \alpha&#39; )/k \ge 0 \]</span></p>
+<p>Thus the test <span class="math inline">\(\phi(x)\)</span> is most
+powerful at the significance level <span
+class="math inline">\(\alpha_{0}\)</span>.</p>
+<p><strong>Necessity</strong>:</p>
+<p><em>If a test <span class="math inline">\(\phi&#39;(x)\)</span> is
+most powerful at significance level <span
+class="math inline">\(\alpha&#39;\)</span> (where <span
+class="math inline">\(\alpha&#39; \le \alpha_{0}\)</span> by
+hypothesis), it satisfies the state (a) and the state (b), namely <span
+class="math inline">\(\alpha&#39; = \alpha_{0}\)</span> and <span
+class="math inline">\(\phi&#39;(x) = \phi(x)\)</span>, except possibly
+where <span class="math inline">\(\frac{f(x|H_{0})}{f(x|H_{1})} =
+k\)</span>, or <span class="math inline">\(\alpha&#39; \lt
+\alpha_{0}\)</span> while the power of <span
+class="math inline">\(\phi&#39;(x)\)</span> is 1.</em></p>
+<p>We may assume <span class="math inline">\(\phi&#39;(x) \neq
+\phi(x)\)</span> for <span class="math inline">\(\forall x \in
+S\)</span>, then we can define the sets,</p>
+<p><span class="math display">\[ \begin{aligned}
+S^{+} &amp;= \{ x : \phi&#39;(x) &gt; \phi(x) \} \\
+S^{=} &amp;= \{ x : \phi&#39;(x) = \phi(x) \} \\
+S^{-} &amp;= \{ x : \phi&#39;(x) &lt; \phi(x) \} \\
+S &amp;= S^{+} \cup S^{-}
+\end{aligned}  \]</span></p>
+<p>Also, considering the integral,</p>
+<p><span class="math display">\[ \int_{\mathcal{X}} [ \phi&#39;(x) -
+\phi(x) ] [ f(x|H_{0}) - k \cdot f(x|H_{1}) ] \ dx = \int_{S} (\cdot) +
+\int_{S^{=}} (\cdot) + \int_{\{x : f(x|H_{0}) = k \cdot f(x|H_{1})\}}
+(\cdot) \ge 0 \]</span></p>
+<p>where the last two integrals are zero over their intgrated
+domain,</p>
+<p><span class="math display">\[ \int_{S} [ \phi&#39;(x) - \phi(x) ] [
+f(x|H_{0}) - k \cdot f(x|H_{1}) ] \ dx \gt 0 \]</span></p>
+<p><span class="math display">\[ (1-\beta) - (1-\beta&#39;) \gt
+\frac{1}{k} (\alpha_{0} - \alpha&#39;) \ge 0 \]</span></p>
+<p>which contradicts the assumption that the test <span
+class="math inline">\(\phi&#39;(x)\)</span> is most powerful. So <span
+class="math inline">\(\phi&#39;(x)\)</span> should satisfy the state
+(b).</p>
+<p>As for the state (a), because the significance level <span
+class="math inline">\(\alpha&#39;\)</span> and the power <span
+class="math inline">\(1-\beta&#39;\)</span> are both monotonically
+increasing function of the measure of rejection region <span
+class="math inline">\(\mu(\mathcal{R})\)</span>. So we can keep
+increasing <span class="math inline">\(\mu(\mathcal{R})\)</span> until
+either <span class="math inline">\(\alpha&#39; = \alpha_{0}\)</span>
+(the power reaches its maximum) or <span class="math inline">\(1 -
+\beta&#39; = 1\)</span> (<span
+class="math inline">\(\alpha&#39;\)</span> is still less than <span
+class="math inline">\(\alpha_{0}\)</span>).</p>
+<p>Here we omit the proof of its existence. Readers may find it out from
+the reference.</p>
+<p>From above discussion we may come to the conclusion that the
+likelihood ratio is the test statistic which is most powerful at most
+type I error. It should be noticed there may be a test statistic of
+which the power is 1 while the significance level is less than <span
+class="math inline">\(\alpha_{0}\)</span>. However, in such the case
+data are so distinguished that there is no need to test.</p>
+<h2 id="generalized-likelihood-ratio">Generalized likelihood ratio</h2>
+<p>If null hypothesis <span class="math inline">\(H_{0}\)</span> or
+alternative hypothesis <span class="math inline">\(H_{1}\)</span> is
+composite, we don't have a unique form of likelihood function because
+the composite hypothesis covers a set of values from parameter space.
+However, we can still use the maximum likelihood estimation to get a
+likelihood function using estimated parameters as long as we know the
+functional form of the population from which data is drawn.</p>
+<p>Suppose we want to test the null hypothesis <span
+class="math inline">\(H_{0} = \{ \pmb{a} : \pmb{a} \in \mathcal{S}
+\}\)</span> against the alternative hypothesis <span
+class="math inline">\(H_{1} = \{ \pmb{a} : \pmb{a} \in \mathcal{\bar{S}}
+= \mathcal{A} - \mathcal{S} \}\)</span>, where <span
+class="math inline">\(\mathcal{S}\)</span> is the parameter subspace of
+the full parameter space <span
+class="math inline">\(\mathcal{A}\)</span>. If the parameter values are
+allowed to vary only over the subspace <span
+class="math inline">\(\mathcal{S}\)</span>, then the likelihood function
+will be maximized at the point <span
+class="math inline">\(\hat{\pmb{a}}_{\mathcal{S}}\)</span>, which may or
+may not coincide with the global maximum <span
+class="math inline">\(\hat{\pmb{a}}\)</span> over the full space <span
+class="math inline">\(\mathcal{A}\)</span>. So we can write down the
+generalized likelihood ratio,</p>
+<p><span class="math display">\[ \lambda(x) = \frac{L(x;
+\hat{\pmb{a}}_{\mathcal{S}})}{L(x; \hat{\pmb{a}})} \]</span></p>
+<p>The ratio illustrates the general situation that if the global
+estimator <span class="math inline">\(\hat{\pmb{a}}\)</span> fall in or
+near the subspace <span class="math inline">\(\mathcal{S}\)</span> then
+the sample will be considered consistent with the null hypothesis <span
+class="math inline">\(H_{0}\)</span> and the value of <span
+class="math inline">\(\lambda\)</span> will be near unity. If <span
+class="math inline">\(\hat{\pmb{a}}\)</span> is distant from <span
+class="math inline">\(\mathcal{S}\)</span> then the sample will not be
+in accord with <span class="math inline">\(H_{0}\)</span> and ordinarily
+<span class="math inline">\(\lambda\)</span> will have a small positive
+value. So <span class="math inline">\(\lambda(x)\)</span> represents the
+probability that the sample data is drawn from <span
+class="math inline">\(H_{0}\)</span>.</p>
+<p>If samples are all drawn independently from Gaussian distribution for
+which both the mean and variance are unknown and we want to test the
+hypotheses,</p>
+<p><span class="math display">\[ H_{0} : \mu = \mu_{0} \text{ and }
+H_{1} : \mu \neq \mu_{0} \]</span></p>
+<p>Then the most powerful test at level <span
+class="math inline">\(\alpha\)</span> is the t-test.</p>
+<p>Under <span class="math inline">\(H_{0}\)</span>, the
+maximum-likelihood estimator for the variance over the parameter
+subspace <span class="math inline">\(\mathcal{S}\)</span> is</p>
+<p><span class="math display">\[ \hat{\sigma_{\mathcal{S}}^{2}} =
+\frac{1}{n} \sum_{i=1}^{n} (x_{i} - \mu_{0})^{2} \]</span></p>
+<p>and under <span class="math inline">\(H_{1}\)</span>, the
+maximum-likelihood estimators for the mean and variance over the full
+parameter sapce <span class="math inline">\(\mathcal{A}\)</span>
+are,</p>
+<p><span class="math display">\[ \begin{aligned}
+\hat{\mu} &amp;= \bar{x} \\
+\hat{\sigma^{2}} &amp;= \frac{1}{n} \sum_{i=1}^{n} (x_{i} - \bar{x})^{2}
+= s^{2}
+\end{aligned}  \]</span></p>
+<p>Substitute these parameter estimators into the functional form of
+likelihood function, we will get the generalized likelihood ratio,</p>
+<p><span class="math display">\[ \lambda(x) = \frac{L(x; \mu_{0},
+\hat{\sigma_{\mathcal{S}}^{2}})}{L(x; \bar{x}, s^{2})} = (
+\frac{\hat{\sigma_{\mathcal{S}}^{2}}}{s^{2}} )^{-\frac{n}{2}} = [
+\frac{\sum_{i=1}^{n} (x_{i} - \mu_{0})^{2}}{\sum_{i=1}^{n} (x_{i} -
+\bar{x})^{2}} ]^{-\frac{n}{2}} = ( 1 + \frac{(\bar{x} -
+\mu_{0})^{2}}{s^{2}} )^{-\frac{n}{2}} \]</span> <span
+class="math display">\[ \text{[ split $\sum_{i=1}^{n} (x_{i} -
+\mu_{0})^{2}$ as $\sum_{i=1}^{n} (x_{i} - \bar{x} + \bar{x} -
+\mu_{0})^{2} = \sum_{i=1}^{n} (x_{i} - \bar{x})^{2} +  \sum_{i=1}^{n}
+(\bar{x} - \mu_{0})^{2}]$} \]</span></p>
+<p>Substitute <span class="math inline">\(t = \frac{\bar{x} - \mu_{0}}{s
+/ \sqrt{n-1}}\)</span> as the normalization of sample mean distribution
+into <span class="math inline">\(\lambda(x)\)</span>,</p>
+<p><span class="math display">\[ T(t) = ( 1 + \frac{t^{2}}{n-1}
+)^{-\frac{n}{2}} \]</span></p>
+<p>We can replace the biased estimator <span
+class="math inline">\(s^{2}\)</span> by the unbiased estimator <span
+class="math inline">\(s&#39;^{2} = \frac{\sum_{i=1}^{n} (x_{i} -
+\bar{x})^{2}}{n-1}\)</span>,</p>
+<p><span class="math display">\[ T(t) = (1 +
+\frac{t^{2}}{n})^{-\frac{n}{2}} \]</span></p>
+<p>where <span class="math inline">\(t = \frac{\bar{x} - \mu_{0}}{s&#39;
+/ \sqrt{n}}\)</span>.</p>
+<h2 id="students-t-test">Student's t-test</h2>
+<p>As <span class="math inline">\(T(t)\)</span> represents the
+probability that sample data is drawn from <span
+class="math inline">\(H_{0}\)</span>, we may reject <span
+class="math inline">\(H_{0}\)</span> if <span
+class="math inline">\(T(t)\)</span> is small, say <span
+class="math inline">\(T(t) &lt; k\)</span>. Because <span
+class="math inline">\(T(t)\)</span> is a monotonically decreasing
+function of <span class="math inline">\(t\)</span>, the rejection region
+<span class="math inline">\(\mathcal{R} = \{ t : T(t) &lt; k \}\)</span>
+is equivalent to <span class="math inline">\(\mathcal{R} = \{ t : t &gt;
+p \}\)</span>, where <span class="math inline">\(k\)</span> and <span
+class="math inline">\(p\)</span> are some constants satisfying <span
+class="math inline">\(T(p) = k\)</span>. The significance level of the
+test then can be determined by the measure of <span
+class="math inline">\(\mathcal{R}\)</span>,</p>
+<p><span class="math display">\[ \alpha = \mu(\mathcal{R}) =
+\int_{\mathcal{R}} f(t|H_{0}) \ dt \]</span></p>
+<p>To carry out a test, we need to determine the significance level
+<span class="math inline">\(\alpha\)</span> first (usually <span
+class="math inline">\(\alpha = 0.05\)</span>). From <span
+class="math inline">\(\alpha\)</span> we can derive reversely <span
+class="math inline">\(p\)</span> which defines <span
+class="math inline">\(\mathcal{R}\)</span>. In order to do that, we need
+to know the function <span
+class="math inline">\(f(t|H_{0})\)</span>.</p>
+<p>We already have <span class="math inline">\(t = \frac{\bar{x} -
+\mu_{0}}{ s/\sqrt{n-1} }\)</span>, where <span
+class="math inline">\(\bar{x}\)</span> and <span
+class="math inline">\(s\)</span> are both random variables. We may get
+<span class="math inline">\(f(t|H_{0})\)</span> by considering changes
+of variables in probability function,</p>
+<p><span class="math display">\[ f_{t,s}(t,s | H_{0}) \ dt ds =
+f_{\bar{x},s}(\bar{x}, s | H_{0}) \ d\bar{x} ds \]</span></p>
+<p>and its marginal probability density function,</p>
+<p><span class="math display">\[ f(t|H_{0}) = \int f_{t,s}(t,s | H_{0})
+\ ds \]</span></p>
+<h3 id="independent-mean-and-variance">independent mean and
+variance</h3>
+<p>The joint sampling distribution (mean and sampling) for Gaussian
+distribution is the product of two sample distribution because the mean
+and variance are allowed to vary independently in Gaussian distribution,
+namely, <span class="math inline">\(f(\bar{x}, s) = f(\bar{x})
+f(s)\)</span>. Suppose we have the Gaussian distribution of independent
+samples <span class="math inline">\(x_{i}\)</span>,</p>
+<p><span class="math display">\[ f(\pmb{x} | H_{0}) = (2 \pi
+\sigma^{2})^{-\frac{n}{2}} \exp[ -\frac{\sum_{i=1}^{n} (x_{i} -
+\mu_{0})^{2}}{2 \sigma^{2}} ] \]</span></p>
+<p>Let's define new variables <span class="math inline">\(y_{1} =
+\bar{x}\)</span> and <span class="math inline">\(y_{i} = x_{i} -
+\bar{x}, (i = 2, 3, \dots, n)\)</span> corresponding to the old <span
+class="math inline">\(n\)</span> variables <span
+class="math inline">\(x_{i}\)</span> before transformation, we have,</p>
+<p><span class="math display">\[ f(\pmb{x}|H_{0}) \ dV =
+f(\pmb{x}(\pmb{y})| H_{0}) |J| \ dy_{1} \cdots dy_{n} \]</span></p>
+<p>where the <a
+href="https://psichen.github.io/2021/02/04/geometric-interpretation-about-Jacobian-determinant/">Jacobian
+determinant</a> is a constant,</p>
+<p><span class="math display">\[ J = \frac{\partial (x_{1}, x_{2},
+\cdots, x_{n})}{\partial (y_{1}, y_{2}, \cdots, y_{n})} =
+\begin{bmatrix}
+1 &amp; -1 &amp; -1 &amp; \cdots &amp; -1 \\
+1 &amp; 1 &amp; 0 &amp; \cdots &amp; 0 \\
+1 &amp; 0 &amp; 1 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; 0 &amp; 0 &amp; \cdots &amp; 1 \\
+\end{bmatrix}
+= c \]</span></p>
+<p>So we have,</p>
+<p><span class="math display">\[ \begin{aligned}
+f(\pmb{x} | H_{0}) \ dV &amp;= A \exp[ -\frac{\sum_{i=1}^{n} (x_{i} -
+\bar{x})^{2}}{2 \sigma^{2}} ] \exp[ - \frac{n (\bar{x} - \mu_{0})^{2}}{2
+\sigma^{2}} ] \ dV \\
+&amp;= A&#39; \exp[-\frac{(-\sum_{i=2}^{n} y_{i})^{2} + \sum_{i=2}^{n}
+y_{i}^{2}}{2 \sigma^{2}}] \exp[-\frac{n (y_{1} - \mu_{0})^{2}}{2
+\sigma^{2}}] \ dy_{1} \cdots dy_{n}
+\end{aligned}  \]</span> <span class="math display">\[ [ \sum_{i=1}^{n}
+(x_{i} - \bar{x}) = 0 \Rightarrow (x_{1} - \bar{x}) = - \sum_{i=2}^{n}
+(x_{i} - \bar{x}) ] \]</span></p>
+<p>Because <span class="math inline">\(f_{Y_{1}, Y_{2}, \dots,
+Y_{n}}(y_{1}, y_{2}, \dots, y_{n})\)</span> can be factored into a
+product of functions that only depend respective set of statistics, it
+follows that <span class="math inline">\(Y_{1} = \bar{X}\)</span> is
+independent of <span class="math inline">\(Y_{i} = X_{i} - \bar{X}, i =
+2,3,\dots,n\)</span>. Further, since <span class="math inline">\(X_{1} -
+\bar{X}\)</span> is a function of <span class="math inline">\(Y_{i} =
+X_{i} - \bar{X}, i = 2, 3, \dots, n\)</span>, <span
+class="math inline">\(\bar{X}\)</span> is also independent of <span
+class="math inline">\(X_{1} - \bar{X}\)</span>. Therefore <span
+class="math inline">\(\bar{X}\)</span> is independent of <span
+class="math inline">\(X_{i} - \bar{X}, i=1,2,\dots,n\)</span>.
+Similarly, the sample variance <span class="math inline">\(s^{2} =
+\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{n}\)</span> is a function of
+<span class="math inline">\(X_{i} - \bar{X}\)</span>, so the sample mean
+<span class="math inline">\(\bar{X}\)</span> is independent of the
+sample variance <span class="math inline">\(s^{2}\)</span> or the sample
+standard deviation <span class="math inline">\(s\)</span>.</p>
+<h3 id="joint-sampling-distribution">joint sampling distribution</h3>
+<p>Because <span class="math inline">\(\bar{x}\)</span> and <span
+class="math inline">\(s\)</span> are independent, or orthogonal in
+vector space, the volume in <span
+class="math inline">\(\bar{x}-s\)</span> axis is the direct product of
+the measure <span class="math inline">\(\mu(\bar{x})\)</span> and the
+measure <span class="math inline">\(\mu(s)\)</span>. Since <span
+class="math inline">\(n \bar{x} = \sum_{i=1}^{n} x_{i}\)</span> is a
+<span class="math inline">\(n-1\)</span> dimensional hyperplane and
+<span class="math inline">\(n s^{2} = \sum_{i=1}^{n} (x_{i} -
+\bar{x})^{2}\)</span> is a <span class="math inline">\(n-1\)</span>
+dimensional hypersphere, the intersection is a <span
+class="math inline">\(n-2\)</span> hypersphere of which the volume is
+proportional to <span class="math inline">\(s^{n-1}\)</span>. So the
+infinitesimal volume <span class="math inline">\(dV\)</span> is equal to
+<span class="math inline">\(s^{n-2} \ ds d\bar{x}\)</span>. We have
+already known that <span class="math inline">\(f(\pmb{x}|H_{0}) = A
+\exp[-\frac{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}{2 \sigma^{2}}]
+\exp[-\frac{n(\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}}]\)</span>, so the
+joint sampling distribution <span
+class="math inline">\(f_{\bar{x},s}(\bar{x},s|H_{0})\)</span> should
+satisfy,</p>
+<p><span class="math display">\[ f(\pmb{x}|H_{0}) \ dV = A \exp[
+-\frac{n s^{2}}{2 \sigma^{2}} ] \exp[ -\frac{n(\bar{x} - \mu_{0})^{2}}{2
+\sigma^{2}} ] s^{n-2} \ d\bar{x}ds = f_{\bar{x}, s}(\bar{x},s|H_{0}) \
+d\bar{x}ds \]</span></p>
+<p>where <span class="math inline">\(A\)</span> can be gotten from the
+normalization condition <span class="math inline">\(\iint
+f_{\bar{x},s}(\bar{x},s|H_{0}) \ d\bar{x}ds = 1\)</span>.</p>
+<h3 id="t-distribution">t-distribution</h3>
+<p>As we can see,</p>
+<p><span class="math display">\[ f_{\bar{x},s}(\bar{x},s|H_{0}) \sim
+\exp[-\frac{n (\bar{x} - \mu_{0})^{2}}{2 \sigma^{2}}] \exp[ -\frac{n
+s^{2}}{2 \sigma^{2}} ] s^{n-2} \]</span></p>
+<p>Replace <span class="math inline">\(\bar{x}\)</span> with <span
+class="math inline">\(t = \frac{\bar{x} - \mu_{0}}{s /
+\sqrt{n-1}}\)</span>,</p>
+<p><span class="math display">\[ f_{t,s}(t,s|H_{0}) \sim \exp[ -\frac{n
+s^{2} t^{2}}{2 \sigma^{2} (n-1)} ] \exp[ -\frac{n s^{2}}{2 \sigma^{2}} ]
+s^{n-1} \]</span></p>
+<p>So we can get the t-distribution from marginal probability density
+function,</p>
+<p><span class="math display">\[ f_{t}(t|H_{0}) = \int
+f_{t,s}(t,s|H_{0}) \ ds \sim \int_{0}^{\infty} \exp[ -\frac{n s^{2}
+t^{2}}{2 \sigma^{2} (n-1)} ] \exp[ -\frac{n s^{2}}{2 \sigma^{2}} ]
+s^{n-1} \ ds \]</span></p>
+<p>Recall the gamma integral <span class="math inline">\(\Gamma(r) =
+\int_{0}^{\infty} x^{r-1} e^{-x} \ d{x}\)</span>, we may substitute
+<span class="math inline">\(x = s \sqrt{\frac{n}{2 \sigma^{2}} (1 +
+\frac{t^{2}}{n-1})}\)</span> into the integral,</p>
+<p><span class="math display">\[ f_{t}(t|H_{0}) \sim (1 +
+\frac{t^{2}}{n-1})^{-\frac{n}{2}} \underbrace{\int_{0}^{\infty} x^{n-1}
+e^{-x^{2}} \ d{x}}_{\frac{1}{2} \Gamma(\frac{n}{2})} \sim (1 +
+\frac{t^{2}}{n-1})^{-\frac{n}{2}} \]</span></p>
+<p>The normalization factor can be gotten from the integral <span
+class="math inline">\(\int f_{t}(t|H_{0}) \ dt = 1\)</span>.</p>
+<p>Otherwise, considering that <span class="math inline">\(u =
+\frac{\bar{x} - \mu}{\sigma / \sqrt{n}}\)</span> follows the <a
+href="https://psichen.github.io/2021/03/10/common-probability-density-functions/">standard
+normal distribution</a> <span class="math inline">\(N(0,1)\)</span> and
+<span class="math inline">\(v = \frac{n s^{2}}{\sigma^{2}}\)</span>
+follows the <a
+href="https://psichen.github.io/2021/03/10/common-probability-density-functions/">Chi-square
+distribution</a> <span class="math inline">\(\chi^{2}(n-1)\)</span>,
+then <span class="math inline">\(t\)</span> may be rearranged as,</p>
+<p><span class="math display">\[ t = \frac{\bar{x} - \mu}{s /
+\sqrt{n-1}} = \frac{u}{\sqrt{v / (n-1)}}\]</span></p>
+<p>Also, <span class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span> should be independent. It seem like a
+bit complicated for the change of variables, but it brings simple
+distributions that the variables follow. Using <span
+class="math inline">\(\delta\)</span> function, we have the probability
+density function for <span class="math inline">\(t\)</span>,</p>
+<p><span class="math display">\[ f(t) = \iint \delta(t -
+\frac{u}{\sqrt{v / (n-1)}}) \underbrace{\frac{1}{\sqrt{2 \pi}} \exp[
+-\frac{u^{2}}{2} ]}_{g(u)} \underbrace{\frac{v^{(n-2)/2} \exp[ -v/2
+]}{2^{n/2} \Gamma(n/2)}}_{h_{n-1}(v)} \ dudv \]</span></p>
+<p>Substitute <span class="math inline">\(y =
+\frac{u}{\sqrt{v/(n-1)}}\)</span>, then,</p>
+<p><span class="math display">\[ \begin{aligned}
+f(t) &amp;= \iint \delta(t - y) g(\sqrt{\frac{v}{n-1}}y) h_{n-1}(v)
+\sqrt{\frac{v}{n-1}} \ dydv = \int_{0}^{\infty} \sqrt{\frac{v}{n-1}}
+h_{n-1}(v) g(\sqrt{\frac{v}{n-1}}t) \ dv \\
+&amp;= \int_{0}^{\infty} \sqrt{\frac{v}{n-1}} \frac{1}{\sqrt{2 \pi}}
+\exp[ -\frac{v t^{2}}{2 (n-1)} ] \frac{v^{(n-3)/2} \exp[ -v/2
+]}{2^{(n-1)/2} \Gamma(\frac{n-1}{2})} \ dv \\
+&amp;= \frac{1}{\sqrt{\pi (n-1)} 2^{\frac{n}{2}} \Gamma(\frac{n-1}{2})}
+\int_{0}^{\infty} v^{\frac{n-2}{2}} \exp[ - \frac{v}{2} (1 +
+\frac{t^{2}}{n-1}) ] \ dv \\
+&amp;[ x = \frac{v}{2} (1 + \frac{t^{2}}{n-1}) ] \\
+&amp;= \frac{1}{\sqrt{\pi (n-1)} \Gamma(\frac{n-1}{2})} (1 +
+\frac{t^{2}}{n-1})^{-\frac{n}{2}} \int_{0}^{\infty} x^{-\frac{n}{2}}
+e^{-x} \ dx
+\end{aligned}  \]</span></p>
+<p>Finally, we get the analytic form t-distribution for testing sample
+data drawn independently from Gaussian distribution with unknown <span
+class="math inline">\(\mu\)</span> and <span
+class="math inline">\(\sigma^{2}\)</span>,</p>
+<p><span class="math display">\[ f_{t}(t|H_{0}) =  \frac{1}{\sqrt{(n-1)
+\pi}} \frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{2})} (1 +
+\frac{t^{2}}{n-1})^{-\frac{n}{2}} \]</span></p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://web.stanford.edu/class/archive/stats/stats200/stats200.1172/Lecture06.pdf">Simple
+alternatives and the Neyman-Pearson lemma</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://web.stanford.edu/~lmackey/stats300a/doc/stats300a-fall15-lecture13.pdf">Neyman-Pearson
+Lemma</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://www2.stat.duke.edu/courses/Fall18/sta611.01/Lecture/lec12_mean_var_indep.pdf">Show
+<span class="math inline">\(\bar{X}\)</span> and <span
+class="math inline">\(S^{2}\)</span> are independent</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://shoichimidorikawa.github.io/Lec/ProbDistr/t-e.pdf">Derivation
+of the <span class="math inline">\(t\)</span>-Distribution</a></li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/probability-density-function/">probability density function</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/gamma/">gamma</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/t-test/">t-test</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/maximum-likelihood-estimation/">maximum likelihood estimation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/test-statistic/">test statistic</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/likelihood-ratio/">likelihood ratio</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/type-I-error/">type I error</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/type-II-error/">type II error</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/power/">power</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/delta-function/">delta function</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/06/27/FPK-equation-by-Taylor-series/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          FPK equation derived from Taylor series
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Interpretation of frequency shift in FM AFM (II)
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

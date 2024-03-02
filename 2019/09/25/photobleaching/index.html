@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>荧光猝灭的原理与避免方法 | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        荧光猝灭的原理与避免方法
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2019-09-25</time>
+          <span class="text-gray-400">·</span>
+          <span>927 words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>荧光染料分子被激发后，会从ground state(S<sub>0</sub>)变到first
+excited singlet state (S<sub>1</sub>)，之后会包含以下几个过程：</p>
+<ol type="1">
+<li>重新回到S<sub>0</sub>，并在ns的时间尺度内发出fluorescence</li>
+<li>经过inter-system crossing弛豫到first excited triplet state
+(T<sub>1</sub>)，并在μs的时间尺度内发出phosphorescence</li>
+<li>如果存在FRET，则会将能量传递给acceptor,令acceptor从S<sub>0</sub>到S<sub>1</sub>,然后acceptor染料同样也会经历相同的弛豫过程</li>
+</ol>
+<p>染料分子达到triplet
+state或发生猝灭，都会降低光子产生速率，对成像、荧光单分子检测，特别是对快过程的研究都会造成影响。</p>
+<span id="more"></span>
+<h2 id="猝灭原理">猝灭原理</h2>
+<h3 id="化学因素">化学因素</h3>
+<p>当染料处于S<sub>1</sub>时，其化学活性较高，容易与溶液中的singlet
+oxygen或自由基发生反应，造成染料化学结构改变，从而发生荧光猝灭，永久失去发光能力。</p>
+<h3 id="光物理因素">光物理因素</h3>
+<p>在较低的激发光强下，染料只经历three-level体系(S<sub>0</sub>,
+S<sub>1</sub>, T<sub>1</sub>)，而在较高激发光强下(&gt; ~70
+kW/cm<sup>2</sup>)，染料经历five-level体系(S<sub>0</sub>, S<sub>1</sub>,
+T<sub>1</sub>, S<sub>n</sub>, T<sub>n</sub>)<sup>1</sup>。</p>
+<figure>
+<img src="https://i.loli.net/2019/09/27/l7h9quryPtb3KM6.jpg"
+alt="three/five level system" />
+<figcaption aria-hidden="true">three/five level system</figcaption>
+</figure>
+<p>处于第一激发态的染料(S<sub>1</sub>或T<sub>1</sub>)，还可吸收短波长的激光光子，进一步被激发到更高的能级(S<sub>n</sub>或T<sub>n</sub>)，从而增大染料猝灭的概率<sup>2</sup>。</p>
+<h3 id="猝灭概率singlet-triplet">猝灭概率singlet &gt; triplet</h3>
+<p>通过不同调控频率的ALEX激光，来研究染料singlet和triplet的猝灭概率<sup>2</sup>。</p>
+<p>当ALEX激光的频率在ns尺度时，正好落在荧光寿命的时间尺度。红光先对acceptor染料分子激发，在ns尺度的延迟之后，蓝光进行激发，此时acceptor荧光分子处于S<sub>1</sub>，吸收蓝光光子，进一步激发到更高能级(S<sub>n</sub>或T<sub>n</sub>)，发生猝灭，荧光信号降低。当延迟时间超过ns尺度后，acceptor的荧光信号得到恢复。</p>
+<figure>
+<img src="https://i.loli.net/2019/09/27/7KLUgpYbwJV5rv1.jpg"
+alt="ns-delay" />
+<figcaption aria-hidden="true">ns-delay</figcaption>
+</figure>
+<p>当ALEX的延迟时间在μs尺度时，此时染料分子应处于triplet
+state，而荧光信号改变不大。说明在smFRET中，猝灭主要是由acceptor染料的S<sub>1</sub>吸收短波长的光子带来的，可见染料猝灭的很大一部分原因，都是因为singlet
+state不能稳定地弛豫到ground state。</p>
+<figure>
+<img src="https://i.loli.net/2019/09/27/7nYuxv94D6dVpcI.jpg"
+alt="us-delay" />
+<figcaption aria-hidden="true">us-delay</figcaption>
+</figure>
+<h2 id="影响">影响</h2>
+<p>如果荧光分子的猝灭时间尺度和分子在confocal显微镜的聚焦体积内的扩散时间相当的话（~
+10<sup>2</sup> μs)，那么single-molecule
+FRET的分布会有拖尾，因为分子在聚焦体积内，acceptor猝灭，此时donor仍发光，造成表观的FRET效率减小<sup>2</sup>，<strong>拖尾有时容易让人误以为是新组分的存在。</strong></p>
+<figure>
+<img src="https://i.loli.net/2019/09/27/4GxiQAnvfHIyOoK.jpg"
+alt="FRET-trailing" />
+<figcaption aria-hidden="true">FRET-trailing</figcaption>
+</figure>
+<h2 id="解决方法">解决方法</h2>
+<h3 id="除氧trolox">除氧+Trolox</h3>
+<p>常用的除氧体系是葡萄糖+葡萄糖氧化酶+过氧化氢酶。然而氧气是非常高效的triplet
+quencher，因此将氧气除去后，需要再加入Trolox作为染料的triplet
+quencher。该配方一般用于表面固定的实验，减少荧光染料blinking和bleaching的概率。</p>
+<h3 id="trolox-cocktail">Trolox cocktail</h3>
+<p>2010年的一篇Nature methods指出，buffer不除氧而是添加10 mM半胱胺(<span
+class="math inline">\(\ce{ NH2-CH2-CH2-SH }\)</span>)和1 mM
+Trolox，其中半胱胺作为singlet
+oxygen和自由基的quencher，Trolox作为染料triplet
+quencher，可以大大增加染料的光子产生速率<sup>3</sup>，单分子FRET实验可以达到50
+μs的时间分辨率<sup>4</sup>。</p>
+<figure>
+<img src="https://i.loli.net/2019/09/27/DSyYxkngA9cvZzu.jpg"
+alt="trolox-cocktail" />
+<figcaption aria-hidden="true">trolox-cocktail</figcaption>
+</figure>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Eggeling, Christian, et al. "Photobleaching of fluorescent dyes
+under conditions used for single-molecule detection: Evidence of
+two-step photolysis." Analytical chemistry 70.13 (1998): 2651-2659.</li>
+<li>Kong, Xiangxu, et al. "Photobleaching pathways in single-molecule
+FRET experiments." Journal of the American Chemical Society 129.15
+(2007): 4643-4654</li>
+<li>Campos, Luis A., et al. "A photoprotection strategy for
+microsecond-resolution single-molecule fluorescence spectroscopy."
+Nature methods 8.2 (2011): 143.</li>
+<li>Liu, Jianwei, et al. "Exploring one-state downhill protein folding
+in single molecules." Proceedings of the National Academy of Sciences
+109.1 (2012): 179-184.</li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/fluorescence/">fluorescence</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/bleaching/">bleaching</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2019/09/25/Legendre-transformation/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Legendre变换的理解和在热力学中的应用
+        </a>
+      
+    </div>
+    <div>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

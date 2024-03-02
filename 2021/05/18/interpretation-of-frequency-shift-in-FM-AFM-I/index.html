@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Interpretation of frequency shift in FM-AFM (I) | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Interpretation of frequency shift in FM-AFM (I)
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-05-18</time>
+          <span class="text-gray-400">·</span>
+          <span>2k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>In the Frequency-Modulation mode of AFM, the cantilever keeps
+harmonically oscillating during measurement. In contrast to optic
+microscopy or scanning tunneling microscopy, in which the
+electromagnetic signals are detected directly by detectors, FM-AFM
+detects the frequency shift of the cantilever's harmonic oscillation
+when the distance between sample surface and cantilever's tip
+changes.</p>
+<span id="more"></span>
+<p>When there are potential fields between sample surface and tip (Van
+der Waals force, electromagnetic force, etc), the force exerted on the
+oscillation system will change as the distance changes. If we know the
+relation between frequency shift <span class="math inline">\(\Delta
+f\)</span> and external force <span class="math inline">\(F\)</span> as
+the gradient of potential fields, the distance between surface and tip
+can be measured in nearly real time by detecting the frequency of
+oscillation. In addition, the height of sample surface can also be
+imaged through a feedback system which control the frequency to maintain
+a constant distance between surface and tip.</p>
+<h2 id="classical-mechanics">Classical mechanics</h2>
+<p>Let's consider an harmonic oscillation system in phase space <span
+class="math inline">\((q,p)\)</span>, the harmonic oscillation can be
+described by Newton's mechanics,</p>
+<p><span class="math display">\[ m \ddot{q} = - k q \]</span></p>
+<p>The general solution for the above ordinary partial equation is,</p>
+<p><span class="math display">\[ q(t) = C_{1} \exp(\sqrt{\frac{k}{m}} t
+i) + C_{2} \exp(-\sqrt{\frac{k}{m}} t i) = (C_{1} + C_{2})
+\cos(\sqrt{\frac{k}{m}} t) + i (C_{1} - C_{2}) \sin(\sqrt{\frac{k}{m}}
+t)\]</span></p>
+<p>Because the coordinate <span class="math inline">\(q\)</span> is a
+real number, we have <span class="math inline">\(C_{1} - C_{2} =
+0\)</span>. So the function <span class="math inline">\(q(t)\)</span> is
+a cosine function,</p>
+<p><span class="math display">\[ q(t) = A \cos(\sqrt{\frac{k}{m}} t)
+\]</span></p>
+<p>The momentum <span class="math inline">\(p = m \dot{q}\)</span>
+is,</p>
+<p><span class="math display">\[ p(t) = - \sqrt{km} A
+\sin(\sqrt{\frac{k}{m}} t) \]</span></p>
+<p>For complicated dynamic systems, the mechanic problem itself is hard
+to be solved completely. So we need to find some conserved quantities
+which are able to describe the same dynamic system at a static view.</p>
+<h3 id="lagrangian-hamiltonian-mechanics">Lagrangian &amp; Hamiltonian
+mechanics</h3>
+<p>From the Lagrangian mechanics,</p>
+<p><span class="math display">\[ L(q,\dot{q},t) = T(\dot{q},t) - V(q)
+\]</span></p>
+<p>where <span class="math inline">\(T\)</span> is kinetic energy and
+<span class="math inline">\(V\)</span> is potential energy. Thus we have
+Lagrangian equation of motion,</p>
+<p><span class="math display">\[ \begin{equation}
+\begin{aligned}
+\frac{\partial L}{\partial q} &amp;= - \frac{\partial V}{\partial q} =
+\dot{p} \\
+\frac{\partial L}{\partial \dot{q}} &amp;= \frac{\partial T}{\partial
+\dot{q}} = p
+\end{aligned}
+\end{equation} \label{Lagrangian} \]</span></p>
+<p>Hamiltonian can be gotten by <a
+href="https://psichen.github.io/2019/09/25/Legendre-transformation/">Legendre
+transformation</a> of Lagrangian mechanics, where <span
+class="math inline">\(p\)</span> and <span
+class="math inline">\(\dot{q}\)</span> are conjugated variables.</p>
+<p><span class="math display">\[ H(q,p,t) = - [ L(q,\dot{q},t) - p
+\dot{q} ] = - [ T(\dot{q},t)  - p \dot{q} ] + V(q,t) \]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[ \begin{aligned}
+H(q,p,t) &amp;= T(p,t) + V(q,t) \\
+\frac{\partial H}{\partial p} &amp;= \dot{q} \\
+-\frac{\partial H}{\partial q} &amp;= \dot{p}
+\end{aligned}  \]</span></p>
+<h3 id="canonical-transformation">canonical transformation</h3>
+<p>Then we want to find a function <span
+class="math inline">\(K\)</span> which plays the role of the Hamiltonian
+in the new phase space coordinate set <span
+class="math inline">\((Q,P)\)</span>. For qualified <span
+class="math inline">\(K(Q,P,t)\)</span>, variables <span
+class="math inline">\((Q,P)\)</span> should be canonical, so <span
+class="math inline">\(K(Q,P,t)\)</span> satisfies,</p>
+<p><span class="math display">\[ \begin{aligned}
+\frac{\partial K}{\partial P} &amp;= \dot{Q} \\
+-\frac{\partial K}{\partial Q} &amp;= \dot{P} \\
+\end{aligned} \]</span></p>
+<p>As we mentioned above, <span class="math inline">\(K\)</span> is a
+modified Hamiltonian. For any Hamiltonian, there is Hamilton's
+principle,</p>
+<p><span class="math display">\[ \begin{aligned}
+\delta \int_{t_{0}}^{t_{1}} ( p \dot{q} - H ) \ d{t} &amp;= 0 \\
+\delta \int_{t_{0}}^{t_{1}} ( P \dot{Q} - K ) \ d{t} &amp;= 0 \\
+\end{aligned}  \]</span></p>
+<p>It means the variation of the action is zero. So the integrals should
+be equal by adding a factor,</p>
+<p><span class="math display">\[ \int_{t_{0}}^{t_{1}} ( p \dot{q} - H )
+\ d{t} = \int_{t_{0}}^{t_{1}} ( P \dot{Q} - K ) \ d{t} + F \]</span></p>
+<p>So both above Hamilton's principle will be satisfied if the
+integrands are connected by a relation of the form,</p>
+<p><span class="math display">\[ p \dot{q} - H = P \dot{Q} - K +
+\frac{dF}{dt} \]</span></p>
+<p>The function <span class="math inline">\(F(q,Q,t)\)</span>
+contributes to the action integral only at the end points. Indeed, <span
+class="math inline">\(F\)</span> is useful for specifying the exact form
+of the canonical transformation only when half of the variables (beside
+the time) are from the old set and half are from the new. It acts as a
+bridge between the two sets of canonical variables and is thus called
+the generating function.</p>
+<p>Suppose <span class="math inline">\(F(q,Q,t)\)</span> is given as a
+function of the old and new space coordinates <span
+class="math inline">\(q\)</span> and <span
+class="math inline">\(Q\)</span>,</p>
+<p><span class="math display">\[ p \dot{q} - H = P \dot{Q} - K +
+\frac{\partial F}{\partial q} \dot{q} + \frac{\partial F}{\partial Q}
+\dot{Q} + \frac{\partial F}{\partial t} \]</span></p>
+<p>Because variables <span class="math inline">\(q\)</span> and <span
+class="math inline">\(Q\)</span> are independent, the <span
+class="math inline">\(\dot{q}\)</span> and <span
+class="math inline">\(\dot{Q}\)</span> on both sides of the equation
+must vanish,</p>
+<p><span class="math display">\[ \frac{\partial F}{\partial q} = p
+\]</span> <span class="math display">\[ - \frac{\partial F}{\partial Q}
+= P \]</span></p>
+<p>and we get the Hamilton-Jacobi equation,</p>
+<p><span class="math display">\[ K(Q,P,t) = H(q,p,t) + \frac{\partial
+F(q,Q,t)}{\partial t} \]</span></p>
+<p>The Hamilton-Jacobi equation is made to zero for convenience,</p>
+<p><span class="math display">\[ \begin{equation}
+H(q,p,t) + \frac{\partial F(q,Q,t)}{\partial t} = 0
+\label{HJ_equation}
+\end{equation} \]</span></p>
+<p>So that the new canonical variables in phase space <span
+class="math inline">\((Q,P)\)</span> won't change with time,</p>
+<p><span class="math display">\[ \begin{aligned}
+\frac{\partial K}{\partial P} &amp;= \dot{Q} = 0 \\
+-\frac{\partial K}{\partial Q} &amp;= \dot{P} = 0
+\end{aligned} \]</span></p>
+<p>Thus a dynamic system can be simply described by static
+functions.</p>
+<h3 id="hamilton-jacobi-equation">Hamilton-Jacobi equation</h3>
+<p>In physics there are 4 types of generating functions whose partial
+derivatives generate differential equations that determine a system's
+dynamics.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Generating function</th>
+<th>Derivatives</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(F = F_{1}(q,Q,t)\)</span></td>
+<td><span class="math inline">\(p = \frac{\partial F}{\partial
+q}\)</span> and <span class="math inline">\(P = - \frac{\partial
+F}{\partial Q}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(F = F_{2}(q,P,t) = F_{1}(q,Q,t) +
+PQ\)</span></td>
+<td><span class="math inline">\(p = \frac{\partial F}{\partial
+q}\)</span> and <span class="math inline">\(Q = \frac{\partial
+F}{\partial P}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(F = F_{3}(p,Q,t) = F_{1}(q,Q,t) -
+qp\)</span></td>
+<td><span class="math inline">\(q = - \frac{\partial F}{\partial
+p}\)</span> and <span class="math inline">\(P = - \frac{\partial
+F}{\partial Q}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(F = F_{4}(p,P,t) = F_{1}(q,Q,t) + QP -
+qp\)</span></td>
+<td><span class="math inline">\(q = - \frac{\partial F}{\partial
+p}\)</span> and <span class="math inline">\(Q = \frac{\partial
+F}{\partial P}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>They're converted by the <a
+href="https://psichen.github.io/2019/09/25/Legendre-transformation/">Legendre
+transformation</a>. Among them, <span
+class="math inline">\(F_{2}(q,P,t)\)</span> (type-2 Generating function)
+is called Hamilton's principal function.</p>
+<p>Substituting <span class="math inline">\(p = \frac{\partial
+F}{\partial q}\)</span> into the Hamilton-Jacobi equation <span
+class="math inline">\(\eqref{HJ_equation}\)</span>,</p>
+<p><span class="math display">\[ H(q, \frac{\partial F}{\partial q},t) +
+\frac{\partial F}{\partial t} = 0 \]</span></p>
+<p>The solution of the above PDE is <span class="math inline">\(F(q,
+\alpha, t, \alpha_{t})\)</span> in which <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\alpha_{t}\)</span> are independent constants of
+integration with respect to differential variables <span
+class="math inline">\(q\)</span> and <span
+class="math inline">\(t\)</span>. The value of the constant of
+integration changes according to initial conditions of the differential
+equations. We can fix the initial time <span
+class="math inline">\(t_{0}\)</span> then <span
+class="math inline">\(\alpha_{t}\)</span> won't change. Similarly,
+because the initial condition about <span
+class="math inline">\(q\)</span> is undetermined, we may take <span
+class="math inline">\(\alpha\)</span> as the new variables <span
+class="math inline">\(Q\)</span>, then their conjugated variables <span
+class="math inline">\(P\)</span> are,</p>
+<p><span class="math display">\[ P = - \frac{\partial F}{\partial Q}
+\]</span></p>
+<p>The variable <span class="math inline">\(Q\)</span> is constant when
+it's respect to the old variable set like <span
+class="math inline">\((q,p,t)\)</span>. However, <span
+class="math inline">\(Q\)</span> is dependent on initial conditions. So
+the coordinates <span class="math inline">\((Q,P)\)</span> can be seen
+as variables before the initial conditions are determined.</p>
+<p>It also tells us an important truth, when the dynamic system has a
+conserved energy, that the partial derivative of <span
+class="math inline">\(F\)</span> with respect to time <span
+class="math inline">\(t\)</span> is also constant, so we may guess the
+form of <span class="math inline">\(F(q,Q,t)\)</span> as,</p>
+<p><span class="math display">\[ \begin{equation}
+F(q,Q,t) = W(q,Q) - \alpha(Q) t
+\label{generating_function}
+\end{equation} \]</span></p>
+<p>where <span class="math inline">\(\alpha(Q)\)</span> is constant with
+respect to time and equal to the Hamiltonian <span
+class="math inline">\(H_{0}\)</span>, and <span
+class="math inline">\(W(q,Q)\)</span> is called the Hamilton's
+characteristic function.</p>
+<h3
+id="the-action-as-the-generating-function-in-canonical-transformation">the
+action as the generating function in canonical transformation</h3>
+<p>The action is defined as,</p>
+<p><span class="math display">\[ S(q,t) = \int_{t_{0}}^{t}
+L(q,\dot{q},\tau) \ d{\tau} \]</span></p>
+<p>One the one hand, the partial differential of <span
+class="math inline">\(S\)</span> with respect to <span
+class="math inline">\(q\)</span> is,</p>
+<p><span class="math display">\[ \begin{aligned}
+\delta S &amp;= \int_{t_{0}}^{t} ( \frac{\partial L}{\partial q} \delta
+q + \frac{\partial L}{\partial \dot{q}} \frac{d}{d\tau} \delta q ) \
+d{\tau} \\
+&amp;= \int_{t_{0}}^{t} \delta q ( \frac{\partial L}{\partial q} -
+\frac{d}{d\tau} \frac{\partial L}{\partial \dot{q}} ) \ d{\tau} + [
+\frac{\partial L}{\partial \dot{q}} \delta q ] |_{t_{0}}^{t}
+\end{aligned} \]</span></p>
+<p>Here we use the property <span class="math inline">\(\delta \dot{q} =
+\frac{d}{dt} \delta q\)</span> because of the linearity of differential
+operators. If the system obeys the equation of motion <span
+class="math inline">\(\eqref{Lagrangian}\)</span>, the term in the
+integral should vanish. In addition, it should be noticed that <span
+class="math inline">\(\delta q=\delta q(\tau)\)</span> is still a
+function of time. If we fixed the coordinate <span
+class="math inline">\(q\)</span> at the initial time <span
+class="math inline">\(t_{0}\)</span>, then <span
+class="math inline">\(\delta q(t_{0}) = 0\)</span>. Eventually we
+have,</p>
+<p><span class="math display">\[ \frac{\partial S}{\partial q} =
+\frac{\partial L}{\partial \dot{q}} = p(t) \]</span></p>
+<p>On the other hand, the total derivative of <span
+class="math inline">\(S(q,t)\)</span> with respect to time <span
+class="math inline">\(t\)</span> is <span
+class="math inline">\(L\)</span> as cancelling the integral. According
+to the chain rule we also have,</p>
+<p><span class="math display">\[ \frac{dS}{dt} =  \frac{\partial
+S}{\partial q} \dot{q} + \frac{\partial S}{\partial t} = L \]</span></p>
+<p>So the action of a mechanic system satisfies the Hamiltonian-Jacobi
+equation,</p>
+<p><span class="math display">\[ p \dot{q} - L + \frac{\partial
+S}{\partial t} = H + \frac{\partial S}{\partial t} = 0 \]</span></p>
+<h2 id="harmonic-oscillation">Harmonic oscillation</h2>
+<p>Taking an Harmonic oscillation as an example, the Hamiltonian is,</p>
+<p><span class="math display">\[ H(p,q,t) = \frac{1}{2m} p^{2} +
+\frac{1}{2} m \omega^{2} q^{2} \]</span></p>
+<p>Substitute the generating function <span
+class="math inline">\(F(q,Q,t)\)</span> into <span
+class="math inline">\(H(p,q,t)\)</span>,</p>
+<p><span class="math display">\[ \frac{1}{2m} (\frac{\partial
+F}{\partial q})^{2} + \frac{1}{2} m \omega^{2} q^{2} + \frac{\partial
+F}{\partial t} = 0 \]</span></p>
+<p>From the equation <span
+class="math inline">\(\eqref{generating_function}\)</span> we have,</p>
+<p><span class="math display">\[ (\frac{\partial W}{\partial q})^{2} +
+m^{2} \omega^{2} q^{2} = 2 m \alpha \]</span></p>
+<p>where <span class="math inline">\(\alpha = \alpha(Q)\)</span>. The
+solution of the above first-order ODE is,</p>
+<p><span class="math display">\[ W(q,Q) = \int_{q_{0} = 0}^{q}
+\sqrt{2m\alpha - m^{2} \omega^{2} q&#39;^{2}} \ d{q&#39;} \]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[ S(q,Q,t) = W(q,Q) - \alpha t
+\]</span></p>
+<p>Because <span class="math inline">\(\alpha(Q)\)</span> is a function
+of solely variable <span class="math inline">\(Q\)</span>, we reassign
+<span class="math inline">\(\alpha\)</span> as the canonical variable
+<span class="math inline">\(Q\)</span>, which is the total energy
+Hamiltonian of the system. We have the partial derivatives according to
+the generating function,</p>
+<p><span class="math display">\[ p = \frac{\partial S}{\partial q} =
+\sqrt{ 2 m \alpha - m^{2} \omega^{2} q^{2} } \]</span></p>
+<p>From this we can solve <span
+class="math inline">\(\alpha\)</span>,</p>
+<p><span class="math display">\[ \alpha = \frac{p^{2} + m^{2} \omega^{2}
+q^{2}}{2m} = A^{2} \]</span></p>
+<p>where <span class="math inline">\(A\)</span> is the amplitude of the
+harmonic oscillation, consistent with the Hamilton-Jacobi equation. For
+the other conjugated variable,</p>
+<p><span class="math display">\[ \beta = - \frac{\partial S}{\partial
+\alpha} = t - \int_{q_{0}=0}^{q} \frac{2m}{\sqrt{2 m \alpha - m^{2}
+\omega^{2} q&#39;^{2}}} \ d{q&#39;} = t - \frac{1}{\omega}
+\arcsin(\omega \sqrt{\frac{m}{2 \alpha}} q) \]</span></p>
+<p>Turn the equation "inside out",</p>
+<p><span class="math display">\[ \begin{aligned}
+q &amp;= \sqrt{\frac{2 \alpha}{m \omega^{2}}} \sin( \omega t - \omega
+\beta ) \\
+p &amp;= \sqrt{ 2 m \alpha - m^{2} \omega^{2} q^{2} } = \sqrt{2 m
+\alpha} \cos(\omega t - \omega \beta) \\
+\end{aligned} \]</span></p>
+<p>So <span class="math inline">\(\beta\)</span> is the phase of the
+oscillator with some scaling. Then we get <span
+class="math inline">\(\beta\)</span>,</p>
+<p><span class="math display">\[ \beta = t - \frac{1}{\omega} \arctan( m
+\omega \frac{q}{p} ) \]</span></p>
+<p>Let's substitute <span class="math inline">\(q\)</span> into the
+differential equation solution <span
+class="math inline">\(S(q,Q,t)\)</span>,</p>
+<p><span class="math display">\[ S(q,Q,t) = \alpha \int_{0}^{t} \cos[2
+\omega (t-\beta)] \ d{t&#39;} \]</span></p>
+<p>and into the Lagrangian,</p>
+<p><span class="math display">\[ L(q,\dot{q},t) = \frac{1}{2} m
+\dot{q}^{2} - \frac{1}{2} m \omega^{2} q^{2} = \alpha \cos[2 \omega
+(t-\beta)] \]</span></p>
+<p>We can see the generating function <span
+class="math inline">\(S(q,Q,t)\)</span> exactly satisfies the definition
+of the action.</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><p>Goldstein, Herbert, Charles Poole, and John Safko. "Classical
+mechanics." (2002).</p></li>
+<li><p><a
+target="_blank" rel="noopener" href="https://www.asc.ohio-state.edu/mathur.16/821hj.pdf">Notes for
+Classical Mechanics 821: Hamilton-Jacobi equation</a></p></li>
+<li><p>Giessibl, Franz J. "Forces and frequency shifts in
+atomic-resolution dynamic-force microscopy." <em>Physical Review B</em>
+56.24 (1997): 16010.</p></li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/AFM/">AFM</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/transformation/">transformation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/generating-function/">generating function</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/mechanics/">mechanics</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Hamilton/">Hamilton</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Jacobi/">Jacobi</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/harmonic-oscillation/">harmonic oscillation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/perturbation/">perturbation</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Interpretation of frequency shift in FM AFM (II)
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/05/15/partial-differential-equations/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Partial differential equations
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

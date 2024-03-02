@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <section class="px-6 max-w-4xl mx-auto md:px-0">
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        
+      </h1>
+    </div>
+  </header>
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <h2 id="dag">DAG</h2>
+<pre class="mermaid">flowchart TB
+
+VIPP1 --- |2015_DS_NC| membrane_fusion_by_destabilization
+membrane_fusion_by_destabilization --- |2018_DS_JBC| Mg2+_hydrophobic_surface_ring_stacking
+Mg2+_hydrophobic_surface_ring_stacking --- |2020_DS_SR| GTP_doesnot_affect_memrbane_remodeling
+GTP_doesnot_affect_memrbane_remodeling --- |2020_DS_bioRxiv| Mg2+_shift_IM30_from_protection_to_destabilization
+Mg2+_shift_IM30_from_protection_to_destabilization ---> |2021_DS_CS_Cell| PspA_rods_like_ESCRTIII_folds
+PspA_rods_like_ESCRTIII_folds ---> |2021_DS_FEBSLett| Purine_NOT_required_ring_formation
+
+VIPP1 ---> |2019_MS_SR| crVIPP1_rods_engulf_PI4P_membrane
+crVIPP1_rods_engulf_PI4P_membrane ---> |2021_BDE_Cell| VIPP1_thylakoid_integrity
+
+VIPP1 ---> |2021_HHL_Cell| VIPP1_PspA_ESCRTIII_superfamily
+
+VIPP1 ---> |2018_EKOS_MM| VIPP1_localization_for_photosynthetic_competency
+
+click membrane_fusion_by_destabilization href "./VIPP1#ds_nc" _self
+click Mg2+_hydrophobic_surface_ring_stacking href "./VIPP1#ds_jbc" _self
+click GTP_doesnot_affect_memrbane_remodeling href "./VIPP1#ds_sr" _self
+click Mg2+_shift_IM30_from_protection_to_destabilization href "./VIPP1#ds_biorxiv" _self
+click PspA_rods_like_ESCRTIII_folds href "./VIPP1#ds_cs_cell" _self
+click Purine_NOT_required_ring_formation href "./VIPP1#ds_febslett" _self
+click crVIPP1_rods_engulf_PI4P_membrane href "./VIPP1#ms_sr" _self
+click VIPP1_thylakoid_integrity href "./VIPP1#bde_cell" _self
+click VIPP1_PspA_ESCRTIII_superfamily href "./VIPP1#hhl_cell" _self
+click VIPP1_localization_for_photosynthetic_competency href "./VIPP1#ekos_mm" _self</pre>
+<h2 id="lectures">Lectures</h2>
+<h3 id="ds_nc">2015_DS_NC</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(VIPP1 triggers membrane fusion by destabilization)
+
+preserved(membrane-binding properties preserved \n between native VIPP1 from Synechocystis \n and heterologously recombinated VIPP1)
+negativelyChargedLipids(VIPP1 binds to negatively charged lipids \n SQDG, PG)
+destabilization(VIPP1 and Mg2+ destabilize MGDG/PG vesicles cooperatively)
+fusion(VIPP1 - Mg2+ triggers liposome fusion)
+beforeFusion(membrane fusion triggered by being destabilized)
+
+non-canonical(VIPP1 is non-canonical membrane fusion protein)
+afterFusion(ring is destabilized during or after liposome fusion)
+
+
+%% RELATIONS==================================================
+theme --- |scrose density gradient centrifugation \n western blot| preserved
+
+preserved --- |Laurdan fluorophores monitor \n membrane lipid order| negativelyChargedLipids
+negativelyChargedLipids --- |light scattering with increasing Mg2+ \n monitor the release of soluble \n liposome content fluorophore/quencher pair| destabilization
+destabilization --- |dual-labelled vesicles fusion| fusion
+fusion --- |fluorophores in both leaflet \n quenched with/without VIPP1/Mg2+| beforeFusion
+
+fusion --- |VIPP1/Mg2+/liposomes \n incubation time 1 min \n CryoTM: forming multilamellar liposomes| non-canonical
+non-canonical --- |wt VIPP1 rings are sparse \n fusion-defect VIPP1 decorates liposomes extensively| afterFusion</pre>
+<h3 id="ds_jbc">2018_DS_JBC</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(Mg2+ triggers VIPP1 expose hydrophobic surface and ring stacking)
+negativelyChargedLipids(Mg2+ binds to negatively charged lipids)
+ITC(when Mg2+ binds to VIPP1 \n ΔH > 0)
+hydrophobicSurface(Mg2+ induces exposeure of hydrophobic surface \n ΔS < 0)
+deprotonation(protons transfer from carboxyl groups to buffer \n inferenced the apparent bind enthalpy)
+secondaryStructure(peptides backbone changes \n Thus secondary structures)
+compact(Mg2+ binding makes VIPP1 more compact \n reduced Solvent Accessible Surface Area)
+C-terminus(Mg2+ binding protects VIPP1 C-terminus)
+ringStacking(Mg2+ induces VIPP1 ring stacking)
+
+
+%% RELATIONS==================================================
+theme --- |Laurdan general polarization \n monitor changes in polarity of lipid head-group region | negativelyChargedLipids
+negativelyChargedLipids --- |"ITC (Kd 0.6 +/- 0.3 mM)"| ITC
+negativelyChargedLipids --- |"ANS fluorophores bind to protein surface \n via hydrophobic interaction (Kd 0.6 +/- 1.9 mM)"| hydrophobicSurface
+ITC --- |FTIR| deprotonation
+hydrophobicSurface --- |COOH bond changes| deprotonation
+
+hydrophobicSurface --- |FTIR \n amide I band changes| secondaryStructure
+secondaryStructure --- |CD with increasing urea \n burried W71 quenching| compact
+compact --- |digested by trypsin \n SDS-PAGE \n WB of C-terminus| C-terminus
+compact --- |intermolecular FRET \n TEM| ringStacking</pre>
+<h3 id="ds_sr">2020_DS_SR</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(GTP doesnot affect membrane remodeling)
+malachite(20 uM Pi relase at 2 ug/100 uL IM30 concentration)
+thermodynamic(MM constant 0.65 mM \n Hill coefficient 1.29 \n Kcat 2.16 min-1)
+kinetic(1.79 x 10-2 min-1 in prescence of 10 uM GTP)
+apparent(apparent GTP hydrolysis activity)
+noGTPactivity(no GTP hydrolysis activity detected)
+hydrolysis(synIM30 catalyze the hydrolysis of GTP)
+oligomeric(GTP hydrolysis depends on the oligomeric state of VIPP1)
+membraneBinding(IM30 binding to membrane is not influenced by GTP)
+MgIndependence(GTP binding & hydrolysis is independent of Mg2+)
+fusion(GTP increases fusion rate marginally \n GDP decreases fusion rate marginally)
+
+
+%% RELATIONS==================================================
+theme --- |Pi-release by malachite green| malachite
+theme --- |Fluoreophore-labeled phosphate-bind protein| kinetic
+theme --- |PK/LDH-coupled assay to detect released GDP| noGTPactivity
+
+malachite --- |gradient of GTP concentration| thermodynamic
+thermodynamic --- |thermodynamic| apparent
+kinetic --- |kinetic| apparent
+apparent --- hydrolysis
+noGTPactivity --- |IM30 inhibiting the assay or low Koff for GDP \n luciferase-coupled GTPase assay| hydrolysis
+
+hydrolysis --- |FERM_EE mutants| oligomeric
+hydrolysis --- |in absence/prescence of Mg \n MM constant 0.61 mM \n Kcat 1.65 min-1| MgIndependence
+hydrolysis --- |Laurdan's fluorescence| membraneBinding
+membraneBinding --- |FRET-liposome fusion| fusion</pre>
+<h3 id="ds_biorxiv">2020_DS_bioRxiv</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(Mg2+ shifts IM30 from membrane protection to membrane destabilization)
+affinity(Mg2+ increases IM30's affinity to membrane)
+ability(Mg2+ - binding to IM30 boosts its ability to bind to native as well as model membrane)
+viscoelasticity(Mg2+ alters the viscoelastic properties of IM30-membrane)
+puncta(IM30 forms puncta with higher thickness and diameters in presence of Mg2+)
+carpet(No carpet-like structures observed on membrane in presence of Mg2+ and 1.5 uM IM30)
+defects(Some puncta grew into pores as membrane defects)
+
+
+%% RELATIONS==================================================
+theme --- |Cellular extracts / DOPG liposome model \n sucrose density gradient centrifugation to get membrane \n Immunoblotting| affinity
+affinity --- |DOPG/DOPC GUV \n fluorescence microscopy colocalization| ability
+theme --- |Quartz-crystal microbalance \n bidning of IM30 to DOPG/DOPC SLB \n in presence/absence of Mg2+| viscoelasticity
+theme --- |AFM in presence/absence of Mg2+| puncta
+puncta --- carpet
+carpet --- defects
+puncta --- |longer incubation time /n in presence of Mg2+| defects</pre>
+<h3 id="ds_febslett">2021_DS_FEBSLett</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(Binding/hydrolysis of ATP/GTP is not required for IM30 ring formation)
+specificity(IM30 hydrolyze ATP/GTP but not CTP/UTP)
+copurified(no nucleotides copurified)
+ringForming(IM30 rings/rods)
+denature(IM30 denatured then renatured)
+independent(nucleotide-independent mechanism for IM30 oligomerization to rings/rods)
+
+
+%% RELATIONS==================================================
+theme --- |Pi release| specificity
+theme --- |"Extracted ion chromatograms (EIC) \n didn't observe nucleotides"| copurified
+theme --- |Neg stain EM| ringForming
+theme --- |CD \n SEC| denature
+denature --- |Neg stain EM| ringForming
+ringForming --- independent
+copurified --- independent</pre>
+<h3 id="ms_sr">2019_MS_SR</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(crVIPP1 rods engulf PI4P membranes)
+interaction(strong interaction with PI4P)
+rotation(PI4P considerably slows down the rotation of VIPP1)
+insignificant(no significant effects)
+encapsulated(PC-PI4P liposomes were encopsulated with high efficiency)
+diameter("crVIPP1 alone: 42 nm \n crVIPP1 + PC-PI4P: 46 nm \n rather dependent on [crVIPP1]")
+striation("continuous tubules with striations visible on the surface \n helical pitches abruptly changed")
+drawn("liposomes were drawn into the rods by a strong interaction with the rod's inner surface")
+subtomogram("16 striation per rod \n Rod-liposome distance: ~5 nm \n highly heterogenous rod helical pitches")
+energy("typical Delta G_bend between basic aa and acidic lipids: -6 kJ/mol \n estimated required Delta G: -3 kJ/mol")
+
+%% RELATIONS==================================================
+theme --- |lipid-assembly assay| interaction
+interaction --- |2 Trp in crVIPP1 \n time-resolved anisotropy| rotation
+rotation --- |Delta C-terminus| insignificant
+rotation --- |add 10 mM Mg2+| insignificant
+
+theme --- |neg-stain EM| encapsulated
+encapsulated --- |diameters of crVIPP1 rods| diameter
+diameter --- |cryo EM| striation
+diameter --- |cryo EM| drawn
+striation --- |subtomogram of crVIPP1 rods| subtomogram
+drawn --- |subtomogram of crVIPP1 rods| subtomogram
+subtomogram --- |Delta G_bend of membrane| energy</pre>
+<h3 id="bde_cell">2021_BDE_Cell</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(CryoEM structure of VIPP1 & thylakoid membrane maintenance)
+
+structure("monomers interweave and flex to form basket-like structure")
+helices("five α helices H1-H3, H4/5, H6")
+H1(H1 is an amphipathic helix that orients \n its hydrophobic surface to the lumen)
+H2H3(H2-H3 coil-coil hairpin)
+H6(H6 protrudes on the outer \n surface of the ring)
+H7(H7 unresolved, \n also outside the ring)
+
+nucleotide(three monomers coordinate a \n non-canonical nucleotide binding pocket)
+hydrolysis(E126 and E179 to orient a \n water molecule for nucleophilic attack)
+ringForming(nucleotide hydrolysis is required for in vitro ring forming)
+
+equilibriumRingRod(H1 mutants cause VIPP1 to form more rods)
+maintenance(VIPP1-lipid interaction maintains thylakoid architecture under high light stress)
+
+encapsulation(thylakoid-associated membrane \n encapsulated by VIPP1 perpendicular)
+pitchHandedness(VIPP1 varies in helical \n pitch and handedness in situ)
+
+
+%% RELATIONS==================================================
+theme ------ |CryoEM| structure
+
+structure ------ helices
+helices --- |lipid binding| H1
+helices --- H2H3
+helices --- H6
+helices ---|flexibility| H7
+
+structure ---|a small density difference between layer 1 and layer 2| nucleotide
+nucleotide --- |structure/ATP & GTP hydrolysis assay| hydrolysis
+hydrolysis --- |E126Q + E179Q not forming ring or rod| ringForming
+
+H1 --- |mutants in H1 \n including F4E and V11E| equilibriumRingRod
+H1 --- |F4E and V11E mutants in H1 \n thylakoid swelling under light \n aberrant membrane structure in thylakoid convergence zone| maintenance
+
+theme --- |VIPP1-GFP aligned with cryo Tomography| encapsulation
+encapsulation --- |cryo-CLEM| pitchHandedness</pre>
+<h3 id="hhl_cell">2021_HHL_Cell</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(VIPP1/PspA are members of ESCRT-III membrane remodeling superfamily)
+
+evolutionary(Evolutionary analysis)
+secondary(similar secondary structures)
+tertiary(similar tertiary structures)
+phylogenetic("PspA: bacteria / Archaeas \n VIPP1: (cyano)bacteria / plastids \n ESCRT-III (CdvB/ChmP/Snf7): Eukaryotes / Archaeas")
+multipleCopies(Common feature of ESCRT-III \n to form composite polymers)
+evolutionaryVariance(α5 C-termini evolved too rapidly to ensure the \n homologous relation including the MIM domain)
+
+asymmetricUnit(asymmetric units of six monomers)
+structure(Dome-shaped ring structure)
+interface1(interface 1: \n α5C - hairpin α1-α2/3)
+interface2(interface 2: \n between α0s)
+interface3(interface 3: \n α5N - hairpin below)
+interface4(interface 4: \n α4 - α2 below)
+interface5("interface 5 : \n α1 - hinge2 (between α3 and α4)")
+
+alpha0(membrane binding)
+
+alpha5(Interface 1 is conserved)
+assemblyEssential(α5 involved in interface 1 and 3 is essential \n for filament and ring assembly)
+co-rotate(additional subunits cannot \n flex to form interface 1 and 3)
+geometricLimit(plateaued near 40 degree \n strict geometrical bending limit)
+domeFaciliated(interface 3 facilitates dome-shaped rings formation)
+
+hairpin("hairpin motif (α1 - α2/3) \n is conserved hallmark")
+alpha6(predicted helix α6 extended flexible \n among VIPP1/ESCRT-III, distinguished from PspA)
+
+membraneRemodeling(VIPP1 doem-shaped rings \n attaches to the membrane \n via the wider opening)
+
+
+%% RELATIONS==================================================
+theme --- |sensitive protein sequence search| evolutionary
+evolutionary --- |similar α1 - α5 helical structure| secondary
+secondary --- |co-evolutionary residue contact map \n key conserved interface 1 between α5 and α1 & α2| tertiary
+evolutionary --- |mapping the presence or absence of homologs across the domains of life| phylogenetic
+phylogenetic --- |Multiple copies of VIPP1 in cyanobacteria genomes| multipleCopies
+multipleCopies --- |Evolutionary variance across \n yeast Snf7 and N. punctiforme VIPP1| evolutionaryVariance
+
+theme --- |CyroEm \n mixed with pre-formed Dynamin I filaments \n generated from the PspA crystal hairpin motif aa 24-142 \n cysteine mutants cross-linking| asymmetricUnit
+asymmetricUnit ---|three hing regions widely in curvature| structure
+structure ------ interface1
+structure --- interface2
+structure --- interface3
+structure --- interface4
+structure --- interface5
+asymmetricUnit ------ alpha6
+
+interface1 --- |"The helix α5C (j) binds \n α1/α2 hairpin (j+3)"| alpha5
+alpha5 --- |VIPP1Δα61-219 \n VIPP1Δα5/61-191| assemblyEssential
+assemblyEssential --- |The hairpin co-rotates and is pulled inwards \n due to the interface 1 and 3| co-rotate
+co-rotate --- |MD simulation of elastic-network \n to get α5 rotation angles| geometricLimit
+co-rotate --- |F197K & L200K in interface 3| domeFaciliated
+
+interface1 --- |compared with ESCRT-III: CHMPB1B| hairpin
+interface2 --- |The helix α0 extends perpendicular to the hairpin \n stack axially and line the ring lumen| alpha0
+
+theme --- |spin pelleting assay \n with E. Coli liposome| membraneRemodeling
+
+tertiary ------ alpha5</pre>
+<h3 id="ds_cs_cell">2021_DS_CS_Cell</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(PspA folds like ESCRT-III and remodels membrane)
+
+structure(PspA forms tubular rods)
+structureLipid(protruded density interpreted \n as helix α0 binding lipid)
+
+monomerStructure(monomer 22-217)
+alpha5(weak density of amphipathic α5)
+charges(opposite charges in different \n ends of surface)
+conservedMotif("conserved hairpin(α1/α2), \n α3, α4, α5, α6")
+conservedPacking(hairpin α1/α2 packing against a perpendicular α5)
+
+unstableRods(less stable rods)
+disassembly(PspA membrane binding involves rod disassembly)
+
+fusion(fusion of several smaller \n vesicles into one large vesicle)
+postFusion(post-fusion structure induced by PspA)
+LTZ("PspA moves lipid across Lipid Transfer Zones (LTZ)")
+
+remodel(PspA remodels liposome \n into membrane tubules)
+attaches(membrane is attached with PspA negatively charged end)
+
+
+%% RELATIONS==================================================
+theme ------ |10.19 subunits per turn \n pitch of 30 Å \n right-handed| structure
+theme --- |13.52 subunits per turn \n pitch of 59.9 Å \n diameter 275 Å vs 220 Å apo| structureLipid
+structure --- |segmented density \n didn't find density correspinding to α0| monomerStructure
+monomerStructure --- |α5 protrudes outside of the helical rod| alpha5
+monomerStructure --- |sequence alignment| conservedMotif
+monomerStructure --- |"highly conserved residues \n between α1 and α2 (70-90) \n helix α4 (167-180) \n A75S/A78S mutants"| unstableRods
+
+conservedMotif --- |"ESCRT-III (CHIMP1B, IST1, Vps24) \n PspA comparasion"| conservedPacking
+unstableRods --- conservedPacking
+unstableRods --- |fluorescence spectroscopy \n higher affinity to negatively charged membrane| disassembly
+
+monomerStructure --- charges
+
+theme --- |E. Coli polar lipid extract \n increased membrane length upon addition of PspA \n deformed/internalized lipid structure| fusion
+fusion --- |cleavage-inducible assembly PspA| remodel
+fusion --- |leaflet separation found in \n vesicles with perimeters > 175 nm| postFusion
+remodel --- |leaflet separation \n increased bilayer thickness| postFusion
+remodel --- |superimposing PspA+EPL rods \n with PspA+liposome Tomography| attaches
+remodel --- |multiple vesicles connected \n proteinaceous high-density zones \n HDZ formed in high lipid curvature area/internal budding| LTZ</pre>
+<h3 id="ekos_mm">2018_EKOS_MM</h3>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS==================================================
+theme(VIPP1 localization in thylakoid membrane for photosynthetic competency)
+puncta("VIPP1 forms puncta independently \n number per cell = 1.36")
+peripheral(VIPP1 forms peripheral puncta)
+colocalization(VIPP1 colocalizes with CurT)
+curvature(VIPP1 locates at high thylakoid curvature)
+time("VIPP1 puncta on the time scale of 1~2 min")
+transition(dark-light transition cells have defects \n dark-grown cells OK \n light-grown cells OK)
+thylakoid_membrane(VIPP1 is not required in thylakoid membrane growth)
+
+%% RELATIONS==================================================
+theme --- |VIPP1-GFP \n thylakoid farred from photosynthetic proteins| puncta
+puncta --- |position of VIPP1 alongthe standardized cell radius| peripheral
+puncta --- |super-resolution| colocalization
+colocalization --- |immunoEM \n VIPP1 detected on the thylakoid edge| curvature
+peripheral --- |time-lapse fluorescent imaging| time
+colocalization --- |time-lapse fluorescent imaging| time
+
+theme --- |anchor-away to perturb the \n native location of VIPP1| transition
+transition --- |thylakoid membrane grows after \n VIPP1 is anchorred away| thylakoid_membrane</pre>
+
+  </article>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

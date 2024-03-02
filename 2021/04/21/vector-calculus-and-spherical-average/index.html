@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Vector calculus and spherical average in SAXS | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Vector calculus and spherical average in SAXS
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-04-21</time>
+          <span class="text-gray-400">·</span>
+          <span>1.8k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>A vector is typically regarded as a geometric entity characterized by
+a magnitude and a direction. Here are some notes about vector calculus
+and its basic application in small-angle x-ray scattering (SAXS).</p>
+<span id="more"></span>
+<h2 id="vector-derivative-with-respect-to-a-scalar-variable">Vector
+derivative with respect to a scalar variable</h2>
+<p>A vector can be denoted by a function of scalar variables. At a
+specific point <span class="math inline">\(u\)</span>, the vector from
+the origin to the coordinate <span class="math inline">\((a_{i}(u),
+a_{j}(u), a_{k}(u))\)</span> comprises the vector <span
+class="math inline">\(\pmb{a}(u)\)</span>. The trajectory of the moving
+end of <span class="math inline">\(\pmb{a}(u)\)</span> along with the
+changing <span class="math inline">\(u\)</span> comprises the curve of
+the vector function <span class="math inline">\(\pmb{a}(u)\)</span>.
+According to the definition, we have the derivative of <span
+class="math inline">\(\pmb{a}(u)\)</span> by calculating the limit,</p>
+<p><span class="math display">\[ \frac{d\pmb{a}}{du} = \lim_{\Delta u
+\to 0} \frac{\pmb{a}(u+\Delta u) - \pmb{a}(u)}{\Delta u} = \lim_{\Delta
+u \to 0} \sum_{\pmb{n}=\pmb{i},\pmb{j},\pmb{k}}
+\frac{a_{\pmb{n}}(u+\Delta u) - a_{\pmb{n}}(u)}{\Delta u} \pmb{n}
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[ \frac{d\pmb{a}}{du} = \frac{da_{i}}{du}
+\pmb{i} + \frac{da_{j}}{du} \pmb{j} + \frac{da_{k}}{du} \pmb{k}
+\]</span></p>
+<p>The chain rule also works for vector calculus,</p>
+<p><span class="math display">\[ \frac{d (\pmb{a} \cdot \pmb{b})}{dt} =
+\pmb{a} \cdot \frac{d \pmb{b}}{dt} + \pmb{b} \cdot \frac{d \pmb{a}}{dt}
+\]</span></p>
+<p>specifically, if <span
+class="math inline">\(\pmb{a}=\pmb{b}\)</span>, we have,</p>
+<p><span class="math display">\[ \frac{d (\pmb{a} \cdot \pmb{a})}{dt} =
+2 \pmb{a} \cdot \frac{d \pmb{a}}{dt} \]</span></p>
+<p>If <span class="math inline">\(|\pmb{a}|=a\)</span> is constant as
+<span class="math inline">\(t\)</span> varies (e.g. circles), then <span
+class="math inline">\(\pmb{a} \cdot \frac{d \pmb{a}}{dt}=0\)</span>,
+thus <span class="math inline">\(\pmb{a}\)</span> is perpendicular to
+its derivate <span class="math inline">\(\frac{d
+\pmb{a}}{dt}\)</span>.</p>
+<h2 id="curvature">Curvature</h2>
+<p>For the curve described by <span class="math inline">\(\pmb{r}(t) =
+x(t)\pmb{i}+y(t)\pmb{j}+z(t)\pmb{k}\)</span>, the infinitesimal
+displacement is,</p>
+<p><span class="math display">\[ d \pmb{r} = (\dot{x} \pmb{i} + \dot{y}
+\pmb{j} + \dot{z} \pmb{k}) dt \]</span></p>
+<p>A curve may also be described in the parametric form by the vector
+<span class="math inline">\(\pmb{r}(s)\)</span>, where the parameter
+<span class="math inline">\(s\)</span> is the arc length along the curve
+measured from a fixed point. The infinitesimal length <span
+class="math inline">\(s\)</span> should be equal to the module of the
+infinitesimal <span class="math inline">\(d \pmb{r}\)</span>,</p>
+<p><span class="math display">\[ ds = \sqrt{d \pmb{r} \cdot d \pmb{r}} =
+\sqrt{\dot{x}^{2} + \dot{y}^{2} + \dot{z}^{2}} dt \]</span></p>
+<p>Thus the unit tangent vector of the curve <span
+class="math inline">\(\pmb{r}(t)\)</span> at a given point is given
+by,</p>
+<p><span class="math display">\[ \frac{d \pmb{r}}{ds} = \frac{\dot{x}
+\pmb{i} + \dot{y} \pmb{j} + \dot{z} \pmb{k}}{\sqrt{\dot{x}^{2} +
+\dot{y}^{2} + \dot{z}^{2}}} = \hat{\pmb{t}} \]</span></p>
+<p>The rate at which the tangent vector <span
+class="math inline">\(\hat{\pmb{t}}\)</span> changes with respect to
+<span class="math inline">\(s\)</span> is <span
+class="math inline">\(\frac{d \hat{\pmb{t}}}{ds}\)</span>, and its
+magnitude is defined as the curvature <span
+class="math inline">\(\kappa\)</span> of the curve at a given point,</p>
+<p><span class="math display">\[ \kappa = |\frac{d \hat{\pmb{t}}}{ds}| =
+|\frac{d^{2} \hat{\pmb{r}}}{ds^{2}}| \]</span></p>
+<p>and the quantity <span class="math inline">\(\rho =
+\frac{1}{\kappa}\)</span> is the radius of curvature. Since <span
+class="math inline">\(\hat{\pmb{t}}\)</span> is of constant unit
+magnitude, it is perpendicular to its derivate <span
+class="math inline">\(\frac{d \hat{\pmb{t}}}{ds}\)</span>. The unit
+vector in the direction perpendicular to <span
+class="math inline">\(\hat{\pmb{t}}\)</span> is denoted by the principal
+normal vector <span class="math inline">\(\hat{\pmb{n}}\)</span>,</p>
+<p><span class="math display">\[ \frac{d \hat{\pmb{t}}}{ds} = \kappa
+\hat{\pmb{n}} \]</span></p>
+<h2 id="gradient">Gradient</h2>
+<p>The directional derivative of a scalar function <span
+class="math inline">\(\phi(\pmb{r})\)</span> in the direction of <span
+class="math inline">\(\pmb{v}\)</span> is defined as,</p>
+<p><span class="math display">\[ \frac{d \phi(\pmb{r})}{ds} =
+\lim_{|\delta \pmb{v}| \to 0} \frac{\phi(\pmb{r} + \delta \pmb{v}) -
+\phi(\pmb{r})}{|\delta \pmb{v}|} \]</span></p>
+<p>where <span class="math inline">\(ds\)</span> is the infinitesimal
+arc length in the direction of <span class="math inline">\(\delta
+\pmb{v}\)</span>. Transform the above equation using the first order
+approximation of the Taylor series,</p>
+<p><span class="math display">\[ \frac{d \phi(\pmb{r})}{ds} =
+\lim_{|\delta \pmb{v}| \to 0} \frac{\phi(\pmb{r} + \delta \pmb{v}) -
+\phi(\pmb{r})}{|\delta \pmb{v}|} = \lim_{|\delta \pmb{v}| \to 0}
+(\frac{\partial \phi(\pmb{r})}{\partial x} \pmb{i} + \frac{\partial
+\phi(\pmb{r})}{\partial y} \pmb{j} + \frac{\partial
+\phi(\pmb{r})}{\partial z} \pmb{k})\frac{\delta \pmb{v}}{|\delta
+\pmb{v}|} \]</span></p>
+<p>The gardient operator is defined as <span
+class="math inline">\(\nabla = \frac{\partial }{\partial x} \pmb{i} +
+\frac{\partial }{\partial y} \pmb{j} + \frac{\partial }{\partial z}
+\pmb{k}\)</span>. Thus, the directional derivative in the direction of
+an arbitrary unit vector <span
+class="math inline">\(\hat{\pmb{v}}\)</span> is,</p>
+<p><span class="math display">\[ \frac{d \phi(\pmb{r})}{ds} =
+\nabla{\phi(\pmb{r})} \cdot \frac{\delta {\pmb{v}}}{|\delta \pmb{v}|} =
+\nabla{\phi(\pmb{r})} \cdot \hat{\pmb{v}} \]</span></p>
+<p>It has two interesting geometric properties.</p>
+<h3 id="steepest-descent">steepest descent</h3>
+<p>Since the directional derivative is <span
+class="math inline">\(\nabla{\phi(\pmb{r})} \cdot \hat{\pmb{v}} =
+|\nabla{\phi(\pmb{r})}| \cos\theta\)</span>, clearly <span
+class="math inline">\(\nabla{\phi(\pmb{r})}\)</span> lies in the
+direction of largest possible rate of increase in <span
+class="math inline">\(\phi(\pmb{r})\)</span>, and <span
+class="math inline">\(- \nabla{\phi(\pmb{r})}\)</span> the largest
+possible rate of the decrease in <span
+class="math inline">\(\phi(\pmb{r})\)</span>.</p>
+<h3 id="normal-vector-to-surface">normal vector to surface</h3>
+<p>For a surface function <span class="math inline">\(\phi(\pmb{r}) =
+c\)</span> (<span class="math inline">\(c\)</span> is a constant), the
+directional derivative is,</p>
+<p><span class="math display">\[ \frac{d \phi(\pmb{r})}{ds} = \nabla
+\phi \cdot \hat{\pmb{v}} = 0 \]</span></p>
+<p>where <span class="math inline">\(\hat{\pmb{v}}\)</span> is the
+arbitrary tangent vector. In other words, <span
+class="math inline">\(\nabla{\phi(\pmb{r})}\)</span> is the vector
+normal to the surface <span class="math inline">\(\phi(\pmb{r}) =
+c\)</span> at every point.</p>
+<h2 id="different-coordinate-system">Different coordinate system</h2>
+<p>Coordinate system transformation is a fascinating skill because
+usually it dramatically simplifies calculations. The vector <span
+class="math inline">\(\pmb{r}\)</span> in the <span
+class="math inline">\(xyz\)</span>-coordinate system can be transformed
+by <span class="math inline">\(uvw\)</span> as variables,</p>
+<p><span class="math display">\[ \pmb{r} = x(u,v,w) \pmb{i} + y(u,v,w)
+\pmb{j} + z(u,v,w) \pmb{k} \]</span></p>
+<p>The basis vectors, however, are not transformed because they are
+still the <span class="math inline">\(\pmb{i}, \pmb{j},
+\pmb{k}\)</span>. Since we want to find the new basis vectors in which
+directions the vector <span class="math inline">\(\pmb{r}\)</span>
+changes with new variables, let's calculate the partial derivatives of
+the vector <span class="math inline">\(\pmb{r}\)</span> with respect to
+new variables,</p>
+<p><span class="math display">\[ \begin{aligned}
+\frac{\partial \pmb{r}}{\partial u} &amp;= \frac{\partial x}{\partial u}
+\pmb{i} + \frac{\partial y}{\partial u} \pmb{j} + \frac{\partial
+z}{\partial u} \pmb{k} = |\frac{\partial \pmb{r}}{\partial u}|
+\hat{\pmb{e}}_{u} \\
+\frac{\partial \pmb{r}}{\partial v} &amp;= \frac{\partial x}{\partial v}
+\pmb{i} + \frac{\partial y}{\partial v} \pmb{j} + \frac{\partial
+z}{\partial v} \pmb{k} = |\frac{\partial \pmb{r}}{\partial v}|
+\hat{\pmb{e}}_{v} \\
+\frac{\partial \pmb{r}}{\partial w} &amp;= \frac{\partial x}{\partial w}
+\pmb{i} + \frac{\partial y}{\partial w} \pmb{j} + \frac{\partial
+z}{\partial w} \pmb{k} = |\frac{\partial \pmb{r}}{\partial w}|
+\hat{\pmb{e}}_{w} \\
+\end{aligned} \]</span></p>
+<p>Thus we get the new basis vectors,</p>
+<p><span class="math display">\[ \begin{aligned}
+\hat{\pmb{e}}_{u} &amp;= |\frac{\partial \pmb{r}}{\partial u}|^{-1}
+(\frac{\partial x}{\partial u} \pmb{i} + \frac{\partial y}{\partial u}
+\pmb{j} + \frac{\partial z}{\partial u} \pmb{k}) \\
+\hat{\pmb{e}}_{v} &amp;= |\frac{\partial \pmb{r}}{\partial v}|^{-1}
+(\frac{\partial x}{\partial v} \pmb{i} + \frac{\partial y}{\partial v}
+\pmb{j} + \frac{\partial z}{\partial v} \pmb{k}) \\
+\hat{\pmb{e}}_{w} &amp;= |\frac{\partial \pmb{r}}{\partial w}|^{-1}
+(\frac{\partial x}{\partial w} \pmb{i} + \frac{\partial y}{\partial w}
+\pmb{j} + \frac{\partial z}{\partial w} \pmb{k}) \\
+\end{aligned}  \]</span></p>
+<p>as well as the infinitesimal change in <span
+class="math inline">\(\pmb{r}\)</span> along three directions,</p>
+<p><span class="math display">\[ d \pmb{r} = |\frac{\partial
+\pmb{r}}{\partial u}| \hat{\pmb{e}}_{u} du + |\frac{\partial
+\pmb{r}}{\partial v}| \hat{\pmb{e}}_{v} dv + |\frac{\partial
+\pmb{r}}{\partial w}| \hat{\pmb{e}}_{w} dw \]</span></p>
+<h3 id="spherical-coordinates">spherical coordinates</h3>
+<p>For spherical coordinates, <span class="math inline">\(xyz\)</span>
+can be described by <span class="math inline">\(r\phi\theta\)</span>
+as,</p>
+<p><span class="math display">\[ \begin{aligned}
+x &amp;= r \cos\phi \sin\theta \\
+y &amp;= r \sin\phi \sin\theta \\
+z &amp;= r \cos\theta \\
+\end{aligned}  \]</span></p>
+<p><span class="math display">\[ \frac{\partial (x,y,z)}{\partial
+(r,\phi,\theta)} = \begin{bmatrix}
+\frac{\partial x}{\partial r} &amp; \frac{\partial x}{\partial \phi}
+&amp; \frac{\partial x}{\partial \theta} \\
+\frac{\partial y}{\partial r} &amp; \frac{\partial y}{\partial \phi}
+&amp; \frac{\partial y}{\partial \theta} \\
+\frac{\partial z}{\partial r} &amp; \frac{\partial z}{\partial \phi}
+&amp; \frac{\partial z}{\partial \theta} \\
+\end{bmatrix} = \begin{bmatrix}
+\cos\phi \sin\theta &amp; -r \sin\phi \sin\theta &amp; r \cos\phi
+\cos\theta \\
+\sin\phi \sin\theta &amp; r \cos\phi \sin\theta &amp; r \sin\phi
+\cos\theta \\
+\cos\theta &amp; 0 &amp; -r \sin\theta \\
+\end{bmatrix} \]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[ d \pmb{r} = \hat{\pmb{e}}_{r} dr + r
+\sin\theta \hat{\pmb{e}}_{\phi} d\phi + r \hat{\pmb{e}}_{\theta} d\theta
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[ \begin{aligned}
+\hat{\pmb{e}}_{r} &amp;= \cos\phi \sin\theta \pmb{i} + \sin\phi
+\sin\theta \pmb{j} + \cos\theta \pmb{k} \\
+\hat{\pmb{e}}_{\phi} &amp;= - \sin\phi \pmb{i} + \cos\phi \pmb{j} \\
+\hat{\pmb{e}}_{\theta} &amp;= \cos\phi \cos\theta \pmb{i} + \sin\phi
+\cos\theta \pmb{j} - \sin\theta \pmb{k} \\
+\end{aligned}  \]</span></p>
+<p>These three vector are orthonormal since their dot products with each
+other are zero.</p>
+<p>The infinitesimal volume <span class="math inline">\(dV\)</span> of
+the parallelepiped defined the vector <span class="math inline">\(dr
+\hat{\pmb{e}}_{r}, r\sin\theta d\phi \hat{\pmb{e}}_{\phi}, r d\theta
+\hat{\pmb{e}}_{\theta}\)</span> is given by,</p>
+<p><span class="math display">\[ dV =  dr \hat{\pmb{e}}_{r} \cdot |r
+\sin\theta d\phi \hat{\pmb{e}}_{\phi} \times r d\theta
+\hat{\pmb{e}}_{\theta}| = r^{2} \sin\theta dr d\phi d\theta
+\]</span></p>
+<p>The infinitesimal area <span class="math inline">\(dA\)</span>
+is,</p>
+<p><span class="math display">\[ dA = \frac{dV}{dr} = r^{2} \sin\theta
+d\phi d\theta \]</span></p>
+<p>The solid angle is defined as,</p>
+<p><span class="math display">\[ d\Omega = \frac{dA}{r^{2}} = \sin\theta
+d\phi d\theta \]</span></p>
+<h3 id="spherical-average-of-scattering-wave-function-in-saxs">spherical
+average of scattering wave function in SAXS</h3>
+<p>SAXS uses x-ray's scattering and diffraction to study structural
+features of particles. If <span
+class="math inline">\(\pmb{k}_{0}\)</span> and <span
+class="math inline">\(\pmb{k}_{1}\)</span> are wave vectors of the
+incident ray and the scattered ray, respectively, for simplicity, we
+just describe the part about diffracted wave,</p>
+<p><span class="math display">\[ \exp(i \pmb{q} \cdot \pmb{s})
+\]</span></p>
+<p>where <span class="math inline">\(\pmb{q}\)</span> is the
+displacement between two electrons that scatter x-rays, and <span
+class="math inline">\(\pmb{s}=\pmb{k}_{1} - \pmb{k}_{0}\)</span> is the
+scattering vector.</p>
+<p>Because atoms are always in thermal motion, the detected signals
+should be the oriental average of the diffracted wave. Considering the
+geometric symmetry of sphere, we can always make the basis vector <span
+class="math inline">\(\hat{\pmb{e}}_{\theta}\)</span> lies in the plane
+comprised by <span class="math inline">\(\pmb{q}\)</span> and <span
+class="math inline">\(\pmb{s}\)</span>,</p>
+<p><span class="math display">\[ \begin{aligned}
+&lt;\exp(i \pmb{q} \cdot \pmb{s})&gt;_{\Omega}
+&amp;= \frac{1}{4 \pi} \int_{0}^{2 \pi} d\phi \int_{0}^{\pi} \exp(iqs
+\cos\theta) \sin\theta d\theta \\
+&amp;= \frac{i}{2qs} \exp(iqs \cos\theta)|_{0}^{\pi} \\
+&amp;= \frac{\sin(qs)}{qs} \\
+\end{aligned}  \]</span></p>
+<p>which is denoted in Debye Scattering Equation.</p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/vector/">vector</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/calculus/">calculus</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/SAXS/">SAXS</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/spherical-average/">spherical average</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/curvature/">curvature</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/gradient/">gradient</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/coordinate/">coordinate</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/05/02/first-order-ordinary-differential-equations/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          First-order ordinary differential equations
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/03/27/notes-about-fluorescence-correlation-spectroscopy-formalism/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Notes about fluorescence correlation spectroscopy formalism
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

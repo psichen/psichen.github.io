@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Notes about fluorescence correlation spectroscopy formalism | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Notes about fluorescence correlation spectroscopy formalism
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-03-27</time>
+          <span class="text-gray-400">·</span>
+          <span>3.9k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Let's say the concentration of the component <span
+class="math inline">\(j\)</span> in the solution is <span
+class="math inline">\(C_j(\vec{r}, t)\)</span>, which is a scalar
+function of coordinates <span class="math inline">\(\vec{r}\)</span> and
+time <span class="math inline">\(t\)</span>. For a well-mixed solution,
+the average of concentration over coordinates and time should be a
+constant <span class="math inline">\(&lt;C_j(\vec{r}, t)&gt; =
+\bar{C}_j\)</span>. The local concentration <span
+class="math inline">\(C_j(\vec{r}, t)\)</span>, however, fluctuates with
+coordinates and time. The amount of local fluctuation is <span
+class="math inline">\(\delta C_j(\vec{r}, t) = C_j(\vec{r},
+t)-\bar{C}_j\)</span>.</p>
+<span id="more"></span>
+<h2 id="fluctuation-of-molecules">Fluctuation of molecules</h2>
+<p>Some physical and chemical processes (e.g. diffusion and reaction)
+will contribute to the partial derivate of the local concentration
+fluctuation <span class="math inline">\(\frac{\partial \delta
+C_j(\vec{r}, t)}{\partial t}\)</span>. If we find a relationship between
+these processes and some measurable quantities related to <span
+class="math inline">\(\frac{\partial \delta C_j(\vec{r}, t)}{\partial
+t}\)</span>, we can get parameters describing these processes through
+the measured quantity.</p>
+<h3 id="ficks-law-of-diffusion">Fick's law of diffusion</h3>
+<p>According to Fick's first law of diffusion,</p>
+<p><span class="math display">\[\begin{equation}
+\vec{J} = -D \nabla C(\vec{r}, t) \label{fick1st}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(C_j(\vec{r}, t)\)</span> is a
+scalar concentration function, <span class="math inline">\(\nabla
+C_j(\vec{r}, t)\)</span> is a vector function, <span
+class="math inline">\(D\)</span> is the diffusion coefficient and <span
+class="math inline">\(\vec{J}\)</span> is the diffusive flux to the
+gradient of the concentration. The dimension of <span
+class="math inline">\(\vec{J}\)</span> is the amount of substance per
+unit area per unit time. The negative sign in the equation indicates
+that the diffusive flux goes from the rigion of high concentration to
+the region of low concentration.</p>
+<p>Considering an infinitesimal volme <span
+class="math inline">\(dV\)</span> and the mass conservation,</p>
+<p><span class="math display">\[ \iiint \frac{\partial C_j(\vec{r},
+t)}{\partial t} dV + \iint \vec{J} \cdot d\vec{S} = 0 \]</span></p>
+<p>where <span class="math inline">\(d\vec{S}\)</span> is the closed
+surface of the infinitesimal volume. According to the Green Gauss
+theorem, we have the Fick's second law of diffusion,</p>
+<p><span class="math display">\[\begin{equation}
+\frac{\partial C_j(\vec{r}, t)}{\partial t} = - \nabla \cdot \vec{J} =
+D_j \nabla^2 C_j(\vec{r}, t) \label{fick2nd}
+\end{equation}\]</span></p>
+<p>which is a second-order partial differential quation. Besides, it's a
+linear equaiton so the following equation holds,</p>
+<p><span class="math display">\[\begin{equation}
+\frac{\partial \delta \pmb{C}(\vec{r}, t)}{\partial t} = - \nabla \cdot
+\vec{J} = \pmb{D} \nabla^2 \delta \pmb{C}(\vec{r}, t)
+\label{fick2ndFluc}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\pmb{D}\)</span> is a diagonal
+matrix in which the element is the diffusion coefficient of respective
+species.</p>
+<h3 id="reaction-kinetics">Reaction kinetics</h3>
+<p>In general, the kinetic equation of a reaction isn't linear. For
+example, the kinetic equation of a simple reaction <span
+class="math inline">\(A+B \to C\)</span> is,</p>
+<p><span class="math display">\[\begin{aligned}
+\frac{\partial A}{\partial t} &amp;= -k_{+} A B + k_{-} C \\
+\frac{\partial B}{\partial t} &amp;= -k_{+} A B + k_{-} C \\
+\frac{\partial C}{\partial t} &amp;= k_{+} A B - k_{-} C \\
+\end{aligned}\]</span></p>
+<p>But we can consider the first-order derivate of the concentration of
+above equations,</p>
+<p><span class="math display">\[\begin{aligned}
+\frac{\partial \delta A}{\partial t} &amp;= -k_{+} B \delta A - k_{+} A
+\delta B  + k_{-} \delta C \\
+\frac{\partial \delta B}{\partial t} &amp;= -k_{+} B \delta A - k_{+} A
+\delta B  + k_{-} \delta C \\
+\frac{\partial \delta C}{\partial t} &amp;= k_{+} B \delta A + k_{+} A
+\delta B  - k_{-} \delta C \\
+\end{aligned}\]</span></p>
+<p>Therefore we can rewrite the kinetic equation as the matrix form,</p>
+<p><span class="math display">\[ \frac{\partial}{\partial t}
+\begin{bmatrix} \delta A \\ \delta B \\ \delta C \end{bmatrix} =
+\begin{bmatrix} -k_{+} B &amp; -k_{+} A &amp; k_{-} \\ -k_{+} B &amp;
+-k_{+} A &amp; k_{-} \\ k_{+} B &amp; k_{+} A &amp; -k_{-} \end{bmatrix}
+\begin{bmatrix} \delta A \\ \delta B \\ \delta C \end{bmatrix}
+\]</span></p>
+<p>In general we have such equation,</p>
+<p><span class="math display">\[\begin{equation}
+\frac{\partial}{\partial t} \delta \pmb{C} = \pmb{K} \delta \pmb{C}
+\label{react}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\pmb{C}\)</span> is the
+concentration matrix and <span class="math inline">\(\pmb{K}\)</span> is
+the matrix in which every element combins reaction rate constants and
+equilibrium concentrations of species.</p>
+<h3
+id="concentration-fluctuation-from-diffusion-and-reaction">Concentration
+fluctuation from diffusion and reaction</h3>
+<p>In simple solution, the concentration fluctuation of the component is
+contributed by two parts: diffusion and reaction. According to the
+equation <span class="math inline">\(\eqref{fick2ndFluc}\)</span> and
+<span class="math inline">\(\eqref{react}\)</span>, we can write the
+following equation,</p>
+<p><span class="math display">\[\begin{equation}
+\frac{\partial}{\partial t} \delta \pmb{C} = \pmb{D} \nabla^2 \delta
+\pmb{C} + \pmb{K} \delta \pmb{C} \label{main}
+\end{equation}\]</span></p>
+<p>Because the derivative of original function equals to the product of
+the reciprocal variable and the reciprocal function in Fourier
+space,</p>
+<p><span class="math display">\[ \frac{1}{\sqrt{2 \pi}}
+\int_{-\infty}^{\infty} \frac{df(x)}{dx} e^{-i k x} dx =
+\frac{1}{\sqrt{2 \pi}} [f(x) e^{-i k x}|_{-\infty}^{\infty} -
+\int_{-\infty}^{\infty} f(x) (-i k) e^{-i k x} dx] = i k F(k)
+\]</span></p>
+<p>here the first term vanishes because <span
+class="math inline">\(|e^{-i k x}| \leq 1\)</span> and we assume <span
+class="math inline">\(f(x)\)</span> is absolutly integrable on the real
+space <span class="math inline">\(\mathbb{R}\)</span>.</p>
+<p>The equation can be simplified to the first-order ordinary
+differential equation by using the above properity of Fourier
+transformation,</p>
+<p><span class="math display">\[\begin{equation}
+\frac{\partial \pmb{\tilde{C}}(\vec{q}, t)}{\partial t} =
+\pmb{M}(\vec{q}) \pmb{\tilde{C}}(\vec{q}, t) \label{mainFourier}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\pmb{\tilde{C}}(\vec{q}, t) =
+(2\pi)^{-\frac{3}{2}} \int \delta \pmb{C}(\vec{r}, t) e^{-i \vec{q}
+\vec{r}} d^3 \vec{r}\)</span> and <span
+class="math inline">\(\pmb{M}(\vec{q}) = \pmb{K} - \vec{q}^2
+\pmb{D}\)</span>.</p>
+<h2 id="correlation-between-fluctuation-of-concentration">Correlation
+between fluctuation of concentration</h2>
+<p>Here let's make a reasonable assumption of ideal solution that
+molecules are independent with each other at the same time <span
+class="math inline">\(t_0\)</span>,</p>
+<p><span class="math display">\[\begin{equation}
+&lt;\delta C_i(\vec{r_1}, t_0) \delta C_j(\vec{r_2}, t_0)&gt; =
+\bar{C}_i \delta_{ij} \delta(r_1 - r_2) \label{assumption}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\bar{C}_i\)</span> is the average
+concentration of the component <span class="math inline">\(i\)</span>
+being equal to the mean-square fluctuation of the Poisson events.</p>
+<p>In the next section we will use the fact that <span
+class="math inline">\(\delta C_j(\vec{r}&#39;, t)\)</span> are the
+solutions to the equation <span
+class="math inline">\(\eqref{main}\)</span> with the initial condition
+<span class="math inline">\(\delta C_j(\vec{r}&#39;, 0)\)</span> in
+order to express <span class="math inline">\(&lt;\delta C_i(\vec{r}, 0)
+\delta C_j(\vec{r}&#39;, t)&gt;\)</span> through the combination of the
+same-time correlation <span class="math inline">\(&lt;\delta
+C_i(\vec{r}, 0) \delta C_k(\vec{r}&#39;&#39; ,0)&gt;\)</span>. The
+subscripts and coordinates changes because there are Fourier
+transformations to get the final correaltion expression.</p>
+<h3
+id="eigendecomposition-and-exponential-function-of-matrices">eigendecomposition
+and exponential function of matrices</h3>
+<p>If the matrix <span class="math inline">\(\pmb{M}\)</span> has the
+eigenvector matrix <span class="math inline">\(\pmb{\mathsf{X}}\)</span>
+and eigenvalue matrix <span
+class="math inline">\(\pmb{\Lambda}\)</span>, it can be decomposed as
+the product as following,</p>
+<p><span class="math display">\[\begin{aligned}
+\pmb{M} \pmb{V} &amp;= \lambda \pmb{V} \\
+\pmb{M} \pmb{X} &amp;= \pmb{X} \pmb{\Lambda} \\
+\pmb{M} &amp;= \pmb{X} \pmb{\Lambda} \pmb{X}^{-1} \\
+\pmb{M}^n &amp;= \pmb{X} \pmb{\Lambda}^n \pmb{X}^{-1} \\
+\end{aligned}\]</span></p>
+<p>Substitute the decomposition into the definition of exponential
+function of a matrix,</p>
+<p><span class="math display">\[ e^{\pmb{M}} = \sum_{k=1}^{\infty}
+\frac{\pmb{M}^k}{k!} = \sum_{k=1}^{\infty} \frac{\pmb{X} \pmb{\Lambda}^k
+\pmb{X}^{-1}}{k!} = \pmb{X} e^{\pmb{\Lambda}} \pmb{X}^{-1} \]</span></p>
+<p>Thus we can easily get the solution for the matrix ordinary
+differential equation,</p>
+<p><span class="math display">\[ \frac{\partial \pmb{F}}{\partial t} =
+\pmb{M} \pmb{F} \]</span></p>
+<p>which is <span class="math inline">\(\pmb{F}(t) = e^{\pmb{M} t}
+\pmb{F}(0) = \pmb{X} e^{\pmb{\Lambda} t} \pmb{X}^{-1}
+\pmb{F}(0)\)</span>.</p>
+<p>In addition, for the diagonal matrix <span
+class="math inline">\(\pmb{\Lambda}\)</span>, the exponential matrix has
+following property,</p>
+<p><span class="math display">\[ e^{\pmb{\Lambda}} = \sum_{k}
+\frac{\pmb{\Lambda}^k}{k!} = \begin{bmatrix} \sum_{k}
+\frac{\lambda_1^k}{k!} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp;
+\sum_{k} \frac{\lambda_m^k}{k!} \\ \end{bmatrix} = \begin{bmatrix}
+e^{\lambda_1} &amp; &amp; \\ &amp; \ddots &amp; \\ &amp; &amp;
+e^{\lambda_m} \\ \end{bmatrix} \]</span></p>
+<h3 id="solving-differential-equations-by-eigenfunctions">solving
+differential equations by eigenfunctions</h3>
+<p>According above equations, the equation <span
+class="math inline">\(\eqref{mainFourier}\)</span> as an ordinary
+differential matrix function has the solution,</p>
+<p><span class="math display">\[\begin{equation}
+\pmb{\tilde{C}}(\vec{q}, t) = \pmb{X} e^{\pmb{\Lambda} t} \pmb{X}^{-1}
+\pmb{\tilde{C}}(\vec{q}, 0) \label{solution}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\pmb{\Lambda}\)</span> and <span
+class="math inline">\(\pmb{X}\)</span> are the eigenvalue matrix and the
+eigenvector matrix of matrix <span
+class="math inline">\(\pmb{M}\)</span>, respectivly. The element in
+<span class="math inline">\(\pmb{\tilde{C}}(\vec{q}, t)\)</span> is,</p>
+<p><span class="math display">\[ \tilde{C}_{k}(\vec{q}, t) =
+\sum_{s=1}^{m} (\pmb{X} e^{\pmb{\Lambda} t} \pmb{X}^{-1})_{[k, s]}
+\tilde{C}_{s}(\vec{q}, 0) \]</span></p>
+<h2 id="fluorescent-intensity-from-confocal-microscope">Fluorescent
+intensity from confocal microscope</h2>
+<p>The fluorescent intensity detected by the confocal microscope is,</p>
+<p><span class="math display">\[\begin{equation}
+\delta n(t) = \Delta t \int I(\vec{r}) \pmb{Q} \delta \pmb{C}(\vec{r},
+t) d^3 \vec{r} \label{intensityFluc}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\pmb{Q} = [Q_1, Q_2, \cdots,
+Q_m]\)</span> is the coefficient matrix in which the element is the
+product of the adsorption cross section, quantum yield and detection
+efficiency of microscope of the fluorescent components and <span
+class="math inline">\(I(\vec{r})\)</span> is the Gaussian light
+field.</p>
+<h3 id="correlation-function-in-general">correlation function in
+general</h3>
+<p>The correlatoin function is defined as the time average of the
+product of the fluorescent intensity fluctuation and normalized by the
+square of the average fluorescent intensity,</p>
+<p><span class="math display">\[\begin{equation}
+G(\tau) = \frac{&lt;\delta n(t) \delta n(t+\tau)&gt;}{\bar{n}^2} =
+\frac{&lt;\delta n(0) \delta n(\tau)&gt;}{\bar{n}^2} \label{correlation}
+\end{equation}\]</span></p>
+<p>The right part of the equation holds because of the ergodicity. Thus
+we have,</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+G(\tau)
+&amp;= \frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2
+I(\vec{r}_1) I(\vec{r}_2) &lt;[\pmb{Q} \delta \pmb{C}(\vec{r}_1, 0)]
+[\pmb{Q} \delta \pmb{C}(\vec{r}_2, \tau)]&gt; \\
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \iint d^3 \vec{r}_1 d^3 \vec{r}_2
+I(\vec{r}_1) I(\vec{r}_2) \sum_{i} \sum_{j} Q_i Q_j &lt;\delta
+C_i(\vec{r}_1, 0) \delta C_j(\vec{r}_2, \tau)&gt; \\
+\end{aligned}
+\label{correlationExpand}
+\end{equation}
+\]</span></p>
+<p>Let's first substitute the solution <span
+class="math inline">\(\eqref{solution}\)</span> into the correlation
+factor,</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+&amp;&lt;\delta C_i(\vec{r}_1, 0) \delta C_j(\vec{r}_2, \tau)&gt; \\
+&amp;= (2 \pi)^{-\frac{3}{2}} \int e^{i \vec{q} \vec{r_2}} d^3 \vec{q}
+&lt;\delta C_i(\vec{r}_1, 0) \delta \tilde{C}_j(\vec{q}, \tau)&gt; \\
+&amp;= (2 \pi)^{-\frac{3}{2}} \int e^{i \vec{q} \vec{r_2}} d^3 \vec{q}
+&lt;\delta C_i(\vec{r}_1, 0) \sum_{s=1}^{m} (\pmb{X} e^{\pmb{\Lambda}
+\tau} \pmb{X}^{-1})_{[j, s]} \tilde{C}_{s}(\vec{q}, 0)&gt; \\
+&amp;= (2 \pi)^{-\frac{3}{2}} \int e^{i \vec{q} \vec{r_2}}
+\sum_{s=1}^{m} (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, s]}
+d^3 \vec{q} &lt;\delta C_i(\vec{r}_1, 0) \tilde{C}_{s}(\vec{q}, 0)&gt;
+\\
+&amp;= (2 \pi)^{-3} \int e^{i \vec{q} \vec{r_2}} \sum_{s=1}^{m} (\pmb{X}
+e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, s]} d^3 \vec{q} &lt;\delta
+C_i(\vec{r}_1, 0) \int e^{-i \vec{q} \vec{r}_3} \delta C_s(\vec{r}_3, 0)
+d^3 \vec{r}_3&gt; \\
+&amp;= (2 \pi)^{-3} \int e^{i \vec{q} \vec{r_2}} \sum_{s=1}^{m} (\pmb{X}
+e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, s]} d^3 \vec{q} \int e^{-i
+\vec{q} \vec{r}_3}  d^3 \vec{r}_3 &lt;\delta C_i(\vec{r}_1, 0) \delta
+C_s(\vec{r}_3, 0)&gt; \\
+&amp;= (2 \pi)^{-3} \bar{C}_i \int e^{i \vec{q} \vec{r_2}}
+\sum_{s=1}^{m} (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, s]}
+d^3 \vec{q} \int e^{-i \vec{q} \vec{r}_3} \delta_{is} \delta(\vec{r}_1 -
+\vec{r}_3) d^3 \vec{r}_3 \\
+&amp;= (2 \pi)^{-3} \bar{C}_i \int e^{i \vec{q} (\vec{r}_2 - \vec{r}_1)}
+\sum_{s=1}^{m} (\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, s]}
+d^3 \vec{q} \delta_{is} \\
+&amp;= (2 \pi)^{-3} \bar{C}_i \int e^{i \vec{q} (\vec{r}_2 - \vec{r}_1)}
+(\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} d^3 \vec{q} \\
+\end{aligned}
+\label{correlationSolution}
+\end{equation}\]</span></p>
+<p>Then substitute the above equation <span
+class="math inline">\(\eqref{correlationSolution}\)</span> and the light
+field function into the equation <span
+class="math inline">\(\eqref{correlationExpand}\)</span>,</p>
+<p><span class="math display">\[\begin{aligned}
+G(\tau)
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \int d^3 \vec{q} \iint (2 \pi)^{-3}
+e^{i \vec{q} (\vec{r}_2 - \vec{r}_1)} I(\vec{r}_1) I(\vec{r}_2) d^3
+\vec{r}_1 d^3 \vec{r}_2 \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X}
+e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \int d^3 \vec{q} [\int (2
+\pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_1} I(\vec{r}_1) d^3
+\vec{r}_1] [\int (2 \pi)^{-\frac{3}{2}} e^{- i \vec{q} \vec{r}_2}
+I(\vec{r}_2) d^3 \vec{r}_2]^* \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i
+(\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1})_{[j, i]} \\
+&amp;=\frac{(\Delta t)^2}{\bar{n}^2} \int |\tilde{I}(\vec{q})|^2
+\sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau}
+\pmb{X}^{-1})_{[j, i]} d^3 \vec{q} \\
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(^*\)</span> means complex
+conjugation.</p>
+<p>The light field in the confocal microscope can be described by the
+Gaussian function,</p>
+<p><span class="math display">\[ I(\vec{r}) = I_0 e^{-\frac{2
+(x^2+y^2)}{\omega_{xy}^2}-\frac{2 z^2}{\omega_z^2}} \]</span></p>
+<p>Thus the Fourier transformation of the light field function is,</p>
+<p><span class="math display">\[\begin{aligned}
+\tilde{I}(\vec{q})
+&amp;= (2 \pi)^{-\frac{3}{2}} I_0 \iiint e^{- i \vec{q}
+(\vec{x}+\vec{y}+\vec{z})} e^{-\frac{2 (x^2+y^2)}{\omega_{xy}^2}-\frac{2
+z^2}{\omega_z^2}} dx dy dz \\
+&amp;= I_0 \frac{\omega_{xy}^2 \omega_z}{8} e^{-\frac{\omega_{xy}^2}{8}
+(q_x^2 + q_y^2) - \frac{\omega_z^2}{8} q_z^2} \\
+\end{aligned}\]</span></p>
+<p>The integral of light field function over the space is the special
+case of the Fourier transformation where <span
+class="math inline">\(\vec{q}=0\)</span>, so the average fluorescent
+intensity <span class="math inline">\(\bar{n}\)</span> is,</p>
+<p><span class="math display">\[\begin{equation}
+\bar{n} = \Delta t \int I(\vec{r}) \pmb{Q} \pmb{\bar{C}} d^3 \vec{r} =
+\Delta t (2 \pi)^{\frac{3}{2}} \sum_l Q_l \bar{C}_l \tilde{I}(0) =
+\Delta t I_0 \omega_{xy}^2 \omega_{z} (\frac{\pi}{2})^{\frac{3}{2}}
+\sum_l Q_l \bar{C}_l \label{intensity}
+\end{equation}\]</span></p>
+<p>Thus, the general correlation function of concentration fluctuation
+is,</p>
+<p><span class="math display">\[\begin{equation}
+G(\tau) = \frac{1}{(2 \pi)^3 (\sum_l Q_l \bar{C}_l)^2} \int
+e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4}
+q_z^2} \sum_{i} \sum_{j} Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda}
+\tau} \pmb{X}^{-1})_{[j, i]}d^3 \vec{q} \label{correlationGeneral}
+\end{equation}\]</span></p>
+<h3 id="single-component-diffusion-scenario">single component diffusion
+scenario</h3>
+<p>The diffusion function is,</p>
+<p><span class="math display">\[ \frac{\partial \delta C(\vec{r},
+t)}{\partial t} = D \nabla^2 \delta C(\vec{r}, t) \]</span></p>
+<p>The matrix <span class="math inline">\(\pmb{M} = -\vec{q}^2
+D\)</span>, which only has one element. Thus <span
+class="math inline">\(\lambda = -\vec{q}^2 D\)</span> and <span
+class="math inline">\(\pmb{X}=1\)</span> trivially. According to the
+equation <span class="math inline">\(\eqref{correlationGeneral}\)</span>
+we have,</p>
+<p><span class="math display">\[\begin{aligned}
+G(\tau)
+&amp;= \frac{1}{(2 \pi)^3 \bar{C}} \int e^{-\frac{\omega_{xy}^2}{4}
+(q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} e^{-(q_x + q_y + q_z)^2 D
+\tau} d^3 \vec{q} \\
+&amp;= \frac{1}{\pi^{\frac{3}{2}} \bar{C}} (\omega_{xy}^2 + 4 D
+\tau)^{-1} (\omega_{z}^2 + 4 D \tau)^{-\frac{1}{2}} \\
+&amp;= \frac{1}{\pi^{\frac{3}{2}} \omega_{xy}^2 \omega_z \bar{C}} (1 +
+\frac{\tau}{(\omega_{xy}^2 / 4D)})^{-1} (1 + \frac{\tau}{(\omega_z^2 /
+4D)})^{-\frac{1}{2}} \\
+&amp;= \frac{1}{V \bar{C}} (1+\frac{\tau}{\tau_D})^{-1}
+(1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} \\
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(V = \pi^{\frac{3}{2}} \omega_{xy}^2
+\omega_z\)</span> is defined as the effective sampling volume, <span
+class="math inline">\(\tau_D=\frac{\omega_{xy}^2}{4D}\)</span> is the
+diffusion time over the <span class="math inline">\(xy\)</span> plane
+and <span class="math inline">\(\epsilon =
+\frac{\omega_z}{\omega_{xy}}\)</span> is the waist ratio of the light
+field.</p>
+<h3
+id="diffusion-coupled-with-reaction-scenario-perfect-dark-state">diffusion
+coupled with reaction scenario (perfect dark state)</h3>
+<p>Considering a simple isomerization reaction (e.g. the transformation
+from singlet state to triplet state of fluorescent dyes),</p>
+<p><span class="math display">\[ A \leftrightarrow B \]</span></p>
+<p>where the reaction rate constants are <span
+class="math inline">\(k_{AB}\)</span> and <span
+class="math inline">\(k_{BA}\)</span>. Also we assume that both their
+diffusion coefficients are <span class="math inline">\(D\)</span>, which
+is often met in experiments. So the matrix <span
+class="math inline">\(\pmb{M}\)</span> is,</p>
+<p><span class="math display">\[\begin{bmatrix}
+-k_{AB}-\vec{q}^2 D &amp; k_{BA} \\
+k_{AB} &amp; -k_{BA}-\vec{q}^2 D \\
+\end{bmatrix}\]</span></p>
+<p>and its <span class="math inline">\(\pmb{\Lambda}\)</span> and <span
+class="math inline">\(\pmb{X}\)</span> are,</p>
+<p><span class="math display">\[\begin{aligned}
+\pmb{\Lambda} &amp;= \begin{bmatrix} -\vec{q}^2 D &amp; \\ &amp;
+-k_{AB}-k_{BA}-\vec{q}^2D \\ \end{bmatrix} \\
+\pmb{X} &amp;= \begin{bmatrix} 1 &amp; 1 \\ \frac{k_{AB}}{k_{BA}} &amp;
+-1 \\ \end{bmatrix} \\
+\end{aligned}\]</span></p>
+<p>Thus we have the solution matrix,</p>
+<p><span class="math display">\[\begin{aligned}
+\pmb{X} e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}
+&amp;= \begin{bmatrix} 1 &amp; 1 \\ \frac{k_{AB}}{k_{BA}} &amp; -1 \\
+\end{bmatrix} \begin{bmatrix} e^{-\vec{q}^2 D \tau} &amp; \\ &amp;
+e^{-(k_{AB}+k_{BA}+\vec{q}^2 D) \tau} \\ \end{bmatrix} \begin{bmatrix}
+\frac{k_{BA}}{k_{AB}+k_{BA}} &amp; \frac{k_{BA}}{k_{AB}+k_{BA}} \\
+\frac{k_{AB}}{k_{AB}+k_{BA}} &amp; -\frac{k_{BA}}{k_{AB}+k_{BA}} \\
+\end{bmatrix} \\
+&amp;= \begin{bmatrix} e^{\lambda_1 \tau} &amp; e^{\lambda_2 \tau} \\ K
+e^{\lambda_1 \tau} &amp; -e^{\lambda_2 \tau} \\ \end{bmatrix}
+\begin{bmatrix} \frac{1}{1+K} &amp; \frac{1}{1+K} \\ \frac{K}{1+K} &amp;
+-\frac{1}{1+K} \\ \end{bmatrix} \\
+&amp;= (1+K)^{-1} \begin{bmatrix} e^{\lambda_1 \tau} + K e^{\lambda_2
+\tau} &amp; e^{\lambda_1 \tau}-e^{\lambda_2 \tau} \\ K (e^{\lambda_1
+\tau}-e^{\lambda_2 \tau}) &amp; K e^{\lambda_1 \tau} + e^{\lambda_2
+\tau} \\ \end{bmatrix} \\
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(K=\frac{k_{AB}}{k_{BA}}\)</span> is
+the reaction dissociation constant.</p>
+<p>If <span class="math inline">\(Q_A=Q\)</span> and <span
+class="math inline">\(Q_B=0\)</span>, only the first-row first-column
+element in the matrix <span class="math inline">\(\pmb{X}
+e^{\pmb{\Lambda} \tau} \pmb{X}^{-1}\)</span> contributes to the general
+equation <span
+class="math inline">\(\eqref{correlationGeneral}\)</span>,</p>
+<p><span class="math display">\[\begin{aligned}
+G(\tau)
+&amp;= \frac{1}{(2 \pi)^3 \bar{C}_A} \int e^{-\frac{\omega_{xy}^2}{4}
+(q_x^2 + q_y^2) - \frac{\omega_z^2}{4} q_z^2} (1+K)^{-1} (e^{\lambda_1
+\tau} + K e^{\lambda_2 \tau}) d^3 \vec{q} \\
+&amp;= \frac{1}{(2 \pi)^3 (\bar{C}_A + \bar{C}_B)} \int
+e^{-\frac{\omega_{xy}^2}{4} (q_x^2 + q_y^2) - \frac{\omega_z^2}{4}
+q_z^2} (e^{\lambda_1 \tau} + K e^{\lambda_2 \tau}) d^3 \vec{q} \\
+\end{aligned}\]</span></p>
+<p>Noticed that <span class="math inline">\(\bar{C}_A (1+K) =
+\bar{C}_A+\bar{C}_B\)</span> because <span
+class="math inline">\(K\)</span> is the dissociation constant. The
+integral has two additive parts,</p>
+<p><span class="math display">\[\begin{aligned}
+FIRST \ PART &amp;= \frac{1}{V (\bar{C}_A + \bar{C}_B)}
+(1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2
+\tau_D})^{-\frac{1}{2}} \\
+SECOND \ PART &amp;= \frac{K}{V (\bar{C}_A + \bar{C}_B)}
+(1+\frac{\tau}{\tau_D})^{-1} (1+\frac{\tau}{\epsilon^2
+\tau_D})^{-\frac{1}{2}} \exp[-\frac{\tau}{\tau_R}]
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(\tau_R =
+(k_{AB}+k_{BA})^{-1}\)</span> is the reaction time. Finally, we add the
+two parts and get the expression of the two-state reaction,</p>
+<p><span class="math display">\[\begin{aligned}
+G(\tau)
+&amp;= FIRST \ PART + SECOND \ PART \\
+&amp;= \frac{1}{V (\bar{C}_A + \bar{C}_B) } (1+\frac{\tau}{\tau_D})^{-1}
+(1+\frac{\tau}{\epsilon^2 \tau_D})^{-\frac{1}{2}} (1 + K
+\exp(-\frac{\tau}{\tau_R})) \\
+&amp;= G_0 G_D(\tau) G_R(\tau) \\
+\end{aligned}\]</span></p>
+<p>Different processes of different time scales represented in <span
+class="math inline">\(G(\tau)\)</span> clearly. If <span
+class="math inline">\(\tau \lt\lt \tau_D, \tau_R\)</span>, <span
+class="math inline">\(G(\tau) = \frac{1+K}{V(\bar{C}_A+\bar{C}_B)} =
+\frac{1}{V \bar{C}_A}\)</span>. It means the time resolution is enough
+to detect the fluorescent molecules conversation. If <span
+class="math inline">\(\tau_R \lt\lt \tau \lt\lt \tau_D\)</span>, <span
+class="math inline">\(G(\tau) = \frac{1}{V (\bar{C}_A +
+\bar{C}_B)}\)</span>. It means in this time scale all of molecules
+appear to be fluorescent due to the fast tunrover between the A and B
+states.</p>
+<h3 id="reaction-scenario-with-relative-brightness">reaction scenario
+with relative brightness</h3>
+<p>In the previous section, we assume <span
+class="math inline">\(Q_A=Q\)</span> and <span
+class="math inline">\(Q_B=0\)</span>, which is rarely met in practical
+experiments. So let's just substitute <span
+class="math inline">\(Q_A\)</span> and <span
+class="math inline">\(Q_B\)</span> into the equaiton <span
+class="math inline">\(\eqref{correlationGeneral}\)</span>. For
+simplicity, we just deduce the reaction part because the change of
+relative brightness has no impact on diffusion part of correlation
+function.</p>
+<p><span class="math display">\[ \pmb{X} e^{\pmb{\Lambda} \tau}
+\pmb{X}^{-1} = \frac{1}{K+1} \begin{bmatrix} 1 + K e^{\lambda_2 \tau}
+&amp; 1 - e^{\lambda_2 \tau} \\ K(1 - e^{\lambda_2 \tau}) &amp; K +
+e^{\lambda_2 \tau} \\ \end{bmatrix} \]</span></p>
+<p>where <span class="math inline">\(\lambda_1 = 0\)</span> and <span
+class="math inline">\(\lambda_2 = -(k_{AB}+k_{BA})\)</span>.</p>
+<p>Recall that the equation <span
+class="math inline">\(\eqref{correlationGeneral}\)</span>, we have,</p>
+<p><span class="math display">\[\begin{aligned}
+\sum_i \sum_j Q_i Q_j \bar{C}_i (\pmb{X} e^{\pmb{\Lambda} \tau}
+\pmb{X}^{-1})_{[j,i]} &amp;= (AA + AB + BA + BB)(\frac{1}{1+K}) \\
+AA &amp;= Q_A Q_A \bar{C}_A (1+K e^{\lambda_2 \tau}) \\
+AB &amp;= Q_A Q_B \bar{C}_A K (1-e^{\lambda_2 \tau}) \\
+BA &amp;= Q_A Q_B \bar{C}_B (1-e^{\lambda_2 \tau}) \\
+BB &amp;= Q_B Q_B \bar{C}_B (K+e^{\lambda_2 \tau}) \\
+\end{aligned}\]</span></p>
+<p>Because there is no variable <span
+class="math inline">\(\vec{q}\)</span> in reaction part, we can
+calculate the integral first,</p>
+<p><span class="math display">\[ \frac{\int
+\exp[{-\frac{\omega_{xy}^2}{4}(q_x^2+q_y^2)-\frac{\omega_z^2}{4}q_z^2}]
+d^3 \vec{q} }{(2 \pi)^3 (Q_A \bar{C}_A + Q_B \bar{C}_B)^2} =
+\frac{1}{\pi^{\frac{3}{2}} \omega_{xy}^2 \omega_z (Q_A \bar{C}_A + Q_B
+\bar{C}_B)^2} = \frac{1}{V (Q_A \bar{C}_A + Q_B
+\bar{C}_B)^2}\]</span></p>
+<p>Then substitute all factors,</p>
+<p><span class="math display">\[\begin{aligned}
+G_R(\tau) &amp;= \frac{(AA+AB+BA+BB)(1+K)^{-1}}{V (Q_A \bar{C}_A + Q_B
+\bar{C}_B)^2} \\
+&amp;= \frac{\bar{C}_A (1+K \exp[\lambda_2 \tau]) + Q^2 \bar{C}_B (K+
+\exp[\lambda_2 \tau]) + 2 Q \bar{C}_B (1-\exp[\lambda_2 \tau])}{V (1+K)
+(\bar{C}_A + Q \bar{C}_B)^2} \\
+\end{aligned}\]</span></p>
+<p>where <span class="math inline">\(Q=\frac{Q_B}{Q_A}\)</span> is the
+relative brightness. Factor the above equation we get,</p>
+<p><span class="math display">\[ \frac{1 + K (\frac{Q-1}{1+QK})^2
+\exp[\lambda_2 t]}{V (\bar{C}_A + \bar{C}_B)} \]</span></p>
+<p>Thus when both two species emit fluorescent photons the amplitude
+before the reaction part is equal to <span class="math inline">\(K
+(\frac{Q-1}{1+QK})^2\)</span>.</p>
+<h2 id="references">References</h2>
+<p>[1] Krichevsky, Oleg, and Grégoire Bonnet. "Fluorescence correlation
+spectroscopy: the technique and its applications." <em>Reports on
+Progress in Physics</em> 65.2 (2002): 251.</p>
+<p>[2] Zhu, Ruixue, et al. "Photophysical properties of Atto655 dye in
+the presence of guanosine and tryptophan in aqueous solution." <em>The
+Journal of Physical Chemistry B</em> 115.17 (2011): 5001-5007.</p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/fluctuation/">fluctuation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/diffusion-equation/">diffusion equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/differential-equation/">differential equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Fourier-transform/">Fourier transform</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/correlation-function/">correlation function</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/04/21/vector-calculus-and-spherical-average/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Vector calculus and spherical average in SAXS
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/03/10/common-probability-density-functions/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Common probability density functions
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

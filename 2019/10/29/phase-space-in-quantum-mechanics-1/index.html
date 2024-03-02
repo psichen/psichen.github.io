@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>量子力学里的相空间体积--Fourier变换 | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        量子力学里的相空间体积--Fourier变换
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2019-10-29</time>
+          <span class="text-gray-400">·</span>
+          <span>1.4k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵<span
+class="math inline">\(S\)</span>和相空间<span
+class="math inline">\(\Gamma\)</span>的体积有关：</p>
+<p><span class="math display">\[ S = k_Bln(|\Gamma|) \]</span></p>
+<p>根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变<span
+class="math inline">\(\Gamma\)</span>的体积单位时，会在<span
+class="math inline">\(S\)</span>加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。</p>
+<span id="more"></span>
+<h2 id="fourier变换与逆变换">Fourier变换与逆变换</h2>
+<p>Fourier变换将目标函数<span
+class="math inline">\(f(t)\)</span>变为周期为<span
+class="math inline">\(T/n\)</span>的正余弦函数的线性组合。</p>
+<h3 id="三角函数形式的fourier级数">三角函数形式的Fourier级数：</h3>
+<p><span class="math display">\[ f(t) = \frac{a_0}{2} +
+\sum_{n=1}^{+\infty} a_n \cos (n \omega t) + b_n \sin (n \omega t)
+\]</span></p>
+<p>根据三角函数在周期区间内积分的正交性：</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos (nt) dt = 0 \\
+&amp;\int_{-\frac{T}{2}}^{\frac{T}{2}} \sin (nt) dt = 0 \\
+&amp;\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos (nt) \sin (mt) dt = 0 \\
+&amp;\int_{-\frac{T}{2}}^{\frac{T}{2}} \cos (nt) \cos (mt) dt =
+\begin{cases}
+\frac{T}{2} &amp; (n = m) \\
+0 &amp; (n \neq m) \\
+\end{cases}
+\\
+&amp;\int_{-\frac{T}{2}}^{\frac{T}{2}} \sin (nt) \sin (mt) dt =
+\begin{cases}
+\frac{T}{2} &amp; (n = m) \\
+0 &amp; (n \neq m) \\
+\end{cases}
+\\
+\end{aligned}
+\]</span></p>
+<p>我们在Fourier级数的两边同时对<span
+class="math inline">\(t\)</span>积分：</p>
+<p><span class="math display">\[ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t)
+dt = \frac{T}{2}a_0 \]</span></p>
+<p>所以</p>
+<p><span class="math display">\[ a_0 = \frac{2}{T}
+\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) dt \]</span></p>
+<p>然后我们在Fourier级数的两边同时乘上<span class="math inline">\(\cos
+(n \omega t)\)</span>，再同时对<span
+class="math inline">\(t\)</span>积分，可得到：</p>
+<p><span class="math display">\[ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t)
+\cos (n \omega t) dt = \frac{T}{2} a_n \]</span></p>
+<p>同理，乘上<span class="math inline">\(\sin (n \omega
+t)\)</span>，积分后可得到：</p>
+<p><span class="math display">\[ \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t)
+\sin (n \omega t) dt = \frac{T}{2} b_n \]</span></p>
+<p>整理之后，我们就可以得到Fourier级数展开的系数项：</p>
+<p><span class="math display">\[
+\begin{aligned}
+a_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega
+t) dt \\
+b_n = \frac{2}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega
+t) dt \\
+\end{aligned}
+\]</span></p>
+<p>其中<span class="math inline">\(a_n\)</span>为偶函数，<span
+class="math inline">\(b_n\)</span>为奇函数。</p>
+<h3 id="指数函数形式的fourier级数">指数函数形式的Fourier级数</h3>
+<p>根据Euler公式：<span class="math inline">\(e^{ikx} = \cos kx + i\sin
+kx\)</span>，所以三角函数可以表达为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\cos (n \omega t) &amp;= \frac{1}{2} (e^{i n \omega t}+e^{-i n \omega
+t}) \\
+\sin (n \omega t) &amp;= \frac{1}{2i} (e^{i n \omega t}-e^{-i n \omega
+t}) \\
+\end{aligned}
+\]</span></p>
+<p>代入Fourier级数的表达式，合并指数项，并根据<span
+class="math inline">\(a_n\)</span>和<span
+class="math inline">\(b_n\)</span>的奇偶性，可得指数形式的Fourier级数：</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(t) &amp;= \frac{a_0}{2}+\sum_{n=1}^{+\infty} \frac{a_n-i b_n}{2}e^{i n
+\omega t}+\frac{a_n+i b_n}{2}e^{-i n \omega t} \\
+&amp;=\sum_{n=-\infty}^{+\infty} F(n \omega) e^{i n \omega t} \\
+\end{aligned}
+\]</span></p>
+<p>注意两个求和符号中<span
+class="math inline">\(n\)</span>的取值范围，其中<span
+class="math inline">\(F(n \omega) =
+\frac{a_n-ib_n}{2}\)</span>为指前因子。将<span
+class="math inline">\(a_n\)</span>和<span
+class="math inline">\(b_n\)</span>的表达式代入，得：</p>
+<p><span class="math display">\[
+\begin{aligned}
+F(n \omega) &amp;= \frac{1}{2}\left[ \frac{2}{T}
+\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \cos (n \omega t) dt -
+\frac{2i}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) \sin (n \omega t) dt
+\right] \\
+&amp;= \frac{1}{T} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega
+t} dt \\
+\end{aligned}
+\]</span></p>
+<h3 id="fourier积分变换">Fourier积分变换</h3>
+<p>因为周期<span class="math inline">\(T\)</span>与角频率<span
+class="math inline">\(\omega\)</span>满足关系：<span
+class="math inline">\(T \omega = 2 \pi\)</span>，当<span
+class="math inline">\(T \to +\infty\)</span>时，<span
+class="math inline">\(\omega \to 0\)</span>。</p>
+<p>对无穷小量的求和满足如下关系：</p>
+<p><span class="math display">\[ \sum_{-\infty}^{+\infty} f(n \delta x)
+= \frac{1}{\delta x} \int_{-\infty}^{+\infty} f(x) dx \]</span></p>
+<p>于是上文的指数形式的Fourier级数，可以扩展为积分形式：</p>
+<p><span class="math display">\[
+\begin{aligned}
+f(t) &amp;= \sum_{-\infty}^{+\infty} F(n \omega) e^{i n \omega t} \\
+     &amp;= \int_{-\infty}^{+\infty} \frac{F(\omega)}{\omega} e^{i
+\omega t} d\omega \\
+\end{aligned}
+\]</span></p>
+<p>其中令<span class="math inline">\(g(\omega) =
+\frac{F(\omega)}{\omega}\)</span>。</p>
+<p>根据上面<span class="math inline">\(F(n \omega) = \frac{1}{T}
+\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i n \omega t} dt\)</span>，将
+<span class="math inline">\(\omega\)</span> 记为 <span
+class="math inline">\(\omega&#39;\)</span>，根据<span
+class="math inline">\(T\omega&#39; = 2\pi\)</span>，可得：</p>
+<p><span class="math display">\[ \frac{F(\omega&#39;)}{\omega&#39;} =
+\frac{1}{2\pi} \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i \omega&#39;
+t} dt \]</span></p>
+<p>当<span class="math inline">\(\omega&#39; \to 0\)</span>时，有：</p>
+<p><span class="math display">\[ g(\omega&#39;) = \frac{1}{2\pi}
+\int_{-\infty}^{+\infty} f(t) e^{-i \omega&#39; t} dt \]</span></p>
+<p>整理一下，我们就得到了可析函数f(t)的Fourier变换与逆变换：</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(\omega) &amp;= \frac{1}{2\pi} \int_{-\infty}^{+\infty} f(t) e^{-i
+\omega t} dt \\
+f(t)      &amp;= \int_{-\infty}^{+\infty} g(\omega) e^{i \omega t}
+d\omega \\
+\end{aligned}
+\]</span></p>
+<p>或改变一下函数前面的系数：</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(\omega) &amp;= \int_{-\infty}^{+\infty} f(t) e^{-i \omega t} dt \\
+f(t)      &amp;= \frac{1}{2\pi} \int_{-\infty}^{+\infty} g(\omega) e^{i
+\omega t} d\omega \\
+\end{aligned}
+\]</span></p>
+<p>因为频率<span class="math inline">\(f\)</span>与角频率<span
+class="math inline">\(\omega\)</span>满足关系：<span
+class="math inline">\(\omega = 2 \pi
+f\)</span>，所以上式可以改写为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(f) &amp;= \int_{-\infty}^{+\infty} f(t) e^{-i 2 \pi f t} dt \\
+f(t) &amp;= \int_{-\infty}^{+\infty} g(f) e^{i 2 \pi f t} df \\
+\end{aligned}
+\]</span></p>
+<p>物理上更多地使用如下形式：</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(\omega) &amp;= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t)
+e^{-i \omega t} dt \\
+f(t)      &amp;= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty}
+g(\omega) e^{i \omega t} d\omega \\
+\end{aligned}
+\]</span></p>
+<h2 id="dirac函数">Dirac函数</h2>
+<p>Dirac函数为一种广义函数，定义为：</p>
+<p><span class="math display">\[
+\delta(x) =
+\begin{cases}
++\infty &amp; (x = 0) \\
+0 &amp; (x \neq 0) \\
+\end{cases}
+\]</span></p>
+<p>并且满足<span class="math inline">\(\int_{-\infty}^{+\infty}
+\delta(x)dx = 1\)</span>。</p>
+<p>Dirac函数的性质：</p>
+<p><span class="math display">\[ \int f(x)\delta(x-a)dx = f(a)
+\]</span></p>
+<p>称之为Dirac函数的挑选性。根据挑选性，我们对Dirac函数进行Fourier变换：</p>
+<p><span class="math display">\[ \mathscr F[\delta(x)] = \frac{1}{2\pi}
+\int\delta(x) e^{-i k x} dx = \frac{1}{2\pi} \]</span></p>
+<p>再进行Fourier逆变换，我们就可以得到<span
+class="math inline">\(\delta\)</span>函数的表达式之一：</p>
+<p><span class="math display">\[ \delta(x) = \frac{1}{2\pi} \int e^{i k
+x} dk \]</span></p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Fourier-transform/">Fourier transform</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Dirac-function/">Dirac function</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2019/10/30/phase-space-in-quantum-mechanics-2/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          量子力学里的相空间体积--波函数
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2019/10/13/inexact-differential-of-Q/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          热力学中热量的非恰当微分
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

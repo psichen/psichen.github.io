@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Partial differential equations | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Partial differential equations
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-05-15</time>
+          <span class="text-gray-400">·</span>
+          <span>1.3k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Partial differential equations provide information about the
+relationship between the variables instead of the specific form of the
+solution function. Determining the specific form of solution needs other
+constraints such as boundary conditions.</p>
+<span id="more"></span>
+<h2 id="homogeneous-first-order-pde">Homogeneous first-order PDE</h2>
+<p>For the homogeneous first-order partial differential equation,</p>
+<p><span class="math display">\[ A(x,y) \frac{\partial u}{\partial x} +
+B(x,y) \frac{\partial u}{\partial y} = 0 \]</span></p>
+<p>It introduces the second differential variable, which complicates the
+equation. So if there is a combination <span
+class="math inline">\(p(x,y)\)</span> which can transform the function
+<span class="math inline">\(u(x,y)\)</span> to the function <span
+class="math inline">\(f(p)\)</span> as one variable, then the PDE may be
+simplified to find the solution. Also, the combination <span
+class="math inline">\(p=p(x,y)\)</span> provides one more constraint for
+the solution of the PDE.</p>
+<p>For the function,</p>
+<p><span class="math display">\[ u(x,y) = f(p) \]</span></p>
+<p>where <span class="math inline">\(p=p(x,y)\)</span>. The variable
+space <span class="math inline">\(\mathbb{R}^{2}(x,y)\)</span> of <span
+class="math inline">\(u(x,y)\)</span> is changed to <span
+class="math inline">\(\mathbb{R}(p)\)</span> of <span
+class="math inline">\(f(p)\)</span>. In the space <span
+class="math inline">\(\mathbb{R}(p)\)</span>, a specific <span
+class="math inline">\(p\)</span> should be constant as <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> vary because <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> hold the combination relation <span
+class="math inline">\(p = p(x,y)\)</span>,</p>
+<p><span class="math display">\[ \begin{equation}
+\frac{\partial p}{\partial x} dx + \frac{\partial p}{\partial y} dy = 0
+\label{constraint_1}
+\end{equation} \]</span></p>
+<p>This is the first constrain equation the solution should satisfy if
+the solution can be represented by the combination <span
+class="math inline">\(p(x,y)\)</span>.</p>
+<p>Then let's find out the another constraint from the PDE. According to
+the chain rule,</p>
+<p><span class="math display">\[ \begin{aligned}
+\frac{\partial u}{\partial x} &amp;= \frac{df}{dp} \frac{\partial
+p}{\partial x} \\
+\frac{\partial u}{\partial y} &amp;= \frac{df}{dp} \frac{\partial
+p}{\partial y}
+\end{aligned}  \]</span></p>
+<p>Then we have,</p>
+<p><span class="math display">\[ [ A(x,y) \frac{\partial p}{\partial x}
++ B(x,y) \frac{\partial p}{\partial y} ] \frac{df}{dp} = 0 \]</span></p>
+<p>Because <span class="math inline">\(f(p)\)</span> is a one-variable
+function, we can factor it out from the equation. The first term must be
+zero for non-trivial <span class="math inline">\(p\)</span>, and it
+removes all reference of function <span
+class="math inline">\(f(p)\)</span>,</p>
+<p><span class="math display">\[ \begin{equation}
+A(x,y) \frac{\partial p}{\partial x} + B(x,y) \frac{\partial p}{\partial
+y} = 0 \label{constraint_2}
+\end{equation} \]</span></p>
+<p>Then we have the equation set consist of <span
+class="math inline">\(\eqref{constraint_1}\)</span> and <span
+class="math inline">\(\eqref{constraint_2}\)</span>,</p>
+<p><span class="math display">\[ \begin{bmatrix} A(x,y) &amp; B(x,y) \\
+dx &amp; dy \\ \end{bmatrix} \begin{bmatrix} \frac{\partial p}{\partial
+x} \\ \frac{\partial p}{\partial y} \\ \end{bmatrix} = \begin{bmatrix} 0
+\\ 0 \\ \end{bmatrix} \]</span></p>
+<p>If the solution satisfies the combination <span
+class="math inline">\(p=p(x,y)\)</span> and the PDE, the equation set
+should be linear dependent, namely, they are the same equation,</p>
+<p><span class="math display">\[ \begin{equation}
+\frac{dx}{A(x,y)} = \frac{dy}{B(x,y)} \label{combination_equation}
+\end{equation} \]</span></p>
+<p>From the equation <span
+class="math inline">\(\eqref{combination_equation}\)</span>, we can get
+the function <span class="math inline">\(p=p(x,y)\)</span>, where <span
+class="math inline">\(p\)</span> is identified by the integral constant.
+By substituting <span class="math inline">\(p\)</span> into the
+arbitrary function <span class="math inline">\(f(p)\)</span> we get the
+general solution for the PDE. The specific form of the solution needs
+boundary conditions to determine.</p>
+<h2 id="homogeneous-high-order-pde">Homogeneous high-order PDE</h2>
+<p>Many physical processes can be described by second-order PDEs such as
+wave function or diffusion function. They are so common in physical
+problems that these equations have been intensively studied. By analogy
+to the first-order PDE, the idea of solving high-order PDE is to find a
+combination of variables to factorize the PDE.</p>
+<h3 id="wave-function">wave function</h3>
+<p><span class="math display">\[ \frac{\partial^2 u}{\partial x^2} -
+\frac{1}{c^{2}} \frac{\partial^2 u}{\partial t^2} = 0 \]</span></p>
+<p>We can get some guidance by supposing the combination <span
+class="math inline">\(p=p(x,t)\)</span>. Thus according to the chain
+rule, the differentials are,</p>
+<p><span class="math display">\[ u(x,t) = f(p) \]</span></p>
+<p><span class="math display">\[ \begin{pmatrix}
+\frac{\partial}{\partial x} &amp; \frac{\partial^2}{\partial x^2} \\
+\frac{\partial}{\partial t} &amp; \frac{\partial^2}{\partial t^2} \\
+\end{pmatrix}
+u = \begin{pmatrix}
+\frac{\partial f}{\partial p} \frac{\partial p}{\partial x} &amp;
+\frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial x^2} +
+(\frac{\partial p}{\partial x})^{2} \frac{\partial^2 f}{\partial p^2} \\
+\frac{\partial f}{\partial p} \frac{\partial p}{\partial t} &amp;
+\frac{\partial f}{\partial p} \frac{\partial^2 p}{\partial t^2} +
+(\frac{\partial p}{\partial t})^{2} \frac{\partial^2 f}{\partial p^2} \\
+\end{pmatrix} \]</span></p>
+<p>From the wave function we get,</p>
+<p><span class="math display">\[ \frac{\partial f}{\partial p} (
+\frac{\partial^2 p}{\partial x^2} - \frac{1}{c^{2}} \frac{\partial^2
+p}{\partial t^2} ) + \frac{\partial^2 f}{\partial p^2} [ (\frac{\partial
+p}{\partial x})^{2} - \frac{1}{c^{2}} (\frac{\partial p}{\partial
+t})^{2} ] = 0 \]</span></p>
+<p>This equation is still a little complicated. Because the combination
+<span class="math inline">\(p(x,t)\)</span> is an arbitrary function,
+let's add a constraint that the combination <span
+class="math inline">\(p(x,t)\)</span> is linear,</p>
+<p><span class="math display">\[ p = A x + B t \]</span> <span
+class="math display">\[ \frac{\partial p}{\partial x} = A,
+\frac{\partial p}{\partial t} = B \]</span> <span
+class="math display">\[ \frac{\partial^2 p}{\partial x^2} =
+\frac{\partial^2 p}{\partial t^2} = 0 \]</span></p>
+<p>So the first term of the differential equation vanishes and,</p>
+<p><span class="math display">\[ \frac{B}{A} = \pm c \]</span></p>
+<p>Then <span class="math inline">\(p\)</span> can be redefined as <span
+class="math inline">\(p = x \pm c t\)</span> and the solution is,</p>
+<p><span class="math display">\[ u(x,t) = f(x+ct) + f&#39;(x-ct)
+\]</span></p>
+<p>where <span class="math inline">\(f(p)\)</span> and <span
+class="math inline">\(f&#39;(p)\)</span> are arbitrary functions.</p>
+<h3 id="diffusion-function">diffusion function</h3>
+<p>Another important PDE is diffusion function,</p>
+<p><span class="math display">\[ D \frac{\partial^2 u}{\partial x^2} -
+\frac{\partial u}{\partial t} = 0 \]</span></p>
+<p>Let's also suppose <span class="math inline">\(p = p(x,t)\)</span>.
+According the chain rule, the diffusion function is transformed as,</p>
+<p><span class="math display">\[ \frac{\partial f}{\partial p} ( D
+\frac{\partial^2 p}{\partial x^2} - \frac{\partial p}{\partial t} ) + D
+\frac{\partial^2 f}{\partial p^2} (\frac{\partial p}{\partial x})^{2} =
+0 \]</span></p>
+<p>It's still too complicated to solve explicitly. But if the terms in
+parentheses have the same dimension, we may be able to pick them out.
+Then we can get a second-order ordinary differential equation about
+<span class="math inline">\(f\)</span>. The dimension of diffusion
+coefficient is <span class="math inline">\([D]_{m} = 2, [D]_{t} =
+-1\)</span>, so if the terms share the same dimension for the length
+<span class="math inline">\([m]\)</span> and time <span
+class="math inline">\([s]\)</span>, the following equations should
+hold,</p>
+<p><span class="math display">\[ [p]_{m} = 2 + 2 [p]_{m} - 2 \]</span>
+<span class="math display">\[ [p]_{t} - 1 = 2 [p]_{s} - 1 \]</span></p>
+<p>which gives <span class="math inline">\([p]_{m} = 0, [p]_{t} =
+0\)</span>.</p>
+<p>So we can suppose the form <span class="math inline">\(p(x,t) =
+\frac{x^{2}}{Dt}\)</span>, and substitute it into the diffusion
+equation,</p>
+<p><span class="math display">\[ \frac{\partial f}{\partial p} (
+\frac{2}{t} + \frac{x^{2}}{D t^{2}} ) + \frac{4x^{2}}{D t^{2}}
+\frac{\partial^2 f}{\partial p^2} = 0 \]</span></p>
+<p>The above equation can be transformed to an homogeneous ordinary
+differential equation with variable coefficients by multiplying <span
+class="math inline">\(t\)</span>,</p>
+<p><span class="math display">\[ 4 p f&#39;&#39; + ( 2 + p ) f&#39; = 0
+\]</span></p>
+<p>A substitution of <span class="math inline">\(g(p)=f&#39;(p)\)</span>
+may be made,</p>
+<p><span class="math display">\[ 4 p g&#39; + (2+p) g = 0 \]</span>
+<span class="math display">\[ g(p) = A p^{-\frac{1}{2}}
+\exp(-\frac{p}{4}) \]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[ f(p) = \int_{p_{0}}^{p} g(q) \ d{q} = A
+\int_{p_{0}}^{p} q^{-\frac{1}{2}} \exp(-\frac{q}{4}) \ d{q}
+\]</span></p>
+<p>Making the substitution <span class="math inline">\(\nu =
+\frac{q^{\frac{1}{2}}}{2}\)</span> and <span class="math inline">\(\eta
+= \frac{p^{\frac{1}{2}}}{2} = (4Dt)^{-\frac{1}{2}} x\)</span>,</p>
+<p><span class="math display">\[ h(\eta) = A&#39; \int_{\eta_{0}}^{\eta}
+\exp(-\nu^{2}) \ d{\nu} \]</span></p>
+<p>Specifically, if <span class="math inline">\(\eta_{0} = 0\)</span>,
+<span class="math inline">\(u(x,t)\)</span> is the error function <span
+class="math inline">\(\text{erf}[ (4Dt)^{-\frac{1}{2}} x ]\)</span>
+multiplied by a constant <span class="math inline">\(B\)</span>. It
+should be noticed that <span class="math inline">\(x\)</span> and <span
+class="math inline">\(t\)</span> appear only in the integral's upper
+limit <span class="math inline">\(\eta\)</span>, and only in the
+combination <span class="math inline">\(t^{-\frac{1}{2}}x\)</span>.</p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/diffusion-equation/">diffusion equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/differential-equation/">differential equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/wave-function/">wave function</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/05/18/interpretation-of-frequency-shift-in-FM-AFM-I/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Interpretation of frequency shift in FM-AFM (I)
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/05/02/first-order-ordinary-differential-equations/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          First-order ordinary differential equations
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

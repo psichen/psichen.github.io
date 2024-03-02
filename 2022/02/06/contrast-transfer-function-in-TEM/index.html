@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Contrast transfer function in TEM | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Contrast transfer function in TEM
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2022-02-06</time>
+          <span class="text-gray-400">·</span>
+          <span>1.1k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>The phase of an electron wave is shifted when the electron wave
+passes near the nucleus of atoms. So the electron wave is imaged on the
+detected after focused by lens giving a phase contrast in cryo-EM
+imaging.</p>
+<span id="more"></span>
+<h2 id="interference-and-phase-shift-of-wave-function">Interference and
+phase shift of wave function</h2>
+<p>A wave function can be expressed as, <span class="math display">\[
+\Psi(\boldsymbol{r}, t) = A \exp[ i (\boldsymbol{k} \cdot \boldsymbol{r}
+- \omega t) ]
+\]</span> It means that the displacement of the wave at the position
+<span class="math inline">\(\boldsymbol{r}\)</span> and time <span
+class="math inline">\(t\)</span> is equal to <span
+class="math inline">\(\Psi(\boldsymbol{r}, t)\)</span>, and the phase
+<span class="math inline">\(\phi\)</span> of the wave is equal to <span
+class="math inline">\((\boldsymbol{k} \cdot \boldsymbol{r} - \omega
+t)\)</span>.</p>
+<h3 id="interference">interference</h3>
+<p>When multiple waves meet, they would interfere with each other and
+the generated displacement is the sum of their respective displacement,
+<span class="math display">\[
+\Psi = A_{1} \exp[i\phi_{1}] + A_{2} \exp[i\phi_{2}] + \dots
+\]</span> Or in the other form of the inverse Fourier transfer, <span
+class="math display">\[
+\Psi(\boldsymbol{r}, t) = \int A(\boldsymbol{k}) \exp[ i (\boldsymbol{k}
+\cdot \boldsymbol{r} - \omega t) ] d \boldsymbol{k}
+\]</span></p>
+<h3 id="phase-shift">phase shift</h3>
+<p>Because waves can be expressed by the exponential form, so the phsae
+shift of a wave can be described by the product of wave function, <span
+class="math display">\[
+\exp[ i (\phi_{1} + \phi_{2}) ] = \exp[ i \phi_{1} ] \exp[ i \phi_{2} ]
+\]</span></p>
+<h2 id="weak-phase-approximation">Weak phase approximation</h2>
+<p>Let's say the incident electron has the time-independent
+wavefunction, <span class="math display">\[
+\Psi = \exp(i \boldsymbol{k} \cdot \boldsymbol{z})
+\]</span> where <span class="math inline">\(\boldsymbol{k}\)</span> is
+the wave vector and has the amplitude of <span
+class="math inline">\(\frac{2 \pi}{\lambda}\)</span>. The wave is the
+propagating direction in the <span
+class="math inline">\(\boldsymbol{z}\)</span> direction.</p>
+<p>After the electron passes through the thin specimen, the wave
+function reflects the phase shift as, <span class="math display">\[
+\Psi = \exp[ i (\boldsymbol{k} \cdot \boldsymbol{z} + \phi(x)) ]
+\]</span> and it'll be diffracted. Assuming <span
+class="math inline">\(\boldsymbol{z} = 0\)</span> and <span
+class="math inline">\(\phi(x)\)</span> is very tiny, we can apply Taylor
+expansion and ignore the high-order terms, <span class="math display">\[
+\exp(i \phi(x)) \approx 1 + i \phi(x)
+\]</span> It's called <em>Weak Phase Approximation</em>. It means that
+the introducing a small phase shift in the electron wave (at the
+specimen) is equivalent to that a diffracted wave <span
+class="math inline">\(\phi(x)\)</span> interferes with the incident
+wave. The imaginary number of the wave <span
+class="math inline">\(\phi(x)\)</span> means the phase of scattered
+electrons is 90 degrees in advanced.</p>
+<h2 id="interfere-with-the-incident-wave">Interfere with the incident
+wave</h2>
+<p>As the incident wave propagates along the <span
+class="math inline">\(\boldsymbol{z}\)</span> direction, the incident
+wave and diffracted waves will interfere with each other at <span
+class="math inline">\(\boldsymbol{z}\)</span> position. Let's say the
+diffracted angle <span class="math inline">\(\theta =
+\sin{\frac{\lambda}{d}} \approx \frac{\lambda}{d}\)</span>, where <span
+class="math inline">\(\lambda\)</span> is the wavelength and <span
+class="math inline">\(d\)</span> is the periodic distance of the
+specimen. So when the incident wave has a phase shift of <span
+class="math inline">\(\boldsymbol{k} \cdot \boldsymbol{z}\)</span>, the
+phase shift of diffracted waves is <span
+class="math inline">\(\boldsymbol{k} \cdot \boldsymbol{z}
+\cos{\theta}\)</span> due to the geometric relationship. Thus we have
+the interfered wave at the position <span
+class="math inline">\(\boldsymbol{z}\)</span>, <span
+class="math display">\[
+\Psi = \exp[ i \boldsymbol{k} \cdot \boldsymbol{z} ] + i \phi(x) \exp[ i
+\boldsymbol{k} \cdot \boldsymbol{z} \cos{\theta} ]
+\]</span> According to quantum mechanics, the intensity of the electron
+waves is given by the squared amplitude of the wave function, <span
+class="math display">\[
+\begin{align*}
+        |\Psi|^2 &amp;= \Psi \cdot \Psi^* \\
+        &amp;= \Big{[} \exp[ i \boldsymbol{k} \cdot \boldsymbol{z} ] + i
+\phi(x) \exp[ i \boldsymbol{k} \cdot \boldsymbol{z} \cos{\theta} ]
+\Big{]} \cdot \Big{[} \exp[ -i \boldsymbol{k} \cdot \boldsymbol{z} ] - i
+\phi(x) \exp[ -i \boldsymbol{k} \cdot \boldsymbol{z} \cos{\theta} ]
+\Big{]} \\
+        &amp;= 1 + i \phi ( \exp[i \boldsymbol{k} \cdot \boldsymbol{z}
+(\cos{\theta} - 1)] - \exp[-i \boldsymbol{k} \cdot \boldsymbol{z}
+(\cos{\theta} - 1)] ) \\
+        \color{blue}{[ e^{ia} - e^{-ia} = 2 i \sin{a}]} &amp;= 1 - 2
+\phi \sin(  \boldsymbol{k} \cdot \boldsymbol{z} ( \cos{\theta} - 1
+)  )\\
+        \color{blue}{[ \cos{a} - 1 \approx -2 \sin^2{\frac{a}{2}}
+\approx - \frac{1}{2} a^2 ]} &amp;=  1 + 2 \phi \sin(\boldsymbol{k}
+\cdot \boldsymbol{z} \theta^2 / 2) \\
+        \color{blue}{[ k = \frac{2\pi}{\lambda} ]}&amp;= 1 + 2 \phi
+\sin( \frac{\pi \boldsymbol{z} \lambda}{d^2} ) \\
+\end{align*}
+\]</span> So the CTF is defined as the scaling of the intensity change
+relative to the original phase shift in the specimen, <span
+class="math display">\[
+\begin{align*}
+        |\Psi|^2 &amp;= const + 2 \phi(x) CTF \\
+        CTF &amp;=  \sin(\frac{\pi \boldsymbol{z} \lambda}{d^2}) \\
+\end{align*}
+\]</span> In practice the specimen is usually underfocused, thus the
+conjugated focus plane is above the specimen and the value of <span
+class="math inline">\(\boldsymbol{z}\)</span> is negative. So the phase
+contrast shares the same polarity of the "amplitude contrast" due to the
+loss of high angels scattered electrons. So CTF has another form, <span
+class="math display">\[
+CTF = \sin(- \pi \lambda \delta f^2)
+\]</span> where <span class="math inline">\(\delta\)</span> is the
+defocused value and <span class="math inline">\(f = \frac{1}{d}\)</span>
+is the spatial frequency of the specimen.</p>
+<h2 id="ctf-under-high-spatial-frequency">CTF under high spatial
+frequency</h2>
+<p>Under high spatial frequency, the CTF is mainly influenced by two
+factors: spherical aberration &amp; envelope function.</p>
+<h3 id="spherical-aberration">Spherical aberration</h3>
+<p>In glass lenses the light is bent more strongly at the periphery than
+it should. In magnetic lenses the effect is approximated by the same
+spherical aberration coefficient <span
+class="math inline">\(C_s\)</span>, <span class="math display">\[
+CTF = \sin(- \pi \delta \lambda f^2 + \frac{\pi C_{s} \lambda^3 f^4}{2})
+\]</span></p>
+<h3 id="envelope-function">Envelope function</h3>
+<p>Due to spatial and thermal incoherence, the image will be blurred at
+high spatial frequency and the CTF has a Gaussian decay with the
+increasing spatial frequency. So it can be written by including the
+Envelope function, <span class="math display">\[
+CTF = CTF_0 \cdot \exp[ - B f^2 / 4 ]
+\]</span> where <span class="math inline">\(B\)</span> is called
+<em>B-factor</em>.</p>
+<h2 id="point-spread-function">Point spread function</h2>
+<p>When the electron wave is scattered by the specimen, the higher the
+spatial frequency of the specimen is, the larger the scattered angel is,
+<span class="math display">\[
+\theta = \lambda / d = \lambda f
+\]</span> So we can imagine that the waves scattered by specimen of high
+spatial frequency would meet the lens plane far away from the center of
+the lens. The lens plane is just a 2D Fourier space of the specimen. The
+intensity of different spatial frequency on the 2D Fourier space should
+obey the CTF, thus we have, <span class="math display">\[
+\mathscr{F}[I] = \mathscr{F}[S] \cdot CTF
+\]</span> where <span class="math inline">\(I\)</span> is the image and
+<span class="math inline">\(S\)</span> is the specimen. We also know the
+image is generated by the convolution of PSF and specimen, <span
+class="math display">\[
+\begin{align*}
+        I &amp;=  S * PSF \\
+        \color{blue}{[ \text{Fourier transfer} ]} \mathscr{F} [I]
+&amp;=  \mathscr{F}[S] \cdot \mathscr{F}[PSF] \\
+\end{align*}
+\]</span> Thus the CTF is the Fourier transfer of the PSF.</p>
+<h2 id="references">References</h2>
+<p><a
+target="_blank" rel="noopener" href="https://nccat.nysbc.org/wp-content/uploads/2020/03/2-Phase-contrast.pdf">Phase-contrast
+imaging in the EM</a></p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/CTF/">CTF</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/PSF/">PSF</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/envelope-function/">envelope function</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/TEM/">TEM</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2022/02/27/fundamentals-of-statistical-mechanics/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Fundamentals of statistical mechanics
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/07/11/FPK-equation-by-MGF/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          FPK equation derived from moment generating function
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

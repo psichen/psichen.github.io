@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>FPK equation derived from Taylor series | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        FPK equation derived from Taylor series
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-06-27</time>
+          <span class="text-gray-400">·</span>
+          <span>1.7k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Fokker-Planck-Kramers equation is a stochastic differential function
+describing the motion in phase space. It can degenerate to diffusion
+function (in coordinate space) or Fokker-Planck function (in velocity
+space).</p>
+<p>The post describes the derivation of FPK equation from Kramers Moyal
+expansion by Taylor series.</p>
+<p><span id="more"></span></p>
+<pre class="mermaid">flowchart TB
+
+continuity["continuity equation (probability)"]
+KME["Kramers Moyal expansion \n represented by fluctuation moments"]
+LE["Langevin stochastic differential equation"]
+FM["fluctuation moments"]
+FPK["Fokker-Planck-Kramers eqaution"]
+
+continuity --> |Taylor expansion| KME
+LE --> |"Taylor expansion (twice)"| FM
+FM --> FPK
+KME --> FPK</pre>
+<h2 id="kramers-moyal-expansion">Kramers Moyal expansion</h2>
+<p>In the stochastic motion, we don't care about the coordinates in
+phase space at initial or final time, because they are arbitrary. But we
+want to study their changes <span class="math inline">\(\Delta
+\pmb{r}\)</span> in phase space <span
+class="math inline">\(\Omega\)</span> after an infinitesimal time
+interval <span class="math inline">\(\Delta t\)</span>. Let's assume the
+particles' moving is a Markovian process, so the inference of
+probability density <span class="math inline">\(\rho\)</span> is,</p>
+<p><span class="math display">\[ \begin{aligned}
+\rho(\pmb{r}, t+\Delta t) &amp;= \int_{\Omega} \rho(\pmb{r}, t+\Delta t
+| \pmb{r}&#39;, t) \rho(\pmb{r}&#39;, t) \ d{\pmb{r&#39;}} \\
+\color{blue}{[\Delta \pmb{r} \equiv \pmb{r} - \pmb{r}&#39;]} &amp;= \int
+\rho(\pmb{r}, t+\Delta t | \pmb{r} - \Delta \pmb{r}, t)
+\rho(\pmb{r}-\Delta \pmb{r}, t) \ d{\Delta \pmb{r}}
+\end{aligned} \]</span></p>
+<p>It should be noticed that <span
+class="math inline">\(\pmb{r}\)</span> and <span
+class="math inline">\(\Delta \pmb{r}\)</span> are two independent
+variables, which means the order of operators about <span
+class="math inline">\(\pmb{r}\)</span> and <span
+class="math inline">\(\Delta \pmb{r}\)</span> is interchangeable. Let's
+expand the integrand of RHS into Taylor series in phase space,</p>
+<p><span class="math display">\[ \begin{aligned}
+\text{RHS} &amp;= \int \rho(\pmb{r}+\Delta \pmb{r}-\Delta \pmb{r},
+t+\Delta t | \pmb{r} - \Delta \pmb{r}, t) \rho(\pmb{r}-\Delta \pmb{r},
+t) \ d{\Delta \pmb{r}} \\
+\color{blue}{[\text{expand by } -\Delta \pmb{r}]} &amp;= \int
+\sum_{n=0}^{\infty} \frac{(\Delta \pmb{r})^{n}}{n!} (-\partial_{r})^{n}
+\Big[ \rho(\pmb{r}+\Delta \pmb{r}, t+\Delta t | \pmb{r}, t)
+\rho(\pmb{r}, t) \Big] \ d{\Delta \pmb{r}} \\
+\color{blue}{[\text{independent variables}]} &amp;= \sum_{n=0}^{\infty}
+(-\partial_{r})^{n} \Big[ \rho(\pmb{r}, t) \frac{1}{n!} \int (\Delta
+\pmb{r})^{n} \rho(\pmb{r}+\Delta \pmb{r}, t+\Delta t | \pmb{r}, t) \
+d{\Delta \pmb{r}} \Big] \\
+&amp;= \sum_{n=0}^{\infty} (-\partial_{r})^{n} \Big[ \rho(\pmb{r},t)
+\frac{&lt; (\Delta \pmb{r})^{n} &gt;}{n!} \Big] \\
+&amp;= \rho(\pmb{r}, t) + \sum_{n=1}^{\infty} (-\partial_{r})^{n} \Big[
+\rho(\pmb{r},t) \frac{&lt; (\Delta \pmb{r})^{n} &gt;}{n!} \Big]
+\end{aligned} \]</span></p>
+<p>The particles changes <span class="math inline">\(\Delta
+\pmb{r}\)</span> after <span class="math inline">\(\Delta t\)</span>
+(which is independent of the variable <span
+class="math inline">\(t\)</span>), so <span class="math inline">\(\Delta
+\pmb{r}\)</span> should be a function of <span
+class="math inline">\(\Delta t\)</span>, and the <span
+class="math inline">\(n\)</span>th moment <span
+class="math inline">\(M_{n}\)</span> should be a function of <span
+class="math inline">\(\Delta t\)</span> as well,</p>
+<p><span class="math display">\[ M_{n}(\Delta t) = &lt; (\Delta
+\pmb{r})^{n} &gt; = \partial_{\Delta t} M_{n}(0) \Delta t + O(\Delta
+t^{2})\]</span></p>
+<p>Here <span class="math inline">\(M_{n}(0) = 0\)</span> because when
+<span class="math inline">\(\Delta t = 0\)</span>, the probability <span
+class="math inline">\(\rho(\pmb{r}+\Delta \pmb{r}, t | \pmb{r}, t) =
+\delta(\Delta \pmb{r})\)</span>, which has zero moments.</p>
+<p>Expand LHS into Taylor series in time space,</p>
+<p><span class="math display">\[ \text{LHS} = \rho(\pmb{r}, t) + \Delta
+t \partial_{t} \rho(\pmb{r}, t) \]</span></p>
+<p>Take LHS and RHS together, we get the Kramers Moyal expansion,</p>
+<p><span class="math display">\[ \partial_{t} \rho(x,t) =
+\sum_{n=1}^{\infty} \frac{1}{n!} (-\partial_{r})^{n} \Big[ \rho(\pmb{r},
+t) \partial_{\Delta t}M_{n}(0) \Big] \]</span></p>
+<p>Usually we denote,</p>
+<p><span class="math display">\[ D^{(n)} = \partial_{\Delta t}
+M_{n}(0)/n! \]</span></p>
+<p><span class="math inline">\(D^{(1)}\)</span> is called drift
+coefficient and <span class="math inline">\(D^{(2)}\)</span> is called
+diffusion coefficient.</p>
+<h2 id="langevin-stochastic-differential-equation">Langevin stochastic
+differential equation</h2>
+<p>The relation between <span class="math inline">\(\Delta
+\pmb{r}\)</span> and <span class="math inline">\(\Delta t\)</span> is
+determined by equation of motion, which could be the Langevin equation.
+The general form of Langevin stochastic differential equation is,</p>
+<p><span class="math display">\[ \dot{\pmb{r}}(t) = \pmb{f}(\pmb{r}(t))
++ \pmb{g}(\pmb{r}(t)) \eta(t) \]</span></p>
+<p>The <span class="math inline">\(\eta(t)\)</span> is Gaussian noise
+which has ensemble averages,</p>
+<p><span class="math display">\[ \begin{aligned}
+&lt; \eta(t) &gt; &amp;= 0 \\
+&lt; \eta(t_{1}) \ \eta(t_{2}) &gt; &amp;= 2 \kappa \delta(t_{2} -
+t_{1})
+\end{aligned} \]</span></p>
+<p>Let's suppose from time <span class="math inline">\(t_{0}\)</span> to
+time <span class="math inline">\(t_{0}+\Delta t\)</span>, the change in
+phase space <span class="math inline">\(\Delta \pmb{r}\)</span> is,</p>
+<p><span class="math display">\[ \Delta \pmb{r} = \pmb{r}(t_{0}+\Delta
+t) - \pmb{r}(t_{0}) = \int_{t_{0}}^{t_{0}+\Delta t} [
+\pmb{f}(\pmb{r}(t_{1})) + \pmb{g}(\pmb{r}(t_{1})) \eta(t_{1}) ] \
+d{t_{1}} \]</span></p>
+<p>Here we use the integral form instead of differential form <span
+class="math inline">\(\Delta \pmb{r} = \dot{\pmb{r}} \Delta t\)</span>
+because we need to conserve details of the integrand function.</p>
+<h3 id="drift-coefficient">drift coefficient</h3>
+<p>Functions <span
+class="math inline">\(\pmb{f}(\pmb{r}(t_{1}))\)</span> and <span
+class="math inline">\(\pmb{g}(\pmb{r}(t_{1}))\)</span> can then be
+expanded into Taylor series dependent on <span
+class="math inline">\(\Delta \pmb{r} = \pmb{r}(t_{1}) -
+\pmb{r}(t_{0})\)</span> again. So we iteratively insert the Langevin
+equation into the integral to get higher-order moments (namely, <span
+class="math inline">\(&lt;\eta(t_{1}) \eta(t_{2})&gt;\)</span>),</p>
+<p><span class="math display">\[ \begin{aligned}
+\pmb{f}(\pmb{r}(t_{1})) &amp;= \pmb{f}(\pmb{r}(t_{0})) +
+\pmb{f}&#39;(\pmb{r}(t_{0})) [ \color{blue}{\pmb{r}(t_{1}) -
+\pmb{r}(t_{0})} ] \\
+&amp;= \pmb{f}(\pmb{r}(t_{0})) + \pmb{f}&#39;(\pmb{r}(t_{0}))
+\color{blue}{\int_{t_{0}}^{t_{1}} [ \pmb{f}(\pmb{r}(t_{2})) +
+\pmb{g}(\pmb{r}(t_{2})) \eta(t_{2}) ] \ d{t_{2}}} \\
+\pmb{g}(\pmb{r}(t_{1})) &amp;= \pmb{g}(\pmb{r}(t_{0})) +
+\pmb{g}&#39;(\pmb{r}(t_{0})) [ \color{blue}{\pmb{r}(t_{1}) -
+\pmb{r}(t_{0})} ] \\
+&amp;= \pmb{g}(\pmb{r}(t_{0})) + \pmb{g}&#39;(\pmb{r}(t_{0}))
+\color{blue}{\int_{t_{0}}^{t_{1}} [ \pmb{f}(\pmb{r}(t_{2})) +
+\pmb{g}(\pmb{r}(t_{2})) \eta(t_{2}) ] \ d{t_{2}}} \\
+\end{aligned} \]</span></p>
+<p>Substituting the expansion into <span class="math inline">\(\Delta
+\pmb{r}\)</span>,</p>
+<p><span class="math display">\[ \begin{aligned}
+\Delta \pmb{r} &amp;= \int_{t_{0}}^{t_{0}+\Delta t} \big[
+\pmb{f}(\pmb{r}(t_{0})) + \pmb{f}&#39;(\pmb{r}(t_{0}))
+\color{blue}{\int_{t_{0}}^{t_{1}} [ \pmb{f}(\pmb{r}(t_{2})) +
+\pmb{g}(\pmb{r}(t_{2})) \eta(t_{2}) ] \ d{t_{2}}} \big] \ d{t_{1}} \\
+&amp;+ \int_{t_{0}}^{t_{0}+\Delta t} \big[ \pmb{g}(\pmb{r}(t_{0})) +
+\pmb{g}&#39;(\pmb{r}(t_{0})) \color{blue}{\int_{t_{0}}^{t_{1}} [
+\pmb{f}(\pmb{r}(t_{2})) + \pmb{g}(\pmb{r}(t_{2})) \eta(t_{2}) ] \
+d{t_{2}}} \big] \eta(t_{1}) \ d{t_{1}}
+\end{aligned} \]</span></p>
+<p>According to the upper and lower limit of definite integral, the time
+intervals have the inequality,</p>
+<p><span class="math display">\[ t_{2} - t_{0} \le t_{1}- t_{0} \le
+\Delta t \]</span></p>
+<p>So <span class="math inline">\(t_{2}\)</span> is close to <span
+class="math inline">\(t_{0}\)</span> thus a reasonable approximation can
+be made,</p>
+<p><span class="math display">\[ \pmb{f}(\pmb{r}(t_{2})) \approx
+\pmb{f}(\pmb{r}(t_{0})) \]</span> <span class="math display">\[
+\pmb{g}(\pmb{r}(t_{2})) \approx \pmb{g}(\pmb{r}(t_{0})) \]</span></p>
+<p>Then, recall that <span class="math inline">\(&lt;\eta&gt; =
+0\)</span> and <span class="math inline">\(&lt;\eta(t_{1})
+\eta(t_{2})&gt; = 2 \kappa \delta(t_{2}-t_{1})\)</span>, let's take an
+ensemble average,</p>
+<p><span class="math display">\[ \begin{aligned}
+&lt; \Delta \pmb{r} &gt; &amp;= \pmb{f}(\pmb{r}(t_{0})) \Delta t +
+\frac{1}{2} \pmb{f}&#39;(\pmb{r}(t_{0})) \pmb{f}(\pmb{r}(t_{0})) \Delta
+t^{2} + \pmb{f}&#39;(\pmb{r}(t_{0})) \pmb{g}(\pmb{r}(t_{0})) \cdot 0 \\
+&amp;+ \pmb{g}(\pmb{r}(t_{0})) \cdot 0 + \pmb{g}&#39;(\pmb{r}(t_{0}))
+\pmb{f}(\pmb{r}(t_{0})) \cdot 0 + \pmb{g}&#39;(\pmb{r}(t_{0}))
+\pmb{g}(\pmb{r}(t_{0})) \int_{t_{0}}^{t_{0}+\Delta t}
+\int_{t_{0}}^{t_{1}} &lt; \eta(t_{1}) \eta(t_{2}) &gt; \ d{t_{2}}
+d{t_{1}} \\
+&amp;= \pmb{f}(\pmb{r}(t_{0})) \Delta t + \frac{1}{2}
+\pmb{f}&#39;(\pmb{r}(t_{0})) \pmb{f}(\pmb{r}(t_{0})) \Delta t^{2} +
+\pmb{g}&#39;(\pmb{r}(t_{0})) \pmb{g}(\pmb{r}(t_{0})) \ 2 \kappa \
+\int_{0}^{\Delta t} \ d{s_{1}} \int_{0}^{s_{1}} \delta(s_{2}-s_{1}) \
+d{s_{2}} \\
+&amp;= \pmb{f}(\pmb{r}(t_{0})) \Delta t + \frac{1}{2}
+\pmb{f}&#39;(\pmb{r}(t_{0})) \pmb{f}(\pmb{r}(t_{0})) \Delta t^{2} +
+\pmb{g}&#39;(\pmb{r}(t_{0})) \pmb{g}(\pmb{r}(t_{0})) \kappa \Delta t
+\end{aligned} \]</span></p>
+<p>where <span class="math inline">\(\int_{0}^{\Delta t} \ d{s_{1}}
+\int_{0}^{s_{1}} \delta(s_{2}-s_{1}) \ d{s_{2}} = \frac{1}{2}
+\int_{0}^{\Delta t} \int_{0}^{\Delta t} \delta(s_{2}-s_{1}) \ d{s_{2}}
+d{s_{1}} = \frac{1}{2} \Delta t\)</span>, because the integrated domain
+of the former is half of the latter.</p>
+<p>So we get <span class="math inline">\(D^{(1)}\)</span>,</p>
+<p><span class="math display">\[ D^{(1)} = \partial_{\Delta t} M_{1}(0)
+= \pmb{f} + \kappa \pmb{g}&#39; \pmb{g} \]</span></p>
+<h3 id="diffusion-coefficient">diffusion coefficient</h3>
+<p><span class="math inline">\(D^{(2)}\)</span> is equal to <span
+class="math inline">\(\frac{1}{2} \partial_{\Delta t} &lt; \Delta
+\pmb{r}^{2} &gt;|_{\Delta t =0}\)</span>, because it has square, it's
+enough to expand <span class="math inline">\(\Delta \pmb{r}\)</span>
+separately once to get <span class="math inline">\(2\)</span>nd
+moment,</p>
+<p><span class="math display">\[ \Delta \pmb{r}^{2} =
+\int_{t_{0}}^{t_{0}+\Delta t} [ \pmb{f}(\pmb{r}(t_{1})) +
+\pmb{g}(\pmb{r}(t_{1})) \eta(t_{1}) ] \ d{t_{1}}
+\int_{t_{0}}^{t_{0}+\Delta t} [ \pmb{f}(\pmb{r}(t_{2})) +
+\pmb{g}(\pmb{r}(t_{2})) \eta(t_{2}) ] \ d{t_{2}} \]</span></p>
+<p>Similarly, taking the ensemble average, we have,</p>
+<p><span class="math display">\[ &lt; \Delta \pmb{r}^{2} &gt; =
+\pmb{f}^{2} \Delta t^{2} + 2 \pmb{g}^{2} \kappa \Delta t \]</span></p>
+<p>So the diffusion coefficient <span
+class="math inline">\(D^{(2)}\)</span> is,</p>
+<p><span class="math display">\[ D^{(2)} = \frac{1}{2} \partial_{\Delta
+t} M_{2}(0) = \pmb{g}^{2} \kappa \]</span></p>
+<h2 id="fokker-planck-kramers-equation">Fokker-Planck-Kramers
+equation</h2>
+<p>From Kramers Moyal expansion, we can easily get the
+Fokker-Planck-Kramers equation, which desribes the particles' motion in
+phase space,</p>
+<p><span class="math display">\[ \partial_{t} \rho = - \partial_{r} [
+\rho (\pmb{f}+\kappa \pmb{g}&#39; \pmb{g}) ] + \partial^{2}_{r} [ \rho
+\kappa \pmb{g}^{2} ] = - \partial_{r} [ \rho \pmb{f} - \kappa \pmb{g}
+\partial_{r} ( \rho \pmb{g} ) ] = \mathcal{L} \rho \]</span></p>
+<p>where the operator <span class="math inline">\(\mathcal{L} = -
+\partial_{r} [ \pmb{f} - \kappa \pmb{g} \partial_{r} \pmb{g}
+]\)</span>.</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://www3.ul.ie/gleesonj/Papers/SDEs/AM4062_notes4.pdf">The
+Fokker-Planck Equation</a></li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Langevin-equation/">Langevin equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Fokker-Planck-Kramers-equation/">Fokker-Planck-Kramers equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/stochastic-differential-eqaution/">stochastic differential eqaution</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/phase-space/">phase space</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/fluctuation/">fluctuation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/diffusion-equation/">diffusion equation</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/07/11/FPK-equation-by-MGF/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          FPK equation derived from moment generating function
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/06/12/notes-about-students-t-test/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Notes about Student's t-test and t-distribution
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

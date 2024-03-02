@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>worm-like chain model and flexible polymers | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        worm-like chain model and flexible polymers
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2023-10-30</time>
+          <span class="text-gray-400">·</span>
+          <span>1.8k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>The worm-like chain model is the most widely used model to describe
+polymers. Here are some notes about the derivation of the relationship
+between wlc model and the theory of elasticity.</p>
+<span id="more"></span>
+<h2 id="elastic-rod">elastic rod</h2>
+<h3 id="youngs-modulus">Young's modulus</h3>
+<p>For a rod with a cross-section area <span
+class="math inline">\(A\)</span> and length <span
+class="math inline">\(L\)</span>, when the deformation is small, the
+force follows the linear relation to the deforamtion, namely the to
+Hooke's law, <span class="math display">\[
+\begin{equation}
+F = k \Delta x \label{Hooke}
+\end{equation}
+\]</span> If we consider the stress <span class="math inline">\(\sigma =
+\frac{F}{A}\)</span> and the strain <span class="math inline">\(\epsilon
+= \frac{\Delta x}{L}\)</span>, then we can rewrite the above equation
+into, <span class="math display">\[
+\begin{equation*}
+\sigma = \frac{kL}{A} \epsilon = E \epsilon
+\end{equation*}
+\]</span> where <span class="math inline">\(E = \frac{kL}{A}\)</span> is
+the Young's modulus.</p>
+<h3 id="elastic-bending">elastic bending</h3>
+<p>For a <em>negative</em> bending rod as shown below, the length of the
+neutral axis is the same with the rest length of the rod. So we can put
+the origin on the neutral axis and calculate the arc length <span
+class="math inline">\(H&#39;G&#39;\)</span> at the distance <span
+class="math inline">\(y\)</span> from the neutral axis.</p>
+<figure>
+<img src="https://roymech.org/images/beam_2.gif" title="bending rod"
+alt="bending rod" />
+<figcaption aria-hidden="true">bending rod</figcaption>
+</figure>
+<p>So the strain of the infinitesimal arc <span
+class="math inline">\(H&#39;G&#39;\)</span> is, <span
+class="math display">\[
+\begin{equation}
+\epsilon = - \frac{(R+y)\theta - R\theta}{R\theta} = - \frac{y}{R}
+\label{strain}
+\end{equation}
+\]</span> where <span class="math inline">\(R\)</span> is the radius of
+the curvature and <span class="math inline">\(\theta\)</span> is the
+angle. Because it's negative bending, so <span class="math inline">\(R
+&lt; 0\)</span>. But the minus sign in the above equation guarantees
+that the strain above the neutral axis is tensile and the strain below
+the neutral axis is compressive.</p>
+<p>So we can easily get the stress, <span class="math display">\[
+\begin{equation}
+\sigma = E\epsilon = - E \frac{y}{R} \label{stress}
+\end{equation}
+\]</span></p>
+<h3 id="moment">moment</h3>
+<p>Because the rod is under the static equilibrium, the external force
+and moment should be equal to the internal force and moment. Now we
+already know the stress <span class="math inline">\(\sigma\)</span> in
+the cross section, so the momment is, <span class="math display">\[
+\begin{equation}
+M = - \int_{A} \sigma y dA = \frac{E}{R} \int_{A} y^2 dA \label{moment}
+\end{equation}
+\]</span> The minus sign comes from the sign convention that negative
+bending rod has a negative bending moment. The moment of inertia <span
+class="math inline">\(I\)</span> of the rectangular cross section is,
+<span class="math display">\[
+\begin{equation}
+I = \int_A y^2 dA = \frac{hw^3}{12} \label{inertia}
+\end{equation}
+\]</span> where <span class="math inline">\(h\)</span> and <span
+class="math inline">\(w\)</span> are the height and the width of the
+rectangular cross section.</p>
+<h3 id="bending-energy">bending energy</h3>
+<p>From the Hooke's law, we know the internal energy is, <span
+class="math display">\[
+\begin{equation*}
+U = \int_{L}^{L+\Delta x} F dx = \int_{L}^{L+\Delta x} k x dx =
+\frac{1}{2} k \Delta x^2
+\end{equation*}
+\]</span> Let's say the area of cross section is <span
+class="math inline">\(A\)</span> and the length of the rod is <span
+class="math inline">\(L\)</span>, <span class="math display">\[
+\begin{align*}
+U &amp;= \int_{0}^{\epsilon} A \sigma L d\epsilon = AL \cdot \frac{1}{2}
+E \epsilon^2 \\
+\partial{s} U &amp;= \frac{1}{2} E \int_A \epsilon^2 dA
+\end{align*}
+\]</span> Substituting <span class="math inline">\(\epsilon =
+-\frac{y}{R}\)</span> into the above equation, we get the internal
+energy per unit length, <span class="math display">\[
+\begin{equation}
+\partial_{s}U = \frac{1}{2} \frac{EI}{R^2} = \frac{1}{2} EIc^2
+\label{energy}
+\end{equation}
+\]</span> The bending rigidity or bending stiffness is defined as <span
+class="math inline">\(\kappa = EI\)</span>.</p>
+<p>If the rod has an intrinsic curvature <span
+class="math inline">\(c_0\)</span>, we can get the internal energy by
+Taylor expand the equation <span
+class="math inline">\(\eqref{energy}\)</span> to 2nd-order, <span
+class="math display">\[
+\begin{equation*}
+U_{s}(c) = U_{s}(c_0) + \frac{1}{2} \kappa (c - c_0)^2 + O(c^3)
+\end{equation*}
+\]</span> where the first term <span class="math inline">\(U_{s}(c_0)
+\ge 0\)</span> is the bending energy at the rest bending curvature <span
+class="math inline">\(c_0\)</span>. The second term <span
+class="math inline">\(U_{s}&#39;(c_0) = 0\)</span> because the energy
+<span class="math inline">\(U_s\)</span> is minimal at the position
+<span class="math inline">\(c_ 0\)</span>.</p>
+<h2 id="worm-like-chain-at-surface">worm-like chain at surface</h2>
+<p>For a small bending, the curvature can be represented by <span
+class="math inline">\(c = \frac{\delta \theta}{\delta s}\)</span>, so
+the bending energy of an elastic rod with small length <span
+class="math inline">\(\delta s\)</span> is quadratic in <span
+class="math inline">\(\delta \theta\)</span>. According to the <a
+href="https://psichen.github.io/2022/02/27/fundamentals-of-statistical-mechanics/">Boltzmann
+distribution</a>, the distribution of <span class="math inline">\(\delta
+\theta\)</span> is hence Gaussian, <span class="math display">\[
+\begin{equation*}
+P(\delta \theta) = \exp(-\frac{1}{2} \frac{\kappa}{k_BT \delta s} \delta
+\theta^2) / Z
+\end{equation*}
+\]</span> where <span class="math inline">\(Z = \int \exp(-\frac{1}{2}
+\frac{\kappa}{k_BT \delta s} \delta \theta^2) d\delta \theta\)</span> is
+the partition function. Thus its Fourier transform is also Gaussian,
+<span class="math display">\[
+\begin{equation*}
+\widetilde{P}(\omega) = \exp(-\frac{1}{2} \frac{k_BT \delta s}{\kappa}
+\omega^2)
+\end{equation*}
+\]</span> Because the angle deflection along the contour is additive,
+the distribution of the angle deflection at distance <span
+class="math inline">\(s\)</span> is thus a convolution of many
+distributions of <span class="math inline">\(\delta s\)</span>, <span
+class="math display">\[
+\begin{equation}
+P(\theta) = \exp(-\frac{1}{2} \frac{\kappa}{k_BT s} \theta) / Z
+\label{dist}
+\end{equation}
+\]</span> where <span class="math inline">\(s = \Sigma ~ \delta
+s\)</span>.</p>
+<p>Let's say <span class="math inline">\(\boldsymbol{t}(s)\)</span> is
+the unit tangent vector along the contour of the polymer chain. So we
+can use the tangent vector correlation function to describe the
+fluctuation extent of the polymer, <span class="math display">\[
+\begin{equation}
+&lt;\boldsymbol{t}(0) \cdot \boldsymbol{t}(s)&gt; = &lt;\cos(\theta)&gt;
+\label{corr}
+\end{equation}
+\]</span> Here <span class="math inline">\(\cos(\theta)\)</span> can be
+seen as the real part of <span class="math inline">\(\exp(-i \omega
+\theta)\)</span> when <span class="math inline">\(\omega=1\)</span>, so
+the above correlation is equivalent to the Fourier trnasform, <span
+class="math display">\[
+\begin{equation}
+&lt; \cos(\theta) &gt; = \Big{(} \int \exp(-i \omega \theta) P(\theta)
+d\theta \Big{)}_{\omega=1} = \widetilde{P}(1) = \exp(- \frac{1}{2}
+\frac{k_BT}{\kappa} s) = \exp(- \frac{s}{2 l_p}) \label{decay}
+\end{equation}
+\]</span> where the persistence length <span
+class="math inline">\(l_{p}\)</span> is defined as <span
+class="math inline">\(\kappa / k_BT\)</span>.</p>
+<h3 id="polymers-in-3d">polymers in 3D</h3>
+<p>There are two transverse directions in 3D space which contribute to
+decorrelate the tangent vectors, i.e., if <span
+class="math inline">\(\boldsymbol{t}(0)\)</span> is put along the x
+axis, the angle between two vectors <span
+class="math inline">\(\alpha\)</span> is determined by two factors,
+<span class="math inline">\(\theta\)</span> and <span
+class="math inline">\(\phi\)</span>. So the probability distribution of
+<span class="math inline">\(\alpha\)</span> is the convolution of that
+of <span class="math inline">\(\theta\)</span> and that of <span
+class="math inline">\(\phi\)</span>, <span class="math display">\[
+\begin{equation*}
+\widetilde{P}_{\alpha} = \widetilde{P}_{\theta} \widetilde{P}_{\phi}
+\end{equation*}
+\]</span></p>
+<figure>
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/3D_Spherical_2.svg/480px-3D_Spherical_2.svg.png"
+title="spherical coordinates" alt="spherical coordinates" />
+<figcaption aria-hidden="true">spherical coordinates</figcaption>
+</figure>
+<p>So the tangent correlation function in 3D space is, <span
+class="math display">\[
+\begin{equation*}
+&lt; \cos(\alpha) &gt; = \widetilde{P}_{\theta}(1)
+\widetilde{P}_{\phi}(1)
+\end{equation*}
+\]</span> If the polymer is isotropic, then the tangent correlation
+decay would be doubled, <span class="math display">\[
+\begin{equation}
+&lt; \cos(\alpha) &gt; = \widetilde{P}(1)^2 = \exp(- \frac{s}{l_p})
+\label{decay_3d}
+\end{equation}
+\]</span></p>
+<h3 id="cauchys-exponential-functional-equation">Cauchy's exponential
+functional equation</h3>
+<p>One of properties of the tangent correlation function also implies
+that the exponential decay of correlation alone the contour. Considering
+two independent angles, <span class="math display">\[
+\begin{align*}
+&lt; \cos(\theta + \phi) &gt;
+&amp;= \Big{(} \int \exp(-i\omega (\theta + \phi)) P(\theta+\phi)
+d(\theta+\phi) \Big{)}_{\omega=1} \\
+&amp;= \Big{(} \int \exp(-i\omega \theta) P(\theta) d\theta \int
+\exp(-i\omega \phi) P(\phi) d\phi \Big{)}_{\omega=1} \\
+&amp;= &lt; \cos(\theta) &gt; &lt; \cos(\phi) &gt;
+\end{align*}
+\]</span> So it has the form of Cauchy's exponential functional
+equation, <span class="math display">\[
+\begin{equation*}
+f(x+y) = f(x)f(y)
+\end{equation*}
+\]</span> The function which satifiies the above equatoin is an
+exponential function. We can Taylor expand it around <span
+class="math inline">\(x\)</span>, <span class="math display">\[
+\begin{equation*}
+f(x+y) = \sum_{n=0}^{\infty} \frac{1}{n!} f^{(n)}(x) y^n
+\end{equation*}
+\]</span> Meanwhile, <span class="math display">\[
+\begin{equation*}
+f(x)f(y) = f(x) \sum_{n=0}^{\infty} \frac{1}{n!} f^{(n)}(0) y^n
+\end{equation*}
+\]</span> So the coefficients before every <span
+class="math inline">\(y^n\)</span> should be the same, <span
+class="math display">\[
+\begin{equation*}
+f^{(n)}(x) = f(x)f^{(n)}(0)
+\end{equation*}
+\]</span> Let's set <span class="math inline">\(n=1\)</span>, <span
+class="math display">\[
+\begin{equation*}
+f&#39;(x) = f(x) \cdot C
+\end{equation*}
+\]</span> Then we get, <span class="math display">\[
+\begin{equation*}
+f(x) = A \exp(C x)
+\end{equation*}
+\]</span></p>
+<h2 id="correlation-of-tangent-vector">Correlation of tangent
+vector</h2>
+<p>There is another way to get the relationship between <span
+class="math inline">\(l_p\)</span> and <span
+class="math inline">\(\kappa\)</span>. If we Taylor expand both sides of
+the equation, <span class="math display">\[
+\begin{align*}
+\text{LHS} &amp;= 1 - \frac{1}{2} &lt; \delta \theta^2 &gt; + O(\delta
+\theta^4) \\
+\text{RHS} &amp;= 1 - \frac{\delta s}{2L} + O(\delta s^2)
+\end{align*}
+\]</span> So we have, <span class="math display">\[
+\begin{equation}
+&lt; \delta \theta^2 &gt; = \frac{\delta s}{l_p} \label{eq1}
+\end{equation}
+\]</span></p>
+<p>According to <a
+href="https://psichen.github.io/2022/02/27/fundamentals-of-statistical-mechanics/">statistic
+mechanics</a>, we can calculate the correlation of bending angle from
+the energy, <span class="math display">\[
+\begin{align}
+&lt;\delta \theta^2&gt; &amp;= \int \delta \theta^2 \exp(-U/k_BT)
+d\delta \theta \Big{/} \int \exp(-U/k_BT) d\delta \theta \\
+&amp;= \int \delta \theta^2 \exp(\delta s \cdot - \frac{1}{2}
+\frac{\kappa}{k_BT} (\frac{\delta \theta}{\delta s})^2) d\delta \theta
+\Big{/} \int \exp(\delta s \cdot - \frac{1}{2} \frac{\kappa}{k_BT}
+(\frac{\delta \theta}{\delta s})^2) d\delta \theta\\
+&amp;= \int \delta \theta^2 \exp(- \frac{1}{2} \frac{\kappa}{k_BT \delta
+s} \delta \theta^2) d\delta \theta \Big{/} \int \exp(- \frac{1}{2}
+\frac{\kappa}{k_BT \delta s} \delta \theta^2) d\delta \theta
+\label{secmom}
+\end{align}
+\]</span> where the curvature <span class="math inline">\(c =
+\frac{\delta \theta}{\delta s}\)</span>. The numerator of <span
+class="math inline">\(\eqref{secmom}\)</span> is the form of second
+moment of Gaussian distribution.</p>
+<h3 id="second-moment-of-gaussian-distribution">second moment of
+Gaussian distribution</h3>
+<p>For the integral, <span class="math display">\[
+\begin{equation*}
+I(s) = \int_{-\infty}^{\infty} \exp(-sx^2) dx = \sqrt{\frac{\pi}{s}}
+\end{equation*}
+\]</span> Its partial derivative with respect to <span
+class="math inline">\(s\)</span> is, <span class="math display">\[
+\begin{equation*}
+\partial_{s}I = - \int_{-\infty}^{\infty} x^2 \exp(-sx^2) dx = -
+\frac{\sqrt{\pi}}{2} s^{-\frac{3}{2}}
+\end{equation*}
+\]</span> So we get the second moment of Gaussian distribution, <span
+class="math display">\[
+\begin{equation}
+M^{(2)} = - \partial_{s}I(1) = \frac{\sqrt{\pi}}{2} \label{secint}
+\end{equation}
+\]</span></p>
+<h3 id="persistence-length-and-bending-rigidity">persistence length and
+bending rigidity</h3>
+<p>Substituting equation <span
+class="math inline">\(\eqref{secint}\)</span> into equation <span
+class="math inline">\(\eqref{secmom}\)</span>, <span
+class="math display">\[
+\begin{equation}
+&lt; \delta \theta^2 &gt; = (\frac{1}{2} \frac{\kappa}{k_BT \delta
+s})^{-\frac{3}{2}} \frac{\sqrt{\pi}}{2} \Big{/} (\frac{1}{2}
+\frac{\kappa}{k_BT \delta s})^{-\frac{1}{2}} \sqrt{\pi} = \frac{k_BT
+\delta s}{\kappa} \label{eq2}
+\end{equation}
+\]</span></p>
+<p>Compared <span class="math inline">\(\eqref{eq1}\)</span> and <span
+class="math inline">\(\eqref{eq2}\)</span>, we get, <span
+class="math display">\[
+\kappa = l_p k_BT
+\]</span></p>
+<h3 id="d-space">3D space</h3>
+<p>If polymers are in 3D space, on the one hand, the Taylor expansion
+is, <span class="math display">\[
+\begin{equation*}
+&lt; \delta \alpha^2 &gt; = \frac{2 \delta s}{l_p}
+\end{equation*}
+\]</span> On the other hand, becuase the distribution of <span
+class="math inline">\(\alpha\)</span> is a convolution of two Gaussian
+distributions, its variance would be doubled, <span
+class="math display">\[
+\begin{align*}
+&lt; \delta \alpha^2 &gt;
+&amp;= \int \delta \alpha^2 P(\delta \alpha) d\delta \alpha \\
+&amp;= \int \delta \alpha_2 \exp(- \frac{1}{2} \frac{\kappa}{2 k_BT
+\delta s} \delta \alpha^2) d\delta \alpha \Big{/} Z \\
+&amp;= \frac{2 k_BT \delta s}{\kappa}
+\end{align*}
+\]</span></p>
+<p>Eventually, it gives the same relationship between <span
+class="math inline">\(l_p\)</span> and <span
+class="math inline">\(\kappa\)</span> with that of 2D space.</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://pkel015.connect.amazon.auckland.ac.nz/SolidMechanicsBooks/Part_I/BookSM_Part_I/07_ElasticityApplications/07_Elasticity_Applications_04_Beam_Theory.pdf">The
+Elementary Beam Theory</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.mpikg.mpg.de/rl/P/archive/197.pdf">Stretching
+of semiflexible polymers with elastic bonds</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6432221/">Semiflexible
+Chains at Surfaces: Worm-Like Chains and beyond</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://www.phys.uri.edu/gerhard/PHY625/wpex28.pdf">Persistence
+length of ideal polymer chain</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://rachitsingh.com/persistence-length/#1_ref">Persistence
+Length in 3D</a></li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/wlc/">wlc</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/persistence-length/">persistence length</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/bending-rigidity/">bending rigidity</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/bending-energy/">bending energy</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/polymers/">polymers</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/elastic-rod/">elastic rod</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/correlation/">correlation</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2023/11/06/solving-differential-equations-by-transform/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Solving differential equations by transforms
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2022/02/27/fundamentals-of-statistical-mechanics/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Fundamentals of statistical mechanics
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

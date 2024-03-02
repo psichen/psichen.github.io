@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>First-order ordinary differential equations | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        First-order ordinary differential equations
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2021-05-02</time>
+          <span class="text-gray-400">·</span>
+          <span>1.5k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Ordinary differential equations (ODE) are important in physical
+modeling and deduction.</p>
+<span id="more"></span>
+<h2 id="integrating-factor-method">Integrating factor method</h2>
+<p>For functions of two variables, the partial derivative is defined
+as,</p>
+<p><span class="math display">\[ \frac{\partial f(x, y)}{\partial x} =
+\lim_{\Delta x \to 0} \frac{f(x + \Delta x, y) - f(x, y)}{\Delta x}
+\]</span></p>
+<p>Similarly, the 2nd partial derivative is,</p>
+<p><span class="math display">\[ \begin{aligned}
+\frac{\partial}{\partial y} \frac{\partial f(x, y)}{\partial x}
+&amp;= \lim_{\Delta y \to 0} \frac{\frac{\partial}{\partial x}f(x,
+y+\Delta y) - \frac{\partial}{\partial x}f(x, y)}{\Delta y} \\
+&amp;= \lim_{\Delta y \to 0} \lim_{\Delta x \to 0} \frac{1}{\Delta x
+\Delta y} [ f(x+\Delta x, y+\Delta y) - f(x, y+\Delta y) - f(x+\Delta x,
+y) + f(x, y) ] \\
+&amp;= \frac{\partial}{\partial x} \frac{\partial f(x, y)}{\partial y}  
+\end{aligned}  \]</span></p>
+<p>Thus, the 2nd partial derivative is symmetric,</p>
+<p><span class="math display">\[ \frac{\partial^2 f}{\partial x \partial
+y} = \frac{\partial^2 f}{\partial y \partial x} \]</span></p>
+<p>We use this criteria to judge whether the function is exact
+differential.</p>
+<h3 id="exact-differential-equations">exact differential equations</h3>
+<p>If the ODE satisfies,</p>
+<p><span class="math display">\[ A(x,y) dx + B(x,y) dy = 0 \text{, where
+} \frac{\partial A}{\partial y} = \frac{\partial B}{\partial x}
+\]</span></p>
+<p>It's the exact differential equation which can be solved by,</p>
+<p><span class="math display">\[ \begin{aligned}
+dU(x,y) &amp;= A(x,y) dx + B(x,y) dy = 0 \\
+U(x,y) &amp;= \int A(x,y) \: dx + F(y) = c_{1} \\
+\end{aligned}  \]</span></p>
+<p>The <span class="math inline">\(F(y)\)</span> can be found by
+differentiating the above <span class="math inline">\(U(x,y)\)</span>
+with respect to <span class="math inline">\(y\)</span>, which should
+yield <span class="math inline">\(B(x,y)\)</span>,</p>
+<p><span class="math display">\[
+F(y) = \int [ B(x,y) - \partial_y ( \int A(x,y) dx ) ] dy
+\]</span></p>
+<h3 id="inexact-differential-equations">inexact differential
+equations</h3>
+<p>If the ODE is,</p>
+<p><span class="math display">\[ A(x,y) dx + B(x,y) dy = 0 \text{, where
+} \frac{\partial A}{\partial y} \neq \frac{\partial B}{\partial x}
+\]</span></p>
+<p>We should introduce an integrating factor <span
+class="math inline">\(\mu\)</span> where <span
+class="math inline">\(\mu\)</span> satisfies,</p>
+<p><span class="math display">\[ \frac{\partial (\mu A)}{\partial y} =
+\frac{\partial (\mu B)}{\partial x} \]</span></p>
+<p><span class="math inline">\(\lambda\)</span> isn't unique so we can
+just arbitrarily defined <span class="math inline">\(\mu =
+\mu(x)\)</span>,</p>
+<p><span class="math display">\[ \mu \frac{\partial A}{\partial y} = B
+\frac{\partial \mu}{\partial x} + \mu \frac{\partial B}{\partial
+x}  \]</span> <span class="math display">\[ \mu = \exp[ \int \frac{1}{B}
+(\frac{\partial A}{\partial y} - \frac{\partial B}{\partial x}) \: dx ]
+\]</span></p>
+<p>Then substitute the integrating factor into the ODE and solve it.
+It's also suitable for the linear equation,</p>
+<p><span class="math display">\[ \frac{dy}{dx} + P(x)y = Q(x)
+\]</span></p>
+<p>where the integrating factor <span class="math inline">\(\mu(x) =
+\exp[\int P(x) \: dx]\)</span>.</p>
+<h3 id="solutions-to-langevin-equation">solutions to Langevin
+equation</h3>
+<p>The Langevin equation can be solved by integrating factor method as
+below. Let's say the Langevin equation is,</p>
+<p><span class="math display">\[ \partial_{t} u = - \xi u + R(t)
+\]</span></p>
+<p>where <span class="math inline">\(u\)</span> is velocity, <span
+class="math inline">\(\xi\)</span> is the friction constant and <span
+class="math inline">\(R(t)\)</span> is random force independent of
+coordinates. We can easily get the integrating factor <span
+class="math inline">\(\mu = \exp[ \xi t ]\)</span>. Inserting the
+integrating factor into the differential equation,</p>
+<p><span class="math display">\[ \exp[ \xi t ][ \xi u - R(t) ] \ dt +
+\exp[ \xi t ] \ du = 0 \]</span></p>
+<p>Integrating the second term, we can get,</p>
+<p><span class="math display">\[ U(t, u) = u \exp[ \xi t ] + F(t) = C
+\]</span></p>
+<p>where <span class="math inline">\(F(t)\)</span> is a sole function
+about <span class="math inline">\(t\)</span>, which can be determined by
+the derivative of <span class="math inline">\(U(t, u)\)</span> with
+respect to <span class="math inline">\(t\)</span>,</p>
+<p><span class="math display">\[ \begin{aligned}
+\xi u \exp[ \xi t ] + F&#39;(t) &amp;= \exp[ \xi t ] [ \xi u - R(t) ] \\
+F&#39;(t) &amp;= - \exp[ \xi t ] R(t) \\
+F(t) &amp;= - \int_{0}^{t} \exp[ \xi \tau ] R(\tau) \ d{\tau}
+\end{aligned} \]</span> <span class="math display">\[  \]</span></p>
+<p>Inserting <span class="math inline">\(F(t)\)</span> into <span
+class="math inline">\(U(t, u)\)</span> and considering the boundary
+condition <span class="math inline">\(u = u_{0}\)</span> at the initial
+time <span class="math inline">\(t=0\)</span>, we get the solution <span
+class="math inline">\(u(t)\)</span> to the Langevin equation,</p>
+<p><span class="math display">\[ u = u_{0} \exp[- \xi t] + \exp[- \xi t]
+\int_{0}^{t} \exp[\xi \tau] R(\tau) \ d{\tau} \]</span></p>
+<h2 id="substitution-method-to-separate-variables">Substitution method
+to separate variables</h2>
+<h3 id="homogeneous-equations">homogeneous equations</h3>
+<p>For the <span class="math inline">\(n\)</span>-degree homogeneous
+function <span class="math inline">\(f(x,y)\)</span>, we have <span
+class="math inline">\(f(\lambda x, \lambda y)=\lambda^{n}
+f(x,y)\)</span>. Thus for the ODE,</p>
+<p><span class="math display">\[ \frac{dy}{dx} = \frac{A(x,y)}{B(x,y)} =
+F(\frac{y}{x}) \]</span></p>
+<p>where <span class="math inline">\(A(x,y)\)</span> and <span
+class="math inline">\(B(x,y)\)</span> are both homogeneous functions of
+the same degree, it may then be solved by making the substitution <span
+class="math inline">\(y = \nu (x) x\)</span>. Because <span
+class="math inline">\(y\)</span> equals a function of <span
+class="math inline">\(x\)</span>, <span
+class="math inline">\(\frac{y}{x}\)</span> should also be a function of
+<span class="math inline">\(x\)</span> as <span
+class="math inline">\(\nu (x)\)</span>. Differentiate <span
+class="math inline">\(y\)</span> with respect to <span
+class="math inline">\(x\)</span>, we get,</p>
+<p><span class="math display">\[\frac{dy}{dx} = \nu + x
+\frac{d\nu}{dx}\]</span></p>
+<p>Thus the ODE can be solved as,</p>
+<p><span class="math display">\[ \int \frac{d\nu}{F(\nu) - \nu} = \int
+\frac{dx}{x}\]</span></p>
+<h3 id="isobaric-equations">isobaric equations</h3>
+<p>More generally, if the ODE isn't homogeneous but it has the form,</p>
+<p><span class="math display">\[ \frac{dy}{dx} = \frac{A(x,y)}{B(x,y)}
+\]</span></p>
+<p>It may then be solved by making the substitution,</p>
+<p><span class="math display">\[ y = \nu x^{m} \]</span></p>
+<p>if the substitution makes the ODE dimensionally consistent,</p>
+<p><span class="math display">\[ \pmb{[} A(x,y) \pmb{]} + 1 = \pmb{[}
+B(x,y) \pmb{]} + m \]</span></p>
+<p>where the dimension of <span class="math inline">\(x\)</span> and
+<span class="math inline">\(dx\)</span> is <span
+class="math inline">\(1\)</span> and of <span
+class="math inline">\(y\)</span> and <span
+class="math inline">\(dy\)</span> is <span
+class="math inline">\(m\)</span>. Then try to substitute it into the
+ODE, cancel the <span class="math inline">\(\nu\)</span> factors
+containing <span class="math inline">\(x\)</span> and make the ODE
+separable.</p>
+<h3 id="bernoullis-equation">bernoulli's equation</h3>
+<p>Bernoulli's equation is the form,</p>
+<p><span class="math display">\[ \frac{dy}{dx} + P(x)y = Q(x)y^{n}
+\text{, where } n \neq 0 \text{ or } 1 \]</span></p>
+<p>which can be transformed by dividing <span
+class="math inline">\(y^{n}\)</span> on both side,</p>
+<p><span class="math display">\[ \frac{1}{1-n} \frac{d(y^{1-n})}{dx} +
+P(x) y^{1-n} = Q(x) \]</span></p>
+<p>Thus the ODE can be solved as a linear equation described above by
+making the substitution,</p>
+<p><span class="math display">\[ \nu = y^{1-n} \]</span></p>
+<h2 id="miscellaneous-equations">Miscellaneous equations</h2>
+<p>If the ODE has the form,</p>
+<p><span class="math display">\[ \frac{dy}{dx} = F(ax+by+c)
+\]</span></p>
+<p>we can solve the equation by just making the substitution,</p>
+<p><span class="math display">\[ \nu = ax + by +c \]</span></p>
+<p>Thus the ODE is transformed to be,</p>
+<p><span class="math display">\[ \frac{d\nu}{dx} = a + bF(\nu)
+\]</span></p>
+<p>Otherwise, if the ODE has the form,</p>
+<p><span class="math display">\[ \frac{dy}{dx} = \frac{ax+by+c}{ex+fy+g}
+\]</span></p>
+<p>we can cancel the constants in both the numerator and denominator by
+linear transformation,</p>
+<p><span class="math display">\[ \begin{aligned}
+X &amp;= x + \alpha \\
+Y &amp;= y + \beta
+\end{aligned}  \]</span></p>
+<p>where <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> satisfy,</p>
+<p><span class="math display">\[ \begin{bmatrix} a &amp; b \\ e &amp; f
+\\ \end{bmatrix} \begin{bmatrix} \alpha \\ \beta \\ \end{bmatrix} = -
+\begin{bmatrix} c \\ g \\ \end{bmatrix} \]</span></p>
+<p>Then we get the homogeneous ODE, which can be solved by
+substitution,</p>
+<p><span class="math display">\[ \frac{dY}{dX} = \frac{aX+bY}{eX+fY}
+\]</span></p>
+<h2 id="higher-degree-first-order-odes">Higher-degree first-order
+ODEs</h2>
+<p>In higher-degree ODEs it's usually hard to separate variables because
+three variables (<span class="math inline">\(x,y,y&#39;\)</span>) are in
+nonlinear relationship in general. So an intuitive method is to
+eliminate one variable and degenerate the ODE to the form we are
+familiar with by the differential relation <span
+class="math inline">\(\frac{dy}{dx} = y&#39;\)</span>.</p>
+<h3 id="equations-soluble-for-y">equations soluble for y'</h3>
+<p>If the ODE can be factorised as,</p>
+<p><span class="math display">\[ \prod_{i=1}^{n} (y&#39; - F_{i}(x, y))
+= 0 \]</span></p>
+<p>The solution for <span class="math inline">\(y&#39; - F_{i}(x, y) =
+0\)</span> is <span class="math inline">\(y_{i}\)</span>,</p>
+<p><span class="math display">\[ y_{i} = H_{i}(x) \]</span> <span
+class="math display">\[ y&#39;_{i} = F_{i}(x, y_{i})\]</span> <span
+class="math display">\[ G_{i}(x, y_{i}) = y_{i} - H_{i} = 0
+\]</span></p>
+<p>The general solution for the ODE is,</p>
+<p><span class="math display">\[ \prod_{i=1}^{n} G_{i}(x, y) = 0
+\]</span></p>
+<p>Here is why,</p>
+<p><span class="math display">\[ \frac{d}{dx} \prod_{i=1}^{n} G_{i}(x,
+y) = \sum_{i=1}^{n} \prod_{\substack{j=1 \\ j \neq i}}^{n} G_{j}(x, y)
+(y&#39; - F_{i}) = 0 \]</span></p>
+<p><span class="math display">\[ \begin{aligned}
+        \sum_{i=1}^{n} \prod_{\substack{j=1 \\ j \neq i}}^{n} G_{j}(x,
+y) y&#39; &amp;= \sum_{i=1}^{n} \prod_{\substack{j=1 \\ j \neq i}}^{n}
+G_{j}(x, y) F_{i} \\
+        y&#39; &amp;= \frac{\sum_{i=1}^{n} \prod_{\substack{j=1 \\ j
+\neq i}}^{n} G_{j}(x, y) F_{i}}{\sum_{i=1}^{n} \prod_{\substack{j=1 \\ j
+\neq i}}^{n} G_{j}(x, y)} \\
+        y&#39; - F_{i} &amp;= G_{i} A_{i}
+\end{aligned} \]</span></p>
+<p><span class="math inline">\(y&#39;\)</span> subtracts <span
+class="math inline">\(F_{i}\)</span> cancelled the factor without <span
+class="math inline">\(G_{i}\)</span> in the numerator. Thus we can
+extract the factor <span class="math inline">\(G_{i}\)</span> from <span
+class="math inline">\(p - F_{i}\)</span>,</p>
+<p><span class="math display">\[ \prod_{i=1}^{n} [ p - F_{i}(x, y) ] =
+\prod_{i=1}^{n} G_{i} \prod_{i=1}^{n} A_{i} = 0 \]</span></p>
+<h3 id="equations-soluble-for-x">equations soluble for x</h3>
+<p>If the ODE can be written as,</p>
+<p><span class="math display">\[ x = F(y, y&#39;) \]</span></p>
+<p>We can eliminate <span class="math inline">\(x\)</span> by
+differentiating both sides with respect to <span
+class="math inline">\(y\)</span>,</p>
+<p><span class="math display">\[ \frac{dx}{dy} = \frac{1}{y&#39;} =
+\frac{\partial F}{\partial y} + \frac{\partial F}{\partial y&#39;}
+\frac{dy&#39;}{dy}  \]</span></p>
+<p>This results in an equation in the form of <span
+class="math inline">\(G(y, y&#39;) = 0\)</span>, which is likely to be
+separable.</p>
+<h3 id="equations-soluble-for-y-1">equations soluble for y</h3>
+<p>If the ODE can be written as,</p>
+<p><span class="math display">\[ y = F(x, y&#39;) \]</span></p>
+<p>We can eliminate <span class="math inline">\(y\)</span> by
+differentiating both sides with respect to <span
+class="math inline">\(x\)</span>,</p>
+<p><span class="math display">\[ \frac{dy}{dx} = y&#39; = \frac{\partial
+F}{\partial x} + \frac{\partial F}{\partial y&#39;} \frac{dy&#39;}{dx}
+\]</span></p>
+<p>This results in an equation in the form of <span
+class="math inline">\(G(x, y&#39;) = 0\)</span>, which is likely to be
+separable.</p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Langevin-equation/">Langevin equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/differential-equation/">differential equation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/integrating-factor/">integrating factor</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2021/05/15/partial-differential-equations/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Partial differential equations
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2021/04/21/vector-calculus-and-spherical-average/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Vector calculus and spherical average in SAXS
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <section class="px-6 max-w-4xl mx-auto gap-12 grid grid-cols-1">
+  <div class="flex flex-col h-48 items-center justify-center">
+    <h1 class="site-title text-4xl leading-relaxed">
+      pan.world
+    </h1>
+    <p class="text-gray-500 mt-2">
+    I have a proof of this theorem, but there is not enough space in this margin
+    </p>
+  </div>
+  
+  
+  
+  
+  <div class="relative pointer-events-none">
+    <span class="text-9xl opacity-10 absolute -left-11 -top-6 font-bold">2019</span>
+  </div>
+  
+  <div>
+    <a href="/2019/11/29/saddle-point-approximation/">
+      <header>
+        <h2 class="font-bold text-xl">
+          鞍点近似
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>鞍点法近似(saddle point approximation)，又称为stationary phase
+approximation，用于计算下列积分在<span class="math inline">\(N \to
+\infty\)</span>时的渐进行为。</p>
+<p><span class="math display">\[ I(N) = \int_C e^{Nf(x)} dx
+\]</span></p>
+<p>其中涉及到复变函数的一些基本性质。</p>
+<h2 id="复数及复变函数性质">复数及复变函数性质</h2>
+<p>复变量<span class="math inline">\(z\)</span>在复平面可表示为<span
+class="math inline">\(z = x+yi\)</span>，其复变函数可表示为<span
+class="math inline">\(f(z) = u + vi\)</span>，其中<span
+class="math inline">\(u = u(x, y)， v = v(x, y)\)</span>。</p>
+<p>另外也可以用极坐标来表示：<span class="math inline">\(z = |z|e^{i
+\phi}\)</span>，其中<span
+class="math inline">\(\phi\)</span>决定了复变量的方向。</p>
+<p>当<span
+class="math inline">\(f(z)\)</span>在区域内处处可导，则称<span
+class="math inline">\(f(z)\)</span>为该区域内解析。而解析函数的充要条件为函数<span
+class="math inline">\(f(z)\)</span>在该区域内连续，同时满足C-R条件(Cauchy-Riemann
+condition)。</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Nov 29
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/approximation/">
+        approximation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/saddle-point/">
+        saddle point
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/stationary-phase/">
+        stationary phase
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/asymptotic/">
+        asymptotic
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/complex-analysis/">
+        complex analysis
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2019/10/31/phase-space-in-quantum-mechanics-3/">
+      <header>
+        <h2 class="font-bold text-xl">
+          量子力学里的相空间体积--相空间
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <h2 id="量子力学基础">量子力学基础</h2>
+<p>物质波为概率波，将单色平面波写为如下形式：</p>
+<p><span class="math display">\[ \psi(r, t) = \frac{1}{ (2\pi
+\hbar)^{3/2} } e^{i/\hbar(p \cdot r - Et)} \]</span></p>
+<p>方便之后归一化为<span
+class="math inline">\(\delta\)</span>函数。其振幅的平方<span
+class="math inline">\(|\psi(r,t)|^2\)</span>对应于粒子坐标的概率密度，因此对于粒子的平均位置<span
+class="math inline">\(&lt;r&gt;\)</span>可以从下式求出：</p>
+<p><span class="math display">\[ &lt;r&gt; = \int r |\psi(r, t)|^2 dr =
+\int \psi^*(r, t) r \psi(r, t) dr \]</span></p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Oct 31
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/phase-space/">
+        phase space
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/entropy/">
+        entropy
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/quantum-mechanics/">
+        quantum mechanics
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/operator/">
+        operator
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/uncertainty-principle/">
+        uncertainty principle
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2019/10/30/phase-space-in-quantum-mechanics-2/">
+      <header>
+        <h2 class="font-bold text-xl">
+          量子力学里的相空间体积--波函数
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <h2 id="波函数基础">波函数基础</h2>
+<p>平面单色波函数：</p>
+<p><span class="math display">\[ \psi(r,t) = \phi e^{i(k \cdot r-\omega
+t)} \]</span></p>
+<p>其中<span class="math inline">\(k=2\pi/\lambda\)</span>为波数，<span
+class="math inline">\(\omega=2\pi f\)</span>为角频率。其振幅<span
+class="math inline">\(\phi\)</span>不随时间变化，为定态波函数（并不意味着波函数不随时间变化）。</p>
+<p>波函数来自于下面的二阶偏微分方程，平面单色波是其一个特解：</p>
+<p><span class="math display">\[ \frac{\omega^2}{k^2} \nabla^2 \psi =
+\frac{\partial^2 \psi}{\partial t^2} \]</span></p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Oct 30
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Fourier-transform/">
+        Fourier transform
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/wave-function/">
+        wave function
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/wavepacket/">
+        wavepacket
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2019/10/29/phase-space-in-quantum-mechanics-1/">
+      <header>
+        <h2 class="font-bold text-xl">
+          量子力学里的相空间体积--Fourier变换
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>最近学到统计力学中熵的微观含义，恶补了一顿量子力学。起因是在统计力学中，熵<span
+class="math inline">\(S\)</span>和相空间<span
+class="math inline">\(\Gamma\)</span>的体积有关：</p>
+<p><span class="math display">\[ S = k_Bln(|\Gamma|) \]</span></p>
+<p>根据热力学第三定律（Nernst假设），温度趋于绝对零度时，任何系统的熵为0。所以热力学第三定律应该同时也规定了描述相空间体积的单位，否则当改变<span
+class="math inline">\(\Gamma\)</span>的体积单位时，会在<span
+class="math inline">\(S\)</span>加上一个常数，熵就不再为0了，与热力学第三定律矛盾。下面分为三篇，分别记录Fourier变换与Dirac函数、波函数以及相空间的内容。</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Oct 29
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Fourier-transform/">
+        Fourier transform
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Dirac-function/">
+        Dirac function
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2019/10/13/inexact-differential-of-Q/">
+      <header>
+        <h2 class="font-bold text-xl">
+          热力学中热量的非恰当微分
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>热力学中都会提到，热量<span
+class="math inline">\(Q\)</span>不是一个恰当微分，写为<span
+class="math inline">\(\delta Q\)</span>，这是因为<span
+class="math inline">\(\delta
+Q\)</span>的积分和积分路径有关，也就是说对于两条起点和终点都是<span
+class="math inline">\(A\)</span>和<span
+class="math inline">\(B\)</span>，但是中间过程不同的路径<span
+class="math inline">\(L_1\)</span>和<span
+class="math inline">\(L_2\)</span>而言，有：</p>
+<p><span class="math display">\[ \int_{L_1} \delta Q \neq \int_{L_2}
+\delta Q \]</span></p>
+<p>类似的，体积功<span class="math inline">\(\delta
+W\)</span>的积分也与路径有关，这一点很好理解。假设有2个过程A, B：</p>
+<p><span class="tikzjax"><svg xmlns="http://www.w3.org/2000/svg" width="325.724" height="210.573" viewBox="-72 -72 244.293 157.93"><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke-width=".8"><path fill="none" d="M-55.999 70.394h226.912"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".64" d="M169.353 68.314c.13.78 1.56 1.95 1.95 2.08-.39.13-1.82 1.3-1.95 2.08"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi12" font-size="12" transform="translate(109.08 11.933)">V</text></g><g stroke-width=".8"><path fill="none" d="M-55.999 70.394V-71.16"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".64" d="M-58.079-69.6c.78-.13 1.95-1.56 2.08-1.95.13.39 1.3 1.82 2.08 1.95"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi12" font-size="12" transform="translate(-12.938 -67.032)">P</text></g><g stroke-width=".8"><path fill="none" d="M-24.013 38.408C.907-14.965.907-14.965 111.185-39.884"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi10" font-size="10" transform="translate(63.825 -85.535)">A</text></g><g stroke-width=".8"><path fill="none" d="M-24.013 38.408c110.278-24.92 110.278-24.92 135.198-78.292"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi10" font-size="10" transform="translate(127.55 -49.896)">B</text></g></g></svg></span></p>
+<p>由于<span class="math inline">\(W=\int PdV\)</span>，曲线A,
+B下方与x轴形成的面积即对应的体积功，很容易看出：</p>
+<p><span class="math display">\[ W_A \neq W_B \]</span></p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Oct 13
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/thermodynamics/">
+        thermodynamics
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/integrating-factor/">
+        integrating factor
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/entropy/">
+        entropy
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/temperature/">
+        temperature
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/inexact-differential/">
+        inexact differential
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2019/09/30/FRET-correcting/">
+      <header>
+        <h2 class="font-bold text-xl">
+          自由扩散的单分子FRET中的校正
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>荧光共振能量转移(Förster resonance energy transfer,
+FRET)是生化实验中的常见手段，一般用于检测生物大分子是否有相互作用、共定位或构象变化。</p>
+<p>单分子FRET(single-molecule FRET,
+smFRET)将单分子超高时空分辨率的优势和FRET对距离变化的敏感性结合起来，是研究蛋白分子构象变化的有力武器。然而由于噪音、荧光染料自身性质和仪器检测效率等原因，我们只能得到表观的测量值，所以需要对其进行校正。</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Sep 30
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/fluorescence/">
+        fluorescence
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/single-molecule/">
+        single-molecule
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/FRET/">
+        FRET
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/correct/">
+        correct
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/free-diffusing/">
+        free-diffusing
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2019/09/25/Legendre-transformation/">
+      <header>
+        <h2 class="font-bold text-xl">
+          Legendre变换的理解和在热力学中的应用
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>热力学中有几个函数概念十分容易混淆：内能(<span
+class="math inline">\(U\)</span>)，焓(<span
+class="math inline">\(H\)</span>)，亥姆霍兹自由能(<span
+class="math inline">\(A\)</span>)和吉布斯自由能(<span
+class="math inline">\(G\)</span>)，。其实觉得容易混淆是因为对其中的Legendre变换没有理解。</p>
+<h2 id="legendre变换">Legendre变换</h2>
+<h3 id="基本形式">基本形式</h3>
+<p>对于一个函数<span
+class="math inline">\(f(x_1,...,x_k)\)</span>，其微分形式为：</p>
+<p><span class="math display">\[ df = \sum_{i=1}^{k} \frac{\partial
+f}{\partial x_i} dx_i \]</span></p>
+<p>令<span class="math inline">\(u_i \equiv \frac{\partial f}{\partial
+x_i}\)</span>，<span class="math inline">\(u_i\)</span>与<span
+class="math inline">\(x_i\)</span>就是共轭变量，Legendre变换的作用就是将函数的自变量变换为其共轭变量，同时不损失任何函数信息。Legendre变换定义为：</p>
+<p><span class="math display">\[ g \equiv f-\sum_{i=1}^{r} u_ix_i \quad
+(r \le k) \]</span></p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Sep 25
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/Legendre/">
+        Legendre
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/transformation/">
+        transformation
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/thermodynamics/">
+        thermodynamics
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  
+  <div>
+    <a href="/2019/09/25/photobleaching/">
+      <header>
+        <h2 class="font-bold text-xl">
+          荧光猝灭的原理与避免方法
+        </h2>
+      </header>
+    </a>
+    <section class="text-gray-500 my-1 text-sm time">
+      
+      <p>荧光染料分子被激发后，会从ground state(S<sub>0</sub>)变到first
+excited singlet state (S<sub>1</sub>)，之后会包含以下几个过程：</p>
+<ol type="1">
+<li>重新回到S<sub>0</sub>，并在ns的时间尺度内发出fluorescence</li>
+<li>经过inter-system crossing弛豫到first excited triplet state
+(T<sub>1</sub>)，并在μs的时间尺度内发出phosphorescence</li>
+<li>如果存在FRET，则会将能量传递给acceptor,令acceptor从S<sub>0</sub>到S<sub>1</sub>,然后acceptor染料同样也会经历相同的弛豫过程</li>
+</ol>
+<p>染料分子达到triplet
+state或发生猝灭，都会降低光子产生速率，对成像、荧光单分子检测，特别是对快过程的研究都会造成影响。</p>
+      
+      <p class="line-clamp-none mt-3">
+      <iconify-icon icon="ant-design:calendar-twotone"></iconify-icon>
+      Sep 25
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/fluorescence/">
+        fluorescence
+      </a>
+      
+      <iconify-icon icon="ant-design:tag-twotone"></iconify-icon>
+      <a href="/tags/bleaching/">
+        bleaching
+      </a>
+      
+      </p>
+    </section>
+  </div>
+  
+  
+  <nav class="flex justify-center gap-5">
+      <a class="extend prev" rel="prev" href="/page/2/">prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+
+</section>
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

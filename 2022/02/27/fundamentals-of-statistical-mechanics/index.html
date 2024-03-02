@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Fundamentals of statistical mechanics | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Fundamentals of statistical mechanics
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2022-02-27</time>
+          <span class="text-gray-400">·</span>
+          <span>2.4k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>Here are some fundamentals about thermodynamic concepts from a
+statistical mechanics perspective.</p>
+<span id="more"></span>
+<pre class="mermaid">flowchart TB
+
+%% OBJECTS====================
+number(number of states)
+Boltzmann_entropy(Boltzmann entropy)
+second_law(the second law of thermodynamics)
+
+derivative(derivative of entropy)
+temperature(temperature)
+chemical_potential(chemical potential)
+
+canonical(canonical ensemble)
+partition(partition function)
+fluctuation_dissipation(fluctuation-dissipation theorem)
+
+Gibbs_entropy(Gibbs entropy)
+Boltzmann_distribution(Boltzmann distribution)
+minimal_free_energy(minimal free energy)
+spontaneous(spontaneous process)
+
+%% RELATIONS====================
+number --- |total number of states| Boltzmann_entropy 
+Boltzmann_entropy --- |saddle point approximation| second_law
+
+Boltzmann_entropy --- |Stirling's approximation \n microcanonical ensemble| Gibbs_entropy
+Gibbs_entropy --- |Langrange multiplier \n micro/grand/canonical ensemble| Boltzmann_distribution
+Boltzmann_distribution --- |Taylor expansion \n Legendre transform| minimal_free_energy
+minimal_free_energy --- |number of states| spontaneous
+
+Boltzmann_entropy --- |energy exchanges with reservoir \n energy conservation| canonical
+canonical --- |equally likely microstates| partition
+partition --- fluctuation_dissipation
+
+derivative --- |with respect to E| temperature
+derivative --- |with respect to N| chemical_potential
+temperature --- Boltzmann_distribution
+chemical_potential --- Boltzmann_distribution</pre>
+<h2 id="number-of-states">number of states</h2>
+<p><span class="math display">\[
+\Omega(E) = \text{number of states with energy } E
+\]</span> If the system has molecules of <span class="math inline">\(N
+\sim 10^{23}\)</span>, and the number of available states of the
+molecules is <span class="math inline">\(k\)</span>, then <span
+class="math inline">\(\Omega(E)\)</span> is at the scale of <span
+class="math inline">\(k^{10^{23}}\)</span>, which is a <em>very</em>
+large number. So when we just add or remove one molecule in the system,
+it can be seen as an infinitesimal change, <span class="math display">\[
+\Omega = \int \Omega(n&#39;) d n&#39;
+\]</span> where <span class="math inline">\(\Omega(n&#39;)\)</span> is
+the function of the individual molecule <span
+class="math inline">\(n&#39;\)</span>. So the total number of states of
+the system is the integral over all molecules.</p>
+<p>Similarly, for a system consisting of several subsystems (<span
+class="math inline">\(n&#39;_1, n&#39;_2\)</span>), the total number of
+states is, <span class="math display">\[
+\Omega = \int \Omega(n&#39;_1) \Omega(n&#39;_2) d n&#39;_1 d n&#39;_2
+\]</span></p>
+<p>If they are mutual independent, the total number of states is, <span
+class="math display">\[
+\Omega = \int \Omega(n&#39;_1) d n&#39;_1 \int \Omega(n&#39;_2) d
+n&#39;_2 = \Omega_1 \Omega_2
+\]</span></p>
+<h2 id="definition-of-boltzmann-entropy">definition of Boltzmann
+entropy</h2>
+<p>The Boltzmann entropy is defined to be proportional to the logarithm
+of the number of all accessible microstates, and the coefficient is
+called Boltzmann constant <span class="math inline">\(k_B\)</span>,
+<span class="math display">\[
+S(E) = k_B \ln \Omega(E)
+\]</span> Because <span class="math inline">\(\Omega(E)\)</span> is at
+the scale of <span class="math inline">\(k^{10^{23}}\)</span>, <span
+class="math inline">\(S(E)\)</span> is at the scale of <span
+class="math inline">\(N \sim 10^{23}\)</span>. In addition, entropy of
+independent systems is additive.</p>
+<h2 id="the-second-law-of-thermodynamics">the second law of
+thermodynamics</h2>
+<p>The number of available states in the combined system is, <span
+class="math display">\[
+\begin{align*}
+        \Omega(E_{total}) &amp;= \sum_{E_i} \Omega_1(E_i)
+\Omega_2(E_{total} - E_i) \\
+        &amp;= \sum_{E_i} \color{red}{ \exp \big{(} \frac{S_1(E_i)}{k_B}
++ \frac{S_2(E_{total} - E_i)}{k_B} \big{)} } \\
+\color{blue}{[\text{subset of }\sum_{E_i} (\cdot)]}        &amp;\ge
+\exp(\frac{S_1(E_1)}{k_B} + \frac{S_2(E_{total} - E_1)}{k_B}) \\
+\end{align*}
+\]</span> This is a sum of exponentials (red terms). Because the entropy
+<span class="math inline">\(S\)</span> is at the scale of molecule
+number <span class="math inline">\(N\)</span>, when, let's say, <span
+class="math inline">\(N_1 &gt; N_2\)</span>, then <span
+class="math inline">\(\exp(N_1) \gg \exp(N_2)\)</span>. So the above sum
+is dominated by the maximum value of <span
+class="math inline">\(S_1(E_i) + S_2(E_{total} - E_i)\)</span>, where
+<span class="math inline">\(E_i = E_*\)</span>. <span
+class="math display">\[
+\Omega(E_{total}) \approx \Omega(E_*)
+\]</span> Because <span class="math inline">\(\Omega(E_{total})\)</span>
+is the number of states of all available energy <span
+class="math inline">\(E_i\)</span>, it can be seen as the measure of the
+set of all observed results. Furthermore, <span
+class="math inline">\(\Omega(E_*)\)</span> is the number of states of
+<em>the</em> energy <span class="math inline">\(E_*\)</span>, so it's
+overwhelmingly likely to be found that the system has the energy <span
+class="math inline">\(E_*\)</span> because it consists of the majority
+of states which can be observed.</p>
+<p>Because <span class="math inline">\(\Omega(E_{total})\)</span> is
+larger than the nunmber of states of any fixed energy <span
+class="math inline">\(E_i\)</span>, the entropy of the combined system
+in the equilibrium (<span class="math inline">\(E_*\)</span>) should be
+the maximum, <span class="math display">\[
+S(E_{total}) \approx S_1(E_*) + S_2(E_{total}-E_*) \ge S_1(E_1) +
+S_2(E_2)
+\]</span></p>
+<h2 id="temperature">temperature</h2>
+<p>If there are <span class="math inline">\(n\)</span> systems with the
+respective energy <span class="math inline">\(E_n\)</span>, the relation
+<span class="math inline">\(\sum_n E_n = E_t\)</span> should hold due to
+energy conservation. Then we can find the solution to maximize the
+entropy under the constrain by using Lagrange multiplier, <span
+class="math display">\[
+\nabla_E S = \lambda \nabla_E (\sum_n E_n - E_t)
+\]</span> <span class="math display">\[
+\begin{bmatrix}
+\frac{\partial}{\partial E_1} \\
+\frac{\partial}{\partial E_2} \\
+\vdots \\
+\frac{\partial}{\partial E_n} \\
+\end{bmatrix}
+S = \lambda
+\begin{bmatrix}
+1 \\
+1 \\
+\vdots \\
+1 \\
+\end{bmatrix}
+\]</span> it means the derivates <span
+class="math inline">\(\frac{\partial S}{\partial E}\)</span> between
+different systems should be equal when they reach the equilibrium. The
+derivate is defined as the reciprocal temperature, <span
+class="math display">\[
+\frac{\partial S}{\partial E} \equiv \frac{1}{T}
+\]</span></p>
+<p>which can be derived from the equations of state of ideal gas.</p>
+<h2 id="chemical-potential">chemical potential</h2>
+<p>Similarly, if the number of molecules exchange within systems, we
+would consider the Langrange multiplier, <span class="math display">\[
+\nabla_{E,N} S = \lambda \nabla_E (\sum_n E_n - E_t) + \kappa \nabla_N
+(\sum_n N_n - N_t)
+\]</span> <span class="math display">\[
+\begin{bmatrix}
+\frac{\partial}{\partial E_1} \\
+\frac{\partial}{\partial E_2} \\
+\vdots \\
+\frac{\partial}{\partial E_n} \\
+\end{bmatrix}
+S = \lambda
+\begin{bmatrix}
+1 \\
+1 \\
+\vdots \\
+1 \\
+\end{bmatrix}
+,
+\begin{bmatrix}
+\frac{\partial}{\partial N_1} \\
+\frac{\partial}{\partial N_2} \\
+\vdots \\
+\frac{\partial}{\partial N_n} \\
+\end{bmatrix}
+S = \kappa
+\begin{bmatrix}
+1 \\
+1 \\
+\vdots \\
+1 \\
+\end{bmatrix}
+\]</span> It means the derivatives <span
+class="math inline">\(\frac{\partial S}{\partial E}\)</span> and <span
+class="math inline">\(\frac{\partial S}{\partial N}\)</span> should be
+equal among all systems. The derivative is defined as, <span
+class="math display">\[
+\frac{\partial S}{\partial N} \equiv - \frac{1}{T} \mu
+\]</span></p>
+<h2 id="partition-function">partition function</h2>
+<p>Canonical ensemble systems (<span class="math inline">\(S\)</span>)
+interacting with each others or the environment (heat reservoir, <span
+class="math inline">\(R\)</span>) would have an averaged energy and the
+same temperature.</p>
+<p>Let's say the individual microstate <span
+class="math inline">\(n\)</span> of the system <span
+class="math inline">\(S\)</span> has the energy <span
+class="math inline">\(E_n\)</span>, so the number of microstates of the
+combined system <span class="math inline">\(S\)</span> and <span
+class="math inline">\(R\)</span> should be the sum over all states of
+<span class="math inline">\(S\)</span>, <span class="math display">\[
+\Omega(E_t) = \sum_n \Omega(E_t - E_n) = \sum_n \exp \big{(} \frac{S_R
+(E_t - E_n)}{k_B} \big{)}
+\]</span> Because <span class="math inline">\(E_n \ll E_t\)</span>, we
+can Taylor expand the above exponential term, <span
+class="math display">\[
+S_R(E_t - E_n) \approx S_R(E_t) - \frac{\partial S_R}{\partial E} E_n
+\]</span> where <span class="math inline">\(\frac{\partial S_R}{\partial
+E} = \frac{1}{T}\)</span>. Now we apply the fundamental assumption that
+all accessible microstates are equally likely in an isolated system in
+equilibrium, so the probability that the system stays in the state <span
+class="math inline">\(n\)</span> is, <span class="math display">\[
+p(n) = \frac{\exp(-E_n / k_B T)}{\sum_n \exp(-E_n / k_B T)}
+\]</span> This is called <em>Boltzmann distribution</em> or
+<em>canonical ensemble</em>, where the information of the reservoir is
+cancelled except the temperature.</p>
+<p>The term <span class="math inline">\(1 / k_B T\)</span> is very
+common in the expression so we define the factor <span
+class="math inline">\(\beta = 1 / k_B T\)</span>, thus the partition
+function is, <span class="math display">\[
+Z = \sum_n \exp(- \beta E_n)
+\]</span></p>
+<h3 id="averaged-energy">averaged energy</h3>
+<p>From the partition function of the canonical ensemble, we can derive
+the averaged energy as, <span class="math display">\[
+&lt;E&gt; = \sum_n p(n) E_n = \sum_n \frac{E_n \exp(- \beta E_n)}{Z} = -
+\frac{\partial}{\partial \beta} \ln Z
+\]</span> and the variance of energy as, <span class="math display">\[
+\Delta E^2 = &lt;E^2&gt; - &lt;E&gt;^2 = - \frac{\partial
+&lt;E&gt;}{\partial \beta} = \frac{\partial^2}{\partial \beta^2} \ln Z
+\]</span></p>
+<h3 id="fluctuation-dissipation-relation">fluctuation-dissipation
+relation</h3>
+<p>In canonical ensemble, the heat capacity is defined as, <span
+class="math display">\[
+C_V = \frac{\partial &lt;E&gt;}{\partial T}|_V
+\]</span> Considering the variance of energy we have, <span
+class="math display">\[
+\begin{align*}
+\Delta E^2 &amp;= - \frac{\partial &lt;E&gt;}{\partial \beta} \\
+&amp;= - \frac{\partial &lt;E&gt;}{\partial T} \frac{\partial
+T}{\partial \beta} \\
+\color{blue}{[ \frac{\partial T}{\partial \beta } = - k_B T^2 ]} &amp;=
+k_B T^2 C_V \\
+\end{align*}
+\]</span> Because <span class="math inline">\(C_V\)</span> is at the
+scale of <span class="math inline">\(N\)</span>, so the relative scale
+of fluctuation is, <span class="math display">\[
+\frac{\Delta E}{E} = \frac{1}{\sqrt{N}}
+\]</span></p>
+<h2 id="ideal-gas-model">Ideal gas model</h2>
+<p>Let's assume the simplest situation that <span
+class="math inline">\(N\)</span> molecules won't interact with each
+other. So the partition function over the phase space should be, <span
+class="math display">\[
+\begin{align*}
+Z &amp;= \big( \frac{1}{(2 \pi \hat{h})^3} \int \int \exp( - \beta H ) d
+\vec{\boldsymbol{p}} d \vec{\boldsymbol{q}} \big)^N \\
+\color{blue}{[ H = T(\vec{\boldsymbol{p}}) + V(\vec{\boldsymbol{q}}) ]}
+&amp;= \big( \frac{1}{(2 \pi \hat{h})^3} V \int \exp( - \beta
+\frac{\vec{\boldsymbol{p}}^2}{2m} ) d \vec{\boldsymbol{p}} \big)^N \\
+\end{align*}
+\]</span></p>
+<p>where <span class="math inline">\(H\)</span> is the Hamiltonian,
+<span class="math inline">\(T(\vec{\boldsymbol{p}})\)</span> is kinetic
+energy, <span class="math inline">\(V(\vec{\boldsymbol{q}})\)</span> is
+potential energy and equal to zero in ideal gas model, and <span
+class="math inline">\(V\)</span> is volume.</p>
+<p>Tha above integral is Gaussian integral so we can easily get the
+partition function of ideal gas, <span class="math display">\[
+Z = V^N (\frac{m}{2 \pi \hat{h}^2 \beta})^{\frac{3}{2} N}
+\]</span> Thus the Helmholtz free energy <span
+class="math inline">\(F\)</span> is, <span class="math display">\[
+F = - \frac{\ln Z}{\beta} = - \frac{N \ln V}{\beta} - \frac{3 N}{2
+\beta} \ln (\frac{m}{2 \pi \hat{h}^2 \beta})
+\]</span> and the pressure <span class="math inline">\(p\)</span> is,
+<span class="math display">\[
+p = - \frac{\partial F}{\partial V} = \frac{N}{V \beta}
+\]</span> According to the equation of state <span
+class="math inline">\(pV = N k_B T\)</span> of classic gas, we know,
+<span class="math display">\[
+\begin{align*}
+        \beta &amp;= \frac{1}{k_B T} \\
+        \frac{\partial S}{\partial E} &amp;= \frac{1}{T} \\
+\end{align*}
+\]</span></p>
+<h2 id="gibbs-entropy">Gibbs entropy</h2>
+<p>The Gibbs entropy is a function of a probability distribution over
+phase space. In contrast, the Boltzmann entropy is a function of total
+number of states.</p>
+<p>Now we consider particles of number <span
+class="math inline">\(N\)</span> in which there are <span
+class="math inline">\(n_i\)</span> in the energy state <span
+class="math inline">\(i\)</span>. So the Boltzmann entropy should be,
+<span class="math display">\[
+S = k_B \ln (\frac{N!}{\prod_i n_i !})
+\]</span> Applying the Stirling's approximation <span
+class="math inline">\(\ln N! \approx N \ln N\)</span>, <span
+class="math display">\[
+S = - k_B N \sum_i p_i \ln p_i
+\]</span> where <span class="math inline">\(p_i\)</span> is the
+probability of energy state <span class="math inline">\(i\)</span> in
+the microcanonical ensemble.</p>
+<p>Because entropy is additive for mutual independent systems, if all we
+do is maximizing <span class="math inline">\(S\)</span> at fixed <span
+class="math inline">\(N\)</span>, the prefactor doesn't matter. So we
+can remove <span class="math inline">\(N\)</span> in the above equation
+and get the Gibbs entropy, <span class="math display">\[
+S = - k_B \sum_i p_i \ln p_i
+\]</span></p>
+<h3 id="maximal-entropy">maximal entropy</h3>
+<p>The probability of states under different constrains guarantees that
+the total entropy would reach the maxmimum value. It can be gotten by
+Lagrange multiplier methods.</p>
+<h3 id="microcanonical-ensemble">microcanonical ensemble</h3>
+<p>On the one hand, the fundamental assumption of statistic mechanics is
+thaht the every microstate is equally likely, so the relevant
+probability distribution of every state is, <span
+class="math display">\[
+p(n) = \frac{1}{\Omega(E)}
+\]</span> On the other hand, the probability of all states should obey
+the constrain <span class="math inline">\(\sum_n p(n) = 1\)</span>. Thus
+we can get the probability of microstate when it maximizes entropy by
+the Lagrange multiplier, <span class="math display">\[
+\begin{align*}
+        \partial_{p(n)} S &amp;=  \alpha k_B \partial_{p(n)} ( \sum_n
+p(n) - 1) \\
+        \color{blue}{[ S = - k_B \sum_n p(n) \ln p(n) ]}p(n)
+&amp;=  \exp(- \alpha - 1) \\
+\end{align*}
+\]</span> It tells us that the equal probability of every state in
+microcanonical ensembles maximizes the total entropy.</p>
+<h3 id="canonical-ensemble">canonical ensemble</h3>
+<p>Canonical ensemble would exchange energy bewteen systems, but the
+total energy should be conserved, <span class="math inline">\(\sum_n
+\Omega_n E_n = E_t\)</span>. Because <span class="math inline">\(p(n) =
+\Omega_n / \Omega\)</span>, we can rewrite the constrain as the function
+of <span class="math inline">\(p(n)\)</span>, <span
+class="math display">\[
+\sum_n p(n) E_n = &lt;E&gt; = E_t / \Omega = \overline{E}
+\]</span> So in canonical ensembles the averaged energy should be fixed.
+The Lagrange multiplier is, <span class="math display">\[
+\begin{align*}
+        \partial_{p(n)} S &amp;= k_B \partial_{p(n)} \Big{(} \alpha (
+\sum_n p(n) - 1) + \beta ( \sum_n p(n) E_n - \overline{E} ) \Big{)} \\
+        \color{blue}{[ S = - k_B \sum_n p(n) \ln p(n) ]}p(n)
+&amp;=  \exp(- \alpha - 1) \exp(- \beta E_n) \\
+\end{align*}
+\]</span> It tells us the state probability in the form of <em>Boltzmann
+distribution</em> <span class="math inline">\(\exp(-\beta E_n)\)</span>
+maximizes the total entropy in canonical ensembles.</p>
+<h3 id="grand-canonical-ensemble">grand canonical ensemble</h3>
+<p>If molecules can exchanges between the reservoir and the system, or
+in a chemical reaction, the number of molecules would change. Say <span
+class="math inline">\(N_n\)</span> is the number of molecules in the
+microstate <span class="math inline">\(\mid n \rangle\)</span>, or in
+other words, the degeneracy of the microstate <span
+class="math inline">\(\mid n \rangle\)</span> with energy <span
+class="math inline">\(\epsilon_n\)</span> is <span
+class="math inline">\(N_n\)</span>, the conservation <span
+class="math inline">\(\sum_n N_n = N_t\)</span> still holds. Here the
+total number <span class="math inline">\(N_t\)</span> is not fixed, so
+we shold consider the formula <span class="math inline">\(S = - k_B N_t
+\sum_n p(n) \ln p(n)\)</span>, <span class="math display">\[
+\begin{align*}
+        \nabla S &amp;= \alpha \nabla (\sum_n N_n - N_t) + \kappa \nabla
+(\sum_n N_n \epsilon_n - E_t) \\
+        \color{blue}{[ S = - k_B N_t \sum_n p(n) \ln p(n) ]} p(n) &amp;=
+\exp(- \frac{1}{k_B} ( \alpha + \kappa \epsilon_n ) - 1) \\
+\end{align*}
+\]</span> Considering the derivatives <span
+class="math inline">\(\frac{\partial S}{\partial E} =
+\frac{1}{T}\)</span> and <span class="math inline">\(\frac{\partial
+S}{\partial N} = - \frac{1}{T} \mu\)</span>, we know, <span
+class="math display">\[
+\begin{align*}
+        \alpha &amp;= - \frac{1}{T} \mu \\
+        \kappa &amp;= \frac{1}{T} \\
+\end{align*}
+\]</span> So for every microstate, the probability is proportional to,
+<span class="math display">\[
+p(n) \propto \exp(- \beta (\epsilon_n - \mu))
+\]</span> For the subsystem consisting of molecules <span
+class="math inline">\(N_n\)</span>, the probability of finding the
+system in the state <span class="math inline">\(\mid n \rangle\)</span>
+is the product of every microstates, <span class="math display">\[
+p&#39;(n) = p^{N_n}(n) \propto \exp(- \beta (E_n - \mu N_n))
+\]</span></p>
+<h2 id="free-energy">Free energy</h2>
+<p>We have already known some partial derivatives of entropy, <span
+class="math display">\[
+\begin{align*}
+         \frac{\partial S}{\partial E} &amp;= \frac{1}{T} \\
+         \frac{\partial S}{\partial V} &amp;=  \frac{\partial
+S}{\partial E} \frac{\partial E}{\partial V} = \frac{1}{T} p \\
+         \frac{\partial S}{\partial N} &amp;= - \frac{\partial
+S}{\partial E} \frac{\partial E}{\partial N} = - \frac{1}{T} \mu \\
+\end{align*}
+\]</span> We can define various free energy which are more convenient in
+certain scenarios by using <a
+href="https://psichen.github.io/2019/09/25/Legendre-transformation/">Legendre
+transform</a>.</p>
+<p><strong>Helmholtz free energy</strong> <span class="math display">\[
+\begin{align*}
+        F &amp;= E - TS \\
+        dF &amp;=  - S dT - p dV \\
+\end{align*}
+\]</span> <strong>Gibbs free energy</strong> <span
+class="math display">\[
+\begin{align*}
+        G &amp;=  E - TS + pV \\
+        dG &amp;= -S dT + V dp \\
+\end{align*}
+\]</span> <strong>enthalpy</strong> <span class="math display">\[
+\begin{align*}
+        H &amp;= E + pV \\
+        dH &amp;= T dS + V dp \\
+\end{align*}
+\]</span></p>
+<h3 id="minimal-free-energy">minimal free energy</h3>
+<p>Using Taylor expansion we can get the relation between the total
+entropy and free energy. Let's take the Gibbs free energy as the
+example, the state of the reservoir should be independent on the state
+of the system, so the total entropy is the sum of the reservoir and the
+system, <span class="math display">\[
+\begin{align*}
+        S_t(E_t, V_t) &amp;= S_R(E_t - E, V_t - V) + S(E, V) \\
+        &amp;\approx S_R(E_t, V_t) - (\partial_E S_R) E - (\partial_V
+S_R) V + S(E,V) \\
+        &amp;= S_R(E_t, V_t) - \frac{G}{T} \\
+\end{align*}
+\]</span> Here the total energy <span class="math inline">\(E_t\)</span>
+and total volume <span class="math inline">\(V_t\)</span> should be
+conserved. Because <span class="math inline">\(S_R(E_t, V_t)\)</span>
+keeps constant, when the total entropy is maximized, the free energy of
+the system is minimized. So if the process is approaching to the maximal
+entropy or minimal free energy, it would be spontaneous in
+thermodynamics.</p>
+<h2 id="references">References</h2>
+<p><a
+target="_blank" rel="noopener" href="https://www.damtp.cam.ac.uk/user/tong/statphys.html">statistic
+physics</a></p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/fluctuation/">fluctuation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Legendre/">Legendre</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/thermodynamics/">thermodynamics</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/statistical-mechanics/">statistical mechanics</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/entropy/">entropy</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/approximation/">approximation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/saddle-point/">saddle point</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/temperature/">temperature</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/chemical-potential/">chemical potential</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/free-energy/">free energy</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2023/10/30/wlc_and_flexible_polymers/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          worm-like chain model and flexible polymers
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2022/02/06/contrast-transfer-function-in-TEM/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Contrast transfer function in TEM
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

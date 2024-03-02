@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>热力学中热量的非恰当微分 | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        热力学中热量的非恰当微分
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2019-10-13</time>
+          <span class="text-gray-400">·</span>
+          <span>897 words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>热力学中都会提到，热量<span
+class="math inline">\(Q\)</span>不是一个恰当微分，写为<span
+class="math inline">\(\delta Q\)</span>，这是因为<span
+class="math inline">\(\delta
+Q\)</span>的积分和积分路径有关，也就是说对于两条起点和终点都是<span
+class="math inline">\(A\)</span>和<span
+class="math inline">\(B\)</span>，但是中间过程不同的路径<span
+class="math inline">\(L_1\)</span>和<span
+class="math inline">\(L_2\)</span>而言，有：</p>
+<p><span class="math display">\[ \int_{L_1} \delta Q \neq \int_{L_2}
+\delta Q \]</span></p>
+<p>类似的，体积功<span class="math inline">\(\delta
+W\)</span>的积分也与路径有关，这一点很好理解。假设有2个过程A, B：</p>
+<p><span class="tikzjax"><svg xmlns="http://www.w3.org/2000/svg" width="325.724" height="210.573" viewBox="-72 -72 244.293 157.93"><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke-width=".8"><path fill="none" d="M-55.999 70.394h226.912"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".64" d="M169.353 68.314c.13.78 1.56 1.95 1.95 2.08-.39.13-1.82 1.3-1.95 2.08"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi12" font-size="12" transform="translate(109.08 11.933)">V</text></g><g stroke-width=".8"><path fill="none" d="M-55.999 70.394V-71.16"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".64" d="M-58.079-69.6c.78-.13 1.95-1.56 2.08-1.95.13.39 1.3 1.82 2.08 1.95"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi12" font-size="12" transform="translate(-12.938 -67.032)">P</text></g><g stroke-width=".8"><path fill="none" d="M-24.013 38.408C.907-14.965.907-14.965 111.185-39.884"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi10" font-size="10" transform="translate(63.825 -85.535)">A</text></g><g stroke-width=".8"><path fill="none" d="M-24.013 38.408c110.278-24.92 110.278-24.92 135.198-78.292"/><text x="-55.999" y="70.394" stroke="none" font-family="cmmi10" font-size="10" transform="translate(127.55 -49.896)">B</text></g></g></svg></span></p>
+<p>由于<span class="math inline">\(W=\int PdV\)</span>，曲线A,
+B下方与x轴形成的面积即对应的体积功，很容易看出：</p>
+<p><span class="math display">\[ W_A \neq W_B \]</span></p>
+<span id="more"></span>
+<p>在没有非体积功的情况下，系统都是从状态1<span
+class="math inline">\((P_1, V_1)\)</span>到状态2<span
+class="math inline">\((P_2, V_2)\)</span>。因此状态函数内能的改变量<span
+class="math inline">\(\Delta U\)</span>应相等。根据热力学第一定律：</p>
+<p><span class="math display">\[ \Delta U = Q-W \]</span></p>
+<p>所以<span class="math inline">\(Q_A \neq Q_B\)</span>。</p>
+<h2 id="积分因子">积分因子</h2>
+<p>对于非恰当微分方程</p>
+<p><span class="math display">\[ du = Pdx + Qdy \]</span></p>
+<p>其中<span class="math inline">\(\frac{\partial P}{\partial y} \neq
+\frac{\partial Q}{\partial x}\)</span>，若存在一个函数<span
+class="math inline">\(\mu(x, y) \neq 0\)</span>，使得<span
+class="math inline">\(\mu Pdx + \mu Qdy =
+0\)</span>成为全微分方程，即满足：</p>
+<p><span class="math display">\[ \frac{\partial (\mu P)}{\partial y} =
+\frac{\partial (\mu Q)}{\partial x} \]</span></p>
+<p>则称<span class="math inline">\(\mu\)</span>为方程<span
+class="math inline">\(du\)</span>的积分因子。</p>
+<p>所以我们现在来找<span class="math inline">\(\delta
+Q\)</span>的积分因子。设想由2个物体组成的孤立体系，2个物体之间有热接触，因此温度均为<span
+class="math inline">\(t\)</span>（经验温度），设想一个状态函数<span
+class="math inline">\(\sigma\)</span>，用于表示系统所处的状态。在<strong>绝热可逆</strong>过程中：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\delta Q_1             &amp;= \tau_1(\sigma_1, t)d\sigma_1 \\
+\delta Q_2             &amp;= \tau_2(\sigma_2, t)d\sigma_2 \\
+\delta Q               &amp;= \tau(\sigma, t)d\sigma \\
+\tau(\sigma, t)d\sigma &amp;= \tau_1(\sigma_1, t)d\sigma_1 +
+\tau_2(\sigma_2, t)d\sigma_2 \\
+\end{aligned}
+\]</span></p>
+<p>其中<span class="math inline">\(1/\tau_1, 1/\tau_2,
+1/\tau\)</span>为我们要找的积分因子。我们将<span
+class="math inline">\(\sigma_1, \sigma_2,
+t\)</span>视为独立变量，分别对<span
+class="math inline">\(\sigma\)</span>求导，有：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial \sigma}{\partial \sigma_1} &amp;= \frac{\tau_1}{\tau} \\
+\frac{\partial \sigma}{\partial \sigma_2} &amp;= \frac{\tau_2}{\tau} \\
+\frac{\partial \sigma}{\partial t}        &amp;= 0 \\
+\end{aligned}
+\]</span></p>
+<p>可见<span class="math inline">\(\sigma\)</span>不是<span
+class="math inline">\(t\)</span>的函数，因为<span
+class="math inline">\(\sigma\)</span>是状态函数，具有全微分的性质，所以二阶导数与微分的顺序无关，所以</p>
+<p><span class="math display">\[ \frac{\partial}{\partial
+t}\left(\frac{\partial \sigma}{\partial \sigma_1}\right) =
+\frac{1}{\tau^2} (\tau \frac{\partial \tau_1}{\partial
+t}-\tau_1\frac{\partial \tau}{\partial t}) = 0 \]</span> <span
+class="math display">\[ \frac{1}{\tau} \frac{\partial \tau}{\partial t}
+= \frac{1}{\tau_1} \frac{\partial \tau_1}{\partial t} \]</span></p>
+<p>同理，</p>
+<p><span class="math display">\[ \frac{1}{\tau} \frac{\partial
+\tau}{\partial t} = \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t}
+\]</span></p>
+<p>所以</p>
+<p><span class="math display">\[ \frac{1}{\tau} \frac{\partial
+\tau}{\partial t} = \frac{1}{\tau_1} \frac{\partial \tau_1}{\partial t}
+= \frac{1}{\tau_2} \frac{\partial \tau_2}{\partial t} \]</span></p>
+<p>因为<span class="math inline">\(\tau_1 = \tau_1(\sigma_1,
+t)\)</span>，并不含有<span
+class="math inline">\(\sigma_2\)</span>，同理<span
+class="math inline">\(\tau_2 = \tau_2(\sigma_2,
+t)\)</span>，并不含有<span
+class="math inline">\(\sigma_1\)</span>，所以上面等式成立的条件为等式各方只是<span
+class="math inline">\(t\)</span>的函数，而与<span
+class="math inline">\(\sigma_1, \sigma_2\)</span>无关，将该函数设为<span
+class="math inline">\(g(t)\)</span>，于是</p>
+<p><span class="math display">\[ \tau_i = e^{\int g(t)dt}h_i(\sigma_i),
+(i = 1, 2) \]</span> <span class="math display">\[ \tau = e^{\int
+g(t)dt}h(\sigma_1, \sigma_2) \]</span></p>
+<h3 id="温度定义之一">温度定义（之一）</h3>
+<p>令绝对温度<span class="math inline">\(T = C \cdot e^{\int
+g(t)dt}\)</span>，该函数只与经验温度<span
+class="math inline">\(t\)</span>有关，常数<span
+class="math inline">\(C\)</span>可通过人为指定来固定（如水的沸点和凝固点之间平均划分为100份）。将<span
+class="math inline">\(\tau_i\)</span>代入<span
+class="math inline">\(\delta Q_i\)</span>的公式，有</p>
+<p><span class="math display">\[ \delta Q_i = T \frac{h_i(\sigma_i)}{C}
+d\sigma_i, (i=1, 2) \]</span></p>
+<h3 id="熵定义之一">熵定义（之一）</h3>
+<p>令<span class="math inline">\(dS_i = \frac{h_i(\sigma_i)}{C}
+d\sigma_i\)</span>，只依赖于状态函数<span
+class="math inline">\(\sigma_i\)</span>，因此<span
+class="math inline">\(S_i\)</span>也是一个状态函数，所以这就找到了非恰当微分<span
+class="math inline">\(\delta Q\)</span>的积分因子：</p>
+<p><span class="math display">\[ \frac{\delta Q_i}{T} = dS_i
+\]</span></p>
+<p>对于有热接触的2个物体：</p>
+<p><span class="math display">\[ \delta Q = \delta Q_1 + \delta Q_2 =
+T(dS_1 + dS_2) = TdS \]</span></p>
+<p>即可逆过程的热力学第二定律数学式。</p>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>黄子卿. "热力学第二定律从物理说法导出数学说法." 化学通报 5 (1974):
+56-59.</li>
+</ol>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/thermodynamics/">thermodynamics</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/integrating-factor/">integrating factor</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/entropy/">entropy</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/temperature/">temperature</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/inexact-differential/">inexact differential</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2019/10/29/phase-space-in-quantum-mechanics-1/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          量子力学里的相空间体积--Fourier变换
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2019/09/30/FRET-correcting/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          自由扩散的单分子FRET中的校正
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>

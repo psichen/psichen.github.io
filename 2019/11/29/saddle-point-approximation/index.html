@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>鞍点近似 | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        鞍点近似
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2019-11-29</time>
+          <span class="text-gray-400">·</span>
+          <span>1k words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>鞍点法近似(saddle point approximation)，又称为stationary phase
+approximation，用于计算下列积分在<span class="math inline">\(N \to
+\infty\)</span>时的渐进行为。</p>
+<p><span class="math display">\[ I(N) = \int_C e^{Nf(x)} dx
+\]</span></p>
+<p>其中涉及到复变函数的一些基本性质。</p>
+<h2 id="复数及复变函数性质">复数及复变函数性质</h2>
+<p>复变量<span class="math inline">\(z\)</span>在复平面可表示为<span
+class="math inline">\(z = x+yi\)</span>，其复变函数可表示为<span
+class="math inline">\(f(z) = u + vi\)</span>，其中<span
+class="math inline">\(u = u(x, y)， v = v(x, y)\)</span>。</p>
+<p>另外也可以用极坐标来表示：<span class="math inline">\(z = |z|e^{i
+\phi}\)</span>，其中<span
+class="math inline">\(\phi\)</span>决定了复变量的方向。</p>
+<p>当<span
+class="math inline">\(f(z)\)</span>在区域内处处可导，则称<span
+class="math inline">\(f(z)\)</span>为该区域内解析。而解析函数的充要条件为函数<span
+class="math inline">\(f(z)\)</span>在该区域内连续，同时满足C-R条件(Cauchy-Riemann
+condition)。</p>
+<span id="more"></span>
+<h3 id="c-r条件">C-R条件</h3>
+<p>复变函数<span
+class="math inline">\(f(z)\)</span>的极限存在的必要条件之一为与<span
+class="math inline">\(z\)</span>逼近极限的路径无关，所以我们可以考虑分别从实轴和虚轴去逼近函数极限来求<span
+class="math inline">\(f(z)\)</span>的导数。</p>
+<p>从实轴求导：<span class="math inline">\(z+\Delta z = (x+\Delta x) +
+yi\)</span> <span class="math display">\[
+\begin{aligned}
+f&#39;(z) &amp;= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta
+z} \\
+      &amp;= \lim_{\Delta x \to 0} \frac{\Delta u + \Delta vi}{\Delta x}
+\\
+      &amp;= u_x + v_xi
+\end{aligned}
+\]</span></p>
+<p>从虚轴求导：<span class="math inline">\(z+\Delta z = x+(y+\Delta
+y)i\)</span> <span class="math display">\[
+\begin{aligned}
+f&#39;(z) &amp;= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta
+z} \\
+      &amp;= \lim_{\Delta y \to 0} \frac{\Delta u + \Delta vi}{\Delta
+yi} \\
+      &amp;= v_y - u_yi
+\end{aligned}
+\]</span></p>
+<p>比较<span class="math inline">\((1)\)</span>和<span
+class="math inline">\((2)\)</span>，我们就可以得到可导函数的Cauchy-Riemann条件：
+<span class="math display">\[
+\begin{cases}
+u_x = v_y \\
+u_y = -v_x
+\end{cases}
+\]</span></p>
+<h3 id="调和性">调和性</h3>
+<p>满足解析条件的复变函数<span
+class="math inline">\(f(z)\)</span>，其实部函数<span
+class="math inline">\(u(x, y)\)</span>和虚部函数<span
+class="math inline">\(v(x, y)\)</span>具有调和性（Harmonicity）:</p>
+<p><span class="math display">\[ \nabla^2 u = \nabla^2 v = 0
+\]</span></p>
+<p>根据C-R定理：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\nabla^2 u &amp;= \frac{\partial u_x}{\partial x} + \frac{\partial
+u_y}{\partial y} \\
+           &amp;= \frac{\partial v_y}{\partial x} - \frac{\partial
+v_x}{\partial y} \\
+           &amp;= v_{yx} - v_{xy} \\
+           &amp;= 0
+\end{aligned}
+\]</span></p>
+<p>对于<span class="math inline">\(v\)</span>同理可证。</p>
+<p>根据调和性，我们可以知道函数的实部<span
+class="math inline">\(u(x,y)\)</span>在两个方向上的二阶导数是异号（如果不为0的话）的，这表明了鞍点的存在。</p>
+<h2 id="鞍点近似法">鞍点近似法</h2>
+<p>对于积分<span class="math inline">\(I = \int e^{Nf(z)}
+dz\)</span>，要求<span class="math inline">\(f(z) = u +
+vi\)</span>为解析复变函数，根据解析函数的调和性，<span
+class="math inline">\(f(z)\)</span>有鞍点<span
+class="math inline">\(z_0\)</span>。我们将积分路径<span
+class="math inline">\(C\)</span>变为<span
+class="math inline">\(C&#39;\)</span>，使其沿一个固定幅角<span
+class="math inline">\(\phi\)</span>经过<span
+class="math inline">\(z_0\)</span>。</p>
+<p>由于<span
+class="math inline">\(f(z)\)</span>在指数函数上，因此可以想象，当<span
+class="math inline">\(N\)</span>极大时，在鞍点<span
+class="math inline">\(z_0\)</span>附近，<span
+class="math inline">\(e^{Nf(z)}\)</span>的图像非常陡峭，因此该函数的积分主要由<span
+class="math inline">\(z_0\)</span>的邻域所贡献。</p>
+<p>将<span class="math inline">\(f(z)\)</span>在<span
+class="math inline">\(z_0\)</span>处进行Tayler展开，于是积分<span
+class="math inline">\(I\)</span>变为：</p>
+<p><span class="math display">\[ I = e^{Nf(z_0)} \int_{C&#39;}
+e^{\frac{1}{2} N f&#39;&#39;(z_0)(z-z_0)^2} dz \]</span></p>
+<p>然后我们将复变量<span class="math inline">\((z-z_0)\)</span>和<span
+class="math inline">\(f&#39;&#39;(z_0)\)</span>均用极坐标来表示：</p>
+<p><span class="math display">\[ z-z_0 = re^{i\phi} \]</span> <span
+class="math display">\[ f&#39;&#39;(z_0)
+=  |f&#39;&#39;(z_0)|e^{i\theta} \]</span></p>
+<p>于是上述积分变为：</p>
+<p><span class="math display">\[ I = e^{Nf(z_0)} \int_{C&#39;}
+e^{\frac{1}{2} N |f&#39;&#39;(z_0)| r^2 e^{i(\theta+2\phi)}} e^{i\phi}
+dr \]</span></p>
+<p>被积函数中<span class="math inline">\(e^{i(\theta+2\phi)} =
+\cos(\theta+2\phi)+i\sin(\theta+2\phi)\)</span>，可知当<span
+class="math inline">\(\theta+2\phi =
+\pi\)</span>时，上述积分变为一个Gauss积分，于是最终得到积分近似：</p>
+<p><span class="math display">\[ I = \int_C e^{Nf(z)}dz \approx
+e^{Nf(z_0)+i\phi}\cdot\sqrt{\frac{2\pi}{N|f&#39;&#39;(z_0)|}}
+\]</span></p>
+<p>其中<span class="math inline">\(\phi =
+\frac{\pi}{2}-\frac{arg(f&#39;&#39;(z_0))}{2}\)</span></p>
+<h3 id="stirling近似">Stirling近似</h3>
+<p><span class="math display">\[ \Gamma(x) = \int_0^\infty e^{-t}t^{x-1}
+dt \]</span></p>
+<p>当<span class="math inline">\(x &gt;&gt;
+1\)</span>时，可使用鞍点近似。首先将<span
+class="math inline">\(\Gamma(x)\)</span>变为<span
+class="math inline">\(\int e^{xf(t)} dt\)</span>的形式：</p>
+<p><span class="math display">\[ \Gamma(x+1) = \int_0^{\infty}
+e^{xlnt-t} dt \]</span></p>
+<p>令<span class="math inline">\(t = xs\)</span>，有：</p>
+<p><span class="math display">\[ \Gamma(x+1) = x \int_0^{\infty}
+e^{xlnx+x(lns-s)} ds \]</span></p>
+<p>因为有<span class="math inline">\(\Gamma(x+1) =
+x\Gamma(x)\)</span>，所以：</p>
+<p><span class="math display">\[ \Gamma(x) = x^x \int_0^{\infty}
+e^{x(lns-s)} ds \]</span></p>
+<p>考虑复平面上的积分<span class="math inline">\(I = \int e^{x(lnz-z)}
+dz\)</span>，其中<span class="math inline">\(f(z) =
+lnz-z\)</span>，<span class="math inline">\(z_0 = 1\)</span>，<span
+class="math inline">\(f(z_0) = -1\)</span>，<span
+class="math inline">\(f&#39;&#39;(z_0) = -1\)</span>，<span
+class="math inline">\(arg(f&#39;&#39;(z_0)) =
+\pi\)</span>，故积分路径的幅角<span class="math inline">\(\theta =
+0\)</span>，恰好为沿着正实轴。</p>
+<p>代入近似公式，得：</p>
+<p><span class="math display">\[ \Gamma(x) \approx x^x e^{-x}
+\sqrt{\frac{2\pi}{x}} = x^{x-\frac{1}{2}}e^{-x}\sqrt{2\pi} \]</span></p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/approximation/">approximation</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/saddle-point/">saddle point</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/stationary-phase/">stationary phase</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/asymptotic/">asymptotic</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/complex-analysis/">complex analysis</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2020/01/19/ideal-gas-state-function/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          理想气体状态方程的统计力学推导
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2019/10/31/phase-space-in-quantum-mechanics-3/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          量子力学里的相空间体积--相空间
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>
