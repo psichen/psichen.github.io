@@ -1,3 +1,8 @@
+---
+title: PID
+tags: [PID]
+---
+
 # PID based optimizer for neural network #
 
 ## PID ##
@@ -14,43 +19,48 @@ $e(t)$: the error between the system's output and the set point
 
 **P controller**
 
-```mermaid
-flowchart LR
-
-start[ ]
-stop[ ]
-sum(("+"))
-controller["P controller (K)"]
-process["G"]
-
-classDef hide fill-opacity:0,stroke-width:0px
-
-start:::hide --"input"--> sum --"error"--> controller --> process --"output"--> stop:::hide
-process --"-output"--> sum
+```tikz
+\begin{document}
+\begin{tikzpicture}
+\node (r) at (0,0) [] {\Large $R(s)$};
+\node (plus) at (2,0) [draw, circle] {\Large $+$};
+\node (K) at (5, 0) [draw, minimum width=1cm, minimum height=1cm] {\Large $K_p$};
+\node (G) at (8, 0) [draw, minimum width=1cm, minimum height=1cm] {\Large $G$};
+\node (y) at (10, 0) [] {\Large $Y(s)$};
+\draw [thick, ->] (r.east) to (plus.west);
+\draw [thick, ->] (plus.east) to node [midway, above] {\Large $E$} (K.west);
+\draw [thick, ->] (K.east) to (G.west);
+\draw [thick, ->] (G.east) to (y.west);
+\draw [thick, ->] (9,0) to (9,-1) to (2,-1) to node [left] {\Large $-$} (plus.south);
+\end{tikzpicture}
+\end{document}
 ```
 
 $$
-E_{ss} = R_{ss} - Y_{ss} = R_{ss} - E_{ss} K G
+E_{ss} = R_{ss} - Y_{ss} = R_{ss} - E_{ss} K_p G
 $$
 $$
-E_{ss} = R_{ss} / (1 + K G)
+E_{ss} = R_{ss} / (1 + K_p G)
 $$
 With only the proportional controller $P$, the steady-state error $e_{ss} \neq 0$ as long as $r_{ss} \neq 0$.
 
 **I controller**
-```mermaid
-flowchart LR
 
-start[ ]
-stop[ ]
-sum(("+"))
-controller["I controller (K/s)"]
-process["G"]
-
-classDef hide fill-opacity:0,stroke-width:0px
-
-start:::hide --"input"--> sum --"error"--> controller --> process --"output"--> stop:::hide
-process --"-output"--> sum
+```tikz
+\begin{document}
+\begin{tikzpicture}
+\node (r) at (0,0) [] {\Large $R(s)$};
+\node (plus) at (2,0) [draw, circle] {\Large $+$};
+\node (K) at (5, 0) [draw, minimum width=1cm, minimum height=1cm] {\Large $K_i/s$};
+\node (G) at (8, 0) [draw, minimum width=1cm, minimum height=1cm] {\Large $G$};
+\node (y) at (10, 0) [] {\Large $Y(s)$};
+\draw [thick, ->] (r.east) to (plus.west);
+\draw [thick, ->] (plus.east) to node [midway, above] {\Large $E$} (K.west);
+\draw [thick, ->] (K.east) to (G.west);
+\draw [thick, ->] (G.east) to (y.west);
+\draw [thick, ->] (9,0) to (9,-1) to (2,-1) to node [left] {\Large $-$} (plus.south);
+\end{tikzpicture}
+\end{document}
 ```
 $$
 E_{ss} = R_{ss} - Y_{ss} = R_{ss} - E_{ss} K G / s
@@ -68,19 +78,22 @@ e_{\infty} = \lim_{s \to 0} s E_{ss} = \omega \lim_{s \to 0} \frac{s^2}{(s^2 + \
 $$
 
 **D controller**
-```mermaid
-flowchart LR
 
-start[ ]
-stop[ ]
-sum(("+"))
-controller["D controller (Ks)"]
-process["G"]
-
-classDef hide fill-opacity:0,stroke-width:0px
-
-start:::hide --"input"--> sum --"error"--> controller --> process --"output"--> stop:::hide
-process --"-output"--> sum
+```tikz
+\begin{document}
+\begin{tikzpicture}
+\node (r) at (0,0) [] {\Large $R(s)$};
+\node (plus) at (2,0) [draw, circle] {\Large $+$};
+\node (K) at (5, 0) [draw, minimum width=1cm, minimum height=1cm] {\Large $K_d \cdot s$};
+\node (G) at (8, 0) [draw, minimum width=1cm, minimum height=1cm] {\Large $G$};
+\node (y) at (10, 0) [] {\Large $Y(s)$};
+\draw [thick, ->] (r.east) to (plus.west);
+\draw [thick, ->] (plus.east) to node [midway, above] {\Large $E$} (K.west);
+\draw [thick, ->] (K.east) to (G.west);
+\draw [thick, ->] (G.east) to (y.west);
+\draw [thick, ->] (9,0) to (9,-1) to (2,-1) to node [left] {\Large $-$} (plus.south);
+\end{tikzpicture}
+\end{document}
 ```
 $$
 E_{ss} = R_{ss} - Y_{ss} = R_{ss} - E_{ss} KGs
