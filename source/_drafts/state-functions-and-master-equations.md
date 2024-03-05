@@ -44,13 +44,21 @@ where $\boldsymbol{\Phi} = (s \boldsymbol{I} - \boldsymbol{A})^{-1}$ is called t
 
 ## Z transform ##
 
-Z transform can be considered as the discrete-time equivalent of the [Laplace transform](http://psichen.github.io/tags/Laplace-transform/). It's defined as,
+Z transform can be considered as the discrete-time equivalent of the [Laplace transform](http://psichen.github.io/tags/Laplace-transform/). If we sample a continuous signal $x(t)$ with a discrete sampling rate $\frac{1}{T}$, we can substitute the discrete signal $x_d[n]$ by the underlying signal $x_d(t)$ on continuous domain,
+$$
+x_d(t) = \sum_{n=-\infty}^{\infty} x(nT) \delta(t - nT)
+$$
+Now we can take the Laplace transform on both sides with respect to time $t$,
+$$
+\mathcal{L}[x_d(t)] = \sum_{n=-\infty}^{\infty} x(nT) \, \mathcal{L}[\delta (t - nT)] = \sum_{n=-\infty}^{\infty} x(nT) e^{-nTs} = X(e^{Ts})
+$$
+Let $z=e^{Ts}$, thus the Z transform is given by,
 $$
 \begin{equation}
-X(z) = \mathcal{Z}\{x[n]\} = \sum_{n=-\infty}^{\infty} x[n] z^{-n} \label{z-transform}
+X_d(z) = X(e^{Ts}) = \sum_{n=-\infty}^{\infty} x[n] z^{-n} \label{z-transform} = \mathcal{Z}\{x[n]\}
 \end{equation}
 $$
-where $z$ is a complex variable. If we let $z=r \exp(i \omega)$ and let $r=1$, the Z-transform would degenerate to the discrete Fourier transform,
+where $z=e^{Ts}$ is also a complex variable. If we let $z=r \exp(i \omega)$ and let $r=1$, the Z transform would degenerate to the discrete Fourier transform,
 $$
 X(\omega) = \mathcal{F} \{ x[n] \} = \sum_{n=-\infty}^{\infty} x[n] \exp(-i \omega n) \label{Fourier}
 $$
