@@ -7,7 +7,9 @@ In chemistry, the law of mass action states that the reaction rates are proporti
 
 <!-- more -->
 
-## State space ##
+## Continuous ##
+
+### State space ###
 
 For a linear time-invariant (LTI) and single input single output (SISO) system, the state-space representation is,
 $$
@@ -26,7 +28,7 @@ $\boldsymbol{C} \in \mathbb{R}^{1 \times n}$ is the output matrix,\
 $D \in \mathbb{R}^{1}$ is the feedthrough,\
 and the Eq $\eqref{state}$ is called the *state equation* and the Eq $\eqref{output}$ is called the *output equation*.
 
-We can get the transfer function in $s$-domain from $U(s)$ to $Y(s)$ by transforming the state-space representation Eqs. $\eqref{state}$ and $\eqref{output}$,
+Assuming $\boldsymbol{x}(0)=\boldsymbol{0}$, we can get the transfer function in $s$-domain from $U(s)$ to $Y(s)$ by transforming the state-space representation Eqs. $\eqref{state}$ and $\eqref{output}$,
 $$
 \begin{align*}
 s \boldsymbol{X} &= \boldsymbol{A} \boldsymbol{X} + \boldsymbol{B} U \\
@@ -41,6 +43,36 @@ H(s) = \boldsymbol{C} \boldsymbol{\Phi} \boldsymbol{B} + D \label{tf}
 \end{equation}
 $$
 where $\boldsymbol{\Phi} = (s \boldsymbol{I} - \boldsymbol{A})^{-1}$ is called the *state transition matrix*.
+
+### Master equation ###
+
+Let's consider a reaction network in closed system under equilibrium,
+```tikz
+\usetikzlibrary{arrows.meta}
+\begin{document}
+\begin{tikzpicture}
+\node (X) {\Large $x_i$};
+\node [xshift=2cm] (Y) {\Large $x_j$};
+\draw [arrows={-Stealth[left]}] (X) to [bend left=5] node [midway, above] {\large $k_{ij}$} (Y);
+\draw [arrows={-Stealth[left]}] (Y) to [bend left=5] node [midway, below] {\large $k_{ji}$} (X);
+\end{tikzpicture}
+\end{document}
+```
+
+the master equations is given by,
+$$
+\dot{\boldsymbol{x}} = \boldsymbol{A} \boldsymbol{x}
+$$
+where $\boldsymbol{x} = [x_1, ..., x_n]^T$ is the concentration matrix and $A$ is the kinetic matrix given by,
+$$
+\boldsymbol{A} =
+\begin{bmatrix}
+-\sum_{i \neq 1} k_{1i} & k_{21} & \cdots & k_{n1} \\
+k_{12} & -\sum_{i \neq 2} k_{2i} & \cdots & k_{n2} \\
+\vdots & \vdots & \ddots & \vdots \\
+k_{1n} & k_{2n} & \cdots & -\sum_{i \neq n} k_{ni} \\
+\end{bmatrix} 
+$$
 
 ## Z transform ##
 
