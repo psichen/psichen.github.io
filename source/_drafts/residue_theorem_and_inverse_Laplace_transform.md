@@ -24,3 +24,18 @@ $$
 \mathcal{L}^{-1}[F(s)] = \lim_{\omega \to \infty} \int_{\sigma-\omega j}^{\sigma+\omega j} F(s) e^{st} \, ds
 $$
 where $\sigma$ is the the abscissa of absolute convergence.
+
+## Normalization of Fourier transform ##
+
+the vector basis are,
+$$
+e^{i \omega t}
+$$
+and the Fourier transform can be seen as the sum of projections on each vector basis,
+$$
+f(t) = \sum_{n=-\infty}^{\infty} A_{\omega} e^{i \omega t}
+$$
+where the projected length $A_{\omega}$ is,
+$$
+A_{\omega} = \frac{< f(t), e^{i \omega t} >}{< e^{i \omega t}, e^{i \omega t} >}
+$$
