@@ -79,6 +79,27 @@ $$ \frac{d \phi(\pmb{r})}{ds} = \nabla \phi \cdot \hat{\pmb{v}} = 0 $$
 
 where $\hat{\pmb{v}}$ is the arbitrary tangent vector. In other words, $\nabla{\phi(\pmb{r})}$ is the vector normal to the surface $\phi(\pmb{r}) = c$ at every point.
 
+## Curl ##
+
+If we want to know if a vector would change its direction, we can check if there is an orthogonal vector acting on the original vector. If yes, then the original vector would change its direction and rotate. For a vector field function $\vec{\boldsymbol{F}}$ and an infinitesimal change $\vec{\boldsymbol{V}}$, if $\vec{\boldsymbol{V}}$ has an orthogonal component to $\vec{\boldsymbol{F}}$, then its cross product $\vec{\boldsymbol{F}} \times \vec{\boldsymbol{V}} \neq 0$.
+
+```tikz
+\begin{document}
+\begin{tikzpicture}
+    \filldraw [thick,color=black,fill=gray!5] (0,0) ellipse (5cm and 2cm);
+    \draw [thick,->] (0,0) -- (3,1.6) node [anchor=south west] {\Large $\vec{\mathbf{F}}$};
+    \draw [thick,->] (3,1.6) -- (2,2.3)  node [anchor=south east] {\Large $\vec{\mathbf{V}}$};
+    \draw [thick,->,blue] (0,0) -- (0,4) node [anchor=south] {\Large $\vec{\mathbf{n}}$};
+\end{tikzpicture}
+\end{document}
+```
+
+After we have the gradient operator $\nabla$, we can define the curl operator as $(\nabla \times)$, where the symbol $\times$ is cross product.
+
+## Divergence ##
+
+Similarily, we can define the div operator as $(\nabla \cdot)$.
+
 ## Different coordinate system
 
 Coordinate system transformation is a fascinating skill because usually it dramatically simplifies calculations. The vector $\pmb{r}$ in the $xyz$-coordinate system can be transformed by $uvw$ as variables,
