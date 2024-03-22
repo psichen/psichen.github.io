@@ -210,7 +210,7 @@
         <section class="flex items-center gap-3 text-sm">
           <time>2021-04-21</time>
           <span class="text-gray-400">·</span>
-          <span>1.8k words</span>
+          <span>2.2k words</span>
         </section>
       </div>
     </div>
@@ -343,6 +343,55 @@ arbitrary tangent vector. In other words, <span
 class="math inline">\(\nabla{\phi(\pmb{r})}\)</span> is the vector
 normal to the surface <span class="math inline">\(\phi(\pmb{r}) =
 c\)</span> at every point.</p>
+<h2 id="curl">Curl</h2>
+<p>If the vector field <span
+class="math inline">\(\boldsymbol{F}\)</span> has a vector component
+along the contour <span class="math inline">\(C\)</span>, then the
+contour integral <span class="math inline">\(\oint_{C} \boldsymbol{F}
+\cdot \, d \boldsymbol{l} \neq 0\)</span>, <em>e.g.</em>, the force
+would make work along the path. When the contour is a closed loop <span
+class="math inline">\(\partial \Sigma\)</span> and the circular integral
+is not zero, then it suggests that the vector field <span
+class="math inline">\(\boldsymbol{F}\)</span> would rotate along the
+contour <span class="math inline">\(\partial \Sigma\)</span>.</p>
+<p>According to the Stokes's theorem, <span class="math display">\[
+\oint_{\partial \Sigma} \boldsymbol{F} \cdot \, d \boldsymbol{\Gamma} =
+\iint_{\Sigma} (\nabla \times \boldsymbol{F}) \cdot \, d
+\boldsymbol{\Sigma}
+\]</span> where <span class="math inline">\(d
+\boldsymbol{\Sigma}\)</span> is the infinitesimal directional integrated
+path and <span class="math inline">\(d \boldsymbol{\Sigma}\)</span> is
+the infinitesimal area on the normal direction.</p>
+<p><span class="tikzjax"><svg xmlns="http://www.w3.org/2000/svg" width="247.368" height="184.855" viewBox="-72 -72 185.526 138.641"><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g fill="#f3f3f3" stroke-width=".8"><path d="M13.271 49.305C40.754 56.67 84.403 17.04 98.63-7.6c14.227-24.641-.97-49.542-28.452-56.906C42.693-71.87 41.507-2.64-15.182-7.6s.97 49.541 23.933 55.694"/><path fill="#000" stroke="none" d="M13.271 49.305c-1.272-.61-3.247-1.947-4.518-3.23l-1.01 3.768c1.743-.475 4.121-.646 5.528-.538"/><g fill="#000" stroke="none" font-size="14.4"><text x="13.271" y="49.305" font-family="cmmi12" transform="translate(-20.793 13.733)">d</text><text x="20.598" y="49.305" font-family="cmbx12" transform="translate(-20.793 13.733)">¡</text></g></g><text x="13.271" y="49.305" stroke="none" font-family="cmr12" font-size="14.4" transform="translate(74.576 -80.438)">§</text><g stroke-width=".8"><path fill="none" d="M7.58 6.626V-49.57"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".64" d="M5.5-48.01c.78-.13 1.95-1.56 2.08-1.95.13.39 1.3 1.82 2.08 1.95"/><g stroke="none" font-size="14.4"><text x="14.246" y="49.105" font-family="cmr12" transform="translate(-10.19 -103.318)">^</text><text x="13.271" y="49.305" font-family="cmbx12" transform="translate(-10.19 -103.318)">n</text></g></g><g fill="red" stroke="red"><path fill="none" d="M-.955 9.471c0-7.857-6.37-14.226-14.227-14.226s-14.226 6.37-14.226 14.226c0 7.858 6.37 14.227 14.226 14.227 7.858 0 14.227-6.37 14.227-10.627"/><path stroke="none" d="M-.955 9.471c-.2 1.067-.8 2.8-1.5 4h3c-.7-1.2-1.3-2.933-1.5-4"/></g><g fill="red" stroke="red"><path fill="none" d="M27.497 29.388c0-7.857-6.369-14.226-14.226-14.226S-.955 21.532-.955 29.388 5.414 43.615 13.27 43.615s14.226-6.37 14.226-10.627"/><path stroke="none" d="M27.497 29.388c-.2 1.067-.8 2.8-1.5 4h3c-.7-1.2-1.3-2.933-1.5-4"/></g><g fill="red" stroke="red"><path fill="none" d="M41.724.936c0-7.858-6.37-14.227-14.226-14.227C19.64-13.29 13.27-6.92 13.27.936s6.37 14.226 14.227 14.226 14.226-6.37 14.226-10.627"/><path stroke="none" d="M41.724.936c-.2 1.066-.8 2.8-1.5 4h3c-.7-1.2-1.3-2.934-1.5-4"/></g><g fill="red" stroke="red"><path fill="none" d="M70.177 15.162c0-7.857-6.37-14.226-14.227-14.226S41.724 7.305 41.724 15.162s6.37 14.226 14.226 14.226 14.227-6.369 14.227-10.626"/><path stroke="none" d="M70.177 15.162c-.2 1.067-.8 2.8-1.5 4h3c-.7-1.2-1.3-2.933-1.5-4"/></g><g fill="red" stroke="red"><path fill="none" d="M64.486-21.827c0-7.857-6.37-14.226-14.226-14.226s-14.227 6.37-14.227 14.226S42.403-7.6 50.26-7.6s14.226-6.37 14.226-10.627"/><path stroke="none" d="M64.486-21.827c-.2 1.067-.8 2.8-1.5 4h3c-.7-1.2-1.3-2.933-1.5-4"/></g><g fill="red" stroke="red"><path fill="none" d="M95.784-16.136c0-7.857-6.37-14.227-14.226-14.227-7.858 0-14.227 6.37-14.227 14.227S73.701-1.91 81.558-1.91s14.226-6.37 14.226-10.626"/><path stroke="none" d="M95.784-16.136c-.2 1.066-.8 2.8-1.5 4h3c-.7-1.2-1.3-2.934-1.5-4"/></g><g fill="red" stroke="red"><path fill="none" d="M84.403-47.434c0-7.857-6.37-14.226-14.226-14.226S55.95-55.291 55.95-47.434s6.37 14.226 14.227 14.226 14.226-6.369 14.226-10.626"/><path stroke="none" d="M84.403-47.434c-.2 1.067-.8 2.8-1.5 4h3c-.7-1.2-1.3-2.933-1.5-4"/></g></g></svg></span></p>
+<p>So the curl is defined as, <span class="math display">\[
+\text{curl} \boldsymbol{F} = \nabla \times \boldsymbol{F}
+\]</span> which measures rotation of vector fields.</p>
+<p>In the two-dimensional special case, we can extend vector <span
+class="math inline">\(&lt;L,M&gt;\)</span> to three-dimensional <span
+class="math inline">\(&lt;L,M,0&gt;\)</span>, and its curl is, <span
+class="math display">\[
+\nabla \times &lt;L,M,0&gt; = &lt;0,0,\frac{\partial M}{\partial x} -
+\frac{\partial L}{\partial y}&gt;
+\]</span> Because it only has one direction, it degenerates into a
+scalar. Then we have the Green's theorem, <span class="math display">\[
+\oint_{C} (L \, dx + M \, dy) = \iint_D (\frac{\partial M}{\partial x} -
+\frac{\partial L}{\partial y}) \, dxdy
+\]</span></p>
+<h2 id="divergence">Divergence</h2>
+<p>In three-dimensional space if the net flux across a closed surface
+<span class="math inline">\(S\)</span> is not zero, then there must be a
+source or sink at least, <em>e.g.</em>, when water comes out from a
+point, tree leaves would follow water flow to move away, or when water
+flows in a hole, tree leaves would move closer.</p>
+<p>According to the Gauss's theorem, <span class="math display">\[
+\oint_{S} (\boldsymbol{F} \cdot \hat{\boldsymbol{n}}) \, dS = \iiint_{V}
+(\nabla \cdot \boldsymbol{F}) \, dV
+\]</span> where <span
+class="math inline">\(\hat{\boldsymbol{n}}\)</span> is the normal vector
+to the surface <span class="math inline">\(S\)</span>. Thus the
+divergence is defined as, <span class="math display">\[
+\text{div} \boldsymbol{F} = \nabla \cdot \boldsymbol{F}
+\]</span> which measures how divergent the vector field is.</p>
 <h2 id="different-coordinate-system">Different coordinate system</h2>
 <p>Coordinate system transformation is a fascinating skill because
 usually it dramatically simplifies calculations. The vector <span
@@ -503,6 +552,26 @@ class="math inline">\(\pmb{s}\)</span>,</p>
       
         <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
           <a href="/tags/coordinate/">coordinate</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/curl/">curl</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/divergence/">divergence</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Green-s-theorem/">Green's theorem</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Stokes-s-theorem/">Stokes's theorem</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Gauss-s-theorem/">Gauss's theorem</a>
         </span>
       
     
