@@ -1,7 +1,7 @@
 ---
 title: Vector calculus and spherical average in SAXS
 date: 2021-04-21 23:30:47
-tags: [vector, calculus, SAXS, spherical average, curvature, gradient, coordinate]
+tags: [vector, calculus, SAXS, spherical average, curvature, gradient, coordinate, curl, divergence, Green's theorem, Stokes's theorem, Gauss's theorem]
 ---
 
 A vector is typically regarded as a geometric entity characterized by a magnitude and a direction. Here are some notes about vector calculus and its basic application in small-angle x-ray scattering (SAXS).
@@ -81,24 +81,64 @@ where $\hat{\pmb{v}}$ is the arbitrary tangent vector. In other words, $\nabla{\
 
 ## Curl ##
 
-If we want to know if a vector would change its direction, we can check if there is an orthogonal vector acting on the original vector. If yes, then the original vector would change its direction and rotate. For a vector field function $\vec{\boldsymbol{F}}$ and an infinitesimal change $\vec{\boldsymbol{V}}$, if $\vec{\boldsymbol{V}}$ has an orthogonal component to $\vec{\boldsymbol{F}}$, then its cross product $\vec{\boldsymbol{F}} \times \vec{\boldsymbol{V}} \neq 0$.
+If the vector field $\boldsymbol{F}$ has a vector component along the contour $C$, then the contour integral $\oint_{C} \boldsymbol{F} \cdot \, d \boldsymbol{l} \neq 0$, *e.g.*, the force would make work along the path. When the contour is a closed loop $\partial \Sigma$ and the circular integral is not zero, then it suggests that the vector field $\boldsymbol{F}$ would rotate along the contour $\partial \Sigma$.
+
+According to the Stokes's theorem,
+$$
+\oint_{\partial \Sigma} \boldsymbol{F} \cdot \, d \boldsymbol{\Gamma} = \iint_{\Sigma} (\nabla \times \boldsymbol{F}) \cdot \, d \boldsymbol{\Sigma}
+$$
+where $d \boldsymbol{\Sigma}$ is the infinitesimal directional integrated path and $d \boldsymbol{\Sigma}$ is the infinitesimal area on the normal direction.
 
 ```tikz
 \begin{document}
 \begin{tikzpicture}
-    \filldraw [thick,color=black,fill=gray!5] (0,0) ellipse (5cm and 2cm);
-    \draw [thick,->] (0,0) -- (3,1.6) node [anchor=south west] {\Large $\vec{\mathbf{F}}$};
-    \draw [thick,->] (3,1.6) -- (2,2.3)  node [anchor=south east] {\Large $\vec{\mathbf{V}}$};
-    \draw [thick,->,blue] (0,0) -- (0,4) node [anchor=south] {\Large $\vec{\mathbf{n}}$};
+\draw [-latex, fill=gray!10, thick] (0,0)
+  .. controls ++(165:-1) and ++(240: 1) .. ( 3, 2)
+  .. controls ++(240:-1) and ++(165:-1) .. ( 2, 4)
+  .. controls ++(165: 1) and ++(175:-2) .. (-1, 2)
+  .. controls ++(175: 2) and ++(165: 1) .. ( 0, 0)
+  node [anchor=north east] {\Large $d \mathbf{\Gamma}$};
+\node at (2.8,3) {\Large $\Sigma$};
+\draw [->, thick] (-.2, 1.5) to ++(0, 2) node [anchor=south] {\Large $\hat{\mathbf{n}}$};
+\draw [-latex, red] (-.5,1.4) arc (0:360:.5cm);
+\draw [-latex, red] (.5,.7) arc (0:360:.5cm);
+\draw [-latex, red] (1,1.7) arc (0:360:.5cm);
+\draw [-latex, red] (2,1.2) arc (0:360:.5cm);
+\draw [-latex, red] (1.8,2.5) arc (0:360:.5cm);
+\draw [-latex, red] (2.9,2.3) arc (0:360:.5cm);
+\draw [-latex, red] (2.5,3.4) arc (0:360:.5cm);
 \end{tikzpicture}
 \end{document}
 ```
 
-After we have the gradient operator $\nabla$, we can define the curl operator as $(\nabla \times)$, where the symbol $\times$ is cross product.
+So the curl is defined as,
+$$
+\text{curl} \boldsymbol{F} = \nabla \times \boldsymbol{F}
+$$
+which measures rotation of vector fields.
+
+In the two-dimensional special case, we can extend vector $<L,M>$ to three-dimensional $<L,M,0>$, and its curl is,
+$$
+\nabla \times <L,M,0> = <0,0,\frac{\partial M}{\partial x} - \frac{\partial L}{\partial y}> 
+$$
+Because it only has one direction, it degenerates into a scalar. Then we have the Green's theorem,
+$$
+\oint_{C} (L \, dx + M \, dy) = \iint_D (\frac{\partial M}{\partial x} - \frac{\partial L}{\partial y}) \, dxdy
+$$
 
 ## Divergence ##
 
-Similarily, we can define the div operator as $(\nabla \cdot)$.
+In three-dimensional space if the net flux across a closed surface $S$ is not zero, then there must be a source or sink at least, *e.g.*, when water comes out from a point, tree leaves would follow water flow to move away, or when water flows in a hole, tree leaves would move closer.
+
+According to the Gauss's theorem,
+$$
+\oint_{S} (\boldsymbol{F} \cdot \hat{\boldsymbol{n}}) \, dS = \iiint_{V} (\nabla \cdot \boldsymbol{F}) \, dV
+$$
+where $\hat{\boldsymbol{n}}$ is the normal vector to the surface $S$. Thus the divergence is defined as,
+$$
+\text{div} \boldsymbol{F} = \nabla \cdot \boldsymbol{F}
+$$
+which measures how divergent the vector field is.
 
 ## Different coordinate system
 
