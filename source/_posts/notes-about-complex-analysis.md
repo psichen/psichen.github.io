@@ -1,15 +1,18 @@
 ---
 title: notes about complex analysis
-tags: [complex analysis]
+tags:
+  - complex analysis
+date: 2024-03-23 12:05:25
 ---
 
-For the analytic complex function,
+
+For a complex function,
 $$
 f(z) = u + v i
 $$
 where $z=x + y i$, $u=u(x,y)$ and $v=v(x,y)$.
 
-### Cauchy-Riemann relations ###
+## Cauchy-Riemann relations ##
 
 if the complex function $f(z) = u + vi$ is analytic, then the necessary condition is given by,
 $$
@@ -40,9 +43,9 @@ $$
 $$
 due to the Cauchy-Riemann conditions, if $f'(z)$ is continuous at each point within and on a closed contour $C$.
 
-### Cauchy's integral formula ###
+## Cauchy's integral formula ##
 
-The value of an analytic function and its derivatives inside a closed contour $C$ is uniquely determined by its values on the contour.
+The value of an analytic function and its derivatives inside a closed contour $C$ is uniquely determined by its values on the contour,
 $$
 \begin{align*}
 f(z_0) &= \frac{1}{2 \pi i} \oint_{C} \frac{f(z)}{z-z_0} \, dz \\
@@ -60,9 +63,9 @@ $$
 &= \frac{M n!}{R^n}
 \end{align*}
 $$
-Thus if $f(z)$ is analytic and bounded for all $z$ then $f$ is constant because when $n=1$ and $R \to \infty$, $\mid f'(z_ n) \mid=0$.
+Thus if $f(z)$ is analytic and bounded for all $z$ then $f$ is constant, because when $n=1$ and $R \to \infty$, $\mid f'(z_ n) \mid=0$.
 
-### Laurent series ###
+## Laurent series ##
 
 The Laurent series is an extension of the Taylor expansion,
 $$
@@ -92,3 +95,4 @@ where the Residue at singularity $z_k$ is given by,
 $$
 \text{Res}(z_k) = \frac{1}{2 \pi i} \oint_{C'} f(z) \, dz
 $$
+Recall the Cauchy's integral theorem, if the closed contour $C$ doesn't contain singularities, then the Laurent series of $f(z)$ only have analytic part, so the residue $a_{-1}=\oint_{C}f(z)\,dz=0$,
