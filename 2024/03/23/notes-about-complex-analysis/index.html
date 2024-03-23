@@ -13,7 +13,7 @@
 
 
 
-<title>鞍点近似 | pan.world</title>
+<title>notes about complex analysis | pan.world</title>
 
 
 
@@ -204,159 +204,122 @@
   <header class="overflow-hidden pt-6 pb-6 md:pt-12">
     <div class="pt-4 md:pt-6">
       <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
-        鞍点近似
+        notes about complex analysis
       </h1>
       <div>
         <section class="flex items-center gap-3 text-sm">
-          <time>2019-11-29</time>
+          <time>2024-03-23</time>
           <span class="text-gray-400">·</span>
-          <span>1k words</span>
+          <span>645 words</span>
         </section>
       </div>
     </div>
   </header>
   <!-- content -->
   <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
-    <p>鞍点法近似(saddle point approximation)，又称为stationary phase
-approximation，用于计算下列积分在<span class="math inline">\(N \to
-\infty\)</span>时的渐进行为。</p>
-<p><span class="math display">\[ I(N) = \int_C e^{Nf(x)} dx
+    <p>For a complex function, <span class="math display">\[
+f(z) = u + v i
+\]</span> where <span class="math inline">\(z=x + y i\)</span>, <span
+class="math inline">\(u=u(x,y)\)</span> and <span
+class="math inline">\(v=v(x,y)\)</span>.</p>
+<h2 id="cauchy-riemann-relations">Cauchy-Riemann relations</h2>
+<p>if the complex function <span class="math inline">\(f(z) = u +
+vi\)</span> is analytic, then the necessary condition is given by, <span
+class="math display">\[
+\begin{align*}
+        \frac{\partial u}{\partial x} &amp;= \frac{\partial v}{\partial
+y}  \\
+        \frac{\partial v}{\partial x} &amp;= - \frac{\partial
+u}{\partial y}  \\
+\end{align*}
+\]</span> which is known as the Cauchy-Riemann relations.</p>
+<h3 id="harmonicity">Harmonicity</h3>
+<p>By differentating the Cauchy-Riemann relations with respect to
+independ variables, we can get the harmonicity of analytic complex
+function, <span class="math display">\[
+\nabla^2 u = \nabla^2 v = 0
+\]</span> which means the second-order derivatives of real part or
+imaginary parts on <span class="math inline">\(x\)</span>- and <span
+class="math inline">\(y\)</span>-dimensions have opposite signs, if they
+are not equal to zero. It's useful in the saddle approximation.</p>
+<h3 id="cauchys-theorem">Cauchy's theorem</h3>
+<p>According to the Green's theorem, <span class="math display">\[
+\oint_{C} L \, dx + M \, dy = \iint_{D} (\frac{\partial M}{\partial x} -
+\frac{\partial L}{\partial y} ) \, dxdy
+\]</span> with the analytic complex function <span
+class="math inline">\(f(z) = u + vi\)</span>, the circular integral of
+an analytic complex function is given by, <span class="math display">\[
+\oint_{C} f(z) \, dz = 0
+\]</span> due to the Cauchy-Riemann conditions, if <span
+class="math inline">\(f&#39;(z)\)</span> is continuous at each point
+within and on a closed contour <span
+class="math inline">\(C\)</span>.</p>
+<h2 id="cauchys-integral-formula">Cauchy's integral formula</h2>
+<p>The value of an analytic function and its derivatives inside a closed
+contour <span class="math inline">\(C\)</span> is uniquely determined by
+its values on the contour, <span class="math display">\[
+\begin{align*}
+f(z_0) &amp;= \frac{1}{2 \pi i} \oint_{C} \frac{f(z)}{z-z_0} \, dz \\
+f^{(n)}(z_0) &amp;= \frac{n!}{2 \pi i} \oint_{C}
+\frac{f(z)}{(z-z_0)^{n+1}} \, dz \\
+\end{align*}
 \]</span></p>
-<p>其中涉及到复变函数的一些基本性质。</p>
-<h2 id="复数及复变函数性质">复数及复变函数性质</h2>
-<p>复变量<span class="math inline">\(z\)</span>在复平面可表示为<span
-class="math inline">\(z = x+yi\)</span>，其复变函数可表示为<span
-class="math inline">\(f(z) = u + vi\)</span>，其中<span
-class="math inline">\(u = u(x, y)， v = v(x, y)\)</span>。</p>
-<p>另外也可以用极坐标来表示：<span class="math inline">\(z = |z|e^{i
-\phi}\)</span>，其中<span
-class="math inline">\(\phi\)</span>决定了复变量的方向。</p>
-<p>当<span
-class="math inline">\(f(z)\)</span>在区域内处处可导，则称<span
-class="math inline">\(f(z)\)</span>为该区域内解析。而解析函数的充要条件为函数<span
-class="math inline">\(f(z)\)</span>在该区域内连续，同时满足C-R条件(Cauchy-Riemann
-condition)。</p>
-<span id="more"></span>
-<h3 id="c-r条件">C-R条件</h3>
-<p>复变函数<span
-class="math inline">\(f(z)\)</span>的极限存在的必要条件之一为与<span
-class="math inline">\(z\)</span>逼近极限的路径无关，所以我们可以考虑分别从实轴和虚轴去逼近函数极限来求<span
-class="math inline">\(f(z)\)</span>的导数。</p>
-<p>从实轴求导：<span class="math inline">\(z+\Delta z = (x+\Delta x) +
-yi\)</span> <span class="math display">\[
-\begin{aligned}
-f&#39;(z) &amp;= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta
-z} \\
-      &amp;= \lim_{\Delta x \to 0} \frac{\Delta u + \Delta vi}{\Delta x}
-\\
-      &amp;= u_x + v_xi
-\end{aligned}
-\]</span></p>
-<p>从虚轴求导：<span class="math inline">\(z+\Delta z = x+(y+\Delta
-y)i\)</span> <span class="math display">\[
-\begin{aligned}
-f&#39;(z) &amp;= \lim_{\Delta z \to 0} \frac{f(z+\Delta z)-f(z)}{\Delta
-z} \\
-      &amp;= \lim_{\Delta y \to 0} \frac{\Delta u + \Delta vi}{\Delta
-yi} \\
-      &amp;= v_y - u_yi
-\end{aligned}
-\]</span></p>
-<p>比较<span class="math inline">\((1)\)</span>和<span
-class="math inline">\((2)\)</span>，我们就可以得到可导函数的Cauchy-Riemann条件：
+<h3 id="liouvilles-theorem">Liouville's theorem</h3>
+<p>From the Cauchy's integral formula, the inequality is given by, <span
+class="math display">\[
+\begin{align*}
+\mid f^{(n)}(z_0) \mid &amp;= \frac{n!}{2 \pi} \mid \oint_{C}
+\frac{f(z)}{(z-z_0)^{n+1}} \, dz \mid \\
+&amp;\leq \frac{n!}{2 \pi} \frac{M}{R^{n+1}} 2 \pi R \\
+&amp;= \frac{M n!}{R^n}
+\end{align*}
+\]</span> Thus if <span class="math inline">\(f(z)\)</span> is analytic
+and bounded for all <span class="math inline">\(z\)</span> then <span
+class="math inline">\(f\)</span> is constant, because when <span
+class="math inline">\(n=1\)</span> and <span class="math inline">\(R \to
+\infty\)</span>, <span class="math inline">\(\mid f&#39;(z_ n)
+\mid=0\)</span>.</p>
+<h2 id="laurent-series">Laurent series</h2>
+<p>The Laurent series is an extension of the Taylor expansion, <span
+class="math display">\[
+f(z) = \sum_{n=-\infty}^{\infty} a_n (z-z_0)^n
+\]</span> where <span class="math inline">\(z_0\)</span> is a pole of
+<span class="math inline">\(f(z)\)</span> and <span
+class="math inline">\(a_n\)</span> is given by, <span
+class="math display">\[
+a_n = \frac{1}{2 \pi i} \oint_{C} \frac{f(z)}{(z-z_0)^{n+1}} \, dz
+\]</span> The terms with <span class="math inline">\(n \geq 0\)</span>
+are called the analytic part and the terms with <span
+class="math inline">\(n \lt 0\)</span> are called the principal part.
+The value of <span class="math inline">\(a_{-1}\)</span> is called the
+residue of <span class="math inline">\(f(z)\)</span> at the pole <span
+class="math inline">\(z=z_0\)</span>.</p>
+<h3 id="residue-theorem">Residue theorem</h3>
+<p>By differentating both sides of Laurent series multiple times, we can
+get the coefficient before the term <span
+class="math inline">\((z-z_0)^{-1}\)</span>, <em>i.e.</em>, the residue,
 <span class="math display">\[
-\begin{cases}
-u_x = v_y \\
-u_y = -v_x
-\end{cases}
-\]</span></p>
-<h3 id="调和性">调和性</h3>
-<p>满足解析条件的复变函数<span
-class="math inline">\(f(z)\)</span>，其实部函数<span
-class="math inline">\(u(x, y)\)</span>和虚部函数<span
-class="math inline">\(v(x, y)\)</span>具有调和性（Harmonicity）:</p>
-<p><span class="math display">\[ \nabla^2 u = \nabla^2 v = 0
-\]</span></p>
-<p>根据C-R定理：</p>
-<p><span class="math display">\[
-\begin{aligned}
-\nabla^2 u &amp;= \frac{\partial u_x}{\partial x} + \frac{\partial
-u_y}{\partial y} \\
-           &amp;= \frac{\partial v_y}{\partial x} - \frac{\partial
-v_x}{\partial y} \\
-           &amp;= v_{yx} - v_{xy} \\
-           &amp;= 0
-\end{aligned}
-\]</span></p>
-<p>对于<span class="math inline">\(v\)</span>同理可证。</p>
-<p>根据调和性，我们可以知道函数的实部<span
-class="math inline">\(u(x,y)\)</span>在两个方向上的二阶导数是异号（如果不为0的话）的，这表明了鞍点的存在。</p>
-<h2 id="鞍点近似法">鞍点近似法</h2>
-<p>对于积分<span class="math inline">\(I = \int e^{Nf(z)}
-dz\)</span>，要求<span class="math inline">\(f(z) = u +
-vi\)</span>为解析复变函数，根据解析函数的调和性，<span
-class="math inline">\(f(z)\)</span>有鞍点<span
-class="math inline">\(z_0\)</span>。我们将积分路径<span
-class="math inline">\(C\)</span>变为<span
-class="math inline">\(C&#39;\)</span>，使其沿一个固定幅角<span
-class="math inline">\(\phi\)</span>经过<span
-class="math inline">\(z_0\)</span>。</p>
-<p>由于<span
-class="math inline">\(f(z)\)</span>在指数函数上，因此可以想象，当<span
-class="math inline">\(N\)</span>极大时，在鞍点<span
-class="math inline">\(z_0\)</span>附近，<span
-class="math inline">\(e^{Nf(z)}\)</span>的图像非常陡峭，因此该函数的积分主要由<span
-class="math inline">\(z_0\)</span>的邻域所贡献。</p>
-<p>将<span class="math inline">\(f(z)\)</span>在<span
-class="math inline">\(z_0\)</span>处进行Tayler展开，于是积分<span
-class="math inline">\(I\)</span>变为：</p>
-<p><span class="math display">\[ I = e^{Nf(z_0)} \int_{C&#39;}
-e^{\frac{1}{2} N f&#39;&#39;(z_0)(z-z_0)^2} dz \]</span></p>
-<p>然后我们将复变量<span class="math inline">\((z-z_0)\)</span>和<span
-class="math inline">\(f&#39;&#39;(z_0)\)</span>均用极坐标来表示：</p>
-<p><span class="math display">\[ z-z_0 = re^{i\phi} \]</span> <span
-class="math display">\[ f&#39;&#39;(z_0)
-=  |f&#39;&#39;(z_0)|e^{i\theta} \]</span></p>
-<p>于是上述积分变为：</p>
-<p><span class="math display">\[ I = e^{Nf(z_0)} \int_{C&#39;}
-e^{\frac{1}{2} N |f&#39;&#39;(z_0)| r^2 e^{i(\theta+2\phi)}} e^{i\phi}
-dr \]</span></p>
-<p>被积函数中<span class="math inline">\(e^{i(\theta+2\phi)} =
-\cos(\theta+2\phi)+i\sin(\theta+2\phi)\)</span>，可知当<span
-class="math inline">\(\theta+2\phi =
-\pi\)</span>时，上述积分变为一个Gauss积分，于是最终得到积分近似：</p>
-<p><span class="math display">\[ I = \int_C e^{Nf(z)}dz \approx
-e^{Nf(z_0)+i\phi}\cdot\sqrt{\frac{2\pi}{N|f&#39;&#39;(z_0)|}}
-\]</span></p>
-<p>其中<span class="math inline">\(\phi =
-\frac{\pi}{2}-\frac{arg(f&#39;&#39;(z_0))}{2}\)</span></p>
-<h3 id="stirling近似">Stirling近似</h3>
-<p><span class="math display">\[ \Gamma(x) = \int_0^\infty e^{-t}t^{x-1}
-dt \]</span></p>
-<p>当<span class="math inline">\(x &gt;&gt;
-1\)</span>时，可使用鞍点近似。首先将<span
-class="math inline">\(\Gamma(x)\)</span>变为<span
-class="math inline">\(\int e^{xf(t)} dt\)</span>的形式：</p>
-<p><span class="math display">\[ \Gamma(x+1) = \int_0^{\infty}
-e^{xlnt-t} dt \]</span></p>
-<p>令<span class="math inline">\(t = xs\)</span>，有：</p>
-<p><span class="math display">\[ \Gamma(x+1) = x \int_0^{\infty}
-e^{xlnx+x(lns-s)} ds \]</span></p>
-<p>因为有<span class="math inline">\(\Gamma(x+1) =
-x\Gamma(x)\)</span>，所以：</p>
-<p><span class="math display">\[ \Gamma(x) = x^x \int_0^{\infty}
-e^{x(lns-s)} ds \]</span></p>
-<p>考虑复平面上的积分<span class="math inline">\(I = \int e^{x(lnz-z)}
-dz\)</span>，其中<span class="math inline">\(f(z) =
-lnz-z\)</span>，<span class="math inline">\(z_0 = 1\)</span>，<span
-class="math inline">\(f(z_0) = -1\)</span>，<span
-class="math inline">\(f&#39;&#39;(z_0) = -1\)</span>，<span
-class="math inline">\(arg(f&#39;&#39;(z_0)) =
-\pi\)</span>，故积分路径的幅角<span class="math inline">\(\theta =
-0\)</span>，恰好为沿着正实轴。</p>
-<p>代入近似公式，得：</p>
-<p><span class="math display">\[ \Gamma(x) \approx x^x e^{-x}
-\sqrt{\frac{2\pi}{x}} = x^{x-\frac{1}{2}}e^{-x}\sqrt{2\pi} \]</span></p>
+\text{Res}(z_0) = \lim_{z \to z_0} \left\{ \frac{1}{(m-1)!}
+\frac{d^{m-1}}{dz^{m-1}} [(z-z_0)^m f(z)] \right\}
+\]</span> where <span class="math inline">\(m\)</span> is the order of
+poles. If <span class="math inline">\(m=1\)</span> and <span
+class="math inline">\(f(z)\)</span> has a form <span
+class="math inline">\(g(z)/h(z)\)</span>, the residue is given by, <span
+class="math display">\[
+\text{Res}(z_0) = g(z_0) \lim_{z \to z_0} \frac{z-z_0}{h(z)} =
+\frac{g(z_0)}{h&#39;(z_0)}
+\]</span> When there are singular points within the closed contour <span
+class="math inline">\(C\)</span>, <span class="math display">\[
+\sum_{k=1}^{n} \text{Res}(z_k) = \frac{1}{2 \pi i} \oint_{C} f(z) \, dz
+\]</span> where the Residue at singularity <span
+class="math inline">\(z_k\)</span> is given by, <span
+class="math display">\[
+\text{Res}(z_k) = \frac{1}{2 \pi i} \oint_{C&#39;} f(z) \, dz
+\]</span> Recall the Cauchy's integral theorem, if the closed contour
+<span class="math inline">\(C\)</span> doesn't contain singularities,
+then the Laurent series of <span class="math inline">\(f(z)\)</span>
+only have analytic part, so the residue <span
+class="math inline">\(a_{-1}=\oint_{C}f(z)\,dz=0\)</span>,</p>
 
   </article>
   <!-- tag -->
@@ -367,38 +330,22 @@ class="math inline">\(arg(f&#39;&#39;(z_0)) =
           <a href="/tags/complex-analysis/">complex analysis</a>
         </span>
       
-        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
-          <a href="/tags/approximation/">approximation</a>
-        </span>
-      
-        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
-          <a href="/tags/saddle-point/">saddle point</a>
-        </span>
-      
-        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
-          <a href="/tags/stationary-phase/">stationary phase</a>
-        </span>
-      
-        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
-          <a href="/tags/asymptotic/">asymptotic</a>
-        </span>
-      
     
   </div>
   <!-- prev and next -->
   <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
     <div>
       
-        <a href="/2020/01/19/ideal-gas-state-function/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+        <a href="/2024/03/23/Z-transform-and-normalization-of-Fourier-transform/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
           <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
-          理想气体状态方程的统计力学推导
+          Z-transform and normalization of Fourier transform
         </a>
       
     </div>
     <div>
       
-        <a href="/2019/10/31/phase-space-in-quantum-mechanics-3/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
-          量子力学里的相空间体积--相空间
+        <a href="/2023/11/06/solving-differential-equations-by-transform/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Solving differential equations by transforms
           <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
         </a>
       

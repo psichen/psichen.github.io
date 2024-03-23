@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Z-transform and normalization of Fourier transform | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Z-transform and normalization of Fourier transform
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2024-03-23</time>
+          <span class="text-gray-400">·</span>
+          <span>905 words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <h2 id="z-transform">Z transform</h2>
+<p>Z transform can be considered as the discrete-time equivalent of the
+<a href="http://psichen.github.io/tags/Laplace-transform/">Laplace
+transform</a>. If we sample a continuous signal <span
+class="math inline">\(x(t)\)</span> with a discrete sampling rate <span
+class="math inline">\(\frac{1}{T}\)</span>, we can substitute the
+discrete signal <span class="math inline">\(x_d[n]\)</span> by the
+underlying signal <span class="math inline">\(x_d(t)\)</span> on
+continuous domain, <span class="math display">\[
+x_d(t) = \sum_{n=-\infty}^{\infty} x(nT) \delta(t - nT)
+\]</span> Now we can take the Laplace transform on both sides with
+respect to time <span class="math inline">\(t\)</span>, <span
+class="math display">\[
+\mathcal{L}[x_d(t)] = \sum_{n=-\infty}^{\infty} x(nT) \,
+\mathcal{L}[\delta (t - nT)] = \sum_{n=-\infty}^{\infty} x(nT) e^{-nTs}
+= X(e^{Ts})
+\]</span> Let <span class="math inline">\(z=e^{Ts}\)</span>, thus the Z
+transform is given by, <span class="math display">\[
+\begin{equation}
+X_d(z) = X(e^{Ts}) = \sum_{n=-\infty}^{\infty} x[n] z^{-n}
+\label{z-transform} = \mathcal{Z}\{x[n]\}
+\end{equation}
+\]</span> where <span class="math inline">\(z=e^{Ts}\)</span> is also a
+complex variable. If we let <span class="math inline">\(z=r \exp(i
+\omega)\)</span> and let <span class="math inline">\(r=1\)</span>, the Z
+transform would degenerate to the discrete Fourier transform, <span
+class="math display">\[
+X(\omega) = \mathcal{F} \{ x[n] \} = \sum_{n=-\infty}^{\infty} x[n]
+\exp(-i \omega n) \label{Fourier}
+\]</span> Thus, the discrete Fourier transform is a specialized Z
+transform which is evaluated on the unit circle in the complex <span
+class="math inline">\(z\)</span> domain.</p>
+<p><span class="tikzjax"><svg xmlns="http://www.w3.org/2000/svg" width="407.281" height="201.062" viewBox="-72 -72 305.461 150.797"><g stroke="#000" stroke-miterlimit="10" stroke-width=".4"><g stroke="none" font-size="14.4"><text x="-15.165" y="21.421" font-family="cmmi12" transform="translate(-28.387 -80.358)">s</text><text x="-8.523" y="21.421" font-family="cmr12" transform="translate(-28.387 -80.358)">-domain</text></g><path fill="none" d="M-72.07 21.421H41.281"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".32" d="M40.081 19.821c.1.6 1.2 1.5 1.5 1.6-.3.1-1.4 1-1.5 1.6"/><g stroke="none" font-size="14.4"><text x="-15.165" y="21.421" font-family="cmr12" transform="translate(39.78 14.333)">Re(</text><text x="6.962" y="21.421" font-family="cmmi12" transform="translate(39.78 14.333)">s</text><text x="13.604" y="21.421" font-family="cmr12" transform="translate(39.78 14.333)">)</text></g><path fill="none" d="M-15.165 78.327V-35.024"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".32" d="M-16.765-33.824c.6-.1 1.5-1.2 1.6-1.5.1.3 1 1.4 1.6 1.5"/><g stroke="none" font-size="14.4"><text x="-15.165" y="21.421" font-family="cmr12" transform="translate(3.533 -53.305)">Im(</text><text x="7.155" y="21.421" font-family="cmmi12" transform="translate(3.533 -53.305)">s</text><text x="13.797" y="21.421" font-family="cmr12" transform="translate(3.533 -53.305)">)</text></g><g stroke-dasharray="3.0,3.0" stroke-width=".8"><path fill="none" d="M55.967-7.032H83.71"/><path fill="none" stroke-dasharray="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".64" d="M82.15-9.112c.13.78 1.56 1.95 1.95 2.08-.39.13-1.82 1.3-1.95 2.08"/><g stroke="none"><text x="-15.165" y="21.421" font-family="cmmi12" font-size="14.4" transform="translate(62.802 -32.186)">z</text><text x="-3.973" y="21.421" font-family="cmr12" font-size="14.4" transform="translate(62.802 -32.186)">=</text><text x="10.994" y="21.421" font-family="cmmi12" font-size="14.4" transform="translate(62.802 -32.186)">e</text><text x="17.528" y="16.196" font-family="cmmi10" font-size="10" transform="translate(62.802 -32.186)">T</text><text x="24.761" y="16.196" font-family="cmmi10" font-size="10" transform="translate(62.802 -32.186)">s</text></g></g><g stroke="none" font-size="14.4"><text x="-15.165" y="21.421" font-family="cmmi12" transform="translate(142.054 -80.358)">z</text><text x="-7.973" y="21.421" font-family="cmr12" transform="translate(142.054 -80.358)">-domain</text></g><path fill="none" d="M98.646 21.421h113.351"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".32" d="M210.797 19.821c.1.6 1.2 1.5 1.5 1.6-.3.1-1.4 1-1.5 1.6"/><g stroke="none" font-size="14.4"><text x="-15.165" y="21.421" font-family="cmr12" transform="translate(210.221 14.333)">Re(</text><text x="6.962" y="21.421" font-family="cmmi12" transform="translate(210.221 14.333)">z</text><text x="14.154" y="21.421" font-family="cmr12" transform="translate(210.221 14.333)">)</text></g><path fill="none" d="M155.552 78.327V-35.024"/><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".32" d="M153.952-33.824c.6-.1 1.5-1.2 1.6-1.5.1.3 1 1.4 1.6 1.5"/><g stroke="none" font-size="14.4"><text x="-15.165" y="21.421" font-family="cmr12" transform="translate(174.25 -53.305)">Im(</text><text x="7.155" y="21.421" font-family="cmmi12" transform="translate(174.25 -53.305)">z</text><text x="14.347" y="21.421" font-family="cmr12" transform="translate(174.25 -53.305)">)</text></g><path fill="none" stroke="#00f" stroke-width="1.6" d="M184.005 21.421c0-15.714-12.739-28.453-28.453-28.453s-28.453 12.739-28.453 28.453 12.739 28.453 28.453 28.453 28.453-12.739 28.453-28.453ZM-15.165 49.874V-7.032"/></g></svg></span></p>
+<p>As we can see, the inner product of unit circles in vector space
+<span class="math inline">\(&lt;e^{i\theta}, e^{i\theta} &gt;\)</span>
+is equal to <span class="math inline">\(2\pi\)</span>, thus
+normalization is required to ensure conservation.</p>
+<h2 id="normalization-of-fourier-transform">Normalization of Fourier
+transform</h2>
+<p>The <span class="math inline">\(\sin(\theta)\)</span> and <span
+class="math inline">\(\cos(\theta)\)</span> functions and the
+corresponding exponential form <span class="math inline">\(e^{i
+\theta}\)</span> have a periodicity of <span
+class="math inline">\(2\pi\)</span>, which makes <span
+class="math inline">\(e^{i \theta}\)</span> as vector bases in function
+space are not orthonormal (the inner product <span
+class="math inline">\(&lt; e^{i \theta}, e^{i \theta} &gt; =
+\int_{-\pi}^{\pi} e^{i \theta} e^{-i \theta} \, d\theta= 2
+\pi\)</span>). So normalization is needed between forward and backward
+Fourier transform.</p>
+<h3 id="continuous">continuous</h3>
+<p>The function <span class="math inline">\(f(t)\)</span> defined on
+<span class="math inline">\([-\frac{T}{2}, \frac{T}{2}]\)</span> can be
+expressed by a set of bases in vector space of functions, <span
+class="math display">\[
+\begin{equation}
+f(t) = \sum_{\omega=-\infty}^{\infty} A_{\omega} e^{i \omega t}
+\label{vector_sum}
+\end{equation}
+\]</span> where <span class="math inline">\(e^{i \omega t}\)</span> is
+the vector basis and <span class="math inline">\(A_{\omega}\)</span> is
+the projected length of <span class="math inline">\(f(t)\)</span> on the
+basis <span class="math inline">\(e^{i \omega t}\)</span>, <span
+class="math display">\[
+\begin{equation}
+A_{\omega} = \frac{&lt; f(t), e^{i \omega t} &gt;}{&lt; e^{i \omega t},
+e^{i \omega t} &gt;} \label{projection}
+\end{equation}
+\]</span> However, bases <span class="math inline">\(e^{i \omega
+t}\)</span> are not orthonormal, <span class="math display">\[
+&lt; e^{i \omega t}, e^{i \omega t} &gt; =
+\int_{-\frac{T}{2}}^{\frac{T}{2}} e^{i \omega t} e^{-i \omega t} \, dt =
+T = \frac{2\pi}{\delta \omega}
+\]</span> where <span class="math inline">\(T\)</span> is the
+periodicity of basis on <span class="math inline">\(t\)</span>-domain
+and <span class="math inline">\(\delta \omega\)</span> is the angular
+<em>sampling</em> frequency. Substituting <span
+class="math inline">\(\eqref{projection}\)</span> into <span
+class="math inline">\(\eqref{vector_sum}\)</span>, we will find the
+normalization factor <span class="math inline">\(\frac{1}{2\pi}\)</span>
+in the inverse Fourier transform, <span class="math display">\[
+\begin{align*}
+        f(t) &amp;= \sum_{\omega=-\infty}^{\infty} \color{blue}{\lim_{T
+\to \infty}  \frac{\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t&#39;) e^{-i
+\omega t&#39;} \, dt&#39;}{T}} e^{i \omega t} \\
+        &amp;= \sum_{\omega=-\infty}^{\infty} \color{blue}{\lim_{\delta
+\omega \to 0}  \frac{\widetilde{F}(\omega)}{2\pi} \delta \omega} e^{i
+\omega t} \\
+        &amp;= \frac{1}{2\pi} \int_{-\infty}^{\infty}
+\widetilde{F}(\omega) e^{i \omega t} \, d\omega \\
+\end{align*}
+\]</span> So the normalization factor comes from the periodicity of
+vector bases that we choose. If we use <span class="math inline">\(e^{i
+2 \pi \omega t}\)</span> as bases, then the Fourier transform and
+inverse transform are normalized by <span
+class="math inline">\(1\)</span>, <span class="math display">\[
+\begin{align}
+        \widetilde{F}(\omega) &amp;= \int_{-\infty}^{\infty} f(t) e^{-i
+2\pi \omega t} \, dt \\
+        f(t) &amp;= \int_{-\infty}^{\infty} \widetilde{F}(\omega) e^{i
+2\pi \omega t} \, d\omega \label{cft} \\
+\end{align}
+\]</span> where <span class="math inline">\(d\omega=\frac{1}{T}\)</span>
+is <em>sampling</em> frequency here.</p>
+<h3 id="discrete">discrete</h3>
+<p>Supposing the <span class="math inline">\(N\)</span>-element discrete
+signal on continuous domain is given by, <span class="math display">\[
+f_d(t) = \sum_{n=0}^{N-1} f(nT) \delta(t-nT)
+\]</span> where <span class="math inline">\(T\)</span> is the sampling
+interval and <span class="math inline">\(T = 1/N\)</span> if we treat
+the signal as one cycle and make time unit. The Fourier transform is
+given by, <span class="math display">\[
+\mathcal{F}[f_d(t)] = \sum_{n=0}^{N-1} f(nT) \mathcal{F}[\delta(t-nT)] =
+\sum_{n=0}^{N-1} f(nT) e^{-i \omega nT}
+\]</span> The <span class="math inline">\(N\)</span>-element signal can
+be evaluated as one cycle at discrete angular frequency, <span
+class="math display">\[
+\omega = \frac{2 \pi}{N} k
+\]</span> where <span class="math inline">\(k=0,1,...,N-1\)</span>. Thus
+the discrete Fourier transform is given by, <span
+class="math display">\[
+\widetilde{F}[k] = \sum_{n=0}^{N-1} f[n] e^{-i 2 \pi k n / N}
+\]</span> Similarly, the inner product of vector bases <span
+class="math inline">\(e^{i 2 \pi k n / N}\)</span> is <span
+class="math inline">\(N\)</span>, so the inverse discrete Fourier
+transform is, <span class="math display">\[
+\begin{align}
+f[n] &amp;= \sum_{k=0}^{N-1} \color{blue}{\frac{&lt; f[n&#39;], e^{i 2
+\pi k n&#39; / N} &gt;}{&lt; e^{i 2 \pi k n&#39; / N}, e^{i 2 \pi k
+n&#39; / N} &gt;}} e^{i 2 \pi k n / N} \\
+&amp;= \frac{1}{N} \sum_{k=0}^{N-1} \color{blue}{\widetilde{F}[k]} e^{i
+2 \pi k n / N} \label{dft} \\
+\end{align}
+\]</span> When <span class="math inline">\(N \to \infty\)</span>, Eq.
+<span class="math inline">\(\eqref{dft}\)</span> will converge to Eq.
+<span class="math inline">\(\eqref{cft}\)</span>, in which <span
+class="math inline">\(d\omega = 1/N\)</span>.</p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Fourier-transform/">Fourier transform</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/Z-transform/">Z-transform</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/vector-space/">vector space</a>
+        </span>
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/complex-analysis/">complex analysis</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+    </div>
+    <div>
+      
+        <a href="/2024/03/23/notes-about-complex-analysis/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          notes about complex analysis
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>
