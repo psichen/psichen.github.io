@@ -1,5 +1,5 @@
 ---
-title: notes about complex analysis
+title: Notes about complex analysis
 tags:
   - complex analysis
 date: 2024-03-23 12:05:25

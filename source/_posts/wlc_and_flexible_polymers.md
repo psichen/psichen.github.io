@@ -1,5 +1,5 @@
 ---
-title: worm-like chain model and flexible polymers
+title: Worm-like chain model and flexible polymers
 tags: [wlc, persistence length, bending rigidity, bending energy, polymers, elastic rod, correlation]
 ---
 

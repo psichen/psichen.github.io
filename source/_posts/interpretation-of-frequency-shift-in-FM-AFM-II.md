@@ -1,5 +1,5 @@
 ---
-title: Interpretation of frequency shift in FM AFM (II)
+title: Interpretation of frequency shift in FM-AFM (II)
 date: 2021-05-21 18:32:09
 tags: [mechanics, Hamilton, Jacobi, harmonic oscillation, generating function, AFM, transformation, perturbation]
 ---
