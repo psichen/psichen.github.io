@@ -3,6 +3,26 @@ title: stochastic processes in bioreaction
 tags: [probability transition matrix, correalton function, detailed balance]
 ---
 
+## Variance sum rule ##
+
+The overdamped Langevin equation is given by,
+$$
+\dot{x}_t = \mu F_t + \sqrt{2D} \eta_t
+$$
+The variance is given by,
+$$
+\text{Var}[X] = \overline{X^2} - \overline{X}^2
+$$
+By taking the variance of the integral of the equation,
+$$
+\begin{align*}
+        \text{LHS} &= \color{blue}{\text{E}[(x_t - x_0 - \int_0^t \mu F_{t'} \, dt')^2]} - \color{red}{\text{E}[x_t - x_0 - \int_0^t \mu F_{t'} \, dt']^2} \\
+        &= \color{blue}{\text{E}[(\Delta x_t)^2] + \text{E}[(\int_0^t \mu F_{t'} \, dt')^2] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt']} - \color{red}{\left( \text{E}[\Delta x_t] - \text{E}[\int_0^t \mu F_{t'} \, dt'] \right)^2} \\
+        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + 2 \text{E}[\Delta x_t] \text{E}[\int_0^t \mu F_{t'} \, dt'] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt'] \\
+        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + \\
+\end{align*}
+$$
+
 The likelihood of $X$ becoming $Y$, or $Y$ becoming $X$, is determined by the chemical potential difference according to Gibbsian chemical thermodynamics,
 $$
 \mu_X = \mu_X^o+k_BT \ln c_X \\

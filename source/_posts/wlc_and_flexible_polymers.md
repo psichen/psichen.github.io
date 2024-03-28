@@ -1,5 +1,6 @@
 ---
 title: Worm-like chain model and flexible polymers
+date: 2023-10-30 12:32:36
 tags: [wlc, persistence length, bending rigidity, bending energy, polymers, elastic rod, correlation]
 ---
 
