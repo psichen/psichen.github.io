@@ -9,9 +9,12 @@ The overdamped Langevin equation is given by,
 $$
 \dot{x}_t = \mu F_t + \sqrt{2D} \eta_t
 $$
-The variance is given by,
+where $\eta_t$ is Gaussian with first two moments $\overline{\eta_t}=0$ and $\overline{\eta_t \eta_{t'}}=\delta (t-t')$, so the variance is given by the integral of $\overline{\eta_t \eta_{t'}}$,
 $$
-\text{Var}[X] = \overline{X^2} - \overline{X}^2
+\begin{align*}
+\int_{-\infty}^{\infty} \overline{\eta_t \eta_{t'}} \, dt' &= \int_{-\infty}^{\infty} \delta(t-t') \, dt' \\
+&= \overline{\eta_t^2} = 1 \\
+\end{align*}
 $$
 By taking the variance of the integral of the equation,
 $$
