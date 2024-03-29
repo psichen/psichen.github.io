@@ -21,7 +21,7 @@ $$
 \begin{align*}
         \text{LHS} &= \color{blue}{\text{E}[(x_t - x_0 - \int_0^t \mu F_{t'} \, dt')^2]} - \color{red}{\text{E}[x_t - x_0 - \int_0^t \mu F_{t'} \, dt']^2} \\
         &= \color{blue}{\text{E}[(\Delta x_t)^2] + \text{E}[(\int_0^t \mu F_{t'} \, dt')^2] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt']} - \color{red}{\left( \text{E}[\Delta x_t] - \text{E}[\int_0^t \mu F_{t'} \, dt'] \right)^2} \\
-        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + 2 \text{E}[\Delta x_t] \text{E}[\int_0^t \mu F_{t'} \, dt'] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt'] \\
+        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + 2 \underbrace{\text{E}[\Delta x_t]}_{0} \text{E}[\int_0^t \mu F_{t'} \, dt'] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt'] \\
         &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + \\
 \end{align*}
 $$
@@ -58,14 +58,6 @@ $$
 \Delta \mu \times J \le 0
 $$
 representing the amount of energy consumed per unit time.
-
-## Master equation ##
-
-### waiting time ###
-
-For a reaction 
-
-## Markov chain ##
 
 ## Wegscheider conditions ##
 
@@ -106,6 +98,31 @@ $$
 \frac{k_{i_0, i_1} k_{i_1, i_2} \cdots k_{i_n, i_0}}{k_{i_1, i_0} k_{i_2, i_1} \cdot k_{i_0 i_n}} = 1
 $$
 It can be shown mathematically that if and only if the Wegscheider condition is satisified for every possible cycle in the kinetic network, then the entire system is at equilibrium, and its stochastic dynamic is time-reversible.
+
+## Master equation ##
+
+For an irreversible reaction,
+$$
+A \overset{k}{\to} B
+$$
+where the random variable $X(t)$ is the number of $A$ molecules at time $t$ and the probability of number of $A$ molecules is $P_x(t) = \text{Prob}\{ X(t) = x\}$. The probability of transition $x \to x-1$ in the interval $(t,t+\Delta t)$ is $k x \Delta t + O(\Delta t)$. So the time-dependent probability $P_x(t+\Delta t)$ is given by,
+$$
+P_x(t+\Delta t) = \underbrace{k (x+1) \Delta t}_{x+1 \to x} \cdot P_{x+1}(t) + \underbrace{(1 - k x \Delta t)}_{x \to x} \cdot P_x(t)
+$$
+By transposing the equation and taking the limit $\Delta t \to 0$, the differential of probability is given by,
+$$
+\frac{dP_x(t)}{dt} = k (x+1) P_{x+1}(t) - k x P_x(t)
+$$
+Multiplying $x$ on both side of the equation and summing over all $x$, then stochastic equation becomes the standard chemical rate equation as the law of mass action,
+$$
+\begin{align*}
+        \frac{d< x >}{dt}  &= k \sum_x x(x+1)P_{x+1}(t) - k \sum_x x^2 P_x(t) \\
+        &= k \left( < (x+1)^2 > - < (x+1) > - <x^2> \right) \\
+        \frac{dn_A}{dt} &= -k n_A \\
+\end{align*}
+$$
+
+1. McQuarrie, Donald A. "Stochastic approach to chemical kinetics." Journal of applied probability 4.3 (1967): 413-478.
 
 ## Probability transition matrix ##
 
