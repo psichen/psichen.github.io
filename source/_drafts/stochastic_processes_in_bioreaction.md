@@ -20,7 +20,6 @@ $$
 \begin{equation}
 x_t - x_0 - \int_0^t \mu F_{t'} \, dt' = \sqrt{2D} \int_0^t \eta_t \, dt' \label{integral}
 \end{equation}
-x_t - x_0 - \int_0^t \mu F_{t'} \, dt' = \sqrt{2D} \int_0^t \eta_t \, dt'
 $$
 Taking the variance of both sides of Eq $\eqref{integral}$,
 $$
@@ -31,10 +30,22 @@ $$
         &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] - 2 \mu \int_0^t \left( C_{xF}(t') - C_{Fx}(t') \right) \, dt' \\
 \end{align*}
 $$
+In the last step to get the correlation function $C_{xF}(t')$ and $C_{Fx}(t')$, the order of integral is changed (omitting constant parameters),
+$$
+\text{E}[(x_t - x_0) \int_0^t F_{t'} \, dt'] = \int_0^t \left( \text{E}[x_t F_{t'}] - \text{E}[x_0 F_{t'}] \right) \, dt'
+$$
+Because $t' \in [0, t]$, the lag time between $x_t$ and $F_{t'}$ will also be $[0, t]$, thus we get the integral of correlations,
+$$
+\int_0^t \left( \text{E}[x_t F_{t'}] - \text{E}[x_0 F_{t'}] \right) \, dt' = \int_0^t \left( C_{xF}(t') - C_{Fx}(t') \right) \, dt'
+$$
+
 meanwhile the variance of RHS is obvious,
 $$
 \text{Var[RHS]} = 2Dt
 $$
+
+## Stratonovich integral ##
+
 
 The likelihood of $X$ becoming $Y$, or $Y$ becoming $X$, is determined by the chemical potential difference according to Gibbsian chemical thermodynamics,
 $$
