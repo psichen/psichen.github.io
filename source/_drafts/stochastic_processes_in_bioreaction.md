@@ -7,23 +7,33 @@ tags: [probability transition matrix, correalton function, detailed balance]
 
 The overdamped Langevin equation is given by,
 $$
-\dot{x}_t = \mu F_t + \sqrt{2D} \eta_t
+\begin{equation}
+\dot{x}_t = \mu F_t + \sqrt{2D} \eta_t \label{Langevin}
+\end{equation}
 $$
 where $\eta_t$ is Gaussian with first two moments $\overline{\eta_t}=0$ and $\overline{\eta_t \eta_{t'}}=\delta (t-t')$, so the variance is given by the integral of $\overline{\eta_t \eta_{t'}}$,
 $$
-\begin{align*}
-\int_{-\infty}^{\infty} \overline{\eta_t \eta_{t'}} \, dt' &= \int_{-\infty}^{\infty} \delta(t-t') \, dt' \\
-&= \overline{\eta_t^2} = 1 \\
-\end{align*}
+\int_{-\infty}^{\infty} \overline{\eta_t \eta_{t'}} \, dt' = \int_{-\infty}^{\infty} \delta(t-t') \, dt' = \overline{\eta_t^2} = 1
 $$
-By taking the variance of the integral of the equation,
+By transposing and integrating Eq $\eqref{Langevin}$, we get,
+$$
+\begin{equation}
+x_t - x_0 - \int_0^t \mu F_{t'} \, dt' = \sqrt{2D} \int_0^t \eta_t \, dt' \label{integral}
+\end{equation}
+x_t - x_0 - \int_0^t \mu F_{t'} \, dt' = \sqrt{2D} \int_0^t \eta_t \, dt'
+$$
+Taking the variance of both sides of Eq $\eqref{integral}$,
 $$
 \begin{align*}
-        \text{LHS} &= \color{blue}{\text{E}[(x_t - x_0 - \int_0^t \mu F_{t'} \, dt')^2]} - \color{red}{\text{E}[x_t - x_0 - \int_0^t \mu F_{t'} \, dt']^2} \\
+        \text{Var[LHS]} &= \color{blue}{\text{E}[(x_t - x_0 - \int_0^t \mu F_{t'} \, dt')^2]} - \color{red}{\text{E}[x_t - x_0 - \int_0^t \mu F_{t'} \, dt']^2} \\
         &= \color{blue}{\text{E}[(\Delta x_t)^2] + \text{E}[(\int_0^t \mu F_{t'} \, dt')^2] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt']} - \color{red}{\left( \text{E}[\Delta x_t] - \text{E}[\int_0^t \mu F_{t'} \, dt'] \right)^2} \\
-        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + 2 \underbrace{\text{E}[\Delta x_t]}_{0} \text{E}[\int_0^t \mu F_{t'} \, dt'] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt'] \\
-        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + \\
+        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + 2 \underbrace{\text{E}[\Delta x_t]}_{=0} \text{E}[\int_0^t \mu F_{t'} \, dt'] - \text{E}[2 (x_t - x_0) \int_0^t \mu F_{t'} \, dt'] \\
+        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] - 2 \mu \int_0^t \left( C_{xF}(t') - C_{Fx}(t') \right) \, dt' \\
 \end{align*}
+$$
+meanwhile the variance of RHS is obvious,
+$$
+\text{Var[RHS]} = 2Dt
 $$
 
 The likelihood of $X$ becoming $Y$, or $Y$ becoming $X$, is determined by the chemical potential difference according to Gibbsian chemical thermodynamics,
