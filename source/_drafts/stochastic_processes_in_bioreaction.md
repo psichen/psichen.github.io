@@ -5,6 +5,28 @@ tags: [probability transition matrix, correalton function, detailed balance]
 
 ## Variance sum rule ##
 
+### variance & correlation ###
+
+For the random variable $X$, the variance is given by,
+$$
+\begin{align*}
+\text{Var}[X] &= \text{E}[(X-\overline{X})^2] \\
+&= \text{E}[X^2] - \text{E}[X]^2 \\
+\end{align*}
+$$
+For two random variables $X$ and $Y$, the variance is given by,
+$$
+\begin{align*}
+\text{Var}[X+Y] &= \text{E}[(X+Y)^2] - \text{E}[X+Y]^2 \\
+&= \text{E}[X^2] + 2 \text{E}[XY] + \text{E}[Y^2] -\text{E}[X]^2 - 2\text{E}[X]\text{E}[Y] - \text{E}[Y]^2 \\
+&= (\text{E}[X^2] -\text{E}[X]^2) + (\text{E}[Y^2] - \text{E}[Y]^2) + 2 (\text{E}[XY] - \text{E}[X]\text{E}[Y]) \\
+&= \text{Var}[X] + \text{Var}[Y] + 2 \text{Cov}[X, Y] \\
+\end{align*}
+$$
+when $X$ and $Y$ have a time delay $t$, the covariance $\text{Cov}[X_t, Y_0] = \text{E}[X_t Y_0] - \text{E}[X_t] \text{E}[Y_0]$ is also called the *connected correlation function* $C_{XY}(t)$.
+
+### stochastic overdamped Langevin equation ###
+
 The overdamped Langevin equation is given by,
 $$
 \begin{equation}
@@ -24,9 +46,8 @@ $$
 Taking the variance of both sides of Eq $\eqref{integral}$,
 $$
 \begin{align*}
-        \text{Var[LHS]} &= \color{blue}{\text{E}[(x_t - x_0 - \int_0^t \mu F_{t'} \, dt')^2]} - \color{red}{\text{E}[x_t - x_0 - \int_0^t \mu F_{t'} \, dt']^2} \\
-        &= \color{blue}{\text{E}[(\Delta x_t)^2] + \text{E}[(\int_0^t \mu F_{t'} \, dt')^2] - \text{E}[2 \Delta x_t \int_0^t \mu F_{t'} \, dt']} - \color{red}{\left( \text{E}[\Delta x_t] - \text{E}[\int_0^t \mu F_{t'} \, dt'] \right)^2} \\
-        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + 2 \underbrace{\text{E}[\Delta x_t]}_{=0} \text{E}[\int_0^t \mu F_{t'} \, dt'] - \text{E}[2 (x_t - x_0) \int_0^t \mu F_{t'} \, dt'] \\
+        \text{Var[LHS]} &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'}\,dt'] - 2 \text{Cov}[\Delta x_t , \int_0^t \mu F_{t'}\,dt'] \\
+        &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] + 2 \underbrace{\text{E}[\Delta x_t]}_{=0} \text{E}[\int_0^t \mu F_{t'} \, dt'] - 2 \text{E}[(x_t - x_0) \int_0^t \mu F_{t'} \, dt'] \\
         &= \text{Var}[\Delta x_t] + \text{Var}[\int_0^t \mu F_{t'} \, dt'] - 2 \mu \int_0^t \left( C_{xF}(t') - C_{Fx}(t') \right) \, dt' \\
 \end{align*}
 $$
@@ -39,7 +60,7 @@ $$
 \int_0^t \left( \text{E}[x_t F_{t'}] - \text{E}[x_0 F_{t'}] \right) \, dt' = \int_0^t \left( C_{xF}(t') - C_{Fx}(t') \right) \, dt'
 $$
 
-meanwhile the variance of RHS is obvious,
+meanwhile the variance of RHS is,
 $$
 \text{Var[RHS]} = 2Dt
 $$
