@@ -122,13 +122,8 @@ var entries = [
 				target: '_top'
 		},
 		{
-				label: 'ESCRT-III',
-				url: 'mindmap/ESCRT-III',
-				target: '_top'
-		},
-		{
-				label: 'mechanosensitive fluorescent probes',
-				url: '#!',
+				label: 'force curves',
+				url: 'mindmap/force_curves',
 				target: '_top'
 		},
 		{
