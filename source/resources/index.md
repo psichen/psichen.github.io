@@ -131,6 +131,11 @@ var entries = [
 				url: 'mindmap/force-optical_microscopy',
 				target: '_top'
 		},
+		{
+                label: 'feedback loop & response',
+				url: 'mindmap/feedback',
+				target: '_top'
+		},
 ];
 </script>
 <script src='./script/jquery.min.js'></script>
