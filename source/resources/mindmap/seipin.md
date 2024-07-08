@@ -61,12 +61,13 @@ lower surface of the core ring is hydrophobic indicating the the region is ancho
 mutants("oligomerization state is critical for seipin function")
 
 lipid("seipin binds anionic 16:0/18:1 PA 'POPA' and PI3P
-<b>interaction to PA is strengthended under increasing pH (6.5 - 8.0)</b>")
+<b>interaction to PA is strengthended under increasing pH (6.5 - 8.0)</b>
+<b>seipin C2-like core domain binds POPC/PA liposomes but does not bind POPC liposomes</b>")
 
 %% RELATIONS====================
 theme --- |human seipin in digionin| cryoEM
 cryoEM --- |6-point mutation \n NS-EM for oligomerization \n lipid droplets in living cells| mutants
-mutants --- |lipid strips| lipid
+mutants --- |lipid strips \n liposome-binding| lipid
 ```
 
 ### 2022_cage ###
