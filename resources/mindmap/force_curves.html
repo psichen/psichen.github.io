@@ -130,7 +130,7 @@
 </script>
 
 
-<meta name="generator" content="Hexo 6.0.0"></head>
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
 <body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
   <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
   <div class="max-auto">
@@ -195,21 +195,31 @@
     </div>
   </header>
   <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
-    <h2 id="dag">DAG</h2>
+    <h2 id="timeline">Timeline</h2>
 <pre class="mermaid">flowchart TB
 
-ESCRT-III --- || 
+2006_SPAM["scanning probe acceleration microscopy (SPAM)"]
+2007_torsional["torsional harmonic cantilever"]
+2018_PORT["photothermal off-resonance tapping afm (PORT)"]
 
-click href "./VIPP1#ds_nc" _self</pre>
+click 2006_SPAM href "./force_curves#spam" _self
+click 2007_torsional href "./force_curves#torsional" _self
+click 2018_PORT href "./force_curves#port" _self
+
+subgraph 2006
+        2006_SPAM
+end
+subgraph 2007
+        2007_torsional
+end
+subgraph 2018
+        2018_PORT
+end
+2006 --> 2007 --> 2018</pre>
 <h2 id="lectures">Lectures</h2>
-<h3 id="ds_nc">2015_DS_NC</h3>
-<pre class="mermaid">flowchart TB
-
-%% OBJECTS==================================================
-theme(VIPP1 triggers membrane fusion by destabilization)
-
-%% RELATIONS==================================================
-theme --- |scrose density gradient centrifugation \n western blot| preserved</pre>
+<h3 id="spam">2006_SPAM</h3>
+<h3 id="torsional">2007_torsional</h3>
+<h3 id="port">2018_PORT</h3>
 
   </article>
 </section>
@@ -306,7 +316,7 @@ theme --- |scrose density gradient centrifugation \n western blot| preserved</pr
   <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
   <!-- copyright -->
   <div class="flex items-center gap-2">
-    <span>© 2019 - 2023</span>
+    <span>© 2019 - 2024</span>
     <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
     <span>psichen</span>
   </div>

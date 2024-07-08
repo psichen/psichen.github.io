@@ -97,6 +97,9 @@ ol {
   display: block;
   overflow-x: auto;
 }
+.tikzjax > svg {
+  margin: 0 auto;
+}
 .tagcloud-0 {
   padding-right: 15px;
   color: #9ca3af;
@@ -122,6 +125,9 @@ html.dark {
 a:hover {
   color: #41c4de;
   cursor: pointer;
+}
+article > p > a {
+  color: #55f;
 }
 ::-webkit-scrollbar-track {
   background-color: var(--c-bg);

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <meta name="author" content="psichen">
+
+
+  <meta name="subtitle" content="I have a proof of this theorem, but there is not enough space in this margin">
+
+
+
+
+<title>Notes about complex analysis | pan.world</title>
+
+
+
+
+
+<link rel="stylesheet" href="/lib/nprogress/nprogress.css">
+
+
+<script src="/lib/jquery.min.js"></script>
+
+
+<script src="/lib/iconify-icon.min.js"></script>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+  };
+</script>
+
+
+<script src="/lib/nprogress/nprogress.js"></script>
+
+<script>
+  $(document).ready(() => {
+    NProgress.configure({
+      showSpinner: false,
+    });
+    NProgress.start();
+    $("#nprogress .bar").css({
+      background: "#de7441",
+    });
+    $("#nprogress .peg").css({
+      "box-shadow": "0 0 2px #de7441, 0 0 4px #de7441",
+    });
+    $("#nprogress .spinner-icon").css({
+      "border-top-color": "#de7441",
+      "border-left-color": "#de7441",
+    });
+    setTimeout(function () {
+      NProgress.done();
+      $(".fade").removeClass("out");
+    }, 800);
+  });
+</script>
+
+<script>
+  (function () {
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    let isDark = document.documentElement.classList.contains("dark");
+  })();
+
+  $(document).ready(function () {
+    // init icon
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = document.documentElement.classList.contains("dark");
+    $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+
+    function toggleGiscusTheme() {
+      const isDark = document.documentElement.classList.contains("dark");
+      const giscusFrame = document.querySelector("iframe.giscus-frame");
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? "dark" : "light",
+              },
+            },
+          },
+          "https://giscus.app"
+        );
+      }
+    }
+
+
+    // toggle dark mode
+    function toggleDark() {
+      let isDark = document.documentElement.classList.contains("dark");
+      isDark = !isDark;
+      const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+      document.documentElement.classList.toggle("dark", isDark);
+      $("#theme-icon").attr("icon", isDark ? "ri:moon-line" : "ri:sun-line");
+      if (prefersDark === isDark) {
+        localStorage.setItem("hexo-color-scheme", "auto");
+      } else {
+        localStorage.setItem("hexo-color-scheme", isDark ? "dark" : "light");
+      }
+      toggleGiscusTheme();
+    }
+    $("#toggle-dark").click(toggleDark);
+    // listen dark mode change
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        const setting = localStorage.getItem("hexo-color-scheme") || "auto";
+        if (setting === "auto") {
+          document.documentElement.classList.toggle("dark", e.matches);
+          $("#theme-icon").attr(
+            "icon",
+            e.matches ? "ri:moon-line" : "ri:sun-line"
+          );
+          toggleGiscusTheme();
+        }
+      });
+  });
+</script>
+
+
+<meta name="generator" content="Hexo 6.0.0"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/node-tikzjax@latest/css/fonts.css" /><style>.tikzjax { display: block; text-align: center; user-select: none; }</style></head>
+<body class="font-sans bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-200">
+  <header class="fixed w-full px-5 py-1 z-10 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5">
+  <div class="max-auto">
+    <nav class="flex items-center text-base">
+      <a href="/" class="group">
+        <h2 class="font-medium tracking-tighterp text-l p-2">
+          pan.world
+        </h2>
+      </a>
+      <div class="flex-1"></div>
+      <div class="flex items-center gap-3">
+        
+          <a class="hidden sm:flex" href="/archives">Archives</a>
+        
+          <a class="hidden sm:flex" href="/tag">Tags</a>
+        
+          <a class="hidden sm:flex" href="/about">About</a>
+        
+        <a class="w-5 h-5" title="toggle theme" id="toggle-dark">
+          <iconify-icon width="20" icon="" id="theme-icon"></iconify-icon>
+        </a>
+      </div>
+      <div class="flex items-center justify-center gap-3 ml-3 sm:hidden">
+        <span class="w-5 h-5" aria-hidden="true" role="img" id="open-menu">
+          <iconify-icon width="20" icon="carbon:menu" ></iconify-icon>
+        </span>
+        <span class="w-5 h-5 hidden" aria-hidden="true" role="img" id="close-menu">
+          <iconify-icon  width="20" icon="carbon:close" ></iconify-icon>
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+<div id="menu-panel" class="h-0 overflow-hidden sm:hidden fixed left-0 right-0 top-12 bottom-0 z-10">
+  <div id="menu-content" class="relative z-20 bg-white/80 px-6 sm:px-8 py-2 backdrop-blur-xl -translate-y-full transition-transform duration-300">
+    <ul class="nav flex flex-col sm:flex-row text-sm font-medium">
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/archives" class="flex h-12 sm:h-auto items-center">Archives</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/tag" class="flex h-12 sm:h-auto items-center">Tags</a>
+        </li>
+      
+        <li class="nav-portfolio sm:mx-2 border-b sm:border-0 border-black/5 last:border-0 hover:text-main">
+          <a href="/about" class="flex h-12 sm:h-auto items-center">About</a>
+        </li>
+      
+    </ul>
+  </div>
+  <div class="mask bg-black/20 absolute inset-0"></div>
+</div>
+
+  <main class="p-12">
+    <!-- css -->
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.min.css">
+
+
+<link rel="stylesheet" href="/lib/tocbot/tocbot.min.css">
+
+<!-- toc -->
+
+  <!-- tocbot -->
+<nav class="post-toc toc text-sm w-48 relative top-32 right-0 opacity-70 hidden xl:block" style="position: fixed !important;"></nav>
+
+
+<section class="px-6 max-w-4xl mx-auto md:px-0">
+  <!-- header -->
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        Notes about complex analysis
+      </h1>
+      <div>
+        <section class="flex items-center gap-3 text-sm">
+          <time>2024-03-23</time>
+          <span class="text-gray-400">·</span>
+          <span>645 words</span>
+        </section>
+      </div>
+    </div>
+  </header>
+  <!-- content -->
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <p>For a complex function, <span class="math display">\[
+f(z) = u + v i
+\]</span> where <span class="math inline">\(z=x + y i\)</span>, <span
+class="math inline">\(u=u(x,y)\)</span> and <span
+class="math inline">\(v=v(x,y)\)</span>.</p>
+<h2 id="cauchy-riemann-relations">Cauchy-Riemann relations</h2>
+<p>if the complex function <span class="math inline">\(f(z) = u +
+vi\)</span> is analytic, then the necessary condition is given by, <span
+class="math display">\[
+\begin{align*}
+        \frac{\partial u}{\partial x} &amp;= \frac{\partial v}{\partial
+y}  \\
+        \frac{\partial v}{\partial x} &amp;= - \frac{\partial
+u}{\partial y}  \\
+\end{align*}
+\]</span> which is known as the Cauchy-Riemann relations.</p>
+<h3 id="harmonicity">Harmonicity</h3>
+<p>By differentating the Cauchy-Riemann relations with respect to
+independ variables, we can get the harmonicity of analytic complex
+function, <span class="math display">\[
+\nabla^2 u = \nabla^2 v = 0
+\]</span> which means the second-order derivatives of real part or
+imaginary parts on <span class="math inline">\(x\)</span>- and <span
+class="math inline">\(y\)</span>-dimensions have opposite signs, if they
+are not equal to zero. It's useful in the saddle approximation.</p>
+<h3 id="cauchys-theorem">Cauchy's theorem</h3>
+<p>According to the Green's theorem, <span class="math display">\[
+\oint_{C} L \, dx + M \, dy = \iint_{D} (\frac{\partial M}{\partial x} -
+\frac{\partial L}{\partial y} ) \, dxdy
+\]</span> with the analytic complex function <span
+class="math inline">\(f(z) = u + vi\)</span>, the circular integral of
+an analytic complex function is given by, <span class="math display">\[
+\oint_{C} f(z) \, dz = 0
+\]</span> due to the Cauchy-Riemann conditions, if <span
+class="math inline">\(f&#39;(z)\)</span> is continuous at each point
+within and on a closed contour <span
+class="math inline">\(C\)</span>.</p>
+<h2 id="cauchys-integral-formula">Cauchy's integral formula</h2>
+<p>The value of an analytic function and its derivatives inside a closed
+contour <span class="math inline">\(C\)</span> is uniquely determined by
+its values on the contour, <span class="math display">\[
+\begin{align*}
+f(z_0) &amp;= \frac{1}{2 \pi i} \oint_{C} \frac{f(z)}{z-z_0} \, dz \\
+f^{(n)}(z_0) &amp;= \frac{n!}{2 \pi i} \oint_{C}
+\frac{f(z)}{(z-z_0)^{n+1}} \, dz \\
+\end{align*}
+\]</span></p>
+<h3 id="liouvilles-theorem">Liouville's theorem</h3>
+<p>From the Cauchy's integral formula, the inequality is given by, <span
+class="math display">\[
+\begin{align*}
+\mid f^{(n)}(z_0) \mid &amp;= \frac{n!}{2 \pi} \mid \oint_{C}
+\frac{f(z)}{(z-z_0)^{n+1}} \, dz \mid \\
+&amp;\leq \frac{n!}{2 \pi} \frac{M}{R^{n+1}} 2 \pi R \\
+&amp;= \frac{M n!}{R^n}
+\end{align*}
+\]</span> Thus if <span class="math inline">\(f(z)\)</span> is analytic
+and bounded for all <span class="math inline">\(z\)</span> then <span
+class="math inline">\(f\)</span> is constant, because when <span
+class="math inline">\(n=1\)</span> and <span class="math inline">\(R \to
+\infty\)</span>, <span class="math inline">\(\mid f&#39;(z_ n)
+\mid=0\)</span>.</p>
+<h2 id="laurent-series">Laurent series</h2>
+<p>The Laurent series is an extension of the Taylor expansion, <span
+class="math display">\[
+f(z) = \sum_{n=-\infty}^{\infty} a_n (z-z_0)^n
+\]</span> where <span class="math inline">\(z_0\)</span> is a pole of
+<span class="math inline">\(f(z)\)</span> and <span
+class="math inline">\(a_n\)</span> is given by, <span
+class="math display">\[
+a_n = \frac{1}{2 \pi i} \oint_{C} \frac{f(z)}{(z-z_0)^{n+1}} \, dz
+\]</span> The terms with <span class="math inline">\(n \geq 0\)</span>
+are called the analytic part and the terms with <span
+class="math inline">\(n \lt 0\)</span> are called the principal part.
+The value of <span class="math inline">\(a_{-1}\)</span> is called the
+residue of <span class="math inline">\(f(z)\)</span> at the pole <span
+class="math inline">\(z=z_0\)</span>.</p>
+<h3 id="residue-theorem">Residue theorem</h3>
+<p>By differentating both sides of Laurent series multiple times, we can
+get the coefficient before the term <span
+class="math inline">\((z-z_0)^{-1}\)</span>, <em>i.e.</em>, the residue,
+<span class="math display">\[
+\text{Res}(z_0) = \lim_{z \to z_0} \left\{ \frac{1}{(m-1)!}
+\frac{d^{m-1}}{dz^{m-1}} [(z-z_0)^m f(z)] \right\}
+\]</span> where <span class="math inline">\(m\)</span> is the order of
+poles. If <span class="math inline">\(m=1\)</span> and <span
+class="math inline">\(f(z)\)</span> has a form <span
+class="math inline">\(g(z)/h(z)\)</span>, the residue is given by, <span
+class="math display">\[
+\text{Res}(z_0) = g(z_0) \lim_{z \to z_0} \frac{z-z_0}{h(z)} =
+\frac{g(z_0)}{h&#39;(z_0)}
+\]</span> When there are singular points within the closed contour <span
+class="math inline">\(C\)</span>, <span class="math display">\[
+\sum_{k=1}^{n} \text{Res}(z_k) = \frac{1}{2 \pi i} \oint_{C} f(z) \, dz
+\]</span> where the Residue at singularity <span
+class="math inline">\(z_k\)</span> is given by, <span
+class="math display">\[
+\text{Res}(z_k) = \frac{1}{2 \pi i} \oint_{C&#39;} f(z) \, dz
+\]</span> Recall the Cauchy's integral theorem, if the closed contour
+<span class="math inline">\(C\)</span> doesn't contain singularities,
+then the Laurent series of <span class="math inline">\(f(z)\)</span>
+only have analytic part, so the residue <span
+class="math inline">\(a_{-1}=\oint_{C}f(z)\,dz=0\)</span>,</p>
+
+  </article>
+  <!-- tag -->
+  <div class="mt-12 pt-6 border-t border-gray-200">
+    
+      
+        <span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 m-1 text-sm rounded-md transition-colors hover:bg-gray-200">
+          <a href="/tags/complex-analysis/">complex analysis</a>
+        </span>
+      
+    
+  </div>
+  <!-- prev and next -->
+  <div class="flex justify-between mt-12 pt-6 border-t border-gray-200">
+    <div>
+      
+        <a href="/2024/03/23/Z-transform-and-normalization-of-Fourier-transform/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          <iconify-icon width="20" icon="ri:arrow-left-s-line" data-inline="false"></iconify-icon>
+          Z-transform and normalization of Fourier transform
+        </a>
+      
+    </div>
+    <div>
+      
+        <a href="/2023/11/06/solving-differential-equations-by-transform/" class="text-sm text-gray-400 hover:text-gray-500 flex justify-center">
+          Solving differential equations by transforms
+          <iconify-icon width="20" icon="ri:arrow-right-s-line" data-inline="false"></iconify-icon>
+        </a>
+      
+    </div>
+  </div>
+</section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
+
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
+
+
+  </main>
+  <footer class="flex flex-col h-40 items-center justify-center text-gray-400 text-sm">
+  <!-- copyright -->
+  <div class="flex items-center gap-2">
+    <span>© 2019 - 2024</span>
+    <iconify-icon width="18" icon="eos-icons:atom-electron" ></iconify-icon>
+    <span>psichen</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <span>
+    Powered by
+    <a href="https://hexo.io/" target="_blank" rel="noopener noreferrer">Hexo</a>.
+    Theme modified from
+    <a href="https://github.com/xbmlz/hexo-theme-maple" target="_blank" rel="noopener noreferrer">Maple</a>.
+    </span>
+  </div>
+
+</footer>
+
+  <iconify-icon class="fixed right-4 bottom-10 z-100 opacity-0" width="24" icon="ion:arrow-up-c" id="go-top"></iconify-icon>
+  
+<script src="/js/main.js"></script>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+</body>
+
+</html>
