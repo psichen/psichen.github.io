@@ -22,10 +22,12 @@ flowchart TB
 
 2018_cryoEM_JCB["cryoEM of seipin"]
 2018_anionic["cryoEM of seipin binding anionic lipids"]
+2021_Sei1["yeast Sei1/Ldb16 Seipin complex"]
 2022_cage["cryoEM of flexible cage"]
 
 click 2018_cryoEM_JCB href "./seipin#cryoem_jcb" _self
 click 2018_anionic href "./seipin#anionic" _self
+click 2021_Sei1 href "./seipin#sei1" _self
 click 2022_cage href "./seipin#cage" _self
 
 subgraph 2018
@@ -33,11 +35,15 @@ subgraph 2018
         2018_anionic
 end
 
+subgraph 2021
+        2021_Sei1
+end
+
 subgraph 2022
         2022_cage
 end
 
-2018 --> 2022
+2018 --> 2021 --> 2022
 ```
 
 ### 2018_cryoEM_JCB ###
@@ -70,6 +76,43 @@ cryoEM --- |6-point mutation \n NS-EM for oligomerization \n lipid droplets in l
 mutants --- |lipid strips \n liposome-binding| lipid
 ```
 
+### 2021_sei1 ###
+
+Klug, Yoel A., et al. "Mechanism of lipid droplet formation by the yeast Sei1/Ldb16 Seipin complex." Nature communications 12.1 (2021): 5892.
+
+```mermaid
+flowchart TB
+
+%% OBJECTS====================
+theme(Sei1/Ldb16 yeast Seipin complex)
+
+cryoEM("decameric
+short helix flanking by two TM segments (&alpha;3, Locking Helix)")
+
+TAG("TAG accumulates around TM segments")
+
+luminal("luminal domain is split into two orthogonal small helices
+enriched in charged residues, fail to concentrate TAg (POPC with 3% TAG)")
+
+Ldb16("Ldb16 can be crosslinked at TM and luminal regions
+Ldb16 complements Sei1 functions")
+
+LH("LH domain deletion leads to increased TM movement \n LH controls the positioning and dynamcis of TM segments")
+
+TM("interaction betwwen TAG and TM, likely amino acid composition but not dynamics, contributs to LD formation")
+
+%% RELATIONS====================
+theme --- |yeast seipin in DDM| cryoEM
+cryoEM --- |coarse-grain MD| TAG
+cryoEM --- |coarse-grain MD| luminal
+luminal --- |UAA to crosslink Sei1 and Ldb16 \n lipid droplets in live cells \n Ldb16 contains many hydroxyl groups| Ldb16
+Ldb16 --- |LH mutation or deletion \n expression level & lipid droplets in live cells \n MD & cryoEM of &Delta;LH| LH
+LH --- |mutants in TM segments failed to restore cell functions \n &Delta;LH mutant could restore cell functions \n chimeric mutant with human TM could restore cell functions| TM
+TAG --- TM
+```
+
+*Seipin rings not in contact with lenses are highly mobile in the ER*
+
 ### 2022_cage ###
 
 Arlt, Henning, et al. "Seipin forms a flexible cage at lipid droplet formation sites." Nature structural & molecular biology 29.3 (2022): 194-202.
@@ -77,7 +120,7 @@ Arlt, Henning, et al. "Seipin forms a flexible cage at lipid droplet formation s
 ```mermaid
 flowchart TB
 
-%% OBJECTs====================
+%% OBJECTS====================
 theme(cryoEM of yeast seipin flexible cages)
 
 cryoEM(decameric, cage-like \n conformation A, B \n switch regions)
