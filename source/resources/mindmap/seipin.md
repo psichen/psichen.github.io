@@ -50,6 +50,37 @@ end
 
 Sui, Xuewu, et al. "Cryo–electron microscopy structure of the lipid droplet–formation protein seipin." Journal of Cell Biology 217.12 (2018): 4080-4091.
 
+```mermaid
+flowchart TB
+
+%% OBJECTS====================
+theme(fly seipin)
+
+cryoEM("dodecamer
+hydrophobic helices (HH) of luminal domain towards ER membrane
+two &beta;-sheets containing four antiparallel &beta;-shrands")
+
+intersubunit("inter-subunit: &pi;-cation between Y230 and R170
+hydrogenbond between Y230 and Y171 backbone
+Y171A: smaller oligomers")
+
+conserved("disulfide bond
+interface conserved")
+
+HH("HHs of Seipin luminal domain bind monolayer of LDs")
+
+LDformation("LD-binding helices function in a complementary manner
+mutants in luminal domain (Y171A) contribute to but are not required for oligomerization in vivo
+double mutant in &beta;-sandwich (V220A/I222A) failed to rescue cell functions")
+
+%% RELATIONS====================
+theme --- |fly seipin in digitionin or DDM \n luminal domain resolved only| cryoEM
+cryoEM --- |mutant & SEC| intersubunit
+intersubunit --- |evolutionary covariation analysis| conserved
+cryoEM --- |fluorescent seipin-HH peptides \n with artificial LDs or DEV| HH
+HH --- |seipin-HH3D mutant rescued seipin KO phenotype \n Y171A rescued LD phenotype in vivo \n mutants in luminal domain V220/I222| LDformation
+```
+
 ### 2018_anionic ###
 
 Yan, Renhong, et al. "Human SEIPIN binds anionic phospholipids." Developmental cell 47.2 (2018): 248-256.
