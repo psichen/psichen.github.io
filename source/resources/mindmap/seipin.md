@@ -22,17 +22,23 @@ flowchart TB
 
 2018_cryoEM_JCB["cryoEM of seipin"]
 2018_anionic["cryoEM of seipin binding anionic lipids"]
+2019_triglyceride["triglyceride flow and droplet ripening"]
 2021_Sei1["yeast Sei1/Ldb16 Seipin complex"]
 2022_cage["cryoEM of flexible cage"]
 
 click 2018_cryoEM_JCB href "./seipin#cryoem_jcb" _self
 click 2018_anionic href "./seipin#anionic" _self
+click 2019_triglyceride href "./seipin#triglyceride" _self
 click 2021_Sei1 href "./seipin#sei1" _self
 click 2022_cage href "./seipin#cage" _self
 
 subgraph 2018
         2018_cryoEM_JCB
         2018_anionic
+end
+
+subgraph 2019
+        2019_triglyceride
 end
 
 subgraph 2021
@@ -43,7 +49,7 @@ subgraph 2022
         2022_cage
 end
 
-2018 --> 2021 --> 2022
+2018 --> 2019 --> 2021 --> 2022
 ```
 
 ### 2018_cryoEM_JCB ###
@@ -106,6 +112,60 @@ theme --- |human seipin in digionin| cryoEM
 cryoEM --- |6-point mutation \n NS-EM for oligomerization \n lipid droplets in living cells| mutants
 mutants --- |lipid strips \n liposome-binding| lipid
 ```
+
+### 2019_triglyceride ###
+
+Salo, Veijo T., et al. "Seipin facilitates triglyceride flow to lipid droplet and counteracts droplet ripening via endoplasmic reticulum contact." Developmental cell 50.4 (2019): 478-493.
+
+```mermaid
+flowchart TB
+
+%% OBJECTS====================
+theme(triglyceride flow to LD and counteract droplet ripening)
+
+formation("LDs forming after ~60s")
+
+mobility("Seipin mobility decreased
+prior to LD formation markers")
+
+LDs("nascent 30~100 nm LDs connecting to ER membrane")
+
+nearest("LD nucleation is non-stochastic")
+
+relocation("LD fraction at NE increases, which is reversible by siRNAs
+NE-LDs  showed similar persistence, reduced mobility
+and higher minimal distrance than random")
+
+neck("necks between (NE) membranes and LDs have a diameter of ~16 nm
+similar uniform ER-LD neck was not apparent, possibily due to conformational flexibility")
+
+depletion("numerous tiny and some supersized LDs
+Seipin maintains normal LDs
+Rab18 facilitates tiny LDs formatoin in Seipin-deficient cells")
+
+transfer("more heterogeneous LD size
+neutral lipids transfer from smaller LDs to larger LDs")
+
+DEV("LDs ripen without Seipin
+Seipin prevents ripening-induced LD shrinkage")
+
+fusion("Seipin facilitates tryglyceride deposition and enhances LD growth")
+
+%% RELATIONS====================
+theme --- |"live-cell imaging \n Oleic acid (OA) to trigger LD formation"| formation
+formation --- |mobility analysis| mobility
+mobility --- |"correlative light EM (CLEM)"| LDs
+formation --- |minimal distance between forming LDs \n is higher thant random simulation| nearest
+nearest --- |"GFP-nanobody system trapping Seipin at nuclear envelope (NE)"| relocation
+relocation --- |fixed architecture of NE \n compared to ER enables ET| neck
+LDs --- neck
+neck --- |acute depletion by auxin-inducible degron| depletion
+depletion --- |OA loaded before Seipin removal \n lipogenesis & lipolysis analysis \n FRAP| transfer
+transfer --- |"<b>isolated LD with Seipin from cells</b> \n mix with droplet-embeded vesicles (DEV)"| DEV
+DEV --- |heterologous cell fusion of seipin-degron cells and seipin cells| fusion
+```
+
+*Seipin may facilitate the growth of LDs, with suggested functions in regulating the enzyme machinery of de novo lipogenesis or phosphatidic acid metabolism.*
 
 ### 2021_sei1 ###
 
