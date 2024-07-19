@@ -24,12 +24,14 @@ flowchart TB
 2018_anionic["cryoEM of seipin binding anionic lipids"]
 2019_triglyceride["triglyceride flow and droplet ripening"]
 2021_Sei1["yeast Sei1/Ldb16 Seipin complex"]
+2021_accumulation_MD["MD of accumulation of DAG and TAG"]
 2022_cage["cryoEM of flexible cage"]
 
 click 2018_cryoEM_JCB href "./seipin#cryoem_jcb" _self
 click 2018_anionic href "./seipin#anionic" _self
 click 2019_triglyceride href "./seipin#triglyceride" _self
 click 2021_Sei1 href "./seipin#sei1" _self
+click 2021_accumulation_MD "./seipin#accumulation_md" _self
 click 2022_cage href "./seipin#cage" _self
 
 subgraph 2018
@@ -43,6 +45,7 @@ end
 
 subgraph 2021
         2021_Sei1
+        2021_accumulation_MD
 end
 
 subgraph 2022
@@ -203,6 +206,40 @@ TAG --- TM
 ```
 
 *Seipin rings not in contact with lenses are highly mobile in the ER*
+
+### 2021_accumulation_MD ###
+
+Zoni, Valeria, et al. "Seipin accumulates and traps diacylglycerols and triglycerides in its ring-like structure." Proceedings of the National Academy of Sciences 118.10 (2021): e2017205118.
+
+```mermaid
+flowchart TB
+
+%% OBJECTS====================
+theme(seipin accumulates DAG and TAG by MD simulation)
+
+accumulate("seipin accumulates TAG of low concentration (2%)")
+
+luminal("luminal (mostly through HH region L162-S166) acumulates TAG
+seipin and TAG establish long-lived interactions")
+
+TM("TM helices accumulate TAG first before luminal domains
+TM-only system failed to retain TAG
+polar residues in TM helices are critical in TAG accumulation")
+
+DAG("accumulation of DAG does not alter TAG accumulation
+TAG still localize S165&S166 of HH in luminal domain, DAG spreads around the HH region")
+
+polar("S165/S166 in HH is required for LD formation")
+
+%% RELATIONS====================
+theme --- |human 11-mer seipin \n DOPC with TAG \n TAG molecule number in direct contact with seipin| accumulate
+accumulate --- |TAG radial concentration along seipin \n simulation of luminal domain alone /n diffusion of TAG interacting with luminal domains \n dissociation of TAG bound to Seipin| luminal
+luminal --- |time-resolved TAG radial concentration along seipin \n simulation of TM helices along \n diffusion of TAG interacting with TM helices \n mutation of TM helices| TM
+TM --- |ER-like membrane: PC, PE, cholesterol, DAG \n 10% DAG or PA in DOPC| DAG
+DAG --- |S165/S166 mutant in live-cell imaging| polar
+```
+
+*N_terminal domain is proposed in relation to PA homeostasis*
 
 ### 2022_cage ###
 
