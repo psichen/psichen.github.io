@@ -20,6 +20,7 @@ Less conserved: cytoplasmic N- and C-terminal regions; lengths vary among specie
 ```mermaid
 flowchart TB
 
+2016_nascent_mature["LDs from nascent to mature"]
 2018_cryoEM_JCB["cryoEM of seipin"]
 2018_anionic["cryoEM of seipin binding anionic lipids"]
 2019_triglyceride["triglyceride flow and droplet ripening"]
@@ -27,12 +28,17 @@ flowchart TB
 2021_accumulation_MD["MD of accumulation of DAG and TAG"]
 2022_cage["cryoEM of flexible cage"]
 
+click 2016_nascent_mature href "./seipin#nascent_mature" _self
 click 2018_cryoEM_JCB href "./seipin#cryoem_jcb" _self
 click 2018_anionic href "./seipin#anionic" _self
 click 2019_triglyceride href "./seipin#triglyceride" _self
 click 2021_Sei1 href "./seipin#sei1" _self
 click 2021_accumulation_MD "./seipin#accumulation_md" _self
 click 2022_cage href "./seipin#cage" _self
+
+subgraph 2016
+        2016_nascent_mature
+end
 
 subgraph 2018
         2018_cryoEM_JCB
@@ -52,7 +58,48 @@ subgraph 2022
         2022_cage
 end
 
-2018 --> 2019 --> 2021 --> 2022
+2016 --> 2018 --> 2019 --> 2021 --> 2022
+```
+
+### 2016_nascent_mature ###
+
+Wang, Huajin, et al. "Seipin is required for converting nascent to mature lipid droplets." elife 5 (2016): e16582.
+
+```mermaid
+flowchart TB
+
+%% OBJECTS====================
+theme(seipin is required for LD maturation)
+
+deficiency("Seipin deficiency leads to LD altered morphology
+without evidence for altered lipid metabolism (including cellular PA levels)")
+
+LiveDrop("small LiveDrop puncta are more mobile in Seipin KD
+LiveDrop localization to LDs depends on TG synthesis")
+
+conserved("Seipin conserved regions (TM and luminal domains) are required for functions")
+
+LD-ER("nascent LDs were close proximity to but separated from the ER
+filamentous structures between LDs and ER in Seipin KO cells
+LD-ER contact sites space lacks ribosomes")
+
+seipin("Seipin are highly mobile along the ER before LD formation
+Seipin co-localized with LiveDrop puncta shortly and became less mobile
+majority of LDs are associated with Seipin")
+
+GPAT4("nascent, abnormal LDs recruit GPAT4 targeting to LDs at early time
+initiating TG synthesis and LD expansion")
+
+phospholipids("Giant LDs of Seipin-deficient cells are deficient in phospholipids")
+
+%% RELATIONS====================
+theme --- |fly and human cells \n RNAi,CRISPR/Cas9 to knock down \n live-cell imaging \n 14C labelling lipidomics| deficiency
+deficiency --- |LiveDrop - more sensitive to TG \n small, abnormal LDs: LiveDrop+ & BODIPY- \n TG synthesis inhibitors| LiveDrop
+LiveDrop --- |cells from BSCL2 mutation patients \n Seipin truncations to rescue LD phenotype in Seipin KD cells \n expression of human Seipin prevents Seipin depletion phenotypes| conserved
+conserved --- |ET| LD-ER
+LD-ER --- |GFP-Seipin & LiveDrop \n live-cell imaging| seipin
+seipin --- |GPAT4 co-licalizes with LDs \n knock down TG synthesis enzymes| GPAT4
+GPAT4 --- |"14C-oleic acid \n gradient centrifugation to get LD lipids \n CCT(PC synthesis enzyme) are recruited to LDs \n add PC liposomes to rescue phenotypes \n inhibition of CCT aggravates phenotypes"| phospholipids
 ```
 
 ### 2018_cryoEM_JCB ###
