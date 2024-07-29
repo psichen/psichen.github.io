@@ -2,6 +2,10 @@
 
 uniport: Q640F1
 
+MW: 37 kD (seipin) + n(?) x 1 kD (FLAG-tag)
+
+PI: 5.77
+
 spcies: Xenopus laevis (African clawed frog) in [homologous comparison](./seipin#cryoem_jcb).
 
 Evolutinoarily conserved: ER-lumenal domain; flanking transmembrane (TM) segments, switch region (within TM segments)
