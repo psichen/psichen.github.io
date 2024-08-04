@@ -15,9 +15,10 @@ Less conserved: cytoplasmic N- and C-terminal regions; lengths vary among specie
 
 ## Potential to do ##
 
-1. [Alphafold Multimer](https://cosmic-cryoem.org/tools/alphafoldmultimer/) of seipin (X. laevis)
-2. CNN to remove double-tip artifacts
-3. glycosylation / glycerolipids?
+- [x] [Alphafold Multimer](https://cosmic-cryoem.org/tools/alphafoldmultimer/) of seipin (X. laevis)
+- [ ] reconstitution (POPC/DOPE/DOPS for ER membrane proteins) / high affinity for PA
+- [ ] ~~algorithm to remove double-tip artifacts~~
+- [ ] glycosylation / glycerolipids?
 
 ## Timeline ##
 
@@ -28,6 +29,7 @@ flowchart TB
 2018_cryoEM_JCB["cryoEM of seipin"]
 2018_anionic["cryoEM of seipin binding anionic lipids"]
 2019_triglyceride["triglyceride flow and droplet ripening"]
+2020_curvature["membrane curvature catalyzes LD assembly"]
 2021_Sei1["yeast Sei1/Ldb16 Seipin complex"]
 2021_accumulation_MD["MD of accumulation of DAG and TAG"]
 2022_cage["cryoEM of flexible cage"]
@@ -36,6 +38,7 @@ click 2016_nascent_mature href "./seipin#nascent_mature" _self
 click 2018_cryoEM_JCB href "./seipin#cryoem_jcb" _self
 click 2018_anionic href "./seipin#anionic" _self
 click 2019_triglyceride href "./seipin#triglyceride" _self
+click 2020_curvature href "./seipin#curvature" _self
 click 2021_Sei1 href "./seipin#sei1" _self
 click 2021_accumulation_MD "./seipin#accumulation_md" _self
 click 2022_cage href "./seipin#cage" _self
@@ -53,6 +56,10 @@ subgraph 2019
         2019_triglyceride
 end
 
+subgraph 2020
+        2020_curvature
+end
+
 subgraph 2021
         2021_Sei1
         2021_accumulation_MD
@@ -62,7 +69,7 @@ subgraph 2022
         2022_cage
 end
 
-2016 --> 2018 --> 2019 --> 2021 --> 2022
+2016 --> 2018 --> 2019 --> 2020 --> 2021 --> 2022
 ```
 
 ### 2016_nascent_mature ###
@@ -220,6 +227,58 @@ DEV --- |heterologous cell fusion of seipin-degron cells and seipin cells| fusio
 ```
 
 *Seipin may facilitate the growth of LDs, with suggested functions in regulating the enzyme machinery of de novo lipogenesis or phosphatidic acid metabolism.*
+
+### 2020_curvature ###
+
+```mermaid
+flowchart TB
+
+%% OBJECTS====================
+theme(membrane curvature catalyzes LD asembly)
+
+enrich("nascent LDs enriched at tubules
+Seipin prefers to tubules
+<b>Seipin moves along sheet edges</b>")
+
+hypotonic("Seipin is enriched on smaller vesicles")
+
+degron("LDs nucleates at ER tubules in abscence of Seipin
+and NOT at large ER vesicles in prescence of Seipin")
+
+diffuse("large ER vesicles make more neutral lipids
+generated NLs diffuse in membrane
+Onion-ring-like ER membrane (low curvature) full of NLs")
+
+pullout("free TG is unfavorable in tubules
+SE is favorable in tubules")
+
+nucleation("membrane curvature promotes TG LD nucleation in vitro rather than SE-containing LDs
+TG diffuses slower than SE, which may facilitate LD formation")
+
+tubules("increase LDs")
+
+sheets("reduce tiny LDs in abscence of Seipin
+mildly reduce LDs in prescence of Seipin")
+
+ratio("increasing sheets lowers LDs number
+TG LDs are more efficiently asseembled than SE")
+
+%% RELATIONS====================
+theme --- |live-cell imaging \n ER sheet/tubules segmentation \n Rab18 KO to decrease tubules| enrich
+enrich --- |hypotonic medium \n swollen ER| hypotonic
+hypotonic --- |Seipin degron cells \n Bpy-C12 for nascent lipids \n LipidTox for neutral lipids| degron
+degron --- |"Sec61&beta;-mCherry (ER membrane protein) as reference \n FRAP"| diffuse
+diffuse --- |DEV system \n tubules pull out from GUVs| pullout
+pullout --- |decrease tubules radius rapidly by surface tension \n FRAP on tubules| nucleation
+nucleation --- |overexpress ER-tubule-generating proteins in Seipin degron cells| tubules
+nucleation --- |increase ER sheets| sheets
+sheets --- |ER tubule-to-sheet ratio| ratio
+tubules --- |TG/SE ratio| ratio
+```
+
+many Seipin-collaborating proteins are membrane curvature sensors or inducers (PEX30/MCTP2, promethin, Ldo16/45, LDIP)
+
+ER-LD marker peptide HPos?
 
 ### 2021_sei1 ###
 
