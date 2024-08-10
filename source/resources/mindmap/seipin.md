@@ -15,8 +15,10 @@ Less conserved: cytoplasmic N- and C-terminal regions; lengths vary among specie
 
 ## Potential to do ##
 
-- [x] [Alphafold Multimer](https://cosmic-cryoem.org/tools/alphafoldmultimer/) of seipin (X. laevis)
-- [ ] reconstitution (POPC/DOPE/DOPS for ER membrane proteins) / high affinity for PA
+- [ ] [Alphafold Multimer](https://cosmic-cryoem.org/tools/alphafoldmultimer/) of seipin (X. laevis)
+- [ ] **(lower LPR)** reconstitution (POPC/DOPE/DOPS for ER membrane proteins) / high affinity for PA
+- [ ] droplet embeded vesicles (DEV) of triglycerides added to reconstituted Seipin
+- [ ] crosslinking (mica - APTES - NES-PEG & SMCC - reconstituted Seipin)
 - [ ] ~~algorithm to remove double-tip artifacts~~
 - [ ] glycosylation / glycerolipids?
 
@@ -33,6 +35,7 @@ flowchart TB
 2021_Sei1["yeast Sei1/Ldb16 Seipin complex"]
 2021_accumulation_MD["MD of accumulation of DAG and TAG"]
 2022_cage["cryoEM of flexible cage"]
+2022_LDER_contact["metabolic and immune-sensitive LD-ER contacts in vitro"]
 
 click 2016_nascent_mature href "./seipin#nascent_mature" _self
 click 2018_cryoEM_JCB href "./seipin#cryoem_jcb" _self
@@ -42,6 +45,7 @@ click 2020_curvature href "./seipin#curvature" _self
 click 2021_Sei1 href "./seipin#sei1" _self
 click 2021_accumulation_MD "./seipin#accumulation_md" _self
 click 2022_cage href "./seipin#cage" _self
+click 2022_LDER_contact href "./seipin#lder_contact" _self
 
 subgraph 2016
         2016_nascent_mature
@@ -67,6 +71,7 @@ end
 
 subgraph 2022
         2022_cage
+        2022_LDER_contact
 end
 
 2016 --> 2018 --> 2019 --> 2020 --> 2021 --> 2022
@@ -378,4 +383,49 @@ cryoEM --- |mutant at central ring \n seipin lacking TM segments \n NS-EM| lumen
 TM --- |predicted interaction patches \n mutants \n lipid droplet in living cells| TM2
 TM2 --- |mutant & sequence shuffled| switch
 lumenal --- switch
+```
+
+### 2022_LDER_contact ###
+
+Kamerkar, Sukrut, et al. "Metabolic and immune-sensitive contacts between lipid droplets and endoplasmic reticulum reconstituted in vitro." Proceedings of the National Academy of Sciences 119.24 (2022): e2200513119.
+
+```mermaid
+flowchart TB
+
+%% OBJECTS====================
+theme(metabolic and immune-sensitive LD-ER contacts)
+
+reconstitution(in vitro reconstitution of LD-ER contacts)
+
+fed(more LD-mSLB contacts in the fed-fed situation)
+
+immunity(LDs-mSLB contacts are enhanced by immune activation)
+
+PA_immune(enrichment of PA on LDs after immune activation)
+
+insensitive(LD-mSLB contacts are insensitive to LD-bogenesis
+but require protein factors on mSLB)
+
+PA_feeding(Rab18 and PA promote LD-mSLB contacts after feeding)
+
+two_processes(two different biological responses, feeding and immune activation, require Rab18 and PA to induce ER-LD contacts)
+
+optical(stable LD-mSLB contacts: >20 pN)
+
+trafficking(stable LD-mSLB contacts support protein and lipid trafficking)
+
+PA_enhance(<b>PA enhances LD-SLB contact formation</b>)
+
+%% RELATIONS====================
+theme --- |"ER-enriched microsomal  vesicles from rat livers or cells (mSLB) \n LDs from livers \n LDs of diluted concentration to incubate, decreasing prewash LDs/unchanging postwash LDs"| reconstitution
+reconstitution --- |fed/fasted LDs & fed/fasted mSLBs| fed
+fed --- |activate immunity by LPS injection| immunity
+immunity --- |"Spo20-p (high affinity for PA)"| PA_immune
+fed --- |"LD-biogenesis inhibitors \n Proteinase-K on mSLBs"| insensitive
+insensitive --- |"Rab18 Ab \n Spo20-p (high affinity for PA) \n reduce bound LDs numbers"| PA_feeding
+PA_feeding --- two_processes
+PA_immune --- two_processes
+two_processes --- |optical trapping| optical
+optical --- |RhPE -> periphery lipids \n mCherry-HPos -> LDs \n fluscent imaging & FRAP| trafficking
+trafficking --- |PC&PC-PA LDs \n PC&PC-PA SLBs \n LD-SLB contact numbers| PA_enhance
 ```
