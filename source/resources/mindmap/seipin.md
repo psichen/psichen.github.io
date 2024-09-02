@@ -16,11 +16,13 @@ Less conserved: cytoplasmic N- and C-terminal regions; lengths vary among specie
 ## Potential to do ##
 
 - [ ] [Alphafold Multimer](https://cosmic-cryoem.org/tools/alphafoldmultimer/) of seipin (X. laevis)
-- [ ] **(lower LPR)** reconstitution (POPC/DOPE/DOPS for ER membrane proteins) / high affinity for PA
-- [ ] droplet embeded vesicles (DEV) of triglycerides added to reconstituted Seipin
-- [ ] crosslinking (mica - APTES - NES-PEG & SMCC - reconstituted Seipin)
-- [ ] ~~algorithm to remove double-tip artifacts~~
+- [ ] triglycerides or cholesterol added to reconstitute Seipin
 - [ ] glycosylation / glycerolipids?
+- [ ] crosslinking (mica - APTES - NES-PEG & SMCC - reconstituted Seipin)\
+        (detergent micelles on cytosolic side?)
+- [x] **(lower LPR)** reconstitution (POPC/DOPE/DOPS for ER membrane proteins) / high affinity for PA\
+        (Seipin may need a higher LPR because of its empty hydrophobic chamber)
+- [ ] ~~algorithm to remove double-tip artifacts~~
 
 ## Timeline ##
 
@@ -85,7 +87,7 @@ Wang, Huajin, et al. "Seipin is required for converting nascent to mature lipid 
 flowchart TB
 
 %% OBJECTS====================
-theme(seipin is required for LD maturation)
+theme("seipin is required for LD maturation")
 
 deficiency("Seipin deficiency leads to LD altered morphology
 without evidence for altered lipid metabolism (including cellular PA levels)")
@@ -109,13 +111,13 @@ initiating TG synthesis and LD expansion")
 phospholipids("Giant LDs of Seipin-deficient cells are deficient in phospholipids")
 
 %% RELATIONS====================
-theme --- |fly and human cells \n RNAi,CRISPR/Cas9 to knock down \n live-cell imaging \n 14C labelling lipidomics| deficiency
-deficiency --- |LiveDrop - more sensitive to TG \n small, abnormal LDs: LiveDrop+ & BODIPY- \n TG synthesis inhibitors| LiveDrop
-LiveDrop --- |cells from BSCL2 mutation patients \n Seipin truncations to rescue LD phenotype in Seipin KD cells \n expression of human Seipin prevents Seipin depletion phenotypes| conserved
+theme --- |fly and human cells <br/> RNAi,CRISPR/Cas9 to knock down <br/> live-cell imaging <br/> 14C labelling lipidomics| deficiency
+deficiency --- |LiveDrop - more sensitive to TG <br/> small, abnormal LDs: LiveDrop+ & BODIPY- <br/> TG synthesis inhibitors| LiveDrop
+LiveDrop --- |cells from BSCL2 mutation patients <br/> Seipin truncations to rescue LD phenotype in Seipin KD cells <br/> expression of human Seipin prevents Seipin depletion phenotypes| conserved
 conserved --- |ET| LD-ER
-LD-ER --- |GFP-Seipin & LiveDrop \n live-cell imaging| seipin
-seipin --- |GPAT4 co-licalizes with LDs \n knock down TG synthesis enzymes| GPAT4
-GPAT4 --- |"14C-oleic acid \n gradient centrifugation to get LD lipids \n CCT(PC synthesis enzyme) are recruited to LDs \n add PC liposomes to rescue phenotypes \n inhibition of CCT aggravates phenotypes"| phospholipids
+LD-ER --- |GFP-Seipin & LiveDrop <br/> live-cell imaging| seipin
+seipin --- |GPAT4 co-licalizes with LDs <br/> knock down TG synthesis enzymes| GPAT4
+GPAT4 --- |"14C-oleic acid <br/> gradient centrifugation to get LD lipids <br/> CCT(PC synthesis enzyme) are recruited to LDs <br/> add PC liposomes to rescue phenotypes <br/> inhibition of CCT aggravates phenotypes"| phospholipids
 ```
 
 ### 2018_cryoEM_JCB ###
@@ -146,11 +148,11 @@ mutants in luminal domain (Y171A) contribute to but are not required for oligome
 double mutant in &beta;-sandwich (V220A/I222A) failed to rescue cell functions")
 
 %% RELATIONS====================
-theme --- |fly seipin in digitionin or DDM \n luminal domain resolved only| cryoEM
+theme --- |fly seipin in digitionin or DDM <br/> luminal domain resolved only| cryoEM
 cryoEM --- |mutant & SEC| intersubunit
 intersubunit --- |evolutionary covariation analysis| conserved
-cryoEM --- |fluorescent seipin-HH peptides \n with artificial LDs or DEV| HH
-HH --- |seipin-HH3D mutant rescued seipin KO phenotype \n Y171A rescued LD phenotype in vivo \n mutants in luminal domain V220/I222| LDformation
+cryoEM --- |fluorescent seipin-HH peptides <br/> with artificial LDs or DEV| HH
+HH --- |seipin-HH3D mutant rescued seipin KO phenotype <br/> Y171A rescued LD phenotype in vivo <br/> mutants in luminal domain V220/I222| LDformation
 ```
 
 ### 2018_anionic ###
@@ -175,8 +177,8 @@ lipid("seipin binds anionic 16:0/18:1 PA 'POPA' and PI3P
 
 %% RELATIONS====================
 theme --- |human seipin in digionin| cryoEM
-cryoEM --- |6-point mutation \n NS-EM for oligomerization \n lipid droplets in living cells| mutants
-mutants --- |lipid strips \n liposome-binding| lipid
+cryoEM --- |6-point mutation <br/> NS-EM for oligomerization <br/> lipid droplets in living cells| mutants
+mutants --- |lipid strips <br/> liposome-binding| lipid
 ```
 
 ### 2019_triglyceride ###
@@ -218,16 +220,16 @@ Seipin prevents ripening-induced LD shrinkage")
 fusion("Seipin facilitates tryglyceride deposition and enhances LD growth")
 
 %% RELATIONS====================
-theme --- |"live-cell imaging \n Oleic acid (OA) to trigger LD formation"| formation
+theme --- |"live-cell imaging <br/> Oleic acid (OA) to trigger LD formation"| formation
 formation --- |mobility analysis| mobility
 mobility --- |"correlative light EM (CLEM)"| LDs
-formation --- |minimal distance between forming LDs \n is higher thant random simulation| nearest
+formation --- |minimal distance between forming LDs <br/> is higher thant random simulation| nearest
 nearest --- |"GFP-nanobody system trapping Seipin at nuclear envelope (NE)"| relocation
-relocation --- |fixed architecture of NE \n compared to ER enables ET| neck
+relocation --- |fixed architecture of NE <br/> compared to ER enables ET| neck
 LDs --- neck
 neck --- |acute depletion by auxin-inducible degron| depletion
-depletion --- |OA loaded before Seipin removal \n lipogenesis & lipolysis analysis \n FRAP| transfer
-transfer --- |"<b>isolated LD with Seipin from cells</b> \n mix with droplet-embeded vesicles (DEV)"| DEV
+depletion --- |OA loaded before Seipin removal <br/> lipogenesis & lipolysis analysis <br/> FRAP| transfer
+transfer --- |"<b>isolated LD with Seipin from cells</b> <br/> mix with droplet-embeded vesicles (DEV)"| DEV
 DEV --- |heterologous cell fusion of seipin-degron cells and seipin cells| fusion
 ```
 
@@ -269,12 +271,12 @@ ratio("increasing sheets lowers LDs number
 TG LDs are more efficiently asseembled than SE")
 
 %% RELATIONS====================
-theme --- |live-cell imaging \n ER sheet/tubules segmentation \n Rab18 KO to decrease tubules| enrich
-enrich --- |hypotonic medium \n swollen ER| hypotonic
-hypotonic --- |Seipin degron cells \n Bpy-C12 for nascent lipids \n LipidTox for neutral lipids| degron
-degron --- |"Sec61&beta;-mCherry (ER membrane protein) as reference \n FRAP"| diffuse
-diffuse --- |DEV system \n tubules pull out from GUVs| pullout
-pullout --- |decrease tubules radius rapidly by surface tension \n FRAP on tubules| nucleation
+theme --- |live-cell imaging <br/> ER sheet/tubules segmentation <br/> Rab18 KO to decrease tubules| enrich
+enrich --- |hypotonic medium <br/> swollen ER| hypotonic
+hypotonic --- |Seipin degron cells <br/> Bpy-C12 for nascent lipids <br/> LipidTox for neutral lipids| degron
+degron --- |"Sec61&beta;-mCherry (ER membrane protein) as reference <br/> FRAP"| diffuse
+diffuse --- |DEV system <br/> tubules pull out from GUVs| pullout
+pullout --- |decrease tubules radius rapidly by surface tension <br/> FRAP on tubules| nucleation
 nucleation --- |overexpress ER-tubule-generating proteins in Seipin degron cells| tubules
 nucleation --- |increase ER sheets| sheets
 sheets --- |ER tubule-to-sheet ratio| ratio
@@ -306,7 +308,7 @@ enriched in charged residues, fail to concentrate TAg (POPC with 3% TAG)")
 Ldb16("Ldb16 can be crosslinked at TM and luminal regions
 Ldb16 complements Sei1 functions")
 
-LH("LH domain deletion leads to increased TM movement \n LH controls the positioning and dynamcis of TM segments")
+LH("LH domain deletion leads to increased TM movement <br/> LH controls the positioning and dynamcis of TM segments")
 
 TM("interaction betwwen TAG and TM, likely amino acid composition but not dynamics, contributs to LD formation")
 
@@ -314,9 +316,9 @@ TM("interaction betwwen TAG and TM, likely amino acid composition but not dynami
 theme --- |yeast seipin in DDM| cryoEM
 cryoEM --- |coarse-grain MD| TAG
 cryoEM --- |coarse-grain MD| luminal
-luminal --- |UAA to crosslink Sei1 and Ldb16 \n lipid droplets in live cells \n Ldb16 contains many hydroxyl groups| Ldb16
-Ldb16 --- |LH mutation or deletion \n expression level & lipid droplets in live cells \n MD & cryoEM of &Delta;LH| LH
-LH --- |mutants in TM segments failed to restore cell functions \n &Delta;LH mutant could restore cell functions \n chimeric mutant with human TM could restore cell functions| TM
+luminal --- |UAA to crosslink Sei1 and Ldb16 <br/> lipid droplets in live cells <br/> Ldb16 contains many hydroxyl groups| Ldb16
+Ldb16 --- |LH mutation or deletion <br/> expression level & lipid droplets in live cells <br/> MD & cryoEM of &Delta;LH| LH
+LH --- |mutants in TM segments failed to restore cell functions <br/> &Delta;LH mutant could restore cell functions <br/> chimeric mutant with human TM could restore cell functions| TM
 TAG --- TM
 ```
 
@@ -347,10 +349,10 @@ TAG still localize S165&S166 of HH in luminal domain, DAG spreads around the HH 
 polar("S165/S166 in HH is required for LD formation")
 
 %% RELATIONS====================
-theme --- |human 11-mer seipin \n DOPC with TAG \n TAG molecule number in direct contact with seipin| accumulate
-accumulate --- |TAG radial concentration along seipin \n simulation of luminal domain alone /n diffusion of TAG interacting with luminal domains \n dissociation of TAG bound to Seipin| luminal
-luminal --- |time-resolved TAG radial concentration along seipin \n simulation of TM helices along \n diffusion of TAG interacting with TM helices \n mutation of TM helices| TM
-TM --- |ER-like membrane: PC, PE, cholesterol, DAG \n 10% DAG or PA in DOPC| DAG
+theme --- |human 11-mer seipin <br/> DOPC with TAG <br/> TAG molecule number in direct contact with seipin| accumulate
+accumulate --- |TAG radial concentration along seipin <br/> simulation of luminal domain alone <br/> diffusion of TAG interacting with luminal domains <br/> dissociation of TAG bound to Seipin| luminal
+luminal --- |time-resolved TAG radial concentration along seipin <br/> simulation of TM helices along <br/> diffusion of TAG interacting with TM helices <br/> mutation of TM helices| TM
+TM --- |ER-like membrane: PC, PE, cholesterol, DAG <br/> 10% DAG or PA in DOPC| DAG
 DAG --- |S165/S166 mutant in live-cell imaging| polar
 ```
 
@@ -366,21 +368,21 @@ flowchart TB
 %% OBJECTS====================
 theme(cryoEM of yeast seipin flexible cages)
 
-cryoEM(decameric, cage-like \n conformation A, B \n switch regions)
+cryoEM(decameric, cage-like <br/> conformation A, B <br/> switch regions)
 
-TM("seipin TM segments are crucial for function \n <b>N-terminal TM segment showed more critical</b>")
+TM("seipin TM segments are crucial for function <br/> <b>N-terminal TM segment showed more critical</b>")
 
-lumenal(lumenal domain of yeast seipin likely does not insert into membrane \n unlike fly and human homologs \n lumenal domain alone is sufficient for oligomerization)
+lumenal(lumenal domain of yeast seipin likely does not insert into membrane <br/> unlike fly and human homologs <br/> lumenal domain alone is sufficient for oligomerization)
 
-TM2(crucial for function \n conserved through evolution \n <b>C-terminal showed more critical</b>)
+TM2(crucial for function <br/> conserved through evolution <br/> <b>C-terminal showed more critical</b>)
 
-switch(switch region is required for oligomerization and function \n localization of seipin around ER-LD site changed dramatically )
+switch(switch region is required for oligomerization and function <br/> localization of seipin around ER-LD site changed dramatically )
 
 %% RELATIONS====================
-theme --- |seipin in digitonin and PmalC8 \n Rosetta prediction \n C10 symmetry expansion and then classification without symmetry| cryoEM
-theme --- |TM segments replacement \n sequence shuffled \n lipid droplet in living cells \n growth phenotype under inhibitors| TM
-cryoEM --- |mutant at central ring \n seipin lacking TM segments \n NS-EM| lumenal
-TM --- |predicted interaction patches \n mutants \n lipid droplet in living cells| TM2
+theme --- |seipin in digitonin and PmalC8 <br/> Rosetta prediction <br/> C10 symmetry expansion and then classification without symmetry| cryoEM
+theme --- |TM segments replacement <br/> sequence shuffled <br/> lipid droplet in living cells <br/> growth phenotype under inhibitors| TM
+cryoEM --- |mutant at central ring <br/> seipin lacking TM segments <br/> NS-EM| lumenal
+TM --- |predicted interaction patches <br/> mutants <br/> lipid droplet in living cells| TM2
 TM2 --- |mutant & sequence shuffled| switch
 lumenal --- switch
 ```
@@ -417,15 +419,15 @@ trafficking(stable LD-mSLB contacts support protein and lipid trafficking)
 PA_enhance(<b>PA enhances LD-SLB contact formation</b>)
 
 %% RELATIONS====================
-theme --- |"ER-enriched microsomal  vesicles from rat livers or cells (mSLB) \n LDs from livers \n LDs of diluted concentration to incubate, decreasing prewash LDs/unchanging postwash LDs"| reconstitution
+theme --- |"ER-enriched microsomal  vesicles from rat livers or cells (mSLB) <br/> LDs from livers <br/> LDs of diluted concentration to incubate, decreasing prewash LDs/unchanging postwash LDs"| reconstitution
 reconstitution --- |fed/fasted LDs & fed/fasted mSLBs| fed
 fed --- |activate immunity by LPS injection| immunity
 immunity --- |"Spo20-p (high affinity for PA)"| PA_immune
-fed --- |"LD-biogenesis inhibitors \n Proteinase-K on mSLBs"| insensitive
-insensitive --- |"Rab18 Ab \n Spo20-p (high affinity for PA) \n reduce bound LDs numbers"| PA_feeding
+fed --- |"LD-biogenesis inhibitors <br/> Proteinase-K on mSLBs"| insensitive
+insensitive --- |"Rab18 Ab <br/> Spo20-p (high affinity for PA) <br/> reduce bound LDs numbers"| PA_feeding
 PA_feeding --- two_processes
 PA_immune --- two_processes
 two_processes --- |optical trapping| optical
-optical --- |RhPE -> periphery lipids \n mCherry-HPos -> LDs \n fluscent imaging & FRAP| trafficking
-trafficking --- |PC&PC-PA LDs \n PC&PC-PA SLBs \n LD-SLB contact numbers| PA_enhance
+optical --- |RhPE -> periphery lipids <br/> mCherry-HPos -> LDs <br/> fluscent imaging & FRAP| trafficking
+trafficking --- |PC&PC-PA LDs <br/> PC&PC-PA SLBs <br/> LD-SLB contact numbers| PA_enhance
 ```
