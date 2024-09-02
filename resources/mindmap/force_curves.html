@@ -220,7 +220,6 @@ end
 <h3 id="spam">2006_SPAM</h3>
 <h3 id="torsional">2007_torsional</h3>
 <h3 id="port">2018_PORT</h3>
-<script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad: true, flowchart: {curve: 'linear'}}); </script>
 
   </article>
 </section>
@@ -254,6 +253,20 @@ end
 </script>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "neutral",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
 
 
 

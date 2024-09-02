@@ -210,7 +210,7 @@
         <section class="flex items-center gap-3 text-sm">
           <time>2021-07-11</time>
           <span class="text-gray-400">·</span>
-          <span>898 words</span>
+          <span>877 words</span>
         </section>
       </div>
     </div>
@@ -355,7 +355,6 @@ we want, namely the Fokker-Planck-Kramers equation.</p>
 target="_blank" rel="noopener" href="http://physics.gu.se/~frtbm/joomla/media/mydocs/LennartSjogren/kap7.pdf">Brownian
 Motion: Fokker-Planck Equation</a></li>
 </ol>
-<script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad: true, flowchart: {curve: 'linear'}}); </script>
 
   </article>
   <!-- tag -->
@@ -434,6 +433,20 @@ Motion: Fokker-Planck Equation</a></li>
 </script>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "neutral",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
 
 
 

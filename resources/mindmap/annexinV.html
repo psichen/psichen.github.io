@@ -210,7 +210,6 @@ function --- |"buffer exchange pump system & plused UV laser for uncaging \n cro
 <h3 id="ss_nature-communications">2020_SS_Nature communications</h3>
 <pre class="mermaid">flowchart TB
 function(annexin V stabilizes membrane defects by inducing lipid phase transition)</pre>
-<script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad: true, flowchart: {curve: 'linear'}}); </script>
 
   </article>
 </section>
@@ -244,6 +243,20 @@ function(annexin V stabilizes membrane defects by inducing lipid phase transitio
 </script>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "neutral",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
 
 
 

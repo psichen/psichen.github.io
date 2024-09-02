@@ -250,7 +250,6 @@ structure --- |E1511| permeation
 structure --- |H1423| tether --- transiduction
 structure --- |W1572| gating --- transiduction
 structure --- |side chains not resolved \n sub-classes of AR conformation| motion</pre>
-<script type="module"> import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad: true, flowchart: {curve: 'linear'}}); </script>
 
   </article>
 </section>
@@ -284,6 +283,20 @@ structure --- |side chains not resolved \n sub-classes of AR conformation| motio
 </script>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "neutral",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
 
 
 
