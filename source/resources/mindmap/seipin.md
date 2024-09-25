@@ -2,7 +2,8 @@
 
 uniport: Q640F1
 
-MW: 37 kD (seipin) + n(?) x 1 kD (FLAG-tag)
+MW: 37 kD (seipin) + 8 kD (LDAF1) + n(?) x 1 kD (FLAG-tag) \
+Seipin + LDAF1 = 45 kD (subunit)
 
 PI: 5.77
 
@@ -13,16 +14,30 @@ Evolutinoarily conserved: ER-lumenal domain; flanking transmembrane (TM) segment
 Less conserved: cytoplasmic N- and C-terminal regions; lengths vary among species
 ([homologous comparison](./seipin#cage))
 
+diameter: 14 nm (from HS-AFM)\
+top area: 154 nm<sup>2</sup>
+
+POPC head area: 0.7 nm<sup>2</sup> \
+MW: 760
+
+number of lipids to fill Seipin chamber:
+
+154/0.7\*2 = 440 (mol/mol, lipid:Seipin 11mer) \
+154/0.7\*2/11 = 40 (mol/mol, lipid:Seipin subunit)
+
+LPR = 40 * 0.76 / 45 = **0.68** (w/w, lipid:Seipin-LDAF1 subunit), \
+weight concentration (mg/mL) is independent on oligomeric states.
+
 ## Potential to do ##
 
-- [ ] [Alphafold Multimer](https://cosmic-cryoem.org/tools/alphafoldmultimer/) of seipin (X. laevis)
 - [ ] triglycerides or cholesterol added to reconstitute Seipin
 - [ ] glycosylation / glycerolipids?
-- [ ] crosslinking (mica - APTES - NES-PEG & SMCC - reconstituted Seipin)\
-        (detergent micelles on cytosolic side?)
 - [x] **(lower LPR)** reconstitution (POPC/DOPE/DOPS for ER membrane proteins) / high affinity for PA\
         (Seipin may need a higher LPR because of its empty hydrophobic chamber)
+- [x] [Alphafold Multimer](https://cosmic-cryoem.org/tools/alphafoldmultimer/) of seipin (X. laevis)
 - [ ] ~~algorithm to remove double-tip artifacts~~
+- [ ] ~~crosslinking (mica - APTES - NES-PEG & SMCC - reconstituted Seipin)~~\
+        (detergent micelles on cytosolic side?)
 
 ## Timeline ##
 
