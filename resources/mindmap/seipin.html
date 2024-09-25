@@ -197,7 +197,8 @@
   <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
     <h2 id="seipin">Seipin</h2>
 <p>uniport: Q640F1</p>
-<p>MW: 37 kD (seipin) + n(?) x 1 kD (FLAG-tag)</p>
+<p>MW: 37 kD (seipin) + 8 kD (LDAF1) + n(?) x 1 kD (FLAG-tag)<br />
+Seipin + LDAF1 = 45 kD (subunit)</p>
 <p>PI: 5.77</p>
 <p>spcies: Xenopus laevis (African clawed frog) in <a
 href="./seipin#cryoem_jcb">homologous comparison</a>.</p>
@@ -205,25 +206,35 @@ href="./seipin#cryoem_jcb">homologous comparison</a>.</p>
 (TM) segments, switch region (within TM segments)</p>
 <p>Less conserved: cytoplasmic N- and C-terminal regions; lengths vary
 among species (<a href="./seipin#cage">homologous comparison</a>)</p>
+<p>diameter: 14 nm (from HS-AFM)<br />
+top area: 154 nm<sup>2</sup></p>
+<p>POPC head area: 0.7 nm<sup>2</sup><br />
+MW: 760</p>
+<p>number of lipids to fill Seipin chamber:</p>
+<p>154/0.7*2 = 440 (mol/mol, lipid:Seipin 11mer)<br />
+154/0.7*2/11 = 40 (mol/mol, lipid:Seipin subunit)</p>
+<p>LPR = 40 * 0.76 / 45 = <strong>0.68</strong> (w/w, lipid:Seipin-LDAF1
+subunit),<br />
+weight concentration (mg/mL) is independent on oligomeric states.</p>
 <h2 id="potential-to-do">Potential to do</h2>
 <ul class="task-list">
-<li><label><input type="checkbox" /><a
-target="_blank" rel="noopener" href="https://cosmic-cryoem.org/tools/alphafoldmultimer/">Alphafold
-Multimer</a> of seipin (X. laevis)</label></li>
 <li><label><input type="checkbox" />triglycerides or cholesterol added
 to reconstitute Seipin</label></li>
 <li><label><input type="checkbox" />glycosylation /
 glycerolipids?</label></li>
-<li><label><input type="checkbox" />crosslinking (mica - APTES - NES-PEG
-&amp; SMCC - reconstituted Seipin)<br />
-(detergent micelles on cytosolic side?)</label></li>
 <li><label><input type="checkbox" checked="" /><strong>(lower
 LPR)</strong> reconstitution (POPC/DOPE/DOPS for ER membrane proteins) /
 high affinity for PA<br />
 (Seipin may need a higher LPR because of its empty hydrophobic
 chamber)</label></li>
+<li><label><input type="checkbox" checked="" /><a
+target="_blank" rel="noopener" href="https://cosmic-cryoem.org/tools/alphafoldmultimer/">Alphafold
+Multimer</a> of seipin (X. laevis)</label></li>
 <li><label><input type="checkbox" /><del>algorithm to remove double-tip
 artifacts</del></label></li>
+<li><label><input type="checkbox" /><del>crosslinking (mica - APTES -
+NES-PEG &amp; SMCC - reconstituted Seipin)</del><br />
+(detergent micelles on cytosolic side?)</label></li>
 </ul>
 <h2 id="timeline">Timeline</h2>
 <pre class="mermaid">flowchart TB
