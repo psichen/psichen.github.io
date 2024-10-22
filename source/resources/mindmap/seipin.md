@@ -1,9 +1,11 @@
 ## Seipin ##
 
-uniport: Q640F1
+uniport: Q640F1 (Seipin)
 
-MW: 37 kD (seipin) + 8 kD (LDAF1) + n(?) x 1 kD (FLAG-tag) \
-Seipin + LDAF1 = 45 kD (subunit)
+sequence ID: [NP_001087496.1](https://www.ncbi.nlm.nih.gov/protein/NP_001087496.1?report=genbank&log$=protalign&blast_rank=1&RID=HDDAS211013) (LDAF1)
+
+MW: 37 kD (seipin) + 17 kD (LDAF1) (+ 1x kD (FLAG-tag) )\
+Seipin + LDAF1 = 54 kD (subunit)
 
 PI: 5.77
 
@@ -25,7 +27,7 @@ number of lipids to fill Seipin chamber:
 154/0.7\*2 = 440 (mol/mol, lipid:Seipin 11mer) \
 154/0.7\*2/11 = 40 (mol/mol, lipid:Seipin subunit)
 
-LPR = 40 * 0.76 / 45 = **0.68** (w/w, lipid:Seipin-LDAF1 subunit), \
+LPR = 40 * 0.76 / 54 = **0.56** (w/w, lipid:Seipin-LDAF1 subunit), \
 weight concentration (mg/mL) is independent on oligomeric states.
 
 ## Potential to do ##
