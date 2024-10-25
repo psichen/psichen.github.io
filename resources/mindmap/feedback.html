@@ -13,7 +13,7 @@
 
 
 
-<title>Tags: transformation | pan.world</title>
+<title>pan.world</title>
 
 
 
@@ -186,95 +186,134 @@
 </div>
 
   <main class="p-12">
-    
-
-  <div>
-    <h2>Tag - transformation</h2>
-  </div>
-  <section class="px-6 max-w-prose mx-auto gap-2 grid grid-cols-1">
-  
-  
-    
-    
-      <div class="relative pointer-events-none">
-        <span class="text-5xl opacity-10 font-bold">2023</span>
-      </div>
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    Nov 06
-    </span>
-    <span>
-    <a href="/2023/11/06/solving-differential-equations-by-transform/">
-      Solving differential equations by transforms
-    </a>
-    </span>
-    </span>
+    <section class="px-6 max-w-4xl mx-auto md:px-0">
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        
+      </h1>
     </div>
+  </header>
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <h2 id="timeline">Timeline</h2>
+<h2 id="lectures">Lectures</h2>
+<h3 id="scan_speed">2002_scan_speed</h3>
+<p>Limitations to scanning speed:</p>
+<ol type="1">
+<li>slow transient response of probe</li>
+<li>instability limitations of high-quality factor (Q) systems</li>
+<li>feedback actuator bandwidth</li>
+<li>error signal saturation</li>
+<li>rms-to-dc converter</li>
+</ol>
+<p>squeeze film damping</p>
+<h2 id="questions">Questions</h2>
+<ol type="1">
+<li><p>active control of effective quality factor Q of the cantilever /
+why should the cantilever be damped?</p></li>
+<li><p>when the cantilever sacns a downward step, the amplitude would
+increase as a function of time, <span class="math display">\[
+\Delta a(t) = [a_{free} - a_{sp}][ 1 - \exp(-\omega_0 t / 2Q) ]
+\]</span></p></li>
+<li><p>For stable feedback, the gain of the loop should be small for the
+frequencies where the drive from the controller and the response of the
+actuator are out of phase</p></li>
+<li><p>At <span class="math inline">\(\omega_0\)</span>, there is a
+<span class="math inline">\(90^\circ\)</span> phase shift from the
+cantilever and the controller adds an additional <span
+class="math inline">\(90^\circ\)</span> phase shift (it is dominated by
+an integrator)</p></li>
+</ol>
 
-  
-    
-    
-      <div class="relative pointer-events-none">
-        <span class="text-5xl opacity-10 font-bold">2021</span>
-      </div>
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    May 21
-    </span>
-    <span>
-    <a href="/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/">
-      Interpretation of frequency shift in FM-AFM (II)
-    </a>
-    </span>
-    </span>
-    </div>
-
-  
-    
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    May 18
-    </span>
-    <span>
-    <a href="/2021/05/18/interpretation-of-frequency-shift-in-FM-AFM-I/">
-      Interpretation of frequency shift in FM-AFM (I)
-    </a>
-    </span>
-    </span>
-    </div>
-
-  
-    
-    
-      <div class="relative pointer-events-none">
-        <span class="text-5xl opacity-10 font-bold">2019</span>
-      </div>
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    Sep 25
-    </span>
-    <span>
-    <a href="/2019/09/25/Legendre-transformation/">
-      Legendre变换的理解和在热力学中的应用
-    </a>
-    </span>
-    </span>
-    </div>
-
-  
+  </article>
 </section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
 
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
 
 
   </main>

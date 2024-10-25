@@ -13,7 +13,7 @@
 
 
 
-<title>Tags: transformation | pan.world</title>
+<title>pan.world</title>
 
 
 
@@ -186,95 +186,130 @@
 </div>
 
   <main class="p-12">
-    
-
-  <div>
-    <h2>Tag - transformation</h2>
-  </div>
-  <section class="px-6 max-w-prose mx-auto gap-2 grid grid-cols-1">
-  
-  
-    
-    
-      <div class="relative pointer-events-none">
-        <span class="text-5xl opacity-10 font-bold">2023</span>
-      </div>
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    Nov 06
-    </span>
-    <span>
-    <a href="/2023/11/06/solving-differential-equations-by-transform/">
-      Solving differential equations by transforms
-    </a>
-    </span>
-    </span>
+    <section class="px-6 max-w-4xl mx-auto md:px-0">
+  <header class="overflow-hidden pt-6 pb-6 md:pt-12">
+    <div class="pt-4 md:pt-6">
+      <h1 id="article-title" class="text-[2rem] font-bold leading-snug mb-4 md:mb-6 md:text-[2.6rem]">
+        
+      </h1>
     </div>
+  </header>
+  <article class="post-content mt-10 prose-lg dark:prose-invert post-content">
+    <h2 id="timeline">Timeline</h2>
+<pre class="mermaid">flowchart TB
 
-  
-    
-    
-      <div class="relative pointer-events-none">
-        <span class="text-5xl opacity-10 font-bold">2021</span>
-      </div>
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    May 21
-    </span>
-    <span>
-    <a href="/2021/05/21/interpretation-of-frequency-shift-in-FM-AFM-II/">
-      Interpretation of frequency shift in FM-AFM (II)
-    </a>
-    </span>
-    </span>
-    </div>
+2006_SPAM["scanning probe acceleration microscopy (SPAM)"]
+2007_torsional["torsional harmonic cantilever"]
+2018_PORT["photothermal off-resonance tapping afm (PORT)"]
 
-  
-    
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    May 18
-    </span>
-    <span>
-    <a href="/2021/05/18/interpretation-of-frequency-shift-in-FM-AFM-I/">
-      Interpretation of frequency shift in FM-AFM (I)
-    </a>
-    </span>
-    </span>
-    </div>
+click 2006_SPAM href "./force_curves#spam" _self
+click 2007_torsional href "./force_curves#torsional" _self
+click 2018_PORT href "./force_curves#port" _self
 
-  
-    
-    
-      <div class="relative pointer-events-none">
-        <span class="text-5xl opacity-10 font-bold">2019</span>
-      </div>
-    
-    <div>
-    <span class="grid grid-cols-[1fr_5fr]">
-    <span class="text-gray-400">
-    Sep 25
-    </span>
-    <span>
-    <a href="/2019/09/25/Legendre-transformation/">
-      Legendre变换的理解和在热力学中的应用
-    </a>
-    </span>
-    </span>
-    </div>
+subgraph 2006
+        2006_SPAM
+end
+subgraph 2007
+        2007_torsional
+end
+subgraph 2018
+        2018_PORT
+end
+2006 --> 2007 --> 2018</pre>
+<h2 id="lectures">Lectures</h2>
+<h3 id="spam">2006_SPAM</h3>
+<h3 id="torsional">2007_torsional</h3>
+<h3 id="port">2018_PORT</h3>
 
-  
+  </article>
 </section>
+<!-- js inspect -->
+
+<script src="/lib/clipboard.min.js"></script>
+
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+  });
+</script>
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  $(document).ready(() => {
+    const maraidConfig = {
+      theme: "default",
+      logLevel: 3,
+      flowchart: { curve: "linear" },
+      gantt: { axisFormat: "%m/%d/%Y" },
+      sequence: { actorMargin: 50 },
+    };
+    mermaid.initialize(maraidConfig);
+  });
+</script>
 
+
+
+<script src="/lib/fancybox/fancybox.umd.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+    $('.post-content').each(function(i){
+      $(this).find('img').each(function(){
+        if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
+        var alt = this.alt;
+        $(this).wrap('<a class="fancybox-img" href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      });
+      $(this).find('.fancybox').each(function(){
+        $(this).attr('rel', 'article' + i);
+      });
+    });
+
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        // options
+    })
+  })
+</script>
+
+<!-- tocbot begin -->
+
+<script src="/lib/tocbot/tocbot.min.js"></script>
+
+<script>
+  $(document).ready(() => {
+      tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.post-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+  })
+</script>
+<!-- tocbot end -->
 
 
   </main>
