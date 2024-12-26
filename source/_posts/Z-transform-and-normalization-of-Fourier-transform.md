@@ -47,7 +47,7 @@ Thus, the discrete Fourier transform is a specialized Z transform which is evalu
 \end{document}
 ```
 
-As we can see, the inner product of unit circles in vector space $<e^{i\theta}, e^{i\theta} >$ is equal to $2\pi$, thus normalization is required to ensure conservation.
+As we can see, the inner product of unit circles in vector space $<e^{i\theta}, e^{i\theta} >_{\theta}$ is equal to $2\pi$, thus normalization is required to ensure conservation.
 
 ## Normalization of Fourier transform ##
 
@@ -67,15 +67,15 @@ $$
 A_{\omega} = \frac{< f(t), e^{i \omega t} >}{< e^{i \omega t}, e^{i \omega t} >} \label{projection}
 \end{equation}
 $$
-However, bases $e^{i \omega t}$ are not orthonormal,
+The Fourier transform $\widetilde{F}(\omega)$ is defined exactly as $< f(t), e^{i \omega t} > = \int_{-\frac{T}{2}}^{\frac{T}{2}} f(t) e^{-i \omega t} \, dt$. However, bases $e^{i \omega t}$ are not orthonormal,
 $$
 < e^{i \omega t}, e^{i \omega t} > = \int_{-\frac{T}{2}}^{\frac{T}{2}} e^{i \omega t} e^{-i \omega t} \, dt = T = \frac{2\pi}{\delta \omega}
 $$
 where $T$ is the periodicity of basis on $t$-domain and $\delta \omega$ is the angular *sampling* frequency. Substituting $\eqref{projection}$ into $\eqref{vector_sum}$, we will find the normalization factor $\frac{1}{2\pi}$ in the inverse Fourier transform,
 $$
 \begin{align*}
-        f(t) &= \sum_{\omega=-\infty}^{\infty} \color{blue}{\lim_{T \to \infty}  \frac{\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t') e^{-i \omega t'} \, dt'}{T}} e^{i \omega t} \\
-        &= \sum_{\omega=-\infty}^{\infty} \color{blue}{\lim_{\delta \omega \to 0}  \frac{\widetilde{F}(\omega)}{2\pi} \delta \omega} e^{i \omega t} \\
+        f(t) &= \sum_{\omega=-\infty}^{\infty} \lim_{T \to \infty}  \frac{\color{blue}{\int_{-\frac{T}{2}}^{\frac{T}{2}} f(t') e^{-i \omega t'} \, dt'}}{T} e^{i \omega t} \\
+        &= \sum_{\omega=-\infty}^{\infty} \lim_{\delta \omega \to 0}  \frac{\color{blue}{\widetilde{F}(\omega)}}{2\pi} \delta \omega e^{i \omega t} \\
         &= \frac{1}{2\pi} \int_{-\infty}^{\infty} \widetilde{F}(\omega) e^{i \omega t} \, d\omega \\
 \end{align*}
 $$
@@ -104,13 +104,13 @@ $$
 $$
 where $k=0,1,...,N-1$. Thus the discrete Fourier transform is given by,
 $$
-\widetilde{F}[k] = \sum_{n=0}^{N-1} f[n] e^{-i 2 \pi k n / N}
+\widetilde{F}[k] = \sum_{n=0}^{N-1} f[n] e^{-i 2 \pi k n T / N}
 $$
-Similarly, the inner product of vector bases $e^{i 2 \pi k n / N}$ is $N$, so the inverse discrete Fourier transform is,
+Similarly, the inner product of vector bases $e^{i 2 \pi k n T / N}$ is $N$, so the inverse discrete Fourier transform is,
 $$
 \begin{align}
-f[n] &= \sum_{k=0}^{N-1} \color{blue}{\frac{< f[n'], e^{i 2 \pi k n' / N} >}{< e^{i 2 \pi k n' / N}, e^{i 2 \pi k n' / N} >}} e^{i 2 \pi k n / N} \\
-&= \frac{1}{N} \sum_{k=0}^{N-1} \color{blue}{\widetilde{F}[k]} e^{i 2 \pi k n / N} \label{dft} \\
+f[n] &= \sum_{k=0}^{N-1} \color{blue}{\frac{< f[n'], e^{i 2 \pi k n' T / N} >}{< e^{i 2 \pi k n' T / N}, e^{i 2 \pi k n' T / N} >}} e^{i 2 \pi k n T / N} \\
+&= \frac{1}{N} \sum_{k=0}^{N-1} \color{blue}{\widetilde{F}[k]} e^{i 2 \pi k n T / N} \label{dft} \\
 \end{align}
 $$
 When $N \to \infty$, Eq. $\eqref{dft}$ will converge to Eq. $\eqref{cft}$, in which $d\omega = 1/N$.
