@@ -3,10 +3,10 @@
 % Packages:
 \usepackage[
 ignoreheadfoot, % set margins without considering header and footer
-top=2 cm, % seperation between body and page edge from the top
-bottom=2 cm, % seperation between body and page edge from the bottom
-left=2 cm, % seperation between body and page edge from the left
-right=2 cm, % seperation between body and page edge from the right
+top=1 cm, % seperation between body and page edge from the top
+bottom=1 cm, % seperation between body and page edge from the bottom
+left=1 cm, % seperation between body and page edge from the left
+right=1 cm, % seperation between body and page edge from the right
 footskip=1.0 cm, % seperation between body and footer
 % showframe % for debugging 
 ]{geometry} % for adjusting page geometry
@@ -108,7 +108,7 @@ urlcolor=primaryColor
 \newenvironment{twocolentry}[2][]{
         \onecolentry
         \def\secondColumn{#2}
-        \setcolumnwidth{\fill, 4.5 cm}
+        \setcolumnwidth{\fill, 2.5 cm}
         \begin{paracol}{2}
         }{
                 \switchcolumn \raggedleft \secondColumn
@@ -119,7 +119,7 @@ urlcolor=primaryColor
 \newenvironment{threecolentry}[3][]{
         \onecolentry
         \def\thirdColumn{#3}
-        \setcolumnwidth{, \fill, 4.5 cm}
+        \setcolumnwidth{5.5 cm, \fill, 3 cm}
         \begin{paracol}{3}
                 {\raggedright #2} \switchcolumn
         }{
@@ -179,22 +179,23 @@ urlcolor=primaryColor
 \vspace{5 pt - 0.3 cm}
 
 \section{Education}
-\begin{twocolentry}{ 2013 – 2019 }
-\textbf{Peking University}, Ph.D. in Chemical biology / Supervisor: Xin Sheng Zhao
-\end{twocolentry}
-\begin{twocolentry}{ 2009 – 2013 }
-\textbf{Sun Yat-sen University}, B.Sc. in Chemistry
-\end{twocolentry}
+\begin{threecolentry} {\textbf{Peking University}} {2013 – 2019}
+Ph.D. in Chemical biology / Supervisor: Xin Sheng Zhao
+\end{threecolentry}
+\begin{threecolentry} {\textbf{Sun Yat-sen University}} {2009 – 2013}
+B.Sc. in Chemistry
+\end{threecolentry}
 
 \section{Work Experience}
-\begin{twocolentry}{2021 – Present}
-\textbf{Weill Cornell Medicine}, Postdoctoral researcher / Supervisor: Simon Scheuring
-\end{twocolentry}
+\begin{threecolentry} {\textbf{Weill Cornell Medicine}} {2021 – Present}
+Postdoctoral researcher / Supervisor: Simon Scheuring
+\end{threecolentry}
 
 \section{Publications}
 \begin{samepage}
         \begin{onecolentry}
                 \begin{highlightsforbulletentries}
+                \item \underline{Pan, S.}, Scheuring, S. A self-supervised deep learning pipline for AFM image denoising. \textit{in preparation}.
                 \item \underline{Pan, S.}, Gries, K., Engel, B.D., Schroda, M., Haselwandter, C.A., Scheuring, S. The cyanobacterial protein VIPP1 forms ESCRT-III-like structures on lipid bilayers. \textit{Nat Struct Mol Biol} (2024).
                 \item \underline{Pan, S.}, Yang, C. Zhao, X.S. Affinity of Skp to OmpC revealed by single-molecule detection. \textit{Sci Rep}, 14871 (2020).
                 \item He, C., \underline{Pan, S.}, Li, G., Zhao, X.S. Molecular mechanism of SurA’s chaperoning function to outer membrane proteins revealed by purification-after-crosslinking single-molecule FRET. \textit{Sci. China Chem.} 63, 1142 (2020)
@@ -205,12 +206,15 @@ urlcolor=primaryColor
 \end{samepage}
 
 \section{Conference Proceedings}
-\begin{twocolentry}{2024}
-        Presentation \& Poster \hfill Keck Biomembrane Retreat, USA\end{twocolentry}
-\begin{twocolentry}{2024}
-        Poster \hfill Biophysical Society Annual Meetings, USA\end{twocolentry}
-\begin{twocolentry}{2018}
-        Presentation \hfill the 5th National Conference on Biological Physical Chemistry, China\end{twocolentry}
+\begin{threecolentry} {Presentation \& Poster} {2024}
+         Keck Biomembrane Retreat, USA
+\end{threecolentry}
+\begin{threecolentry} {Poster} {2024}
+        Biophysical Society Annual Meetings, USA
+\end{threecolentry}
+\begin{threecolentry} {Presentation} {2018}
+        the 5th National Conference on Biological Physical Chemistry, China
+\end{threecolentry}
 
 \section{Awards}
 \begin{twocolentry}{2018}
@@ -233,19 +237,29 @@ First class scholarship of Sun Yat-sen University\end{twocolentry}
 Liu Yongsheng excellent students scholarship\end{twocolentry}
 
 \section{Teaching}
-\begin{twocolentry}{ fall semester, 2017 }
-        \textbf{General chemical experiments (B)} Teaching Assistant
-\end{twocolentry}
+\begin{threecolentry} {General chemical experiments (B)} {fall semester, 2017}
+        Teaching Assistant
+\end{threecolentry}
 
-\section{Research Field}
+\section{Research Profile}
 \begin{onecolentry}
-        \textbf{Biology} membrane protein, membrane-associated protein, conformational dynamics, supermolecular assembly
+        \begin{highlightsforbulletentries}
+        \item developed pscFCS to successfully reveal affinity of molecular chaperones to outer membrane proteins at single-molecule level
+        \item discoveried and illustrated ESCRT-III homologous protein VIPP1's supermolecular structures and polymerization mechanism on membranes by HS-AFM
+        \item Using self-supervised deep learning algorithm to denoise and dramatically facilitate HS-AFM imaging
+        \item rich experience in biophysics, molecular biology, electron microscopy and programming
+        \end{highlightsforbulletentries}
+\end{onecolentry}
+
+\section{Keywords}
+\begin{onecolentry}
+        \textbf{Biology} membrane/membrane-interacting protein, molecular chaperone, conformational dynamics, supermolecular assembly
 \end{onecolentry}
 
 \vspace{0.2 cm}
 
 \begin{onecolentry}
-        \textbf{Deep learning} self-supervised AFM imaging algorithm development
+        \textbf{Deep learning} self-supervised, denoising, computer vision, pytorch, Linux cluster
 \end{onecolentry}
 
 \vspace{0.2 cm}
